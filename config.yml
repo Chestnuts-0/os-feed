@@ -92,3 +92,44 @@ openclaw_peers:
   - id: zeroclaw
     repo: zeroclaw-labs/zeroclaw
     name: ZeroClaw
+
+# ════════════════════════════════════════════════════════════════
+# 开源版抖音信息流 — 扩展配置
+# ════════════════════════════════════════════════════════════════
+
+# ── 关注大牛清单 ───────────────────────────────────────────────
+# 追踪这些 GitHub 用户 star 的项目（像关注博主一样）。
+# 可在此列用户名，也可用环境变量 BIGBROS（逗号分隔）覆盖。
+bigbros:
+  - torvalds
+  - gvanrossum
+  - yyx990803
+  - tj
+  - sindresorhus
+
+# ── Trending/Search 主题 ───────────────────────────────────────
+# GitHub Search API 查询主题。默认 6 个 AI 主题，已拓宽到"好玩+实用"。
+trending_topics:
+  - { q: "topic:llm", label: "llm" }
+  - { q: "topic:ai-agent", label: "ai-agent" }
+  - { q: "topic:rag", label: "rag" }
+  - { q: "topic:vector-database", label: "vector-db" }
+  - { q: "topic:large-language-model", label: "llm-model" }
+  - { q: "topic:machine-learning", label: "ml" }
+  - { q: "topic:awesome", label: "awesome" }
+  - { q: "topic:self-hosted", label: "self-hosted" }
+  - { q: "topic:cli", label: "cli" }
+  - { q: "topic:productivity", label: "productivity" }
+
+# ── star 门槛 ──────────────────────────────────────────────────
+# 总 star 数低于此值的项目不进信息流（太冷门不看）
+star_threshold: 100
+
+# ── 兴趣画像 ───────────────────────────────────────────────────
+# ai_interests_text 是给 AI 的自然语言兴趣描述（TrendRadar 式），
+# AI 据此给每条项目打分。三个权重用于推荐排序。
+interests:
+  ai: 0.5
+  fun: 0.3
+  practical: 0.2
+  ai_interests_text: "我想看 AI 相关、好玩的、能直接拿来用的开源工具和软件"

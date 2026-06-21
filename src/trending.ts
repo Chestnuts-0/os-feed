@@ -141,7 +141,10 @@ interface SearchApiResponse {
   items: SearchApiItem[];
 }
 
-async function searchAiRepos(sevenDaysAgo: string): Promise<SearchRepo[]> {
+async function searchAiRepos(
+  sevenDaysAgo: string,
+  topics: { q: string; label: string }[] = SEARCH_QUERIES,
+): Promise<SearchRepo[]> {
   const token = process.env["GITHUB_TOKEN"] ?? "";
   const headers: Record<string, string> = {
     Accept: "application/vnd.github+json",
@@ -153,7 +156,7 @@ async function searchAiRepos(sevenDaysAgo: string): Promise<SearchRepo[]> {
   const all: SearchRepo[] = [];
 
   await Promise.all(
-    SEARCH_QUERIES.map(async ({ q, label }) => {
+    topics.map(async ({ q, label }) => {
       try {
         const query = `${q}+pushed:>${sevenDaysAgo}&sort=stars&order=desc`;
         const url = `https://api.github.com/search/repositories?q=${query}&per_page=15`;
@@ -193,12 +196,12 @@ async function searchAiRepos(sevenDaysAgo: string): Promise<SearchRepo[]> {
 // Export
 // ---------------------------------------------------------------------------
 
-export async function fetchTrendingData(): Promise<TrendingData> {
+export async function fetchTrendingData(topics?: { q: string; label: string }[]): Promise<TrendingData> {
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
   const [{ repos: trendingRepos, success }, searchRepos] = await Promise.all([
     fetchGitHubTrending(),
-    searchAiRepos(sevenDaysAgo),
+    searchAiRepos(sevenDaysAgo, topics),
   ]);
 
   return { trendingRepos, searchRepos, trendingFetchSuccess: success };

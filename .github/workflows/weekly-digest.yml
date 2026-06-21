@@ -34,8 +34,9 @@ jobs:
       - name: Run weekly rollup
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LLM_PROVIDER: deepseek
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          LLM_PROVIDER: agnes
+          AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+          AGNES_MODEL: ${{ secrets.AGNES_MODEL || 'Agnes-2.0-Flash' }}
           DIGEST_REPO: ${{ github.repository }}
         run: pnpm weekly
 
@@ -69,5 +70,5 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '@agents_radar' }}
-          PAGES_URL: https://duanyytop.github.io/agents-radar
+          PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
         run: pnpm notify

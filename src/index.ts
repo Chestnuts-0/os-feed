@@ -55,12 +55,15 @@ import { type Lang, MSG, ISSUE_LABELS, CLI_ISSUE_TITLE, OPENCLAW_ISSUE_TITLE } f
 // Repo config — loaded from config.yml, falls back to built-in defaults
 // ---------------------------------------------------------------------------
 
+const CONFIG = loadConfig();
 const {
   cliRepos: CLI_REPOS,
   skillsRepo: CLAUDE_SKILLS_REPO,
   openclaw: OPENCLAW,
   openclawPeers: OPENCLAW_PEERS,
-} = loadConfig();
+  trendingTopics: TRENDING_TOPICS,
+  bigbros: BIGBROS,
+} = CONFIG;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -152,7 +155,7 @@ async function fetchAllData(
         return { site: "openai", siteName: "OpenAI", isFirstRun: false, newItems: [], totalDiscovered: 0 };
       }),
     ]),
-    fetchTrendingData().catch(
+    fetchTrendingData(TRENDING_TOPICS).catch(
       (): TrendingData => ({
         trendingRepos: [],
         searchRepos: [],
@@ -485,6 +488,18 @@ async function main(): Promise<void> {
       );
       console.log(`  Created OpenClaw issue (${lang}): ${ocUrl}`);
     }
+  }
+
+  // 开源版抖音信息流：采集大牛 star 动态 + 生成 feed.json
+  try {
+    console.log("Generating feed...");
+    const { fetchBigbroStars } = await import("./bigbro-stars.ts");
+    const { generateFeed } = await import("./feed/index.ts");
+    const bigbroStars = await fetchBigbroStars(BIGBROS);
+    const feedCards = await generateFeed(CONFIG, trendingData, bigbroStars);
+    console.log(`  [feed] generated ${feedCards.length} cards`);
+  } catch (err) {
+    console.error(`[feed] generation failed: ${err}`);
   }
 
   console.log("Done!");

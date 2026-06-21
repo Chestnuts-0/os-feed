@@ -24,6 +24,22 @@ interface RawConfig {
   skills_repo?: string;
   openclaw?: RawRepoEntry;
   openclaw_peers?: RawRepoEntry[];
+  bigbros?: string[];
+  trending_topics?: { q: string; label: string }[];
+  star_threshold?: number;
+  interests?: { ai?: number; fun?: number; practical?: number; ai_interests_text?: string };
+}
+
+export interface TrendingTopic {
+  q: string;
+  label: string;
+}
+
+export interface InterestProfile {
+  ai: number;
+  fun: number;
+  practical: number;
+  aiInterestsText: string;
 }
 
 export interface RadarConfig {
@@ -31,6 +47,10 @@ export interface RadarConfig {
   skillsRepo: string;
   openclaw: RepoConfig;
   openclawPeers: RepoConfig[];
+  bigbros: string[];
+  trendingTopics: TrendingTopic[];
+  starThreshold: number;
+  interests: InterestProfile;
 }
 
 // ---------------------------------------------------------------------------
@@ -73,6 +93,30 @@ const DEFAULT_OPENCLAW_PEERS: RepoConfig[] = [
 ];
 
 // ---------------------------------------------------------------------------
+// Defaults — 开源版抖音信息流扩展
+// ---------------------------------------------------------------------------
+
+const DEFAULT_TRENDING_TOPICS: TrendingTopic[] = [
+  { q: "topic:llm", label: "llm" },
+  { q: "topic:ai-agent", label: "ai-agent" },
+  { q: "topic:rag", label: "rag" },
+  { q: "topic:vector-database", label: "vector-db" },
+  { q: "topic:large-language-model", label: "llm-model" },
+  { q: "topic:machine-learning", label: "ml" },
+];
+
+const DEFAULT_BIGBROS: string[] = [];
+
+const DEFAULT_STAR_THRESHOLD = 100;
+
+const DEFAULT_INTERESTS: InterestProfile = {
+  ai: 0.5,
+  fun: 0.3,
+  practical: 0.2,
+  aiInterestsText: "我想看 AI 相关、好玩的、能直接拿来用的开源工具和软件",
+};
+
+// ---------------------------------------------------------------------------
 // Loader
 // ---------------------------------------------------------------------------
 
@@ -90,6 +134,10 @@ export function loadConfig(configPath = "config.yml"): RadarConfig {
       skillsRepo: DEFAULT_SKILLS_REPO,
       openclaw: DEFAULT_OPENCLAW,
       openclawPeers: DEFAULT_OPENCLAW_PEERS,
+      bigbros: DEFAULT_BIGBROS,
+      trendingTopics: DEFAULT_TRENDING_TOPICS,
+      starThreshold: DEFAULT_STAR_THRESHOLD,
+      interests: DEFAULT_INTERESTS,
     };
   }
 
@@ -112,10 +160,37 @@ export function loadConfig(configPath = "config.yml"): RadarConfig {
       ? raw.openclaw_peers.map(toRepoConfig)
       : DEFAULT_OPENCLAW_PEERS;
 
+  const trendingTopics =
+    Array.isArray(raw?.trending_topics) && raw.trending_topics.length > 0
+      ? raw.trending_topics.map((t) => ({ q: t.q, label: t.label }))
+      : DEFAULT_TRENDING_TOPICS;
+
+  const configBigbros = Array.isArray(raw?.bigbros)
+    ? raw.bigbros.filter((b): b is string => typeof b === "string" && b.trim() !== "")
+    : DEFAULT_BIGBROS;
+
+  // 环境变量 BIGBROS（逗号分隔）优先，便于在 Actions Secrets 里覆盖
+  const envBigbros =
+    process.env["BIGBROS"]
+      ?.split(",")
+      .map((s) => s.trim())
+      .filter(Boolean) ?? [];
+  const bigbros = envBigbros.length > 0 ? envBigbros : configBigbros;
+
+  const starThreshold = typeof raw?.star_threshold === "number" ? raw.star_threshold : DEFAULT_STAR_THRESHOLD;
+
+  const interests: InterestProfile = {
+    ai: raw?.interests?.ai ?? DEFAULT_INTERESTS.ai,
+    fun: raw?.interests?.fun ?? DEFAULT_INTERESTS.fun,
+    practical: raw?.interests?.practical ?? DEFAULT_INTERESTS.practical,
+    aiInterestsText: raw?.interests?.ai_interests_text ?? DEFAULT_INTERESTS.aiInterestsText,
+  };
+
   console.log(
     `[config] Loaded from ${configPath}: ` +
-      `${cliRepos.length} CLI repos, ${openclawPeers.length} OpenClaw peers`,
+      `${cliRepos.length} CLI repos, ${openclawPeers.length} OpenClaw peers, ` +
+      `${trendingTopics.length} trending topics, ${bigbros.length} bigbros`,
   );
 
-  return { cliRepos, skillsRepo, openclaw, openclawPeers };
+  return { cliRepos, skillsRepo, openclaw, openclawPeers, bigbros, trendingTopics, starThreshold, interests };
 }
