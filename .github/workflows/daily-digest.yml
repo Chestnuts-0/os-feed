@@ -2,7 +2,7 @@ name: Daily Agents Radar
 
 on:
   schedule:
-    # 每天 00:00 UTC = 08:00 CST (UTC+8)
+    # 00:00 UTC = 08:00 CST (UTC+8)
     - cron: "0 0 * * *"
   workflow_dispatch:
 
@@ -13,8 +13,6 @@ permissions:
 jobs:
   digest:
     runs-on: ubuntu-latest
-    # Web content fetching adds ~60-120 s of HTTP requests on incremental runs;
-    # the first-ever run (fetching 50 articles) may need up to 20 min.
     timeout-minutes: 40
 
     steps:
@@ -98,4 +96,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DIGEST_REPO: ${{ github.repository }}
         run: pnpm close-stale
-

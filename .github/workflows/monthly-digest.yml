@@ -2,7 +2,7 @@ name: Monthly Agents Radar
 
 on:
   schedule:
-    # 每月1日 02:00 UTC = 10:00 CST，日报运行后2小时
+    # 1st of month 02:00 UTC = 10:00 CST
     - cron: "0 2 1 * *"
   workflow_dispatch:
 
