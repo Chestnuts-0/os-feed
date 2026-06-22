@@ -1,0 +1,2502 @@
+[
+  {
+    "repo": "NousResearch/hermes-agent",
+    "owner": "NousResearch",
+    "name": "hermes-agent",
+    "desc": "The agent that grows with you",
+    "reasonCn": "①这是一个由Nous Research开发的智能体框架，强调随用户成长。②它在社区拥有极高的热度，代表了前沿的AI Agent技术方向。③适合希望构建或探索高级AI代理系统的开发者直接使用。",
+    "stars": 199337,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/NousResearch/hermes-agent",
+    "ts": "2026-06-22T05:46:55Z",
+    "score": 0.4401641783851942
+  },
+  {
+    "repo": "Significant-Gravitas/AutoGPT",
+    "owner": "Significant-Gravitas",
+    "name": "AutoGPT",
+    "desc": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.",
+    "reasonCn": "①这是早期著名的自主AI智能体项目，能独立规划并执行复杂任务。②它展示了LLM作为独立代理的潜力，具有极高的实验价值。③适合想探索AI自主性、构建自动化工作流的AI研究者和极客。",
+    "stars": 185065,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/Significant-Gravitas/AutoGPT",
+    "ts": "2026-06-22T04:50:19Z",
+    "score": 0.43802439600185566
+  },
+  {
+    "repo": "CherryHQ/cherry-studio",
+    "owner": "CherryHQ",
+    "name": "cherry-studio",
+    "desc": "AI productivity studio with smart chat, autonomous agents, and 300+ assistants. Unified access to frontier LLMs",
+    "reasonCn": "①这是一个集成了聊天、自主智能体和300多个助手的AI生产力工作室。②它支持主流大模型，提供统一入口，开箱即用体验极佳。③适合需要多模型管理和高效AI交互的个人用户。",
+    "stars": 47640,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.98,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/CherryHQ/cherry-studio",
+    "ts": "2026-06-22T07:46:35Z",
+    "score": 0.4249697061925208
+  },
+  {
+    "repo": "google-gemini/gemini-cli",
+    "owner": "google-gemini",
+    "name": "gemini-cli",
+    "desc": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
+    "reasonCn": "①这是Google推出的终端AI智能体，直接将Gemini模型能力集成到命令行中。②它让开发者能在日常工作中无缝调用强大的多模态AI，极大提升效率。③适合习惯使用CLI的程序员和需要快速处理文本任务的AI爱好者。",
+    "stars": 105482,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/google-gemini/gemini-cli",
+    "ts": "2026-06-22T01:43:05Z",
+    "score": 0.42452321438994317
+  },
+  {
+    "repo": "infiniflow/ragflow",
+    "owner": "infiniflow",
+    "name": "ragflow",
+    "desc": "RAGFlow is a leading open-source Retrieval-Augmented Generation (RAG) engine that fuses cutting-edge RAG with Agent capabilities to create a superior context layer for LLMs",
+    "reasonCn": "①这是一个领先的开源RAG引擎，融合了Agent能力。②它为LLM创建了卓越的上下文层，显著提升回答质量。③适合需要构建企业级知识库和复杂问答系统的技术团队。",
+    "stars": 83329,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "rag"
+    ],
+    "aiDim": "RAG与知识",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/infiniflow/ragflow",
+    "ts": "2026-06-22T07:37:25Z",
+    "score": 0.42339158300215796
+  },
+  {
+    "repo": "vllm-project/vllm",
+    "owner": "vllm-project",
+    "name": "vllm",
+    "desc": "A high-throughput and memory-efficient inference and serving engine for LLMs",
+    "reasonCn": "①vLLm是一个专为大型语言模型设计的高吞吐量和内存高效推理及服务引擎。②它通过PagedAttention等技术显著提升了LLM的部署效率，是当前工业界和开源社区的首选推理后端。③适合需要快速搭建本地或云端大模型服务的技术人员和开发者直接使用。",
+    "stars": 83524,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/vllm-project/vllm",
+    "ts": "2026-06-22T07:27:47Z",
+    "score": 0.42333869937306196
+  },
+  {
+    "repo": "unslothai/unsloth",
+    "owner": "unslothai",
+    "name": "unsloth",
+    "desc": "Unsloth Studio is a web UI for training and running open models like Gemma 4, Qwen3.6, DeepSeek, gpt-oss locally.",
+    "reasonCn": "①这是一个提供Web UI的开源模型训练和运行工作室。②它支持本地高效训练和运行Gemma、Qwen等主流大模型。③适合希望在自己的硬件上微调和使用开源LLM的AI爱好者。",
+    "stars": 67064,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "模型与训练",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/unslothai/unsloth",
+    "ts": "2026-06-22T07:47:41Z",
+    "score": 0.41902228245020695
+  },
+  {
+    "repo": "affaan-m/ECC",
+    "owner": "affaan-m",
+    "name": "ECC",
+    "desc": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.",
+    "reasonCn": "①这是一个AgentHarness性能优化系统，涵盖技能、记忆和安全等多维度优化。②它针对主流AI编码工具进行了深度调优，显著提升了Agent的执行效果。③适合追求极致AI编程体验并希望系统化优化Agent表现的高级开发者。",
+    "stars": 219526,
+    "starGrowth": 0,
+    "language": "JavaScript",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/affaan-m/ECC",
+    "ts": "2026-06-22T04:55:54Z",
+    "score": 0.4183489213298926
+  },
+  {
+    "repo": "ollama/ollama",
+    "owner": "ollama",
+    "name": "ollama",
+    "desc": "Get up and running with Kimi-K2.6, GLM-5.1, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.",
+    "reasonCn": "①这是在本地轻松运行和下载多种大语言模型的一站式工具。②它极大地降低了AI模型的部署门槛，支持Mac、Linux和Windows。③适合希望在本地私有环境中体验和使用LLM的个人开发者和企业。",
+    "stars": 174704,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/ollama/ollama",
+    "ts": "2026-06-22T05:20:34Z",
+    "score": 0.414159256450458
+  },
+  {
+    "repo": "langgenius/dify",
+    "owner": "langgenius",
+    "name": "dify",
+    "desc": "Production-ready platform for agentic workflow development.",
+    "reasonCn": "①这是生产级的AI应用开发平台，支持快速构建LLM应用程序。②它提供了可视化的工作流编排，降低了AI应用开发的复杂度。③适合希望快速落地AI想法、搭建企业级聊天机器人或工具的团队。",
+    "stars": 146110,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/langgenius/dify",
+    "ts": "2026-06-22T07:47:10Z",
+    "score": 0.41217320607266755
+  },
+  {
+    "repo": "santifer/career-ops",
+    "owner": "santifer",
+    "name": "career-ops",
+    "desc": "AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.",
+    "reasonCn": "①这是一个基于Claude Code构建的AI驱动求职系统。②它集成了多种技能模式和数据可视化，非常实用且有趣。③适合正在求职并希望利用AI自动化处理简历和岗位匹配的用户。",
+    "stars": 55116,
+    "starGrowth": 0,
+    "language": "JavaScript",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/santifer/career-ops",
+    "ts": "2026-06-22T01:15:42Z",
+    "score": 0.41098389263938667
+  },
+  {
+    "repo": "janhq/jan",
+    "owner": "janhq",
+    "name": "jan",
+    "desc": "Jan is an open source alternative to ChatGPT that runs 100% offline on your computer.",
+    "reasonCn": "①这是一个开源的ChatGPT替代品，可在电脑上离线运行。②它让用户完全掌控AI模型，无需依赖云端服务。③适合注重隐私且希望在本地体验大模型能力的用户。",
+    "stars": 43127,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/janhq/jan",
+    "ts": "2026-06-22T07:14:34Z",
+    "score": 0.4095835286331364
+  },
+  {
+    "repo": "zhayujie/CowAgent",
+    "owner": "zhayujie",
+    "name": "CowAgent",
+    "desc": "Open-source super AI assistant & Agent Harness. Plans tasks, runs tools and skills, self-evolves with memory and knowledge. Multi-model, multi-channel. Lightweight, extensible, one-line install. (formerly chatgpt-on-wechat)",
+    "reasonCn": "①这是一个开源的超级AI助手及智能体框架，具备记忆和自我进化能力。②它支持多模型和多渠道，安装简单且扩展性强。③适合希望快速搭建个性化、多功能AI代理的开发者和极客。",
+    "stars": 45537,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/zhayujie/CowAgent",
+    "ts": "2026-06-22T05:04:56Z",
+    "score": 0.40938929826207504
+  },
+  {
+    "repo": "hugohe3/ppt-master",
+    "owner": "hugohe3",
+    "name": "ppt-master",
+    "desc": "AI generates a real, editable PowerPoint from any document — native shapes & animations, speaker notes voiced as audio narration, and the option to follow your own .pptx template, not slide images · by Hugo He",
+    "reasonCn": "①这是一个利用AI将文档转换为可编辑PowerPoint演示文稿的工具。②它支持生成真实形状、动画及语音解说，效果逼真且实用。③适合需要快速制作高质量PPT的专业人士和学生。",
+    "stars": 30101,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/hugohe3/ppt-master",
+    "ts": "2026-06-22T06:18:02Z",
+    "score": 0.40161346132073766
+  },
+  {
+    "repo": "PaddlePaddle/PaddleOCR",
+    "owner": "PaddlePaddle",
+    "name": "PaddleOCR",
+    "desc": "Turn any PDF or image document into structured data for your AI. A powerful, lightweight OCR toolkit that bridges the gap between images/PDFs and LLMs. Supports 100+ languages.",
+    "reasonCn": "①这是一个强大的轻量级OCR工具包，支持100多种语言。②它能将图片或PDF文档转化为结构化数据，桥接视觉与LLM。③适合需要将非结构化文档接入AI流程的开发者。",
+    "stars": 83235,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "rag"
+    ],
+    "aiDim": "RAG与知识",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/PaddlePaddle/PaddleOCR",
+    "ts": "2026-06-22T04:18:52Z",
+    "score": 0.39912198773524815
+  },
+  {
+    "repo": "thedotmack/claude-mem",
+    "owner": "thedotmack",
+    "name": "claude-mem",
+    "desc": "Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More",
+    "reasonCn": "①这是一个为AI Agent提供持久上下文记忆的层。②它能压缩历史会话并注入相关背景，解决Agent遗忘问题。③适合使用Claude等Agent框架并需要长期记忆功能的开发者。",
+    "stars": 83643,
+    "starGrowth": 0,
+    "language": "JavaScript",
+    "topics": [
+      "rag"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/thedotmack/claude-mem",
+    "ts": "2026-06-21T22:43:44Z",
+    "score": 0.3959451019282069
+  },
+  {
+    "repo": "StarTrail-org/LEANN",
+    "owner": "StarTrail-org",
+    "name": "LEANN",
+    "desc": "[MLsys2026]: RAG on Everything with LEANN. Enjoy 97% storage savings while running a fast, accurate, and 100% private RAG application on your personal device.",
+    "reasonCn": "①LEANN主打在个人设备上运行快速、准确且完全私密的RAG应用。②它能节省97%的存储空间，完美契合隐私保护和轻量级部署需求。③适合注重数据隐私且希望直接在本地设备体验AI应用的普通用户。",
+    "stars": 12484,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "RAG与知识",
+    "aiScore": 0.98,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/StarTrail-org/LEANN",
+    "ts": "2026-06-22T05:39:40Z",
+    "score": 0.39524385922405564
+  },
+  {
+    "repo": "n8n-io/n8n",
+    "owner": "n8n-io",
+    "name": "n8n",
+    "desc": "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.",
+    "reasonCn": "①这是一个公平代码的工作流自动化平台，原生支持AI能力。②它通过可视化界面结合自定义代码，能轻松连接数百种应用。③适合希望实现业务流程自动化并引入AI智能的场景。",
+    "stars": 193563,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/n8n-io/n8n",
+    "ts": "2026-06-22T07:49:06Z",
+    "score": 0.3944816631161059
+  },
+  {
+    "repo": "mem0ai/mem0",
+    "owner": "mem0ai",
+    "name": "mem0",
+    "desc": "Universal memory layer for AI Agents",
+    "reasonCn": "①这是一个为AI Agent设计的通用记忆层。②它解决了Agent在多轮对话中缺乏长期记忆的问题。③适合正在开发具备记忆功能的智能应用的工程师。",
+    "stars": 59091,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "rag"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/mem0ai/mem0",
+    "ts": "2026-06-22T06:35:29Z",
+    "score": 0.39379155120319853
+  },
+  {
+    "repo": "huggingface/transformers",
+    "owner": "huggingface",
+    "name": "transformers",
+    "desc": "🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. ",
+    "reasonCn": "①这是Hugging Face提供的深度学习库，支持各类主流AI模型的加载与微调。②它是当今AI生态的核心基础设施，拥有最丰富的模型社区。③适合需要进行自然语言处理、计算机视觉等任务的研究人员和工程师。",
+    "stars": 161785,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "模型与训练",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/huggingface/transformers",
+    "ts": "2026-06-22T07:48:56Z",
+    "score": 0.3911717199417387
+  },
+  {
+    "repo": "OpenHands/OpenHands",
+    "owner": "OpenHands",
+    "name": "OpenHands",
+    "desc": "🙌 OpenHands: AI-Driven Development",
+    "reasonCn": "①这是由OpenHands驱动的AI编程代理，能够自主完成软件开发任务。②它代表了AI辅助编码的前沿方向，能理解需求并执行代码修改。③适合寻求自动化开发流程、测试AI编程能力的工程师和研究人员。",
+    "stars": 77969,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/OpenHands/OpenHands",
+    "ts": "2026-06-21T15:58:16Z",
+    "score": 0.3907180325725312
+  },
+  {
+    "repo": "milvus-io/milvus",
+    "owner": "milvus-io",
+    "name": "milvus",
+    "desc": "Milvus is a high-performance, cloud-native vector database built for scalable vector ANN search",
+    "reasonCn": "①Milvus是一款云原生的高性能向量数据库，专为可扩展的向量相似度搜索而设计。②它是构建大规模AI应用如图像检索、推荐系统和RAG后端的理想基础设施。③适合需要处理亿级向量数据并追求高并发低延迟的企业级开发者。",
+    "stars": 44883,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "RAG与知识",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/milvus-io/milvus",
+    "ts": "2026-06-22T06:46:43Z",
+    "score": 0.38853739042463353
+  },
+  {
+    "repo": "HKUDS/nanobot",
+    "owner": "HKUDS",
+    "name": "nanobot",
+    "desc": "Lightweight, open-source AI agent for your tools, chats, and workflows.",
+    "reasonCn": "①这是一个轻量级的开源AI智能体，用于工具、聊天和工作流自动化。②它设计简洁，易于嵌入现有系统中，资源占用低。③适合需要快速集成轻量级AI能力的开发者和小型团队。",
+    "stars": 44539,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/HKUDS/nanobot",
+    "ts": "2026-06-22T06:48:50Z",
+    "score": 0.38840768591345104
+  },
+  {
+    "repo": "shareAI-lab/learn-claude-code",
+    "owner": "shareAI-lab",
+    "name": "learn-claude-code",
+    "desc": "Bash is all you need -  A nano claude code–like 「agent harness」, built from 0 to 1",
+    "reasonCn": "①这是一个从零构建类Claude Code智能体的教程兼工具库。②它展示了如何打造强大的Bash智能体，极具技术参考价值。③适合对构建自定义AI编码助手感兴趣的开发者学习和部署。",
+    "stars": 67759,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/shareAI-lab/learn-claude-code",
+    "ts": "2026-06-21T14:55:33Z",
+    "score": 0.38745150295213737
+  },
+  {
+    "repo": "run-llama/llama_index",
+    "owner": "run-llama",
+    "name": "llama_index",
+    "desc": "LlamaIndex is the leading document agent and OCR platform",
+    "reasonCn": "①LlamaIndex是一个强大的数据框架，专门用于连接大型语言模型与私有数据源。②它简化了RAG（检索增强生成）的开发流程，是构建AI Agent的核心组件。③适合想要快速搭建基于私有文档问答或AI代理系统的开发者直接使用。",
+    "stars": 50269,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "RAG与知识",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/run-llama/llama_index",
+    "ts": "2026-06-20T00:09:30Z",
+    "score": 0.3815785936814575
+  },
+  {
+    "repo": "ultralytics/yolov5",
+    "owner": "ultralytics",
+    "name": "yolov5",
+    "desc": "Ultralytics YOLOv5 in PyTorch > ONNX > CoreML > TFLite",
+    "reasonCn": "①YOLOv5是目前最流行且易用的目标检测模型之一，支持多种格式导出。②它在速度和精度之间取得了极佳平衡，拥有活跃的社区和丰富的教程。③适合计算机视觉爱好者和开发者快速部署图像识别功能到各种设备。",
+    "stars": 57539,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/ultralytics/yolov5",
+    "ts": "2026-06-21T09:38:17Z",
+    "score": 0.38141266429104237
+  },
+  {
+    "repo": "iOfficeAI/AionUi",
+    "owner": "iOfficeAI",
+    "name": "AionUi",
+    "desc": "Free, local, open-source 24/7 Cowork app for OpenClaw, Hermes Agent, Claude Code, Codex, OpenCode, Gemini CLI and 20+ more CLI | Customize your assistants | Star if you like it!",
+    "reasonCn": "①这是一个免费的本地开源24/7协作应用，支持多种AI CLI工具。②它整合了Hermes、Claude Code等20多个智能体，功能强大。③适合需要在本地环境中管理和运行多种AI助手的开发者。",
+    "stars": 28615,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/iOfficeAI/AionUi",
+    "ts": "2026-06-22T07:39:33Z",
+    "score": 0.3802558779277867
+  },
+  {
+    "repo": "qdrant/qdrant",
+    "owner": "qdrant",
+    "name": "qdrant",
+    "desc": "Qdrant - High-performance, massive-scale Vector Database and Vector Search Engine for the next generation of AI. Also available in the cloud https://cloud.qdrant.io/",
+    "reasonCn": "①Qdrant是一个用Rust编写的高性能向量数据库，支持过滤和语义搜索。②它以易用性和强大的集群扩展能力著称，是许多AI应用的首选存储后端。③适合希望快速集成向量搜索功能并注重系统性能的开发者直接使用。",
+    "stars": 32543,
+    "starGrowth": 0,
+    "language": "Rust",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "RAG与知识",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/qdrant/qdrant",
+    "ts": "2026-06-21T19:27:22Z",
+    "score": 0.37594695842414527
+  },
+  {
+    "repo": "Mintplex-Labs/anything-llm",
+    "owner": "Mintplex-Labs",
+    "name": "anything-llm",
+    "desc": "Stop renting your intelligence. Own it with AnythingLLM. Everything you need for a powerful local-first agent experience ",
+    "reasonCn": "①AnythingLLM是一个一站式的本地LLM应用程序，允许用户轻松连接各种AI模型。②它内置了向量数据库和对话界面，让普通人也能轻松拥有私有AI助手。③适合注重隐私且希望直接体验和管理本地大模型的用户开箱即用。",
+    "stars": 61916,
+    "starGrowth": 0,
+    "language": "JavaScript",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/Mintplex-Labs/anything-llm",
+    "ts": "2026-06-19T01:13:32Z",
+    "score": 0.37388681191317247
+  },
+  {
+    "repo": "jackwener/OpenCLI",
+    "owner": "jackwener",
+    "name": "OpenCLI",
+    "desc": "Make Any Website into CLI & Use your logged-in browser by AI agent. ",
+    "reasonCn": "①这是一个能将任何网站转化为命令行界面并由AI代理控制的工具。②它利用了已登录的浏览器状态，实现了网页操作的自动化。③适合需要自动化执行网页任务或抓取数据的开发者。",
+    "stars": 24959,
+    "starGrowth": 0,
+    "language": "JavaScript",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/jackwener/OpenCLI",
+    "ts": "2026-06-21T19:01:24Z",
+    "score": 0.3706237173909319
+  },
+  {
+    "repo": "streamlit/streamlit",
+    "owner": "streamlit",
+    "name": "streamlit",
+    "desc": "Streamlit — A faster way to build and share data apps.",
+    "reasonCn": "①Streamlit是一个能快速将Python脚本转换为交互式Web应用的框架。②它让数据科学家无需前端知识即可轻松展示AI模型结果或数据看板。③适合希望快速分享AI项目成果或构建内部演示工具的开发者使用。",
+    "stars": 45028,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/streamlit/streamlit",
+    "ts": "2026-06-22T06:18:33Z",
+    "score": 0.3667557143036908
+  },
+  {
+    "repo": "ultralytics/ultralytics",
+    "owner": "ultralytics",
+    "name": "ultralytics",
+    "desc": "Ultralytics YOLO 🚀",
+    "reasonCn": "①这是YOLO系列目标检测模型的官方实现库，功能强大且易用。②它在计算机视觉领域处于领先地位，支持训练、验证和部署全流程。③适合从事图像识别、视频分析研究的AI开发者和数据科学家。",
+    "stars": 58648,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/ultralytics/ultralytics",
+    "ts": "2026-06-21T21:15:17Z",
+    "score": 0.36669337620009107
+  },
+  {
+    "repo": "firecrawl/firecrawl",
+    "owner": "firecrawl",
+    "name": "firecrawl",
+    "desc": "The API to search, scrape, and interact with the web at scale. 🔥",
+    "reasonCn": "①这是将网页内容转化为LLM可用格式的API工具，擅长数据抓取。②它解决了AI获取实时互联网数据的难题，质量极高。③适合需要为RAG系统或AI代理提供高质量网络数据源的开发团队。",
+    "stars": 136488,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.8,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/firecrawl/firecrawl",
+    "ts": "2026-06-22T05:13:21Z",
+    "score": 0.3638063706617219
+  },
+  {
+    "repo": "browser-use/browser-use",
+    "owner": "browser-use",
+    "name": "browser-use",
+    "desc": "🌐 Make websites accessible for AI agents. Automate tasks online with ease.",
+    "reasonCn": "①这是让AI智能体能够像人类一样操作浏览器的开源工具。②它实现了自动化网页交互，拓展了AI在现实任务中的应用边界。③适合希望构建自动化测试、数据采集或复杂任务代理的高级用户。",
+    "stars": 100019,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/browser-use/browser-use",
+    "ts": "2026-06-20T18:21:29Z",
+    "score": 0.3621461353933973
+  },
+  {
+    "repo": "CopilotKit/CopilotKit",
+    "owner": "CopilotKit",
+    "name": "CopilotKit",
+    "desc": "The Frontend Stack for Agents & Generative UI. React, Angular, Mobile, Slack, and more.  Makers of the AG-UI Protocol",
+    "reasonCn": "①这是为前端应用提供智能体和生成式UI支持的开发栈。②它简化了将AI功能集成到React等前端框架的过程。③适合前端开发者希望在其应用中快速添加AI交互功能的场景。",
+    "stars": 35383,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/CopilotKit/CopilotKit",
+    "ts": "2026-06-22T05:02:44Z",
+    "score": 0.3616406521519485
+  },
+  {
+    "repo": "OpenBB-finance/OpenBB",
+    "owner": "OpenBB-finance",
+    "name": "OpenBB",
+    "desc": "Financial data platform for analysts, quants and AI agents.",
+    "reasonCn": "①OpenBB是一个面向分析师、量化交易员和AI代理的金融数据平台。②它提供了丰富的金融数据API和可视化工具，让专业分析变得开源且免费。③适合金融从业者和希望构建AI驱动投资策略的开发者直接集成使用。",
+    "stars": 69528,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/OpenBB-finance/OpenBB",
+    "ts": "2026-06-21T03:23:25Z",
+    "score": 0.360366142533434
+  },
+  {
+    "repo": "open-webui/open-webui",
+    "owner": "open-webui",
+    "name": "open-webui",
+    "desc": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
+    "reasonCn": "①这是Ollama的友好Web界面，支持本地运行多种大模型。②它提供了类似ChatGPT的流畅体验，且完全本地化保障隐私。③适合想要在没有网络或云端限制下享受AI对话乐趣的用户。",
+    "stars": 142572,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/open-webui/open-webui",
+    "ts": "2026-06-19T23:43:24Z",
+    "score": 0.3589632951103957
+  },
+  {
+    "repo": "jeecgboot/JeecgBoot",
+    "owner": "jeecgboot",
+    "name": "JeecgBoot",
+    "desc": "AI 低代码平台「低代码 + 零代码」双驱动！低代码可一键生成前后端代码;零代码可 5 分钟搭建系统;AI Skills 一句话画流程、设计表单、生成整套系统。内置 AI聊天、知识库、流程编排、MCP插件等，兼容主流大模型。引领「AI 生成 → 在线配置 → 代码生成 → 手工合并->AI修改」开发模式，消除 Java 项目 80% 的重复工作，提效而不失灵活。",
+    "reasonCn": "①这是一个集AI对话、知识库与低代码开发于一体的企业级快速开发平台。②它通过AI生成流程和表单显著减少Java重复代码，兼顾了开发效率与灵活性。③适合希望利用AI加速前后端构建、追求高效落地的开发者及团队使用。",
+    "stars": 46829,
+    "starGrowth": 0,
+    "language": "Java",
+    "topics": [
+      "rag"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/jeecgboot/JeecgBoot",
+    "ts": "2026-06-19T19:57:33Z",
+    "score": 0.35816565928209654
+  },
+  {
+    "repo": "0xPlaygrounds/rig",
+    "owner": "0xPlaygrounds",
+    "name": "rig",
+    "desc": "⚙️🦀 Build modular and scalable LLM Applications in Rust",
+    "reasonCn": "①Rig是一个用Rust构建模块化、可扩展LLM应用的框架。②利用Rust的性能优势，它为高性能AI代理开发提供了新选择。③适合熟悉Rust语言并希望构建高效、安全AI应用的开发者。",
+    "stars": 7706,
+    "starGrowth": 0,
+    "language": "Rust",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/0xPlaygrounds/rig",
+    "ts": "2026-06-22T06:57:30Z",
+    "score": 0.35426687554136826
+  },
+  {
+    "repo": "langchain-ai/langchain",
+    "owner": "langchain-ai",
+    "name": "langchain",
+    "desc": "The agent engineering platform.",
+    "reasonCn": "①这是构建LLM应用的标准化框架，简化了链式调用和记忆管理。②它已成为AI应用开发的事实标准，拥有庞大的生态系统。③适合希望利用Python或JavaScript快速开发复杂AI应用的开发者。",
+    "stars": 139848,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.8,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/langchain-ai/langchain",
+    "ts": "2026-06-21T09:16:11Z",
+    "score": 0.35377344024468343
+  },
+  {
+    "repo": "neuml/txtai",
+    "owner": "neuml",
+    "name": "txtai",
+    "desc": "💡 All-in-one AI framework for semantic search, LLM orchestration and language model workflows",
+    "reasonCn": "①txtai是一个全栈AI框架，集成了语义搜索、LLM编排和语言模型工作流。②它让开发者能轻松构建复杂的AI应用，兼具实用性与灵活性。③非常适合Python开发者快速搭建基于LLM的工具。",
+    "stars": 12673,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/neuml/txtai",
+    "ts": "2026-06-19T15:29:15Z",
+    "score": 0.3511861735155619
+  },
+  {
+    "repo": "NirDiamant/RAG_Techniques",
+    "owner": "NirDiamant",
+    "name": "RAG_Techniques",
+    "desc": "This repository showcases various advanced techniques for Retrieval-Augmented Generation (RAG) systems. Each technique has a detailed notebook tutorial.",
+    "reasonCn": "①该仓库展示了多种先进的RAG技术，并附带详细的Jupyter Notebook教程。②它是学习和实践如何优化大模型检索效果、提升生成质量的绝佳资源。③适合希望亲手实验不同RAG策略以解决实际问题的开发者和研究人员。",
+    "stars": 28097,
+    "starGrowth": 0,
+    "language": "Jupyter Notebook",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "RAG与知识",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/NirDiamant/RAG_Techniques",
+    "ts": "2026-06-17T20:54:18Z",
+    "score": 0.3464708536528921
+  },
+  {
+    "repo": "Eigenwise/atomic-agents",
+    "owner": "Eigenwise",
+    "name": "atomic-agents",
+    "desc": "Building AI agents, atomically",
+    "reasonCn": "①Atomic Agents提供了一种原子化构建AI代理的方法论和工具。②它将复杂代理拆解为基本组件，使开发更灵活、可复用。③适合希望快速组装个性化、多功能AI助手的Python开发者。",
+    "stars": 5999,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/Eigenwise/atomic-agents",
+    "ts": "2026-06-20T06:13:13Z",
+    "score": 0.3439391433931851
+  },
+  {
+    "repo": "f/prompts.chat",
+    "owner": "f",
+    "name": "prompts.chat",
+    "desc": "f.k.a. Awesome ChatGPT Prompts. Share, discover, and collect prompts from the community. Free and open source — self-host for your organization with complete privacy.",
+    "reasonCn": "①这是社区驱动的提示词分享平台，汇集了海量高质量的AI指令。②它帮助用户快速掌握如何更好地与大模型交互，激发创意。③适合所有AI聊天用户，尤其是希望提升提示词工程技巧的新手。",
+    "stars": 164068,
+    "starGrowth": 0,
+    "language": "HTML",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.75,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/f/prompts.chat",
+    "ts": "2026-06-22T04:37:38Z",
+    "score": 0.343749556821535
+  },
+  {
+    "repo": "safishamsi/graphify",
+    "owner": "safishamsi",
+    "name": "graphify",
+    "desc": "AI coding assistant skill (Claude Code, Codex, OpenCode, Cursor, Gemini CLI, and more). Turn any folder of code, SQL schemas, R scripts, shell scripts, docs, papers, images, or videos into a queryable knowledge graph. App code + database schema + infrastructure in one graph.",
+    "reasonCn": "①这是一个AI编码助手技能，可将代码库转为可查询图。②它支持多种主流AI编码工具，提升代码理解效率。③适合希望利用Graph RAG技术深入分析代码库的开发者。",
+    "stars": 70422,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "rag"
+    ],
+    "aiDim": "RAG与知识",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/safishamsi/graphify",
+    "ts": "2026-06-19T15:18:02Z",
+    "score": 0.34301644749695454
+  },
+  {
+    "repo": "alibaba/zvec",
+    "owner": "alibaba",
+    "name": "zvec",
+    "desc": "A lightweight, lightning-fast, in-process vector database",
+    "reasonCn": "①zvec是阿里巴巴推出的轻量级、极速嵌入式向量数据库。②作为进程内数据库，它无需独立部署即可提供高性能向量检索。③适合追求极致性能和低延迟的C++开发者嵌入到自己的应用中。",
+    "stars": 12064,
+    "starGrowth": 0,
+    "language": "C++",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/alibaba/zvec",
+    "ts": "2026-06-22T06:12:18Z",
+    "score": 0.34246038832103126
+  },
+  {
+    "repo": "rtk-ai/rtk",
+    "owner": "rtk-ai",
+    "name": "rtk",
+    "desc": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies",
+    "reasonCn": "①这是一个CLI代理工具，能大幅减少常见开发命令中的LLM Token消耗。②它通过优化请求策略直接降低了AI使用的成本，极具实用价值。③适合高频使用AI编程助手且关注成本控制的前端及后端开发者。",
+    "stars": 64722,
+    "starGrowth": 0,
+    "language": "Rust",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.8,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/rtk-ai/rtk",
+    "ts": "2026-06-21T11:51:46Z",
+    "score": 0.3421055069790998
+  },
+  {
+    "repo": "lancedb/lancedb",
+    "owner": "lancedb",
+    "name": "lancedb",
+    "desc": "Developer-friendly OSS embedded retrieval library for multimodal AI. Search More; Manage Less.",
+    "reasonCn": "①LanceDB是一个开发者友好的开源嵌入式检索库，专为多模态AI设计。②它实现了“搜索更多，管理更少”的理念，极大简化了向量数据管理。③适合希望快速集成向量搜索功能的各类AI应用开发者。",
+    "stars": 10678,
+    "starGrowth": 0,
+    "language": "HTML",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/lancedb/lancedb",
+    "ts": "2026-06-22T06:35:26Z",
+    "score": 0.3404091420971411
+  },
+  {
+    "repo": "Panniantong/Agent-Reach",
+    "owner": "Panniantong",
+    "name": "Agent-Reach",
+    "desc": "Give your AI agent eyes to see the entire internet. Read & search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero API fees.",
+    "reasonCn": "①这是一个赋予AI智能体浏览互联网能力的CLI工具。②它能读取社交媒体和内容平台，且无需API费用，极具性价比。③适合希望让AI自动获取实时网络信息的开发者和研究者。",
+    "stars": 37248,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/Panniantong/Agent-Reach",
+    "ts": "2026-06-16T12:45:59Z",
+    "score": 0.33799830137419284
+  },
+  {
+    "repo": "Gitlawb/openclaude",
+    "owner": "Gitlawb",
+    "name": "openclaude",
+    "desc": "runs anywhere. uses anything",
+    "reasonCn": "①这是一个跨平台运行的Claude客户端工具。②它打破了官方限制，让用户可以在任何设备上使用Claude服务。③适合希望灵活访问Claude大模型服务的普通用户。",
+    "stars": 29251,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.8,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/Gitlawb/openclaude",
+    "ts": "2026-06-22T06:33:12Z",
+    "score": 0.33783130783665055
+  },
+  {
+    "repo": "pytorch/pytorch",
+    "owner": "pytorch",
+    "name": "pytorch",
+    "desc": "Tensors and Dynamic neural networks in Python with strong GPU acceleration",
+    "reasonCn": "①PyTorch是目前最流行的Python张量和动态神经网络库。②因其灵活性和强大的GPU加速能力，成为AI研究和原型开发的事实标准。③适合想要直接利用最新AI算法进行实验和开发的程序员使用。",
+    "stars": 100950,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.75,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/pytorch/pytorch",
+    "ts": "2026-06-22T07:40:35Z",
+    "score": 0.3374045684562218
+  },
+  {
+    "repo": "danielmiessler/LifeOS",
+    "owner": "danielmiessler",
+    "name": "LifeOS",
+    "desc": "Agentic AI Infrastructure for magnifying HUMAN capabilities.",
+    "reasonCn": "①这是一个旨在放大人类能力的代理式AI基础设施项目。②它通过自动化工作流和智能代理帮助用户管理复杂的生活与工作事务。③适合对AI Agent技术感兴趣并希望将其应用于个人效能提升的高级用户。",
+    "stars": 16063,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/danielmiessler/LifeOS",
+    "ts": "2026-06-21T04:04:38Z",
+    "score": 0.33475967598897405
+  },
+  {
+    "repo": "DayuanJiang/next-ai-draw-io",
+    "owner": "DayuanJiang",
+    "name": "next-ai-draw-io",
+    "desc": "A next.js web application that integrates AI capabilities with draw.io diagrams. This app allows you to create, modify, and enhance diagrams through natural language commands and AI-assisted visualization.",
+    "reasonCn": "①这是一个结合Next.js与draw.io的AI辅助绘图Web应用。②用户可以通过自然语言指令让AI自动生成或修改图表，大幅降低绘图门槛。③适合需要快速制作流程图或架构图的产品经理和开发者。",
+    "stars": 32205,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/DayuanJiang/next-ai-draw-io",
+    "ts": "2026-06-18T02:00:35Z",
+    "score": 0.33266754000575677
+  },
+  {
+    "repo": "TauricResearch/TradingAgents",
+    "owner": "TauricResearch",
+    "name": "TradingAgents",
+    "desc": "TradingAgents: Multi-Agents LLM Financial Trading Framework",
+    "reasonCn": "①这是基于多智能体协作的金融交易框架，利用LLM进行市场分析。②它展示了AI在专业垂直领域的创新应用，概念新颖。③适合对金融科技感兴趣、想探索AI交易策略的研究者和投资者。",
+    "stars": 87893,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.75,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/TauricResearch/TradingAgents",
+    "ts": "2026-06-22T02:05:09Z",
+    "score": 0.33238743441649776
+  },
+  {
+    "repo": "meilisearch/meilisearch",
+    "owner": "meilisearch",
+    "name": "meilisearch",
+    "desc": "A lightning-fast search engine API bringing AI-powered hybrid search to your sites and applications.",
+    "reasonCn": "①Meilisearch是一个极速的搜索API引擎，近期深度集成了AI驱动的混合搜索功能。②它能在毫秒级时间内处理海量数据，并提供语义搜索能力，提升用户体验。③适合需要在网站或应用中快速接入智能搜索功能的开发者直接部署。",
+    "stars": 58225,
+    "starGrowth": 0,
+    "language": "Rust",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.8,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/meilisearch/meilisearch",
+    "ts": "2026-06-20T15:26:40Z",
+    "score": 0.33059227738228214
+  },
+  {
+    "repo": "FlowiseAI/Flowise",
+    "owner": "FlowiseAI",
+    "name": "Flowise",
+    "desc": "Build AI Agents, Visually",
+    "reasonCn": "①这是一个可视化的AI Agent构建工具。②它通过拖拽方式简化了复杂工作流和逻辑的搭建过程。③适合希望快速原型化AI应用且不擅长写代码的产品经理或开发者。",
+    "stars": 53888,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "rag"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/FlowiseAI/Flowise",
+    "ts": "2026-06-16T11:05:50Z",
+    "score": 0.32555798370652156
+  },
+  {
+    "repo": "tensorflow/tensorflow",
+    "owner": "tensorflow",
+    "name": "tensorflow",
+    "desc": "An Open Source Machine Learning Framework for Everyone",
+    "reasonCn": "①TensorFlow是由Google开发的端到端开源机器学习平台。②虽然它是底层框架而非即插即用的趣味工具，但其生态完善且支持从训练到部署的全流程。③适合希望深入理解机器学习底层逻辑或构建复杂定制模型的开发者。",
+    "stars": 195816,
+    "starGrowth": 0,
+    "language": "C++",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.7,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/tensorflow/tensorflow",
+    "ts": "2026-06-22T07:39:09Z",
+    "score": 0.3249629125832537
+  },
+  {
+    "repo": "VectifyAI/PageIndex",
+    "owner": "VectifyAI",
+    "name": "PageIndex",
+    "desc": "📑 PageIndex: Document Index for Vectorless, Reasoning-based RAG",
+    "reasonCn": "①PageIndex提出了一种无向量的基于推理的RAG文档索引新方法。②它试图解决传统向量搜索在长文档和精确检索上的痛点，代表了前沿探索方向。③适合对RAG技术有深入研究兴趣并希望尝试新型索引方案的开发者。",
+    "stars": 33278,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "RAG与知识",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/VectifyAI/PageIndex",
+    "ts": "2026-06-18T23:44:29Z",
+    "score": 0.32363919003555397
+  },
+  {
+    "repo": "langchain4j/langchain4j",
+    "owner": "langchain4j",
+    "name": "langchain4j",
+    "desc": "LangChain4j is an idiomatic, open-source Java library for building LLM-powered applications on the JVM. It offers a unified API over popular LLM providers and vector stores, and makes implementing tool calling (including MCP support), agents and RAG easy. It integrates seamlessly with enterprise Java frameworks like Quarkus and Spring Boot.",
+    "reasonCn": "①这是LangChain的Java版本，为JVM生态提供统一的LLM应用开发API。②它简化了集成主流LLM提供商和向量存储的过程，填补了Java生态空白。③适合Java后端开发人员构建生产级AI应用。",
+    "stars": 12387,
+    "starGrowth": 0,
+    "language": "Java",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.8,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/langchain4j/langchain4j",
+    "ts": "2026-06-22T07:13:22Z",
+    "score": 0.32326147521814075
+  },
+  {
+    "repo": "aishwaryanr/awesome-generative-ai-guide",
+    "owner": "aishwaryanr",
+    "name": "awesome-generative-ai-guide",
+    "desc": "A one stop repository for generative AI research updates, interview resources, notebooks and much more!",
+    "reasonCn": "①这是一个涵盖生成式AI研究更新、面试资源和笔记本的一站式仓库。②它为学习AI提供了全面的路径和丰富的实践案例。③适合想要系统了解生成式AI技术的开发者和研究者。",
+    "stars": 27833,
+    "starGrowth": 0,
+    "language": "HTML",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.8,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/aishwaryanr/awesome-generative-ai-guide",
+    "ts": "2026-06-20T13:30:44Z",
+    "score": 0.3176442694910272
+  },
+  {
+    "repo": "datawhalechina/hello-agents",
+    "owner": "datawhalechina",
+    "name": "hello-agents",
+    "desc": "📚 《从零开始构建智能体》——从零开始的智能体原理与实践教程",
+    "reasonCn": "①这是一本从零开始构建智能体的中文教程。②它提供了详细的原理讲解和实践指导，社区资源丰富。③适合想要系统学习Agent开发原理的初学者和实践者。",
+    "stars": 60819,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "rag"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.8,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/datawhalechina/hello-agents",
+    "ts": "2026-06-18T15:59:33Z",
+    "score": 0.3108092911862151
+  },
+  {
+    "repo": "weaviate/weaviate",
+    "owner": "weaviate",
+    "name": "weaviate",
+    "desc": "Weaviate is an open-source vector database that stores both objects and vectors, allowing for the combination of vector search with structured filtering with the fault tolerance and scalability of a cloud-native database​.",
+    "reasonCn": "①Weaviate是一个开源向量数据库，支持将向量搜索与结构化过滤结合。②它具备容错性和可扩展性，是构建AI应用后端的关键基础设施。③适合需要高性能语义搜索能力的开发者直接使用。",
+    "stars": 16392,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.75,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/weaviate/weaviate",
+    "ts": "2026-06-22T06:49:50Z",
+    "score": 0.30743447298072263
+  },
+  {
+    "repo": "wavetermdev/waveterm",
+    "owner": "wavetermdev",
+    "name": "waveterm",
+    "desc": "An open-source, AI-integrated, cross-platform terminal for seamless workflows",
+    "reasonCn": "①这是一款集成AI能力的跨平台开源终端模拟器。②它允许在终端内直接调用AI助手进行代码解释和任务自动化，提升工作流效率。③适合希望在不离开终端环境的情况下利用AI辅助开发的程序员。",
+    "stars": 21381,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.8,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/wavetermdev/waveterm",
+    "ts": "2026-06-19T17:19:44Z",
+    "score": 0.30478130907782647
+  },
+  {
+    "repo": "headroomlabs-ai/headroom",
+    "owner": "headroomlabs-ai",
+    "name": "headroom",
+    "desc": "Compress tool outputs, logs, files, and RAG chunks before they reach the LLM. 60-95% fewer tokens, same answers. Library, proxy, MCP server.",
+    "reasonCn": "①这是一款能压缩LLM输入内容（如日志、RAG片段）以大幅降低Token消耗的工具库。②它在保持回答质量不变的前提下实现60-95%的Token节省，极具实用价值。③适合需要优化AI调用成本、集成MCP服务或处理大量上下文数据的后端工程师。",
+    "stars": 45480,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "rag"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.7,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/headroomlabs-ai/headroom",
+    "ts": "2026-06-22T05:57:31Z",
+    "score": 0.30202840176986107
+  },
+  {
+    "repo": "siyuan-note/siyuan",
+    "owner": "siyuan-note",
+    "name": "siyuan",
+    "desc": "A privacy-first, self-hosted, fully open source personal knowledge management software, written in typescript and golang.",
+    "reasonCn": "①这是一款注重隐私和个人知识管理的开源笔记软件。②虽然主打本地化，但也积极集成AI功能以增强知识检索和处理。③适合重视数据隐私并希望在笔记中融入AI辅助功能的用户。",
+    "stars": 44546,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.7,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/siyuan-note/siyuan",
+    "ts": "2026-06-22T06:27:30Z",
+    "score": 0.30193781864198577
+  },
+  {
+    "repo": "github/awesome-copilot",
+    "owner": "github",
+    "name": "awesome-copilot",
+    "desc": "Community-contributed instructions, agents, skills, and configurations to help you make the most of GitHub Copilot.",
+    "reasonCn": "①这是一个社区贡献的GitHub Copilot使用指南和资源合集。②它整理了丰富的技巧和配置方案，能显著提升AI编程助手的效率。③适合希望最大化利用Copilot功能的开发者参考使用。",
+    "stars": 35482,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.7,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/github/awesome-copilot",
+    "ts": "2026-06-22T06:00:34Z",
+    "score": 0.2982898529977884
+  },
+  {
+    "repo": "scikit-learn/scikit-learn",
+    "owner": "scikit-learn",
+    "name": "scikit-learn",
+    "desc": "scikit-learn: machine learning in Python",
+    "reasonCn": "①Scikit-learn是Python中经典且强大的机器学习库，涵盖分类、回归等算法。②它的API设计简洁统一，是数据科学领域不可或缺的实用工具。③适合需要进行传统机器学习任务或数据预处理的研究人员和工程师使用。",
+    "stars": 66393,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.65,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/scikit-learn/scikit-learn",
+    "ts": "2026-06-22T07:39:19Z",
+    "score": 0.2864981868053228
+  },
+  {
+    "repo": "samchon/nestia",
+    "owner": "samchon",
+    "name": "nestia",
+    "desc": "NestJS Helper + AI Chatbot Development",
+    "reasonCn": "①Nestia结合NestJS辅助工具和AI聊天机器人开发功能。②它简化了TypeScript环境下前后端及AI接口的集成过程。③适合前端或全栈开发者快速构建带有AI对话功能的Web应用。",
+    "stars": 2159,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "AI Agent",
+    "aiScore": 0.85,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/samchon/nestia",
+    "ts": "2026-06-19T16:50:16Z",
+    "score": 0.28493053420097986
+  },
+  {
+    "repo": "asukaminato0721/telegram-summary-bot",
+    "owner": "asukaminato0721",
+    "name": "telegram-summary-bot",
+    "desc": "Summarize group chat with AI, LLM && query group chat, FREE to deploy your own, support img, link meta info, reply to, auto fold result, 支持中文检索.",
+    "reasonCn": "①这是一个Telegram群组AI摘要机器人，支持中文检索和图片链接元信息。②它免费可部署，能自动折叠长消息并生成摘要，非常实用有趣。③适合Telegram群主或希望快速搭建个人AI小工具的普通用户。",
+    "stars": 191,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.95,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/asukaminato0721/telegram-summary-bot",
+    "ts": "2026-06-20T11:04:34Z",
+    "score": 0.27961275788369466
+  },
+  {
+    "repo": "keras-team/keras",
+    "owner": "keras-team",
+    "name": "keras",
+    "desc": "Deep Learning for humans",
+    "reasonCn": "①Keras是一个为人类设计的高级神经网络API，支持多种后端引擎。②它以极简的代码结构降低了深度学习模型的构建门槛，极大提升开发效率。③适合初学者和希望快速验证AI想法的开发者直接上手使用。",
+    "stars": 64099,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.7,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/keras-team/keras",
+    "ts": "2026-06-18T23:13:32Z",
+    "score": 0.2752439669631797
+  },
+  {
+    "repo": "VoltAgent/awesome-openclaw-skills",
+    "owner": "VoltAgent",
+    "name": "awesome-openclaw-skills",
+    "desc": "The awesome collection of OpenClaw skills. 5,400+ skills filtered and categorized from the official OpenClaw Skills Registry.🦞",
+    "reasonCn": "①这是一个包含5400多个OpenClaw技能包的精选集合。②它极大地丰富了AI助手的可用能力，覆盖了各种自动化任务场景。③适合正在构建或扩展OpenClaw AI Agent能力的开发者。",
+    "stars": 50478,
+    "starGrowth": 0,
+    "language": "",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.75,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/VoltAgent/awesome-openclaw-skills",
+    "ts": "2026-06-16T14:22:40Z",
+    "score": 0.271468313284167
+  },
+  {
+    "repo": "tesseract-ocr/tesseract",
+    "owner": "tesseract-ocr",
+    "name": "tesseract",
+    "desc": "Tesseract Open Source OCR Engine (main repository)",
+    "reasonCn": "①Tesseract是业界领先的开源OCR引擎，用于识别和提取图像中的文字。②作为老牌AI应用工具，它在多语言和文档数字化方面表现稳定可靠。③适合需要将纸质文档或图片转化为可编辑文本的开发者和企业用户。",
+    "stars": 74877,
+    "starGrowth": 0,
+    "language": "C++",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "AI应用",
+    "aiScore": 0.6,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/tesseract-ocr/tesseract",
+    "ts": "2026-06-22T05:30:36Z",
+    "score": 0.26517954661636023
+  },
+  {
+    "repo": "Mirrowel/LLM-API-Key-Proxy",
+    "owner": "Mirrowel",
+    "name": "LLM-API-Key-Proxy",
+    "desc": "Universal LLM Gateway: One API, every LLM. OpenAI/Anthropic-compatible endpoints with multi-provider translation and intelligent load-balancing.",
+    "reasonCn": "①这是一个通用的LLM网关，支持多提供商API密钥的统一管理和负载均衡。②它能兼容OpenAI和Anthropic等接口，极大降低接入成本。③适合需要整合多个AI服务且希望简化API调用的开发者。",
+    "stars": 511,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.9,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/Mirrowel/LLM-API-Key-Proxy",
+    "ts": "2026-06-16T22:43:58Z",
+    "score": 0.25362176404505404
+  },
+  {
+    "repo": "open-compass/opencompass",
+    "owner": "open-compass",
+    "name": "opencompass",
+    "desc": "OpenCompass is an LLM evaluation platform, supporting a wide range of models (Llama3, Mistral, InternLM2,GPT-4,LLaMa2, Qwen,GLM, Claude, etc) over 100+ datasets.",
+    "reasonCn": "①OpenCompass是一个支持多种主流大模型的评测平台。②它覆盖了100多个数据集，帮助开发者客观评估模型能力。③适合研究人员和工程师用于模型选型和性能基准测试。",
+    "stars": 7109,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "模型与训练",
+    "aiScore": 0.7,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/open-compass/opencompass",
+    "ts": "2026-06-17T08:44:06Z",
+    "score": 0.23370720442687232
+  },
+  {
+    "repo": "zjunlp/LightThinker",
+    "owner": "zjunlp",
+    "name": "LightThinker",
+    "desc": "[EMNLP 2025] LightThinker: Thinking Step-by-Step Compression",
+    "reasonCn": "①LightThinker提出了一种思考步骤压缩的方法，提升推理效率。②作为EMNLP 2025的论文项目，它具有前沿的学术价值。③适合对LLM推理加速和思维链优化感兴趣的研究者复现实验。",
+    "stars": 164,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "模型与训练",
+    "aiScore": 0.7,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/zjunlp/LightThinker",
+    "ts": "2026-06-22T05:33:11Z",
+    "score": 0.21667473507938878
+  },
+  {
+    "repo": "oceanbase/oceanbase",
+    "owner": "oceanbase",
+    "name": "oceanbase",
+    "desc": "The Fastest Distributed Database for Transactional, Analytical, and  AI Workloads.",
+    "reasonCn": "①OceanBase是一款分布式数据库，原生支持事务、分析和AI工作负载。②其强大的性能使其成为处理大规模AI数据的坚实底座。③适合需要高并发和复杂数据分析的企业级AI系统架构师。",
+    "stars": 10159,
+    "starGrowth": 0,
+    "language": "C++",
+    "topics": [
+      "vector-db"
+    ],
+    "aiDim": "AI基础设施",
+    "aiScore": 0.6,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/oceanbase/oceanbase",
+    "ts": "2026-06-19T01:00:50Z",
+    "score": 0.21499621677147895
+  },
+  {
+    "repo": "thinkwee/AgentsMeetRL",
+    "owner": "thinkwee",
+    "name": "AgentsMeetRL",
+    "desc": "Awesome List for Agentic RL",
+    "reasonCn": "①这是一个关于Agentic RL（智能体强化学习）的资源列表。②它整理了该前沿领域的关键论文和项目，具有极高的参考价值。③适合从事AI算法研究的人员深入探索智能体决策机制。",
+    "stars": 1627,
+    "starGrowth": 0,
+    "language": "HTML",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "模型与训练",
+    "aiScore": 0.6,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/thinkwee/AgentsMeetRL",
+    "ts": "2026-06-20T09:01:59Z",
+    "score": 0.20218199062470507
+  },
+  {
+    "repo": "galilai-group/stable-pretraining",
+    "owner": "galilai-group",
+    "name": "stable-pretraining",
+    "desc": "Reliable, minimal and scalable library for pretraining foundation and world models",
+    "reasonCn": "①Stable Pretraining是一个用于预训练基础模型的最小化、可扩展库。②它提供了稳定可靠的底层训练框架，适合定制基座模型。③适合有算力资源并希望从头训练或微调大型基础模型的团队。",
+    "stars": 266,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "模型与训练",
+    "aiScore": 0.6,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/galilai-group/stable-pretraining",
+    "ts": "2026-06-21T12:39:01Z",
+    "score": 0.18730637479321188
+  },
+  {
+    "repo": "thinkwee/AwesomeOPD",
+    "owner": "thinkwee",
+    "name": "AwesomeOPD",
+    "desc": "Awesome List for On-Policy Distillation",
+    "reasonCn": "①AwesomeOPD是关于在线策略蒸馏（On-Policy Distillation）的精选列表。②它聚焦于模型压缩和训练优化技术，学术性较强。③适合对大模型训练效率优化感兴趣的研究人员参考。",
+    "stars": 666,
+    "starGrowth": 0,
+    "language": "",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "模型与训练",
+    "aiScore": 0.5,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/thinkwee/AwesomeOPD",
+    "ts": "2026-06-19T21:14:41Z",
+    "score": 0.15686623258817278
+  },
+  {
+    "repo": "chrisliu298/awesome-llm-unlearning",
+    "owner": "chrisliu298",
+    "name": "awesome-llm-unlearning",
+    "desc": "A resource repository for machine unlearning in large language models",
+    "reasonCn": "①该项目汇集了机器遗忘（Machine Unlearning）在大模型中的应用资源。②这是一个较新的研究领域，涉及模型安全和合规性。③适合关注AI伦理、数据安全及模型可逆性的专业人士。",
+    "stars": 598,
+    "starGrowth": 0,
+    "language": "",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "模型与训练",
+    "aiScore": 0.5,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/chrisliu298/awesome-llm-unlearning",
+    "ts": "2026-06-17T00:39:23Z",
+    "score": 0.14266597062851846
+  },
+  {
+    "repo": "ruvnet/RuView",
+    "owner": "ruvnet",
+    "name": "RuView",
+    "desc": "π RuView turns commodity WiFi signals into real-time spatial intelligence, vital sign monitoring, and presence detection — all without a single pixel of video.",
+    "reasonCn": "①这是一个利用普通WiFi信号实现空间感知和生命体征监测的项目。②它无需摄像头即可通过无线电波检测人的存在和动作，极具科技感。③适合对物联网、信号处理及创新硬件应用感兴趣的科技爱好者。",
+    "stars": 75026,
+    "starGrowth": 0,
+    "language": "Rust",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "非AI-好玩",
+    "aiScore": 0.5,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/ruvnet/RuView",
+    "ts": "2026-06-22T01:09:50Z",
+    "score": 0.13175397379676876
+  },
+  {
+    "repo": "JuliaLang/julia",
+    "owner": "JuliaLang",
+    "name": "julia",
+    "desc": "The Julia Programming Language",
+    "reasonCn": "①Julia是一种高性能的动态编程语言，特别擅长数值计算和数据分析。②虽然它在AI科学计算中有优势，但相比Python生态在通用AI工具链上略逊一筹。③适合对计算性能有极致要求且愿意学习新语言的科研人员和工程师。",
+    "stars": 48877,
+    "starGrowth": 0,
+    "language": "Julia",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.4,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/JuliaLang/julia",
+    "ts": "2026-06-22T07:32:35Z",
+    "score": 0.11574619897329227
+  },
+  {
+    "repo": "llm-jp/awesome-japanese-llm",
+    "owner": "llm-jp",
+    "name": "awesome-japanese-llm",
+    "desc": "日本語LLMまとめ - Overview of Japanese LLMs",
+    "reasonCn": "",
+    "stars": 1408,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.5,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/llm-jp/awesome-japanese-llm",
+    "ts": "2026-06-20T06:27:08Z",
+    "score": 0.11094924821260611
+  },
+  {
+    "repo": "awesome-selfhosted/awesome-selfhosted",
+    "owner": "awesome-selfhosted",
+    "name": "awesome-selfhosted",
+    "desc": "A list of Free Software network services and web applications which can be hosted on your own servers",
+    "reasonCn": "①这是一个收集可自托管免费软件的网络服务和应用列表。②它提供了大量经过筛选的高质量开源项目，方便用户搭建私有云服务。③适合喜欢折腾服务器、重视数据隐私的运维人员和极客。",
+    "stars": 300519,
+    "starGrowth": 0,
+    "language": "",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/awesome-selfhosted/awesome-selfhosted",
+    "ts": "2026-06-21T13:10:51Z",
+    "score": 0.09217434673175953
+  },
+  {
+    "repo": "apache/airflow",
+    "owner": "apache",
+    "name": "airflow",
+    "desc": "Apache Airflow - A platform to programmatically author, schedule, and monitor workflows",
+    "reasonCn": "①Apache Airflow是一个用于 programmatically 创建、调度和监控工作流的平台。②虽然它不是AI专用工具，但在管理大规模数据处理和AI训练流水线中至关重要。③适合数据工程师和运维人员用于自动化复杂的任务调度流程。",
+    "stars": 45886,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.5,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/apache/airflow",
+    "ts": "2026-06-22T07:08:20Z",
+    "score": 0.08648369690396275
+  },
+  {
+    "repo": "Developer-Y/cs-video-courses",
+    "owner": "Developer-Y",
+    "name": "cs-video-courses",
+    "desc": "List of Computer Science courses with video lectures.",
+    "reasonCn": "①这是一个收集计算机科学视频课程的列表仓库。②虽然包含大量AI相关课程资源，但它本身不是可直接运行的软件或工具。③适合正在系统学习AI理论知识和编程基础的学生及自学者参考。",
+    "stars": 81891,
+    "starGrowth": 0,
+    "language": "",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/Developer-Y/cs-video-courses",
+    "ts": "2026-06-21T08:23:57Z",
+    "score": 0.08608801419419375
+  },
+  {
+    "repo": "ohmyzsh/ohmyzsh",
+    "owner": "ohmyzsh",
+    "name": "ohmyzsh",
+    "desc": "🙃   A delightful community-driven (with 2,500+ contributors) framework for managing your zsh configuration. Includes 300+ optional plugins (rails, git, macOS, hub, docker, homebrew, node, php, python, etc), 140+ themes to spice up your morning, and an auto-update tool that makes it easy to keep up with the latest updates from the community.",
+    "reasonCn": "①这是一个社区驱动的zsh配置框架，提供大量插件增强终端体验。②它完全非AI项目，但作为开发者必备的高效工具极具实用性。③适合所有Linux/macOS终端用户，尤其是希望定制开发环境的程序员。",
+    "stars": 188184,
+    "starGrowth": 0,
+    "language": "Shell",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-好玩",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/ohmyzsh/ohmyzsh",
+    "ts": "2026-06-21T12:52:10Z",
+    "score": 0.08114104755887683
+  },
+  {
+    "repo": "sherlock-project/sherlock",
+    "owner": "sherlock-project",
+    "name": "sherlock",
+    "desc": "Hunt down social media accounts by username across social networks",
+    "reasonCn": "①这是一款通过用户名跨多个社交平台查找账号存在的命令行工具。②它满足了人们探索网络身份的好奇心，操作直观且结果清晰。③适合喜欢挖掘信息、进行OSINT调研或对社交网络感兴趣的普通用户。",
+    "stars": 85277,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "非AI-好玩",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/sherlock-project/sherlock",
+    "ts": "2026-06-22T06:53:18Z",
+    "score": 0.0802241046060541
+  },
+  {
+    "repo": "excalidraw/excalidraw",
+    "owner": "excalidraw",
+    "name": "excalidraw",
+    "desc": "Virtual whiteboard for sketching hand-drawn like diagrams",
+    "reasonCn": "①这是一个虚拟白板工具，支持手绘风格的图表绘制与协作。②它非AI项目，但因其简洁易用和开源免费而广受欢迎。③适合需要在会议、头脑风暴中快速绘制草图的技术团队和个人。",
+    "stars": 125933,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-好玩",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/excalidraw/excalidraw",
+    "ts": "2026-06-20T09:45:19Z",
+    "score": 0.07661737207365982
+  },
+  {
+    "repo": "files-community/Files",
+    "owner": "files-community",
+    "name": "Files",
+    "desc": "A modern file manager that helps users organize their files and folders.",
+    "reasonCn": "①这是一个现代化的文件管理器，帮助用户高效组织文件和文件夹。②它非AI项目，但作为Windows平台的优秀替代品深受用户喜爱。③适合寻求更好文件管理体验且不依赖传统资源管理器的Windows用户。",
+    "stars": 43992,
+    "starGrowth": 0,
+    "language": "C#",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-好玩",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/files-community/Files",
+    "ts": "2026-06-21T21:41:04Z",
+    "score": 0.0765949516910094
+  },
+  {
+    "repo": "netdata/netdata",
+    "owner": "netdata",
+    "name": "netdata",
+    "desc": "The fastest path to AI-powered full stack observability, even for lean teams.",
+    "reasonCn": "①Netdata是一个实时性能监控工具，最近集成了AI-powered可观测性功能。②它能提供极其详细的系统指标可视化，帮助团队快速定位问题。③适合运维工程师和开发者用于监控服务器和应用健康状况。",
+    "stars": 79349,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "ml"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.4,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/netdata/netdata",
+    "ts": "2026-06-22T07:45:22Z",
+    "score": 0.07115217511491764
+  },
+  {
+    "repo": "plotly/dash",
+    "owner": "plotly",
+    "name": "dash",
+    "desc": "Data Apps & Dashboards for Python. No JavaScript Required.",
+    "reasonCn": "①这是一个基于Python的数据应用和仪表板构建框架。②无需JavaScript即可创建交互式的复杂数据可视化界面，开发效率极高。③适合Python数据分析师和工程师快速搭建内部工具。",
+    "stars": 24268,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.4,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/plotly/dash",
+    "ts": "2026-06-19T20:04:40Z",
+    "score": 0.061587300345529665
+  },
+  {
+    "repo": "testtimescaling/testtimescaling.github.io",
+    "owner": "testtimescaling",
+    "name": "testtimescaling.github.io",
+    "desc": "\"what, how, where, and how well? a survey on test-time scaling in large language models\" repository",
+    "reasonCn": "①这是一个关于大模型测试时缩放（Test-Time Scaling）的综述仓库。②它主要提供调研文档和相关资料，而非可直接运行的工具。③适合想了解该领域最新研究动态的学术读者阅读文献。",
+    "stars": 104,
+    "starGrowth": 0,
+    "language": "HTML",
+    "topics": [
+      "llm-model"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/testtimescaling/testtimescaling.github.io",
+    "ts": "2026-06-21T02:51:07Z",
+    "score": 0.05765622906002209
+  },
+  {
+    "repo": "docker/awesome-compose",
+    "owner": "docker",
+    "name": "awesome-compose",
+    "desc": "Awesome Docker Compose samples",
+    "reasonCn": "①这是Docker官方提供的Awesome Docker Compose示例集合。②它展示了如何编排多种服务，如数据库、缓存和Web应用。③适合需要快速上手Docker Compose进行多容器部署的开发人员。",
+    "stars": 45595,
+    "starGrowth": 0,
+    "language": "HTML",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/docker/awesome-compose",
+    "ts": "2026-06-20T16:45:04Z",
+    "score": 0.05453079843702821
+  },
+  {
+    "repo": "immich-app/immich",
+    "owner": "immich-app",
+    "name": "immich",
+    "desc": "High performance self-hosted photo and video management solution.",
+    "reasonCn": "①这是一个高性能的自托管照片和视频管理解决方案。②它拥有极高的社区热度，提供了类似Google Photos的体验。③适合希望私有化存储和管理大量多媒体文件的用户。",
+    "stars": 104118,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/immich-app/immich",
+    "ts": "2026-06-22T07:02:04Z",
+    "score": 0.05401362879389932
+  },
+  {
+    "repo": "veggiemonk/awesome-docker",
+    "owner": "veggiemonk",
+    "name": "awesome-docker",
+    "desc": ":whale: A curated list of Docker resources and projects",
+    "reasonCn": "①这是一个关于Docker资源和项目的精选列表。②它包含了教程、最佳实践和各种相关工具，是学习Docker的良好入口。③适合想要系统学习Docker技术栈的新手和进阶用户。",
+    "stars": 36271,
+    "starGrowth": 0,
+    "language": "",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/veggiemonk/awesome-docker",
+    "ts": "2026-06-20T11:09:49Z",
+    "score": 0.05348662486293024
+  },
+  {
+    "repo": "appwrite/appwrite",
+    "owner": "appwrite",
+    "name": "appwrite",
+    "desc": "Appwrite® - complete cloud infrastructure for your web, mobile and AI apps. Including Auth, Databases, Storage, Functions, Messaging, Hosting, Realtime and more",
+    "reasonCn": "①这是一个完整的云基础设施，支持Web、移动及AI应用。②它提供了认证、数据库、函数等一站式后端服务。③适合全栈开发者快速搭建应用后端而无需管理服务器。",
+    "stars": 56378,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/appwrite/appwrite",
+    "ts": "2026-06-22T07:29:33Z",
+    "score": 0.052453529319167136
+  },
+  {
+    "repo": "sxyazi/yazi",
+    "owner": "sxyazi",
+    "name": "yazi",
+    "desc": "💥 Blazing fast terminal file manager written in Rust, based on async I/O.",
+    "reasonCn": "①这是一个基于Rust编写的极速异步终端文件管理器。②因其启动速度极快且支持插件系统而备受开发者推崇。③适合追求高效命令行体验的技术人员直接使用。",
+    "stars": 39634,
+    "starGrowth": 0,
+    "language": "Rust",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/sxyazi/yazi",
+    "ts": "2026-06-22T06:43:40Z",
+    "score": 0.05147768676139922
+  },
+  {
+    "repo": "thedaviddias/Front-End-Checklist",
+    "owner": "thedaviddias",
+    "name": "Front-End-Checklist",
+    "desc": "🗂 The essential checklist for modern web development, for humans and AI agents",
+    "reasonCn": "①这是一个现代Web前端开发的必备检查清单。②虽然标题提及AI代理，但其核心内容是标准化的前端工程规范。③适合前端工程师确保项目质量，AI辅助属性有限。",
+    "stars": 72997,
+    "starGrowth": 0,
+    "language": "MDX",
+    "topics": [
+      "ai-agent"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.3,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/thedaviddias/Front-End-Checklist",
+    "ts": "2026-06-18T03:46:44Z",
+    "score": 0.046312009762099704
+  },
+  {
+    "repo": "yt-dlp/yt-dlp",
+    "owner": "yt-dlp",
+    "name": "yt-dlp",
+    "desc": "A feature-rich command-line audio/video downloader",
+    "reasonCn": "①这是一个功能丰富的命令行音视频下载工具。②虽然极其实用且受欢迎，但它不涉及任何AI技术。③适合需要下载网络视频音频的用户，但不符合AI兴趣。",
+    "stars": 172487,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/yt-dlp/yt-dlp",
+    "ts": "2026-06-21T22:49:35Z",
+    "score": 0.036440215919936056
+  },
+  {
+    "repo": "louislam/uptime-kuma",
+    "owner": "louislam",
+    "name": "uptime-kuma",
+    "desc": "A fancy self-hosted monitoring tool",
+    "reasonCn": "①这是一个界面美观的自托管服务监控工具。②它以其友好的UI和易用性在GitHub上获得了极高的人气。③适合需要监控网站或服务可用性的运维人员或开发者。",
+    "stars": 88295,
+    "starGrowth": 0,
+    "language": "JavaScript",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/louislam/uptime-kuma",
+    "ts": "2026-06-22T04:53:08Z",
+    "score": 0.03560953497115313
+  },
+  {
+    "repo": "Stirling-Tools/Stirling-PDF",
+    "owner": "Stirling-Tools",
+    "name": "Stirling-PDF",
+    "desc": "#1 PDF Application on GitHub that lets you edit PDFs on any device anywhere",
+    "reasonCn": "①这是一个功能强大的自托管PDF编辑工具。②它支持跨设备操作，提供了丰富的PDF处理功能。③适合经常需要处理本地PDF文件且注重隐私的用户。",
+    "stars": 82260,
+    "starGrowth": 0,
+    "language": "Java",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/Stirling-Tools/Stirling-PDF",
+    "ts": "2026-06-21T23:40:27Z",
+    "score": 0.035215398983709074
+  },
+  {
+    "repo": "tldr-pages/tldr",
+    "owner": "tldr-pages",
+    "name": "tldr",
+    "desc": "Collaborative cheatsheets for console commands 📚.",
+    "reasonCn": "①这是社区协作维护的简化版命令手册，提供实用的命令行示例。②它去除了冗长的帮助文档，让用户快速记住常用参数。③适合经常忘记复杂命令参数、追求高效操作的终端用户。",
+    "stars": 62915,
+    "starGrowth": 0,
+    "language": "Markdown",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/tldr-pages/tldr",
+    "ts": "2026-06-22T06:45:59Z",
+    "score": 0.03512149378338654
+  },
+  {
+    "repo": "go-gitea/gitea",
+    "owner": "go-gitea",
+    "name": "gitea",
+    "desc": "Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD",
+    "reasonCn": "①这是一个无痛自托管的全栈软件开发服务平台。②它集成了Git托管、代码审查、CI/CD等核心功能。③适合团队或个人需要私有化代码托管服务的开发者。",
+    "stars": 56435,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/go-gitea/gitea",
+    "ts": "2026-06-22T06:16:48Z",
+    "score": 0.034907852426608356
+  },
+  {
+    "repo": "ClickHouse/ClickHouse",
+    "owner": "ClickHouse",
+    "name": "ClickHouse",
+    "desc": "ClickHouse® is a real-time analytics database management system",
+    "reasonCn": "①这是一个实时分析数据库管理系统。②它在处理海量数据查询时具有极高的性能表现。③适合需要大规模数据分析能力的工程师和数据科学家。",
+    "stars": 48206,
+    "starGrowth": 0,
+    "language": "C++",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/ClickHouse/ClickHouse",
+    "ts": "2026-06-22T07:45:27Z",
+    "score": 0.03471093475989211
+  },
+  {
+    "repo": "junegunn/fzf",
+    "owner": "junegunn",
+    "name": "fzf",
+    "desc": ":cherry_blossom: A command-line fuzzy finder",
+    "reasonCn": "①这是广受好评的通用命令行模糊查找器，能快速过滤文件、历史命令等。②它以极致的速度和简洁的设计成为终端用户的必备神器。③适合所有重度依赖命令行操作的开发者和系统管理员。",
+    "stars": 81110,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/junegunn/fzf",
+    "ts": "2026-06-21T13:13:33Z",
+    "score": 0.03465932262751711
+  },
+  {
+    "repo": "jesseduffield/lazygit",
+    "owner": "jesseduffield",
+    "name": "lazygit",
+    "desc": "simple terminal UI for git commands",
+    "reasonCn": "①这是一个简洁美观的终端UI界面，专门用于简化Git命令操作。②它将复杂的Git工作流可视化，大幅降低版本控制的学习门槛。③适合希望更高效管理代码仓库的开发者和技术爱好者。",
+    "stars": 79509,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/jesseduffield/lazygit",
+    "ts": "2026-06-21T13:38:43Z",
+    "score": 0.03464665594624463
+  },
+  {
+    "repo": "coollabsio/coolify",
+    "owner": "coollabsio",
+    "name": "coolify",
+    "desc": "An open-source, self-hostable PaaS alternative to Vercel, Heroku & Netlify that lets you easily deploy static sites, databases, full-stack applications and 280+ one-click services on your own servers.",
+    "reasonCn": "①这是一个开源的自托管PaaS平台，替代Vercel等服务。②它支持一键部署280多种服务，极大简化了运维流程。③适合希望自建云平台以降低成本和掌握数据的主机玩家。",
+    "stars": 57279,
+    "starGrowth": 0,
+    "language": "PHP",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/coollabsio/coolify",
+    "ts": "2026-06-21T20:55:30Z",
+    "score": 0.0344553115998789
+  },
+  {
+    "repo": "usememos/memos",
+    "owner": "usememos",
+    "name": "memos",
+    "desc": "Open-source, self-hosted note-taking tool built for quick capture. Markdown-native, lightweight, and fully yours.",
+    "reasonCn": "①这是一个轻量级的自托管笔记记录工具。②它原生支持Markdown，设计简洁且完全由用户掌控。③适合喜欢快速捕捉想法且偏好极简风格的笔记用户。",
+    "stars": 60974,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/usememos/memos",
+    "ts": "2026-06-21T14:56:02Z",
+    "score": 0.03426183010109703
+  },
+  {
+    "repo": "ShareX/ShareX",
+    "owner": "ShareX",
+    "name": "ShareX",
+    "desc": "ShareX is a free and open-source application that enables users to capture or record any area of their screen with a single keystroke. It also supports uploading images, text, and various file types to a wide range of destinations.",
+    "reasonCn": "①这是一款免费开源的功能强大的屏幕截图和录屏工具。②它支持丰富的图像处理和自动上传流程，极大提升内容创作效率。③适合需要频繁截图分享或录制演示视频的用户。",
+    "stars": 38217,
+    "starGrowth": 0,
+    "language": "C#",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/ShareX/ShareX",
+    "ts": "2026-06-22T06:07:07Z",
+    "score": 0.034224390784179326
+  },
+  {
+    "repo": "super-productivity/super-productivity",
+    "owner": "super-productivity",
+    "name": "super-productivity",
+    "desc": "Super Productivity is an advanced todo list app with integrated Timeboxing and time tracking capabilities. It also comes with integrations for Jira, GitLab, GitHub and Open Project.",
+    "reasonCn": "①这是一款高级待办事项应用，集成了时间盒和时间追踪功能。②它与GitLab、GitHub等平台深度集成，帮助开发者更好地管理任务周期。③适合需要严格时间管理和多平台任务同步的专业人士。",
+    "stars": 20207,
+    "starGrowth": 0,
+    "language": "TypeScript",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/super-productivity/super-productivity",
+    "ts": "2026-06-22T07:13:43Z",
+    "score": 0.03317537730013789
+  },
+  {
+    "repo": "lissy93/dashy",
+    "owner": "lissy93",
+    "name": "dashy",
+    "desc": "🚀 A self-hostable personal dashboard built for you. Includes status-checking, widgets, themes, icon packs, a UI editor and tons more!",
+    "reasonCn": "①这是一个可自托管的个人仪表盘应用，支持主题和状态监控。②它能将常用链接和服务整合在一个界面，提供极佳的视觉体验和管理便利。③适合希望统一管理个人数字资产和监控服务状态的极客。",
+    "stars": 25498,
+    "starGrowth": 0,
+    "language": "Vue",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/lissy93/dashy",
+    "ts": "2026-06-21T22:25:20Z",
+    "score": 0.03314511240302284
+  },
+  {
+    "repo": "viatsko/awesome-vscode",
+    "owner": "viatsko",
+    "name": "awesome-vscode",
+    "desc": "🎨 A curated list of delightful VS Code packages and resources.",
+    "reasonCn": "①这是一个精心策划的VS Code扩展和资源列表。②它主要关注编辑器插件和开发体验优化，而非AI核心功能。③适合VS Code用户提升日常编码效率，但AI相关性较弱。",
+    "stars": 28773,
+    "starGrowth": 0,
+    "language": "JavaScript",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/viatsko/awesome-vscode",
+    "ts": "2026-06-21T09:36:55Z",
+    "score": 0.03273741504863721
+  },
+  {
+    "repo": "avelino/awesome-go",
+    "owner": "avelino",
+    "name": "awesome-go",
+    "desc": "A curated list of awesome Go frameworks, libraries and software",
+    "reasonCn": "①这是一个精心策划的Go语言框架、库和软件列表。②它是Go语言生态中最权威的资源导航，帮助开发者快速找到所需工具。③适合Golang初学者和需要查找第三方库的专业开发人员。",
+    "stars": 176071,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/avelino/awesome-go",
+    "ts": "2026-06-22T04:53:47Z",
+    "score": 0.030669412511660152
+  },
+  {
+    "repo": "alyssaxuu/screenity",
+    "owner": "alyssaxuu",
+    "name": "screenity",
+    "desc": "The free and privacy-friendly screen recorder with no limits 🎥",
+    "reasonCn": "①这是一款免费且注重隐私的浏览器屏幕录制扩展。②它无需安装额外软件即可轻松录制屏幕，支持无限制时长和基础编辑。③适合需要快速录制教程或演示视频但不想安装重型软件的用户。",
+    "stars": 18337,
+    "starGrowth": 0,
+    "language": "JavaScript",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/alyssaxuu/screenity",
+    "ts": "2026-06-19T17:41:15Z",
+    "score": 0.030248725826929643
+  },
+  {
+    "repo": "ActivityWatch/activitywatch",
+    "owner": "ActivityWatch",
+    "name": "activitywatch",
+    "desc": "The best free and open-source automated time tracker. Cross-platform, extensible, privacy-focused.",
+    "reasonCn": "①这是一款开源的自动化时间追踪工具，专注于隐私保护。②它能自动记录你在不同应用和网页上花费的时间，生成详细的活动报告。③适合希望量化自己的工作习惯并优化时间分配的效率爱好者。",
+    "stars": 17964,
+    "starGrowth": 0,
+    "language": "Python",
+    "topics": [
+      "productivity"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.2,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/ActivityWatch/activitywatch",
+    "ts": "2026-06-19T09:41:25Z",
+    "score": 0.029893656341474038
+  },
+  {
+    "repo": "jaywcjlove/awesome-mac",
+    "owner": "jaywcjlove",
+    "name": "awesome-mac",
+    "desc": " This project is dedicated to collecting high-quality macOS software and organizing them systematically by different categories for easy search and use.",
+    "reasonCn": "①这是一个为macOS用户整理的高质量软件收藏列表。②它按类别系统性地收录了各类优秀开源和付费软件，查找极为方便。③适合Mac新用户寻找必备工具或老用户发现新应用的场景。",
+    "stars": 106115,
+    "starGrowth": 0,
+    "language": "Swift",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/jaywcjlove/awesome-mac",
+    "ts": "2026-06-21T22:33:00Z",
+    "score": 0.029661198422198557
+  },
+  {
+    "repo": "rust-unofficial/awesome-rust",
+    "owner": "rust-unofficial",
+    "name": "awesome-rust",
+    "desc": "A curated list of Rust code and resources.",
+    "reasonCn": "①这是一个Rust代码和资源的高质量精选列表。②它涵盖了从入门教程到生产级库的各种项目，是Rust生态的重要索引。③适合所有级别的Rust开发者查找学习资料和项目参考。",
+    "stars": 57976,
+    "starGrowth": 0,
+    "language": "Rust",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/rust-unofficial/awesome-rust",
+    "ts": "2026-06-21T21:13:32Z",
+    "score": 0.02874262107069217
+  },
+  {
+    "repo": "dkhamsing/open-source-ios-apps",
+    "owner": "dkhamsing",
+    "name": "open-source-ios-apps",
+    "desc": ":iphone: Collaborative List of Open-Source iOS Apps",
+    "reasonCn": "①这是一个协作维护的开源iOS应用程序列表。②它为iOS开发者提供了大量优秀的代码参考和学习案例。③适合希望阅读高质量iOS源码进行学习的移动开发工程师。",
+    "stars": 50814,
+    "starGrowth": 0,
+    "language": "",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/dkhamsing/open-source-ios-apps",
+    "ts": "2026-06-21T19:31:52Z",
+    "score": 0.028484148144091257
+  },
+  {
+    "repo": "akullpp/awesome-java",
+    "owner": "akullpp",
+    "name": "awesome-java",
+    "desc": "A curated list of awesome frameworks, libraries and software for the Java programming language.",
+    "reasonCn": "①这是一个Java编程语言的框架和软件精选列表。②它汇集了Java生态中广泛使用的库和工具，便于开发者检索。③适合Java后端开发人员查找依赖库和技术方案。",
+    "stars": 48281,
+    "starGrowth": 0,
+    "language": "",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "其他",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/akullpp/awesome-java",
+    "ts": "2026-06-21T11:19:14Z",
+    "score": 0.028075014530169563
+  },
+  {
+    "repo": "Raphire/Win11Debloat",
+    "owner": "Raphire",
+    "name": "Win11Debloat",
+    "desc": "A simple, lightweight PowerShell script that allows you to remove pre-installed apps, disable telemetry, as well as perform various other changes to declutter and customize your Windows experience. Win11Debloat works for both Windows 10 and Windows 11.",
+    "reasonCn": "①这是一个PowerShell脚本，用于精简Windows 11预装应用和关闭遥测。②它能显著提升系统流畅度并保护用户隐私，操作简便。③适合希望优化Windows体验、清理冗余软件的普通PC用户。",
+    "stars": 49266,
+    "starGrowth": 0,
+    "language": "PowerShell",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/Raphire/Win11Debloat",
+    "ts": "2026-06-22T01:07:19Z",
+    "score": 0.017204575937389936
+  },
+  {
+    "repo": "BurntSushi/ripgrep",
+    "owner": "BurntSushi",
+    "name": "ripgrep",
+    "desc": "ripgrep recursively searches directories for a regex pattern while respecting your gitignore",
+    "reasonCn": "①这是基于Rust编写的高性能递归文本搜索工具，速度极快。②它尊重.gitignore配置，是grep的现代替代品，深受开发者喜爱。③适合需要频繁在大型代码库中查找内容的技术人员。",
+    "stars": 65327,
+    "starGrowth": 0,
+    "language": "Rust",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/BurntSushi/ripgrep",
+    "ts": "2026-06-21T12:48:16Z",
+    "score": 0.01713640839868477
+  },
+  {
+    "repo": "gogs/gogs",
+    "owner": "gogs",
+    "name": "gogs",
+    "desc": "The painless way to host your own Git service",
+    "reasonCn": "①这是一个轻量级的自托管Git服务。②它以资源占用低和易于部署著称。③适合个人或小团队搭建简单的代码托管环境。",
+    "stars": 47614,
+    "starGrowth": 0,
+    "language": "Go",
+    "topics": [
+      "self-hosted"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/gogs/gogs",
+    "ts": "2026-06-20T15:26:54Z",
+    "score": 0.016364927694970145
+  },
+  {
+    "repo": "awesome-foss/awesome-sysadmin",
+    "owner": "awesome-foss",
+    "name": "awesome-sysadmin",
+    "desc": "A curated list of amazingly awesome open-source sysadmin resources.",
+    "reasonCn": "①这是一个精选的系统管理员开源资源和工具列表。②虽然内容极具实用价值，但完全不涉及AI技术。③适合系统运维人员寻找传统管理工具，不符合你的AI兴趣。",
+    "stars": 34398,
+    "starGrowth": 0,
+    "language": "",
+    "topics": [
+      "awesome"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/awesome-foss/awesome-sysadmin",
+    "ts": "2026-06-20T20:39:14Z",
+    "score": 0.016216712468580304
+  },
+  {
+    "repo": "sharkdp/bat",
+    "owner": "sharkdp",
+    "name": "bat",
+    "desc": "A cat(1) clone with wings.",
+    "reasonCn": "①这是cat命令的增强版，支持语法高亮和Git集成显示。②它让查看代码文件变得赏心悦目，提升了阅读体验。③适合需要频繁查看源码或配置文件的开发者和运维人员。",
+    "stars": 59351,
+    "starGrowth": 0,
+    "language": "Rust",
+    "topics": [
+      "cli"
+    ],
+    "aiDim": "非AI-实用",
+    "aiScore": 0.1,
+    "source": "search",
+    "bigbros": [],
+    "url": "https://github.com/sharkdp/bat",
+    "ts": "2026-06-17T17:54:57Z",
+    "score": 0.01509255359982607
+  }
+]

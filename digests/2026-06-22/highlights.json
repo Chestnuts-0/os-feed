@@ -1,0 +1,118 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code API稳定性受热议",
+      "OpenAI Codex v0.142重构中",
+      "Qwen Code v0.18.5稳定版发布",
+      "OpenCode多模态活跃度极高",
+      "Gemini CLI修复会话持久化",
+      "Copilot Win ARM64现稳定性危机"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.6.10-beta发布",
+      "Gateway内存泄漏致OOM成痛点",
+      "PR优化MCP启动延迟达6秒",
+      "限制ChatGPT响应防内存溢出",
+      "外部化插件增强模块化部署",
+      "子代理通知机制获显著改进"
+    ],
+    "ai-trending": [
+      "Deer-flow成超级智能体标杆",
+      "Codebase-memory MCP降Token",
+      "RTK CLI代理节省90% Token",
+      "OpenMontage开源视频制作系统",
+      "Waveterm成AI集成终端新星",
+      "Hermes-agent强调自主进化"
+    ],
+    "ai-web": [
+      "OpenAI收录三星部署Codex案例",
+      "Samsung集成暗示硬件研发渗透",
+      "Codex品牌强化企业级开发定位",
+      "Anthropic今日官网内容静默",
+      "OpenAI缺乏实质性技术细节",
+      "三星案例或预示私有化部署需求"
+    ],
+    "ai-hn": [
+      "Sakana Fugu模型引发技术热议",
+      "GLM 5.2与Opus直接对比评测",
+      "Qwen 0.6B微调展示边缘AI实力",
+      "Recall工具解决Claude Code记忆",
+      "Crespo提议用AST替代原始代码",
+      "Anthropic身份验证引发隐私辩论"
+    ],
+    "ai-hf": [
+      "DeepSeek-V4-Pro下载量领跑",
+      "Gemma 4 12B成边缘部署热门",
+      "Qwen 3.6激进版下载近400万",
+      "LocateAnything 3B获NVIDIA支持",
+      "DiffusionGemma多模态表现强劲",
+      "Unsloth优化加速GLM本地部署"
+    ],
+    "ai-community": [
+      "Vibe coding被重定义为工作流轴",
+      "六行代码实现React Native离线推理",
+      "RAG应用幻觉问题实战修复指南",
+      "代理安全边界应由规则而非模型决定",
+      "复盘15个AI编程故事揭示风险",
+      "从零构建核心仅128行的代码代理"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "OpenAI Codex releases Alpha v0.142.0",
+      "Qwen Code hits stable v0.18.5 release",
+      "DeepSeek TUI progress on v0.8.64",
+      "Claude Code faces 10 high-engagement issues",
+      "Gemini CLI shows 10 active PRs",
+      "OpenCode and Pi both at 10 open issues"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 issues and 500 PRs",
+      "Critical stability period for OpenClaw",
+      "P0/P1 bugs affect core agent loops",
+      "Session state integrity is top priority",
+      "Memory leaks impacting delivery reliability",
+      "Fixes for compaction model aliases included"
+    ],
+    "ai-trending": [
+      "Shift toward persistent agentic memory",
+      "Cognee highlights long-term context needs",
+      "bytedance/deer-flow emerges as SuperAgent",
+      "rtk-ai/rtk cuts LLM tokens by 60-90%",
+      "DeusData/codebase-memory-mcp gains stars",
+      "unsloth simplifies local model fine-tuning"
+    ],
+    "ai-web": [
+      "Anthropic posts zero new articles today",
+      "OpenAI publishes Samsung ChatGPT Codex case",
+      "Focus on enterprise coding assistant integration",
+      "Anthropic silence suggests backend work",
+      "OpenAI pushes corporate developer tooling",
+      "No substantive text for OpenAI analysis"
+    ],
+    "ai-hn": [
+      "HN debates Anthropic's ID verification",
+      "Sakana Fugu draws high engagement",
+      "Minimal downside to switching open models",
+      "GLM 5.2 vs Opus benchmark comparison",
+      "Local LLM efficiency fine-tuning trends",
+      "Skepticism on automated AI evaluation metrics"
+    ],
+    "ai-hf": [
+      "DeepSeek-V4-Pro leads HF downloads",
+      "Qwen 3.6 and Gemma 4 dominate open weights",
+      "NVIDIA LocateAnything-3B gains popularity",
+      "GLM-5.2 MoE model shows strong engagement",
+      "Surge in multimodal agentic coding tools",
+      "Community driving specialized fine-tunes"
+    ],
+    "ai-community": [
+      "Production challenges for AI agents grow",
+      "React Native ExecuTorch enables on-device AI",
+      "Browser-based PII redaction trends up",
+      "Human judgment remains AI bottleneck",
+      "Vibe coding viewed as axis not level",
+      "RAG hallucinations fixed in new Dev.to guide"
+    ]
+  }
+}

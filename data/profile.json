@@ -1,0 +1,15 @@
+{
+  "interests": {
+    "ai": 0.5,
+    "fun": 0.3,
+    "practical": 0.2
+  },
+  "aiInterestsText": "我想看 AI 相关、好玩的、能直接拿来用的开源工具和软件",
+  "followedBigs": [
+    "torvalds",
+    "gvanrossum",
+    "yyx990803",
+    "tj",
+    "sindresorhus"
+  ]
+}
