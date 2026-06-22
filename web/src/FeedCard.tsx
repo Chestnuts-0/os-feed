@@ -30,93 +30,69 @@ function timeAgo(ts: string): string {
   return `${Math.floor(d / 30)}个月前`;
 }
 
-// ---------------------------------------------------------------------------
-// 语言颜色映射
-// ---------------------------------------------------------------------------
+// 清理旧数据中的 ①②③ 序号
+function cleanReason(text: string): string {
+  return text.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
+}
 
 const LANG_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Python: "#3572A5",
-  Go: "#00ADD8",
-  Rust: "#dea584",
-  Java: "#b07219",
-  "C++": "#f34b7d",
-  C: "#555555",
-  "C#": "#178600",
-  Ruby: "#701516",
-  Swift: "#F05138",
-  Kotlin: "#A97BFF",
-  Dart: "#00B4AB",
-  Vue: "#41b883",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Shell: "#89e051",
-  Jupyter: "#DA5B0B",
+  TypeScript: "#3178c6", JavaScript: "#f1e05a", Python: "#3572A5",
+  Go: "#00ADD8", Rust: "#dea584", Java: "#b07219",
+  "C++": "#f34b7d", C: "#555555", "C#": "#178600",
+  Ruby: "#701516", Swift: "#F05138", Kotlin: "#A97BFF",
+  Dart: "#00B4AB", Vue: "#41b883", HTML: "#e34c26",
+  CSS: "#563d7c", Shell: "#89e051", Jupyter: "#DA5B0B",
+  PHP: "#4F5D95",
 };
 
 // ---------------------------------------------------------------------------
-// 组件
+// 紧凑卡片组件（两列网格用）
 // ---------------------------------------------------------------------------
 
 interface Props {
   card: Card;
-  liked: boolean;
-  disliked: boolean;
-  onLike: (repo: string) => void;
-  onDislike: (repo: string) => void;
+  onOpen: (card: Card) => void;
 }
 
-function FeedCardComponent({ card, liked, disliked, onLike, onDislike }: Props) {
+function FeedCardComponent({ card, onOpen }: Props) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
+  const reason = cleanReason(card.reasonCn || card.desc);
 
   return (
-    <article className="card">
-      {/* 头部：头像 + 仓库名 + 来源标记 */}
+    <article className="card" onClick={() => onOpen(card)}>
       <div className="card-header">
         <img
-          src={`https://github.com/${card.owner}.png?size=48`}
+          src={`https://github.com/${card.owner}.png?size=40`}
           alt=""
           className="avatar"
           loading="lazy"
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.display = "none";
-          }}
+          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
         />
         <div className="card-title">
-          <a href={card.url} target="_blank" rel="noopener noreferrer" className="repo-link">
+          <span className="repo-link">
             <span className="repo-owner">{card.owner}</span>
             <span className="repo-sep">/</span>
             <span className="repo-name">{card.name}</span>
-          </a>
+          </span>
           <div className="card-subtitle">
             <span className={`source-badge source-${card.source}`}>
               {sourceLabel(card.source)}
             </span>
-            <span className="time-ago">{timeAgo(card.ts)}</span>
+            <span>{timeAgo(card.ts)}</span>
           </div>
         </div>
       </div>
 
-      {/* 通俗概括（核心亮点，大白话） */}
-      {card.summaryCn && (
-        <p className="summary">{card.summaryCn}</p>
-      )}
+      {card.summaryCn && <p className="summary">{card.summaryCn}</p>}
 
-      {/* 专业推荐理由 */}
-      {card.reasonCn ? (
-        <p className="reason">{card.reasonCn}</p>
-      ) : card.desc ? (
-        <p className="reason">{card.desc}</p>
-      ) : null}
+      {reason && <p className="reason-clamped">{reason}</p>}
 
-      {/* 元信息条 */}
       <div className="card-meta">
         <span className="meta-item stars" title={`${card.stars} stars`}>
           ★ {formatStars(card.stars)}
         </span>
         {card.starGrowth > 0 && (
-          <span className="meta-item growth">+{card.starGrowth} 今日</span>
+          <span className="meta-item growth">+{card.starGrowth}</span>
         )}
         {card.language && (
           <span className="meta-item">
@@ -126,53 +102,121 @@ function FeedCardComponent({ card, liked, disliked, onLike, onDislike }: Props) 
         )}
         <span className="dim-badge">{card.aiDim}</span>
       </div>
-
-      {/* Topic 标签 */}
-      {card.topics.length > 0 && (
-        <div className="topics">
-          {card.topics.slice(0, 8).map((t) => (
-            <span key={t} className="topic-tag">{t}</span>
-          ))}
-        </div>
-      )}
-
-      {/* 大牛背书 */}
-      {card.bigbros.length > 0 && (
-        <div className="bigbro-endorse">
-          <span className="endorse-icon">👥</span>
-          <span className="endorse-text">
-            <strong>{card.bigbros.slice(0, 3).join("、")}</strong>
-            {card.bigbros.length > 3 && ` 等${card.bigbros.length}位`}
-            {" "}关注的大牛 star 了
-          </span>
-        </div>
-      )}
-
-      {/* 操作按钮 */}
-      <div className="card-actions">
-        <button
-          className={`action-btn like-btn${liked ? " active" : ""}`}
-          onClick={() => onLike(card.repo)}
-        >
-          {liked ? "❤️ 已赞" : "👍 赞"}
-        </button>
-        <button
-          className={`action-btn dislike-btn${disliked ? " active" : ""}`}
-          onClick={() => onDislike(card.repo)}
-        >
-          ✕ 不感兴趣
-        </button>
-        <a
-          href={card.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="action-btn open-btn"
-        >
-          打开 ↗
-        </a>
-      </div>
     </article>
   );
 }
 
 export const FeedCardMemo = memo(FeedCardComponent);
+
+// ---------------------------------------------------------------------------
+// 详情弹窗组件
+// ---------------------------------------------------------------------------
+
+interface DetailProps {
+  card: Card;
+  liked: boolean;
+  disliked: boolean;
+  onLike: (repo: string) => void;
+  onDislike: (repo: string) => void;
+  onClose: () => void;
+}
+
+export function CardDetail({ card, liked, disliked, onLike, onDislike, onClose }: DetailProps) {
+  const langColor = LANG_COLORS[card.language] ?? "#666";
+  const reason = cleanReason(card.reasonCn || card.desc);
+
+  return (
+    <div className="detail-overlay" onClick={onClose}>
+      <div className="detail-card" onClick={(e) => e.stopPropagation()}>
+        <button className="detail-close" onClick={onClose}>✕</button>
+
+        <div className="detail-header">
+          <img
+            src={`https://github.com/${card.owner}.png?size=56`}
+            alt=""
+            className="detail-avatar"
+            loading="lazy"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+          />
+          <div>
+            <div className="detail-repo">
+              <span className="repo-owner">{card.owner}</span>
+              <span className="repo-sep"> / </span>
+              <span className="repo-name">{card.name}</span>
+            </div>
+            <div className="detail-subtitle">
+              <span className={`source-badge source-${card.source}`}>
+                {sourceLabel(card.source)}
+              </span>
+              <span>{timeAgo(card.ts)}</span>
+            </div>
+          </div>
+        </div>
+
+        {card.summaryCn && <p className="detail-summary">{card.summaryCn}</p>}
+
+        {reason && <p className="detail-reason">{reason}</p>}
+
+        <div className="detail-meta">
+          <span className="meta-item stars" title={`${card.stars} stars`}>
+            ★ {formatStars(card.stars)} stars
+          </span>
+          {card.starGrowth > 0 && (
+            <span className="meta-item growth">+{card.starGrowth} 今日增长</span>
+          )}
+          {card.language && (
+            <span className="meta-item">
+              <span className="lang-dot" style={{ background: langColor }} />
+              {card.language}
+            </span>
+          )}
+          <span className="dim-badge">{card.aiDim}</span>
+        </div>
+
+        {card.topics.length > 0 && (
+          <div className="detail-topics">
+            {card.topics.map((t) => (
+              <span key={t} className="topic-tag">{t}</span>
+            ))}
+          </div>
+        )}
+
+        {card.bigbros.length > 0 && (
+          <div className="detail-bigbro">
+            <span style={{ fontSize: "1.1rem" }}>👥</span>
+            <span>
+              <strong style={{ color: "#c4b5fd" }}>
+                {card.bigbros.slice(0, 3).join("、")}
+              </strong>
+              {card.bigbros.length > 3 && ` 等${card.bigbros.length}位`}
+              {" "}关注的大牛 star 了
+            </span>
+          </div>
+        )}
+
+        <div className="detail-actions">
+          <button
+            className={`action-btn like-btn${liked ? " active" : ""}`}
+            onClick={() => onLike(card.repo)}
+          >
+            {liked ? "❤️ 已赞" : "👍 赞"}
+          </button>
+          <button
+            className={`action-btn dislike-btn${disliked ? " active" : ""}`}
+            onClick={() => onDislike(card.repo)}
+          >
+            ✕ 不感兴趣
+          </button>
+          <a
+            href={card.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="action-btn open-btn"
+          >
+            GitHub 主页 ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}

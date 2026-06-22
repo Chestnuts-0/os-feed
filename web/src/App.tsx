@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import type { FeedCard } from "./types.ts";
-import { FeedCardMemo } from "./FeedCard.tsx";
+import { FeedCardMemo, CardDetail } from "./FeedCard.tsx";
 import "./styles.css";
 
 // ---------------------------------------------------------------------------
@@ -18,7 +18,6 @@ interface Feedback {
   dislikes: string[];
 }
 
-// 分区定义
 const SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
   { key: "hot", icon: "🔥", title: "热门", desc: "持续高星项目" },
   { key: "authoritative", icon: "🏛️", title: "权威", desc: "官方权威发布" },
@@ -29,7 +28,7 @@ const SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// localStorage 反馈读写
+// localStorage
 // ---------------------------------------------------------------------------
 
 function loadFeedback(): Feedback {
@@ -45,7 +44,7 @@ function saveFeedback(fb: Feedback): void {
 }
 
 // ---------------------------------------------------------------------------
-// 向后兼容：旧数据没有 summaryCn / category 字段时补全
+// 向后兼容：旧数据没有 summaryCn / category，或 reasonCn 带 ①②③
 // ---------------------------------------------------------------------------
 
 const AUTHORITATIVE_ORGS = new Set([
@@ -58,13 +57,20 @@ const AUTHORITATIVE_ORGS = new Set([
 const LEARNING_RE = /awesome|tutorial|learn|course|guide|roadmap|study|educat/i;
 
 function normalizeCard(card: FeedCard): FeedCard {
-  // 补 summaryCn：取 reasonCn 第一句或 desc
-  if (!card.summaryCn) {
-    if (card.reasonCn) {
-      const firstSentence = card.reasonCn.split(/[。！\n]/)[0];
-      card.summaryCn = firstSentence?.slice(0, 40) || "";
+  // 清理 reasonCn 中的 ①②③ 序号
+  if (card.reasonCn) {
+    card.reasonCn = card.reasonCn.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
+  }
+  // 补 summaryCn：如果为空或和 reasonCn 第一句一样，用一个更短的概括
+  if (!card.summaryCn || card.summaryCn.length === 0) {
+    const desc = card.desc || "";
+    // 尝试从描述中提取关键词组成概括
+    if (desc.length > 0) {
+      card.summaryCn = desc.slice(0, 35);
+    } else if (card.reasonCn) {
+      card.summaryCn = card.reasonCn.slice(0, 35);
     } else {
-      card.summaryCn = card.desc?.slice(0, 40) || "";
+      card.summaryCn = card.name;
     }
   }
   // 补 category
@@ -96,20 +102,13 @@ function normalizeCard(card: FeedCard): FeedCard {
 
 function getSectionCards(cards: FeedCard[], sectionKey: string): FeedCard[] {
   switch (sectionKey) {
-    case "hot":
-      return cards.filter((c) => c.stars >= 5000);
-    case "authoritative":
-      return cards.filter((c) => c.category === "authoritative");
-    case "daily":
-      return cards.filter((c) => c.starGrowth >= 20);
-    case "fun":
-      return cards.filter((c) => c.category === "fun");
-    case "skill":
-      return cards.filter((c) => c.category === "skill");
-    case "learning":
-      return cards.filter((c) => c.category === "learning");
-    default:
-      return cards;
+    case "hot": return cards.filter((c) => c.stars >= 5000);
+    case "authoritative": return cards.filter((c) => c.category === "authoritative");
+    case "daily": return cards.filter((c) => c.starGrowth >= 20);
+    case "fun": return cards.filter((c) => c.category === "fun");
+    case "skill": return cards.filter((c) => c.category === "skill");
+    case "learning": return cards.filter((c) => c.category === "learning");
+    default: return cards;
   }
 }
 
@@ -125,6 +124,7 @@ export default function App() {
   const [feedback, setFeedback] = useState<Feedback>(loadFeedback);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchVisible, setSearchVisible] = useState(10);
+  const [detailCard, setDetailCard] = useState<FeedCard | null>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   // 加载 feed.json
@@ -143,6 +143,16 @@ export default function App() {
         setLoading(false);
       });
   }, []);
+
+  // ESC 关闭弹窗
+  useEffect(() => {
+    if (!detailCard) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDetailCard(null);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [detailCard]);
 
   // 反馈操作
   const handleLike = useCallback((repo: string) => {
@@ -169,7 +179,7 @@ export default function App() {
     });
   }, []);
 
-  // 过滤掉不感兴趣的（搜索 tab 除外）
+  // 过滤不感兴趣
   const visibleCards = useMemo(() => {
     if (tab === "search") return cards;
     return cards.filter((c) => !feedback.dislikes.includes(c.repo));
@@ -179,7 +189,6 @@ export default function App() {
   const sections = useMemo(() => {
     return SECTIONS.map((s) => {
       let list = getSectionCards(visibleCards, s.key);
-      // 本地重排：已赞置顶，其余按 score 降序
       list = [...list].sort((a, b) => {
         const aLiked = feedback.likes.includes(a.repo) ? 1 : 0;
         const bLiked = feedback.likes.includes(b.repo) ? 1 : 0;
@@ -217,7 +226,6 @@ export default function App() {
     );
   }, [visibleCards, searchQuery]);
 
-  // 搜索分页
   useEffect(() => { setSearchVisible(10); }, [searchQuery]);
 
   // 搜索无限滚动
@@ -237,7 +245,12 @@ export default function App() {
     return () => observer.disconnect();
   }, [tab, searchResults]);
 
-  // 统计
+  // 分区跳转
+  const scrollToSection = useCallback((key: string) => {
+    const el = document.getElementById(`section-${key}`);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   const stats = useMemo(() => ({
     total: cards.length,
     bigbro: bigbroCards.length,
@@ -250,7 +263,6 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* 顶部导航 */}
       <header className="header">
         <div className="header-inner">
           <h1 className="logo">📡 开源信息流</h1>
@@ -271,11 +283,25 @@ export default function App() {
         </div>
       </header>
 
-      {/* 内容区 */}
       <main className="main">
         {/* === 推荐 tab === */}
         {tab === "feed" && (
           <>
+            {/* 分区跳转导航 */}
+            {!loading && !error && sections.length > 0 && (
+              <div className="section-nav">
+                {sections.map((s) => (
+                  <button
+                    key={s.key}
+                    className="section-pill"
+                    onClick={() => scrollToSection(s.key)}
+                  >
+                    {s.icon} {s.title}
+                  </button>
+                ))}
+              </div>
+            )}
+
             {loading && (
               <div className="status">
                 <div className="spinner" />
@@ -283,15 +309,17 @@ export default function App() {
               </div>
             )}
             {error && (
-              <div className="status error">
-                <p>⚠️ 加载失败: {error}</p>
-              </div>
+              <div className="status error"><p>⚠️ 加载失败: {error}</p></div>
             )}
             {!loading && !error && sections.length === 0 && (
               <div className="status"><p>📭 暂无内容</p></div>
             )}
             {!loading && !error && sections.map((section) => (
-              <section key={section.key} className="section">
+              <section
+                key={section.key}
+                id={`section-${section.key}`}
+                className="section"
+              >
                 <div className="section-header">
                   <span className="section-icon">{section.icon}</span>
                   <span className="section-title">{section.title}</span>
@@ -303,10 +331,8 @@ export default function App() {
                     <FeedCardMemo
                       key={card.repo}
                       card={card}
-                      liked={feedback.likes.includes(card.repo)}
-                      disliked={feedback.dislikes.includes(card.repo)}
-                      onLike={handleLike}
-                      onDislike={handleDislike}
+                      
+                      onOpen={setDetailCard}
                     />
                   ))}
                 </div>
@@ -318,16 +344,13 @@ export default function App() {
         {/* === 大牛 tab === */}
         {tab === "bigbro" && (
           <>
-            {/* 大牛 profile */}
             <div className="bigbro-profile">
               <img
                 src={`https://github.com/${BIGBRO_NAME}.png?size=72`}
                 alt={BIGBRO_NAME}
                 className="bigbro-avatar"
                 loading="lazy"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.visibility = "hidden";
-                }}
+                onError={(e) => { (e.target as HTMLImageElement).style.visibility = "hidden"; }}
               />
               <div className="bigbro-info">
                 <h2>{BIGBRO_NAME}</h2>
@@ -349,10 +372,8 @@ export default function App() {
                   <FeedCardMemo
                     key={card.repo}
                     card={card}
-                    liked={feedback.likes.includes(card.repo)}
-                    disliked={feedback.dislikes.includes(card.repo)}
-                    onLike={handleLike}
-                    onDislike={handleDislike}
+                    
+                    onOpen={setDetailCard}
                   />
                 ))}
               </div>
@@ -381,9 +402,7 @@ export default function App() {
                 autoFocus
               />
               {searchQuery && (
-                <button className="search-clear" onClick={() => setSearchQuery("")}>
-                  ✕
-                </button>
+                <button className="search-clear" onClick={() => setSearchQuery("")}>✕</button>
               )}
             </div>
             {searchQuery && searchResults.length === 0 && (
@@ -395,10 +414,8 @@ export default function App() {
                   <FeedCardMemo
                     key={card.repo}
                     card={card}
-                    liked={feedback.likes.includes(card.repo)}
-                    disliked={feedback.dislikes.includes(card.repo)}
-                    onLike={handleLike}
-                    onDislike={handleDislike}
+                    
+                    onOpen={setDetailCard}
                   />
                 ))}
               </div>
@@ -430,11 +447,22 @@ export default function App() {
         )}
       </main>
 
-      {/* 底部 */}
       <footer className="footer">
         <span>{stats.total} 个项目 · {stats.sections} 个分区 · </span>
         <span>已赞 {feedback.likes.length} · 不感兴趣 {feedback.dislikes.length}</span>
       </footer>
+
+      {/* 详情弹窗 */}
+      {detailCard && (
+        <CardDetail
+          card={detailCard}
+          liked={feedback.likes.includes(detailCard.repo)}
+          disliked={feedback.dislikes.includes(detailCard.repo)}
+          onLike={handleLike}
+          onDislike={handleDislike}
+          onClose={() => setDetailCard(null)}
+        />
+      )}
     </div>
   );
 }
