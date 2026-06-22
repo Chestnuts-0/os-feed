@@ -27,7 +27,7 @@ import type {
 
 const DATA_DIR = "data";
 const FEED_PATH = path.join(DATA_DIR, "feed.json");
-const BATCH_SIZE = 20;
+const BATCH_SIZE = 10;
 
 // 权威组织/官方仓库 owner 前缀
 const AUTHORITATIVE_ORGS = new Set([
@@ -161,7 +161,7 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
     if (batch.length === 0) continue;
     try {
       const prompt = buildFeedScoringPrompt(batch, aiInterestsText);
-      const raw = await callLlm(prompt, 4096);
+      const raw = await callLlm(prompt, 8192);
       const parsed = parseScoringResult(raw);
       results.push(...parsed);
       console.log(

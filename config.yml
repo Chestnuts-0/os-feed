@@ -130,10 +130,16 @@ trending_topics:
   # 好玩有趣
   - { q: "topic:game", label: "game" }
   - { q: "topic:emulator", label: "emulator" }
+  # 更多领域
+  - { q: "topic:docker", label: "docker" }
+  - { q: "topic:terminal", label: "terminal" }
+  - { q: "topic:database", label: "database" }
+  - { q: "topic:security", label: "security" }
+  - { q: "topic:open-source", label: "open-source" }
 
 # ── star 门槛 ──────────────────────────────────────────────────
 # 总 star 数低于此值的项目不进信息流
-star_threshold: 50
+star_threshold: 10
 
 # ── 兴趣画像 ───────────────────────────────────────────────────
 # ai_interests_text 是给 AI 的自然语言兴趣描述（TrendRadar 式），
