@@ -22,7 +22,7 @@ export class AgnesProvider extends OpenAICompatibleProvider {
     super({
       apiKey: opts?.apiKey ?? process.env["AGNES_API_KEY"],
       baseURL: AGNES_BASE_URL,
-      model: opts?.model ?? process.env["AGNES_MODEL"] ?? "Agnes-2.0-Flash",
+      model: opts?.model ?? process.env["AGNES_MODEL"] ?? "agnes-2.0-flash",
     });
   }
 }
