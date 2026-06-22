@@ -1,5 +1,5 @@
 /* =========================================================================
-   GitTok — 全局样式 v4
+   GitTok — 全局样式 v5
    衬线字体 · 两列网格 · 详情弹窗 · 分区导航
    ========================================================================= */
 
@@ -31,8 +31,8 @@
   --border: rgba(255, 255, 255, 0.08);
   --radius: 16px;
   --radius-sm: 10px;
-  --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--card-border-hover);
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--card-border);
+  --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.15), 0 0 0 1px var(--card-border-hover), 0 0 24px rgba(99, 102, 241, 0.08);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--card-border);
   --max-width: 1650px;
   --header-blur: blur(20px) saturate(180%);
   --header-bg: rgba(10, 11, 15, 0.72);
@@ -50,13 +50,13 @@
     --text-secondary: #555;
     --text-muted: #999;
     --border: rgba(0, 0, 0, 0.08);
-    --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px var(--card-border-hover);
-    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--card-border);
+    --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05), 0 0 0 1px var(--card-border-hover), 0 0 24px rgba(99, 102, 241, 0.06);
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--card-border);
     --header-bg: rgba(255, 255, 255, 0.72);
   }
 }
 
-html { font-size: 18px; -webkit-text-size-adjust: 100%; }
+html { font-size: 17px; -webkit-text-size-adjust: 100%; }
 
 body {
   font-family: var(--font-serif);
@@ -156,29 +156,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* --- 分区导航 --- */
 .section-nav {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  gap: 8px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
 .section-pill {
-  padding: 12px 8px;
-  border-radius: 10px;
+  padding: 16px 12px;
+  border-radius: 14px;
   font-size: 0.95rem;
   color: var(--text-secondary);
-  border: 1px solid var(--border);
-  transition: all 0.2s;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(139, 92, 246, 0.03));
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .section-pill:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-light);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(139, 92, 246, 0.1));
+  border-color: rgba(99, 102, 241, 0.4);
+  color: var(--text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
 }
 
 /* --- 分区 --- */
@@ -188,9 +192,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
 }
 
 .section-icon { font-size: 1.3rem; line-height: 1; }
@@ -217,10 +223,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--card-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: var(--radius);
-  padding: 18px;
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 20px;
   box-shadow: var(--shadow-card);
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -230,15 +237,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 2px;
+  height: 3px;
   background: var(--accent-gradient);
   opacity: 0;
   transition: opacity 0.3s;
 }
 
 .card:hover {
+  border-color: rgba(99, 102, 241, 0.25);
   box-shadow: var(--shadow-hover);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 .card:hover::before { opacity: 1; }
 
@@ -457,16 +465,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   letter-spacing: 0.5px;
 }
 
-.detail-original-desc {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  font-style: italic;
+.detail-detail {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--text-secondary);
   margin-bottom: 20px;
-  padding: 12px 16px;
-  background: var(--card-bg);
+  white-space: pre-wrap;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  line-height: 1.7;
+  border-left: 3px solid var(--accent);
 }
 
 .detail-meta {

@@ -48,12 +48,13 @@ ${list}
 - "repo": "owner/repo"（与输入一致）
 - "ai_dim": 从 [${AI_DIMS.join(", ")}] 中选一个最贴切的分类
 - "ai_score": 0 到 1 的浮点数，表示该项目与用户兴趣描述的相关度（1 = 非常相关，0 = 完全无关）。判断依据：是否 AI 相关、是否好玩有趣、是否实用能直接用、star 热度
-- "summary_cn": 一句话通俗概括，用大白话说清楚这玩意是干啥的。要求：有趣、接地气、让人一眼看懂，不超过30个字。像朋友给你安利一样。注意：不能和 reason_cn 的第一句话一样，必须用完全不同的角度和措辞。例如：“不用显卡也能在笔记本上跑大模型的神器”
-- "reason_cn": 中文专业描述，一段连贯的文字（不要用①②③等序号编号），涵盖：这个项目是干嘛的、为什么值得关注、怎么用或适合谁。如果想分点说明，用换行+·开头的方式。不要重复 summary_cn 的内容。
+- "summary_cn": 一句话通俗描述，用大白话说清楚这玩意是干啥的。要求：有趣、接地气、让人一眼看懂且有兴趣继续了解，不超过30个字。像朋友给你安利一样。注意：不能和 reason_cn/detail_cn 的内容重复，必须用完全不同的角度和措辞。例如：“不用显卡也能在笔记本上跑大模型的神器”
+- "reason_cn": 简要介绍，两三行（约80-150字），一段连贯的文字。要求：比 summary_cn 更具体，可以出现专业术语和技术概念，但读者仍能在较短篇幅内看懂项目更细节的内容。不要用①②③等序号编号。不要重复 summary_cn 的内容。
+- "detail_cn": 详情介绍，约300-500字，一段或多段连贯文字。要求：兼顾通俗易懂且有趣的描述，同时保证专业度和细致度。需涵盖：这个项目具体做什么、核心技术亮点、为什么值得关注、怎么上手用、适合什么人、社区生态如何等。如果想分点说明，用换行+·开头的方式。不要用①②③序号。不要重复 summary_cn 和 reason_cn 已有内容，而是在此基础上深入展开。
 
 # 输出格式
 只返回一个 JSON 数组，不要任何其他文字、不要 markdown 代码块标记。示例：
-[{"repo":"owner/repo","ai_dim":"AI Agent","ai_score":0.85,"summary_cn":"不用显卡也能在笔记本上跑大模型的神器","reason_cn":"这是用纯C++重写的大模型推理引擎，让CPU也能跑量化后的大模型。它把大模型使用门槛从需要A100拉低到有台电脑就行，几行命令就能在笔记本上跑起来一个能对话的AI。适合想在本地体验大模型、做AI应用原型、或研究模型量化的开发者。"}]`;
+[{"repo":"owner/repo","ai_dim":"AI Agent","ai_score":0.85,"summary_cn":"不用显卡也能在笔记本上跑大模型的神器","reason_cn":"基于ggml张量库开发的纯C++推理引擎，支持CPU/GPU混合推理和多种量化方案。提供Python/Node.js等多语言绑定，几行命令即可在本地跑起对话AI。","detail_cn":"这是一个高性能的大模型推理引擎，核心亮点是把推理门槛从需要A100显卡拉低到一台普通笔记本就能跑。\\n\\n· 技术上，它基于ggml张量库，用纯C++实现，支持4/8/16位量化，能在有限内存下加载参数量很大的模型。\\n· 使用上，提供Python、Node.js、Ruby等多语言绑定，也有命令行工具。装好后一行命令就能下载模型并启动对话。\\n· 适合想在本地体验大模型、做AI应用原型、研究模型量化、或受限于硬件无法使用云端API的开发者。\\n· 社区活跃，持续迭代，是目前本地LLM推理生态的重要基础设施之一。"}]`;
 }
 
 /**
@@ -83,6 +84,7 @@ export function parseScoringResult(raw: string): ScoringResult[] {
       ai_score?: number;
       summary_cn?: string;
       reason_cn?: string;
+      detail_cn?: string;
     }>;
     return arr
       .filter((x) => x && typeof x.repo === "string")
@@ -92,6 +94,7 @@ export function parseScoringResult(raw: string): ScoringResult[] {
         aiScore: typeof x.ai_score === "number" ? Math.max(0, Math.min(1, x.ai_score)) : 0.5,
         summaryCn: x.summary_cn ?? "",
         reasonCn: x.reason_cn ?? "",
+        detailCn: x.detail_cn ?? "",
       }));
   } catch (err) {
     console.error(`[feed/scoring] JSON parse failed: ${err}`);

@@ -27,8 +27,10 @@ export interface ScoringResult {
   aiScore: number;
   /** 一句话通俗概括 */
   summaryCn: string;
-  /** 中文专业推荐理由（干嘛的/为什么火/怎么用） */
+  /** 简要介绍（两三行，含专业术语） */
   reasonCn: string;
+  /** 详情介绍（长文，兼顾通俗+专业+细致） */
+  detailCn: string;
 }
 
 /** 信息流分区类型 */
@@ -44,8 +46,10 @@ export interface FeedCard {
   desc: string;
   /** 一句话通俗概括（大白话，有趣，让用户一眼看懂） */
   summaryCn: string;
-  /** 中文专业推荐理由（详细描述：干嘛的/为什么火/怎么用） */
+  /** 简要介绍（两三行，含专业术语但精炼） */
   reasonCn: string;
+  /** 详情介绍（长文，兼顾通俗+专业+细致，深度解读） */
+  detailCn: string;
   stars: number;
   /** 近期 star 增长（trending 用 todayStars，search 用 0） */
   starGrowth: number;

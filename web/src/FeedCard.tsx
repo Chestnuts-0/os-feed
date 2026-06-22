@@ -56,6 +56,7 @@ interface Props {
 
 function FeedCardComponent({ card, onOpen }: Props) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
+  const reason = cleanReason(card.reasonCn || card.desc);
 
   return (
     <article className="card" onClick={() => onOpen(card)}>
@@ -83,6 +84,8 @@ function FeedCardComponent({ card, onOpen }: Props) {
       </div>
 
       {card.summaryCn && <p className="summary">{card.summaryCn}</p>}
+
+      {reason && <p className="reason-clamped">{reason}</p>}
 
       <div className="card-meta">
         <span className="meta-item stars" title={`${card.stars} stars`}>
@@ -154,15 +157,15 @@ export function CardDetail({ card, liked, disliked, onLike, onDislike, onClose }
 
         {reason && (
           <>
-            <div className="detail-label">详细解读</div>
+            <div className="detail-label">简要介绍</div>
             <p className="detail-reason">{reason}</p>
           </>
         )}
 
-        {card.desc && (
+        {card.detailCn && (
           <>
-            <div className="detail-label">项目原始描述（英文）</div>
-            <p className="detail-original-desc">{card.desc}</p>
+            <div className="detail-label">深度解读</div>
+            <p className="detail-detail">{card.detailCn}</p>
           </>
         )}
 

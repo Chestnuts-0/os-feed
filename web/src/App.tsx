@@ -61,16 +61,21 @@ function normalizeCard(card: FeedCard): FeedCard {
   if (card.reasonCn) {
     card.reasonCn = card.reasonCn.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
   }
-  // 补 summaryCn：优先从中文 reasonCn 提取，避免回退到英文 desc
+  // 补 summaryCn：优先从中文 reasonCn 提取第一句完整句子，避免截断
   if (!card.summaryCn || card.summaryCn.length === 0) {
     if (card.reasonCn) {
       const cleaned = card.reasonCn.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
-      card.summaryCn = cleaned.slice(0, 40);
+      const match = cleaned.match(/^[^。！？\n]*[。！？]?/);
+      card.summaryCn = match ? match[0].trim() : cleaned.slice(0, 40);
     } else if (card.desc) {
       card.summaryCn = card.desc.slice(0, 40);
     } else {
       card.summaryCn = card.name;
     }
+  }
+  // 补 detailCn（旧数据没有，留空即可，详情页不显示该区块）
+  if (!card.detailCn) {
+    card.detailCn = "";
   }
   // 补 category
   if (!card.category) {

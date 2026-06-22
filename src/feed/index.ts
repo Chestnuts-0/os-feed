@@ -291,6 +291,7 @@ export async function generateFeed(
       desc: m.desc,
       summaryCn: sc?.summaryCn ?? "",
       reasonCn: sc?.reasonCn ?? "",
+      detailCn: sc?.detailCn ?? "",
       stars: m.stars,
       starGrowth: m.starGrowth,
       language: m.language,

@@ -12,8 +12,10 @@ export interface FeedCard {
   desc: string;
   /** 一句话通俗概括（大白话，有趣） */
   summaryCn: string;
-  /** 中文专业推荐理由（详细） */
+  /** 简要介绍（两三行，含专业术语） */
   reasonCn: string;
+  /** 详情介绍（长文，兼顾通俗+专业+细致） */
+  detailCn: string;
   stars: number;
   starGrowth: number;
   language: string;
