@@ -34,7 +34,7 @@ export interface ScoringResult {
 }
 
 /** 信息流分区类型 */
-export type FeedCategory = "hot" | "authoritative" | "daily" | "fun" | "skill" | "learning";
+export type FeedCategory = "hot" | "authoritative" | "daily" | "fun" | "skill" | "learning" | "ai" | "rising";
 
 /** 信息流卡片 —— 前端消费的最终格式 */
 export interface FeedCard {

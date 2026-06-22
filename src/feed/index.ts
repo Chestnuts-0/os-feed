@@ -56,39 +56,49 @@ const AUTHORITATIVE_ORGS = new Set([
 // 学习资源关键词
 const LEARNING_KEYWORDS = /awesome|tutorial|learn|course|guide|roadmap|面试|interview|study|educat/i;
 
-/** 根据项目属性判定分区 */
+/** 根据项目属性判定分区（每个项目只属于一个分区，零重复） */
 function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
   const repoLower = card.repo.toLowerCase();
   const descLower = card.desc.toLowerCase();
   const topicsLower = card.topics.map((t) => t.toLowerCase());
   const allText = `${repoLower} ${descLower} ${topicsLower.join(" ")}`;
 
-  // SKILL 分区：名字或 topics 含 skill
+  // 1. SKILL 分区：名字或 topics 含 skill
   if (repoLower.includes("skill") || topicsLower.some((t) => t.includes("skill"))) {
     return "skill";
   }
 
-  // 学习分区：教程/awesome/指南类
+  // 2. 学习分区：教程/awesome/指南类
   if (LEARNING_KEYWORDS.test(allText) || topicsLower.includes("awesome")) {
     return "learning";
   }
 
-  // 兴趣分区：好玩但非 AI
+  // 3. 兴趣分区：好玩但非 AI
   if (card.aiDim === "非AI-好玩") {
     return "fun";
   }
 
-  // 权威分区：官方组织 + 有一定热度
+  // 4. AI 分区：AI 相关
+  if (card.aiDim.startsWith("AI") || card.aiDim === "模型与训练" || card.aiDim === "RAG与知识") {
+    return "ai";
+  }
+
+  // 5. 权威分区：官方组织 + 有一定热度
   if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500) {
     return "authoritative";
   }
 
-  // 每日分区：当天 star 增长高
+  // 6. 每日分区：当天 star 增长高
   if (card.starGrowth >= 5) {
     return "daily";
   }
 
-  // 默认热门
+  // 7. 新锐分区：star 不高但 AI 相关度高
+  if (card.stars < 1000 && card.aiScore >= 0.6) {
+    return "rising";
+  }
+
+  // 8. 默认热门
   return "hot";
 }
 
@@ -172,6 +182,64 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
     }
   }
   return results;
+}
+
+// ---------------------------------------------------------------------------
+// 模板中文描述（LLM 评分失败时的兜底，确保所有项目都有中文内容）
+// ---------------------------------------------------------------------------
+
+const TOPIC_CN_MAP: Record<string, string> = {
+  llm: "大语言模型",
+  "ai-agent": "AI智能体",
+  rag: "检索增强生成",
+  "machine-learning": "机器学习",
+  "deep-learning": "深度学习",
+  "generative-ai": "生成式AI",
+  "stable-diffusion": "图像生成",
+  chatbot: "对话机器人",
+  transformer: "Transformer架构",
+  "vector-database": "向量数据库",
+  "large-language-model": "大语言模型",
+  "developer-tools": "开发工具",
+  automation: "自动化",
+  tutorial: "教程",
+  interview: "面试",
+  game: "游戏",
+  emulator: "模拟器",
+  docker: "容器化",
+  terminal: "终端工具",
+  database: "数据库",
+  security: "安全",
+  "open-source": "开源",
+};
+
+function translateTopic(topic: string): string {
+  return TOPIC_CN_MAP[topic.toLowerCase()] ?? topic;
+}
+
+function generateTemplateDescriptions(m: MergedRepo): {
+  summaryCn: string;
+  reasonCn: string;
+  detailCn: string;
+} {
+  const lang = m.language || "未知";
+  const topics = m.topics.length > 0 ? m.topics.slice(0, 5) : [];
+  const topicCn = topics.map(translateTopic).join("、");
+  const topicStr = topicCn || "开源";
+  const starStr =
+    m.stars >= 10000
+      ? `${(m.stars / 10000).toFixed(1)}万`
+      : m.stars >= 1000
+        ? `${(m.stars / 1000).toFixed(1)}k`
+        : `${m.stars}`;
+
+  const summaryCn = `${lang}开发的${topicStr}项目，${starStr} star${m.starGrowth > 0 ? `，今日+${m.starGrowth}` : ""}`;
+
+  const reasonCn = `这是一个使用 ${lang} 开发的开源项目，在 GitHub 上拥有 ${m.stars} 个 star。${m.starGrowth > 0 ? `今日 star 增长 ${m.starGrowth}，社区热度上升中。` : ""}项目涉及 ${topicStr} 等方向，适合对这些领域感兴趣的开发者关注和使用。`;
+
+  const detailCn = `这是一个使用 ${lang} 编写的开源项目，目前在 GitHub 上获得 ${m.stars} 个 star。\n\n· 开发语言：${lang}\n· 项目标签：${topicStr}\n· Star 总数：${m.stars}${m.starGrowth > 0 ? `\n· 今日增长：+${m.starGrowth}` : ""}\n· 数据来源：${m.source === "trending" ? "GitHub 热门趋势" : m.source === "bigbro" ? "大牛关注" : "主题搜索"}\n\n如果你对 ${topicStr} 方向感兴趣，这个项目值得关注。建议直接访问 GitHub 主页查看完整的 README 文档、源代码和使用示例，了解更多技术细节。`;
+
+  return { summaryCn, reasonCn, detailCn };
 }
 
 // ---------------------------------------------------------------------------
@@ -278,20 +346,35 @@ export async function generateFeed(
   const scoringResults = await scoreBatched(allRepos, config.interests.aiInterestsText);
   const scoringMap = new Map(scoringResults.map((r) => [r.repo, r]));
 
-  // 4. 组装 FeedCard
+  // 4. 组装 FeedCard（LLM 评分缺失时用模板中文描述兜底）
   const cards: FeedCard[] = [];
+  let templateCount = 0;
   for (const m of repoMap.values()) {
     const sc = scoringMap.get(m.repo);
     const [owner = "", ...nameParts] = m.repo.split("/");
     const name = nameParts.join("/") || m.repo;
+
+    let summaryCn = sc?.summaryCn ?? "";
+    let reasonCn = sc?.reasonCn ?? "";
+    let detailCn = sc?.detailCn ?? "";
+
+    // LLM 评分失败 → 模板中文描述兜底
+    if (!reasonCn) {
+      const tpl = generateTemplateDescriptions(m);
+      summaryCn = tpl.summaryCn;
+      reasonCn = tpl.reasonCn;
+      detailCn = tpl.detailCn;
+      templateCount++;
+    }
+
     const partialCard = {
       repo: m.repo,
       owner,
       name,
       desc: m.desc,
-      summaryCn: sc?.summaryCn ?? "",
-      reasonCn: sc?.reasonCn ?? "",
-      detailCn: sc?.detailCn ?? "",
+      summaryCn,
+      reasonCn,
+      detailCn,
       stars: m.stars,
       starGrowth: m.starGrowth,
       language: m.language,
@@ -309,6 +392,9 @@ export async function generateFeed(
       category: classifyCard(partialCard),
     });
   }
+  console.log(
+    `  [feed] ${templateCount}/${cards.length} repos used template descriptions (LLM scoring missed)`,
+  );
 
   // 5. star 门槛过滤
   const filtered = cards.filter((c) => c.stars >= config.starThreshold);

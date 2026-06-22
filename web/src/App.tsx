@@ -90,10 +90,18 @@ function normalizeCard(card: FeedCard): FeedCard {
       card.category = "learning";
     } else if (card.aiDim === "非AI-好玩") {
       card.category = "fun";
+    } else if (
+      card.aiDim.startsWith("AI") ||
+      card.aiDim === "模型与训练" ||
+      card.aiDim === "RAG与知识"
+    ) {
+      card.category = "ai";
     } else if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500) {
       card.category = "authoritative";
     } else if (card.starGrowth >= 5) {
       card.category = "daily";
+    } else if (card.stars < 1000 && card.aiScore >= 0.6) {
+      card.category = "rising";
     } else {
       card.category = "hot";
     }
@@ -106,19 +114,8 @@ function normalizeCard(card: FeedCard): FeedCard {
 // ---------------------------------------------------------------------------
 
 function getSectionCards(cards: FeedCard[], sectionKey: string): FeedCard[] {
-  switch (sectionKey) {
-    case "hot": return cards.filter((c) => c.stars >= 1000);
-    case "ai": return cards.filter((c) =>
-      c.aiDim.startsWith("AI") || c.aiDim === "模型与训练" || c.aiDim === "RAG与知识"
-    );
-    case "daily": return cards.filter((c) => c.starGrowth > 0);
-    case "authoritative": return cards.filter((c) => c.category === "authoritative");
-    case "rising": return cards.filter((c) => c.stars < 1000 && c.aiScore >= 0.6);
-    case "fun": return cards.filter((c) => c.category === "fun" || c.aiDim === "非AI-好玩");
-    case "skill": return cards.filter((c) => c.category === "skill");
-    case "learning": return cards.filter((c) => c.category === "learning");
-    default: return cards;
-  }
+  // 用 category 字段独占分区，每个项目只出现在一个分区，零重复
+  return cards.filter((c) => c.category === sectionKey);
 }
 
 // ---------------------------------------------------------------------------
@@ -188,10 +185,11 @@ export default function App() {
     });
   }, []);
 
-  // 过滤不感兴趣
+  // 过滤不感兴趣 + 过滤无中文描述的卡片（安全网，防止英文泄漏）
   const visibleCards = useMemo(() => {
-    if (tab === "search") return cards;
-    return cards.filter((c) => !feedback.dislikes.includes(c.repo));
+    const withContent = cards.filter((c) => c.reasonCn && c.reasonCn.length > 0);
+    if (tab === "search") return withContent;
+    return withContent.filter((c) => !feedback.dislikes.includes(c.repo));
   }, [cards, feedback, tab]);
 
   // 分区数据
@@ -204,7 +202,7 @@ export default function App() {
         if (aLiked !== bLiked) return bLiked - aLiked;
         return b.score - a.score;
       });
-      return { ...s, cards: list.slice(0, 50) };
+      return { ...s, cards: list.slice(0, 300) };
     }).filter((s) => s.cards.length > 0);
   }, [visibleCards, feedback]);
 

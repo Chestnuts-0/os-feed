@@ -3,7 +3,7 @@
  * 前端独立定义避免引入 Node 依赖。
  */
 
-export type FeedCategory = "hot" | "authoritative" | "daily" | "fun" | "skill" | "learning";
+export type FeedCategory = "hot" | "authoritative" | "daily" | "fun" | "skill" | "learning" | "ai" | "rising";
 
 export interface FeedCard {
   repo: string;
