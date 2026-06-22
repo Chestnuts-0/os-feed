@@ -28,6 +28,10 @@ import type {
 const DATA_DIR = "data";
 const FEED_PATH = path.join(DATA_DIR, "feed.json");
 const BATCH_SIZE = 10;
+/** LLM 评分的仓库上限（按 star 排序，高 star 优先） */
+const MAX_LLM_SCORE_REPOS = 2000;
+/** LLM 并发批次数（与 report.ts 的 LLM_CONCURRENCY 匹配） */
+const SCORE_CONCURRENCY = 5;
 
 // 权威组织/官方仓库 owner 前缀
 const AUTHORITATIVE_ORGS = new Set([
@@ -166,20 +170,36 @@ async function fetchRepoDetail(repo: string): Promise<RepoDetail | null> {
 
 async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): Promise<ScoringResult[]> {
   const results: ScoringResult[] = [];
+  const batches: RepoForScoring[][] = [];
   for (let i = 0; i < repos.length; i += BATCH_SIZE) {
     const batch = repos.slice(i, i + BATCH_SIZE);
-    if (batch.length === 0) continue;
-    try {
-      const prompt = buildFeedScoringPrompt(batch, aiInterestsText);
-      const raw = await callLlm(prompt, 8192);
-      const parsed = parseScoringResult(raw);
-      results.push(...parsed);
-      console.log(
-        `  [feed/scoring] batch ${Math.floor(i / BATCH_SIZE) + 1}: ${parsed.length}/${batch.length} scored`,
-      );
-    } catch (err) {
-      console.error(`  [feed/scoring] batch ${Math.floor(i / BATCH_SIZE) + 1} failed: ${err}`);
-    }
+    if (batch.length > 0) batches.push(batch);
+  }
+  console.log(
+    `  [feed/scoring] ${batches.length} batches (${repos.length} repos), concurrency=${SCORE_CONCURRENCY}`,
+  );
+
+  // 并行评分：每次 SCORE_CONCURRENCY 个批次同时进行，利用 LLM 并发槽位
+  for (let i = 0; i < batches.length; i += SCORE_CONCURRENCY) {
+    const chunk = batches.slice(i, i + SCORE_CONCURRENCY);
+    const chunkResults = await Promise.all(
+      chunk.map(async (batch, idx) => {
+        const batchNum = i + idx + 1;
+        try {
+          const prompt = buildFeedScoringPrompt(batch, aiInterestsText);
+          const raw = await callLlm(prompt, 8192);
+          const parsed = parseScoringResult(raw);
+          console.log(
+            `  [feed/scoring] batch ${batchNum}/${batches.length}: ${parsed.length}/${batch.length} scored`,
+          );
+          return parsed;
+        } catch (err) {
+          console.error(`  [feed/scoring] batch ${batchNum}/${batches.length} failed: ${err}`);
+          return [];
+        }
+      }),
+    );
+    for (const r of chunkResults) results.push(...r);
   }
   return results;
 }
@@ -334,16 +354,19 @@ export async function generateFeed(
     );
   }
 
-  // 3. LLM 批量评分
-  const allRepos: RepoForScoring[] = [...repoMap.values()].map((m) => ({
+  // 3. LLM 批量评分（按 star 排序，高 star 优先，cap MAX_LLM_SCORE_REPOS）
+  const sortedRepos = [...repoMap.values()].sort((a, b) => b.stars - a.stars);
+  const reposToScore: RepoForScoring[] = sortedRepos.slice(0, MAX_LLM_SCORE_REPOS).map((m) => ({
     repo: m.repo,
     description: m.desc,
     stars: m.stars,
     language: m.language,
     topics: m.topics,
   }));
-  console.log(`[feed] scoring ${allRepos.length} repos via LLM...`);
-  const scoringResults = await scoreBatched(allRepos, config.interests.aiInterestsText);
+  console.log(
+    `[feed] scoring ${reposToScore.length}/${repoMap.size} repos via LLM (top by stars, cap ${MAX_LLM_SCORE_REPOS})...`,
+  );
+  const scoringResults = await scoreBatched(reposToScore, config.interests.aiInterestsText);
   const scoringMap = new Map(scoringResults.map((r) => [r.repo, r]));
 
   // 4. 组装 FeedCard（LLM 评分缺失时用模板中文描述兜底）
