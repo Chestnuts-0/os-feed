@@ -35,7 +35,7 @@ export function buildFeedScoringPrompt(repos: RepoForScoring[], aiInterestsText:
     })
     .join("\n");
 
-  return `你是一位资深开源项目策展人，面向中文读者。根据用户的兴趣描述，对以下 GitHub 项目逐个评估并生成中文推荐理由。
+  return `你是一位资深开源项目策展人，面向中文读者。根据用户的兴趣描述，对以下 GitHub 项目逐个评估并生成中文推荐内容。
 
 # 用户兴趣描述
 ${aiInterestsText}
@@ -48,14 +48,15 @@ ${list}
 - "repo": "owner/repo"（与输入一致）
 - "ai_dim": 从 [${AI_DIMS.join(", ")}] 中选一个最贴切的分类
 - "ai_score": 0 到 1 的浮点数，表示该项目与用户兴趣描述的相关度（1 = 非常相关，0 = 完全无关）。判断依据：是否 AI 相关、是否好玩有趣、是否实用能直接用、star 热度
-- "reason_cn": 中文推荐理由，恰好三句话，用 ①②③ 编号：
-  ① 这个项目是干嘛的（一句话讲清功能）
+- "summary_cn": 一句话通俗概括，用大白话说清楚这玩意是干啥的。要求：有趣、接地气、让人一眼看懂，不超过30个字。像朋友给你安利一样。例如："不用显卡也能在笔记本上跑大模型的神器"
+- "reason_cn": 中文专业推荐理由，恰好三句话，用 ①②③ 编号：
+  ① 这个项目是干嘛的（一句话讲清核心功能和技术亮点）
   ② 为什么值得关注 / 为什么火（一句话讲价值或亮点）
   ③ 怎么用或适合谁（一句话讲受众或上手方式）
 
 # 输出格式
 只返回一个 JSON 数组，不要任何其他文字、不要 markdown 代码块标记。示例：
-[{"repo":"owner/repo","ai_dim":"AI Agent","ai_score":0.85,"reason_cn":"①这是一个xxx。②因为xxx所以值得关注。③适合xxx人群使用。"}]`;
+[{"repo":"owner/repo","ai_dim":"AI Agent","ai_score":0.85,"summary_cn":"不用显卡也能在笔记本上跑大模型的神器","reason_cn":"①这是用纯C++重写的大模型推理引擎，让CPU也能跑量化后的大模型。②它把大模型门槛从需要A100拉低到有台电脑就行。③适合想在本地体验大模型的开发者。"}]`;
 }
 
 /**
@@ -83,6 +84,7 @@ export function parseScoringResult(raw: string): ScoringResult[] {
       repo?: string;
       ai_dim?: string;
       ai_score?: number;
+      summary_cn?: string;
       reason_cn?: string;
     }>;
     return arr
@@ -91,6 +93,7 @@ export function parseScoringResult(raw: string): ScoringResult[] {
         repo: x.repo as string,
         aiDim: x.ai_dim ?? "其他",
         aiScore: typeof x.ai_score === "number" ? Math.max(0, Math.min(1, x.ai_score)) : 0.5,
+        summaryCn: x.summary_cn ?? "",
         reasonCn: x.reason_cn ?? "",
       }));
   } catch (err) {

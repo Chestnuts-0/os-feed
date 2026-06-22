@@ -101,11 +101,7 @@ openclaw_peers:
 # 追踪这些 GitHub 用户 star 的项目（像关注博主一样）。
 # 可在此列用户名，也可用环境变量 BIGBROS（逗号分隔）覆盖。
 bigbros:
-  - torvalds
-  - gvanrossum
-  - yyx990803
-  - tj
-  - sindresorhus
+  - KKKKhazix
 
 # ── Trending/Search 主题 ───────────────────────────────────────
 # GitHub Search API 查询主题。默认 6 个 AI 主题，已拓宽到"好玩+实用"。

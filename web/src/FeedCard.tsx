@@ -31,7 +31,7 @@ function timeAgo(ts: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// 语言颜色映射（常见语言）
+// 语言颜色映射
 // ---------------------------------------------------------------------------
 
 const LANG_COLORS: Record<string, string> = {
@@ -98,11 +98,16 @@ function FeedCardComponent({ card, liked, disliked, onLike, onDislike }: Props) 
         </div>
       </div>
 
-      {/* 中文推荐理由（核心内容） */}
+      {/* 通俗概括（核心亮点，大白话） */}
+      {card.summaryCn && (
+        <p className="summary">{card.summaryCn}</p>
+      )}
+
+      {/* 专业推荐理由 */}
       {card.reasonCn ? (
         <p className="reason">{card.reasonCn}</p>
       ) : card.desc ? (
-        <p className="reason muted">{card.desc}</p>
+        <p className="reason">{card.desc}</p>
       ) : null}
 
       {/* 元信息条 */}
@@ -111,21 +116,21 @@ function FeedCardComponent({ card, liked, disliked, onLike, onDislike }: Props) 
           ★ {formatStars(card.stars)}
         </span>
         {card.starGrowth > 0 && (
-          <span className="meta-item growth">+{card.starGrowth} today</span>
+          <span className="meta-item growth">+{card.starGrowth} 今日</span>
         )}
         {card.language && (
-          <span className="meta-item lang">
+          <span className="meta-item">
             <span className="lang-dot" style={{ background: langColor }} />
             {card.language}
           </span>
         )}
-        <span className="meta-item dim">{card.aiDim}</span>
+        <span className="dim-badge">{card.aiDim}</span>
       </div>
 
       {/* Topic 标签 */}
       {card.topics.length > 0 && (
         <div className="topics">
-          {card.topics.slice(0, 6).map((t) => (
+          {card.topics.slice(0, 8).map((t) => (
             <span key={t} className="topic-tag">{t}</span>
           ))}
         </div>
@@ -136,7 +141,7 @@ function FeedCardComponent({ card, liked, disliked, onLike, onDislike }: Props) 
         <div className="bigbro-endorse">
           <span className="endorse-icon">👥</span>
           <span className="endorse-text">
-            {card.bigbros.slice(0, 3).join("、")}
+            <strong>{card.bigbros.slice(0, 3).join("、")}</strong>
             {card.bigbros.length > 3 && ` 等${card.bigbros.length}位`}
             {" "}关注的大牛 star 了
           </span>

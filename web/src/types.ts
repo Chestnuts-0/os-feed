@@ -2,11 +2,17 @@
  * 前端 FeedCard 类型 —— 与后端 src/feed/types.ts 的 FeedCard 接口一致。
  * 前端独立定义避免引入 Node 依赖。
  */
+
+export type FeedCategory = "hot" | "authoritative" | "daily" | "fun" | "skill" | "learning";
+
 export interface FeedCard {
   repo: string;
   owner: string;
   name: string;
   desc: string;
+  /** 一句话通俗概括（大白话，有趣） */
+  summaryCn: string;
+  /** 中文专业推荐理由（详细） */
   reasonCn: string;
   stars: number;
   starGrowth: number;
@@ -19,4 +25,5 @@ export interface FeedCard {
   url: string;
   ts: string;
   score: number;
+  category: FeedCategory;
 }

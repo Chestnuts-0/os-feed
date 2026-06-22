@@ -25,9 +25,14 @@ export interface ScoringResult {
   aiDim: string;
   /** 与用户兴趣的相关度 0-1 */
   aiScore: number;
-  /** 中文推荐理由（三句：干嘛的/为什么火/怎么用） */
+  /** 一句话通俗概括 */
+  summaryCn: string;
+  /** 中文专业推荐理由（干嘛的/为什么火/怎么用） */
   reasonCn: string;
 }
+
+/** 信息流分区类型 */
+export type FeedCategory = "hot" | "authoritative" | "daily" | "fun" | "skill" | "learning";
 
 /** 信息流卡片 —— 前端消费的最终格式 */
 export interface FeedCard {
@@ -37,7 +42,9 @@ export interface FeedCard {
   name: string;
   /** 原始描述（可能英文） */
   desc: string;
-  /** 中文推荐理由（三句） */
+  /** 一句话通俗概括（大白话，有趣，让用户一眼看懂） */
+  summaryCn: string;
+  /** 中文专业推荐理由（详细描述：干嘛的/为什么火/怎么用） */
   reasonCn: string;
   stars: number;
   /** 近期 star 增长（trending 用 todayStars，search 用 0） */
@@ -54,6 +61,8 @@ export interface FeedCard {
   ts: string;
   /** 推荐排序分（个性化层计算） */
   score: number;
+  /** 分区分类（前端用于层次化展示） */
+  category: FeedCategory;
 }
 
 /** 用户画像（个性化层） */

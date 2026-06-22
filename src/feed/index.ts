@@ -16,11 +16,81 @@ import type { RadarConfig } from "../config.ts";
 import { callLlm } from "../report.ts";
 import { buildFeedScoringPrompt, parseScoringResult } from "./prompts.ts";
 import { loadProfile, saveProfile, loadFeedback, applyFeedbackToProfile, rankCards } from "./personalize.ts";
-import type { FeedCard, FeedSource, RepoForScoring, ScoringResult, UserProfile } from "./types.ts";
+import type {
+  FeedCard,
+  FeedCategory,
+  FeedSource,
+  RepoForScoring,
+  ScoringResult,
+  UserProfile,
+} from "./types.ts";
 
 const DATA_DIR = "data";
 const FEED_PATH = path.join(DATA_DIR, "feed.json");
 const BATCH_SIZE = 20;
+
+// 权威组织/官方仓库 owner 前缀
+const AUTHORITATIVE_ORGS = new Set([
+  "openai",
+  "anthropics",
+  "google",
+  "google-gemini",
+  "google-research",
+  "microsoft",
+  "meta",
+  "facebookresearch",
+  "huggingface",
+  "nvidia",
+  "stabilityai",
+  "pytorch",
+  "tensorflow",
+  "langchain-ai",
+  "ollama",
+  "vllm-project",
+  "ggerganov",
+  "QwenLM",
+  "deepseek-ai",
+  "mistralai",
+]);
+
+// 学习资源关键词
+const LEARNING_KEYWORDS = /awesome|tutorial|learn|course|guide|roadmap|面试|interview|study|educat/i;
+
+/** 根据项目属性判定分区 */
+function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
+  const repoLower = card.repo.toLowerCase();
+  const descLower = card.desc.toLowerCase();
+  const topicsLower = card.topics.map((t) => t.toLowerCase());
+  const allText = `${repoLower} ${descLower} ${topicsLower.join(" ")}`;
+
+  // SKILL 分区：名字或 topics 含 skill
+  if (repoLower.includes("skill") || topicsLower.some((t) => t.includes("skill"))) {
+    return "skill";
+  }
+
+  // 学习分区：教程/awesome/指南类
+  if (LEARNING_KEYWORDS.test(allText) || topicsLower.includes("awesome")) {
+    return "learning";
+  }
+
+  // 兴趣分区：好玩但非 AI
+  if (card.aiDim === "非AI-好玩") {
+    return "fun";
+  }
+
+  // 权威分区：官方组织 + 有一定热度
+  if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 1000) {
+    return "authoritative";
+  }
+
+  // 每日分区：当天 star 增长高
+  if (card.starGrowth >= 50) {
+    return "daily";
+  }
+
+  // 默认热门
+  return "hot";
+}
 
 // ---------------------------------------------------------------------------
 // 合并中间类型
@@ -214,11 +284,12 @@ export async function generateFeed(
     const sc = scoringMap.get(m.repo);
     const [owner = "", ...nameParts] = m.repo.split("/");
     const name = nameParts.join("/") || m.repo;
-    cards.push({
+    const partialCard = {
       repo: m.repo,
       owner,
       name,
       desc: m.desc,
+      summaryCn: sc?.summaryCn ?? "",
       reasonCn: sc?.reasonCn ?? "",
       stars: m.stars,
       starGrowth: m.starGrowth,
@@ -231,6 +302,10 @@ export async function generateFeed(
       url: `https://github.com/${m.repo}`,
       ts: m.ts,
       score: 0,
+    };
+    cards.push({
+      ...partialCard,
+      category: classifyCard(partialCard),
     });
   }
 
