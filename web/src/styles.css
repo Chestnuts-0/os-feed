@@ -1,5 +1,5 @@
 /* =========================================================================
-   开源信息流 — 全局样式 v3
+   GitTok — 全局样式 v4
    衬线字体 · 两列网格 · 详情弹窗 · 分区导航
    ========================================================================= */
 
@@ -33,7 +33,7 @@
   --radius-sm: 10px;
   --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--card-border-hover);
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--card-border);
-  --max-width: 1100px;
+  --max-width: 1650px;
   --header-blur: blur(20px) saturate(180%);
   --header-bg: rgba(10, 11, 15, 0.72);
   --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
@@ -56,7 +56,7 @@
   }
 }
 
-html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+html { font-size: 18px; -webkit-text-size-adjust: 100%; }
 
 body {
   font-family: var(--font-serif);
@@ -97,7 +97,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .logo {
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   font-weight: 700;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
@@ -155,26 +155,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* --- 分区导航 --- */
 .section-nav {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 12px;
-  margin-bottom: 8px;
-  scrollbar-width: thin;
+  margin-bottom: 20px;
 }
 
-.section-nav::-webkit-scrollbar { height: 4px; }
-.section-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
 .section-pill {
-  padding: 6px 16px;
-  border-radius: 18px;
-  font-size: 0.84rem;
+  padding: 12px 8px;
+  border-radius: 10px;
+  font-size: 0.95rem;
   color: var(--text-secondary);
   border: 1px solid var(--border);
   transition: all 0.2s;
-  white-space: nowrap;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .section-pill:hover {
@@ -443,11 +441,32 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .detail-reason {
-  font-size: 0.92rem;
-  line-height: 1.85;
+  font-size: 1rem;
+  line-height: 1.9;
   color: var(--text-secondary);
   margin-bottom: 20px;
   white-space: pre-wrap;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-original-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--card-bg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  line-height: 1.7;
 }
 
 .detail-meta {
@@ -492,19 +511,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .action-btn {
-  padding: 8px 18px;
-  border-radius: 22px;
-  font-size: 0.84rem;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.25rem;
   border: 1px solid var(--border);
   transition: all 0.25s;
   color: var(--text-secondary);
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.action-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-.like-btn.active { background: rgba(239, 68, 68, 0.12); border-color: var(--danger); color: var(--danger); font-weight: 700; }
-.dislike-btn.active { background: var(--card-bg); color: var(--text-muted); text-decoration: line-through; }
-.open-btn { margin-left: auto; color: var(--accent); border-color: var(--accent); }
+.action-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); transform: scale(1.1); }
+.like-btn.active { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); }
+.dislike-btn.active { opacity: 0.4; }
+.open-btn { margin-left: auto; width: auto; padding: 0 20px; border-radius: 24px; color: var(--accent); border-color: var(--accent); font-size: 0.9rem; font-weight: 600; }
 
 /* Topic 标签 */
 .topics { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
@@ -615,7 +638,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* --- 响应式 --- */
 @media (max-width: 768px) {
   .header-inner { padding: 0 12px; gap: 10px; height: 54px; }
-  .logo { font-size: 1rem; }
+  .logo { font-size: 1.1rem; }
   .tab { padding: 6px 14px; font-size: 0.82rem; }
   .main { padding: 16px 12px 24px; }
   .feed-list { grid-template-columns: 1fr; gap: 12px; }
@@ -624,10 +647,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .detail-card { padding: 24px 20px; }
   .bigbro-profile { padding: 16px; gap: 12px; }
   .bigbro-avatar { width: 56px; height: 56px; border-radius: 16px; }
+  .section-nav { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 480px) {
   .tab { padding: 5px 12px; font-size: 0.78rem; }
   .card-meta { gap: 10px; font-size: 0.76rem; }
-  .section-pill { padding: 5px 12px; font-size: 0.78rem; }
+  .section-pill { padding: 8px 4px; font-size: 0.82rem; }
 }

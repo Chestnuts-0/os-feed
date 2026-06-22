@@ -23,7 +23,7 @@ const SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
   { key: "authoritative", icon: "🏛️", title: "权威", desc: "官方权威发布" },
   { key: "daily", icon: "📈", title: "每日飙升", desc: "今日 star 增长" },
   { key: "fun", icon: "🎮", title: "兴趣", desc: "好玩有趣" },
-  { key: "skill", icon: "⚡", title: "SKILL", desc: "Agent Skill" },
+  { key: "skill", icon: "⚡", title: "技能", desc: "Agent Skill" },
   { key: "learning", icon: "📚", title: "学习", desc: "教程与资源" },
 ];
 
@@ -61,14 +61,13 @@ function normalizeCard(card: FeedCard): FeedCard {
   if (card.reasonCn) {
     card.reasonCn = card.reasonCn.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
   }
-  // 补 summaryCn：如果为空或和 reasonCn 第一句一样，用一个更短的概括
+  // 补 summaryCn：优先从中文 reasonCn 提取，避免回退到英文 desc
   if (!card.summaryCn || card.summaryCn.length === 0) {
-    const desc = card.desc || "";
-    // 尝试从描述中提取关键词组成概括
-    if (desc.length > 0) {
-      card.summaryCn = desc.slice(0, 35);
-    } else if (card.reasonCn) {
-      card.summaryCn = card.reasonCn.slice(0, 35);
+    if (card.reasonCn) {
+      const cleaned = card.reasonCn.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
+      card.summaryCn = cleaned.slice(0, 40);
+    } else if (card.desc) {
+      card.summaryCn = card.desc.slice(0, 40);
     } else {
       card.summaryCn = card.name;
     }
@@ -265,7 +264,7 @@ export default function App() {
     <div className="app">
       <header className="header">
         <div className="header-inner">
-          <h1 className="logo">📡 开源信息流</h1>
+          <h1 className="logo">📡 GitTok</h1>
           <nav className="tabs">
             <button className={`tab${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
               推荐
@@ -449,7 +448,7 @@ export default function App() {
 
       <footer className="footer">
         <span>{stats.total} 个项目 · {stats.sections} 个分区 · </span>
-        <span>已赞 {feedback.likes.length} · 不感兴趣 {feedback.dislikes.length}</span>
+        <span>👍 {feedback.likes.length} · 👎 {feedback.dislikes.length}</span>
       </footer>
 
       {/* 详情弹窗 */}

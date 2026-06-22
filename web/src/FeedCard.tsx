@@ -56,7 +56,6 @@ interface Props {
 
 function FeedCardComponent({ card, onOpen }: Props) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
-  const reason = cleanReason(card.reasonCn || card.desc);
 
   return (
     <article className="card" onClick={() => onOpen(card)}>
@@ -84,8 +83,6 @@ function FeedCardComponent({ card, onOpen }: Props) {
       </div>
 
       {card.summaryCn && <p className="summary">{card.summaryCn}</p>}
-
-      {reason && <p className="reason-clamped">{reason}</p>}
 
       <div className="card-meta">
         <span className="meta-item stars" title={`${card.stars} stars`}>
@@ -155,7 +152,19 @@ export function CardDetail({ card, liked, disliked, onLike, onDislike, onClose }
 
         {card.summaryCn && <p className="detail-summary">{card.summaryCn}</p>}
 
-        {reason && <p className="detail-reason">{reason}</p>}
+        {reason && (
+          <>
+            <div className="detail-label">详细解读</div>
+            <p className="detail-reason">{reason}</p>
+          </>
+        )}
+
+        {card.desc && (
+          <>
+            <div className="detail-label">项目原始描述（英文）</div>
+            <p className="detail-original-desc">{card.desc}</p>
+          </>
+        )}
 
         <div className="detail-meta">
           <span className="meta-item stars" title={`${card.stars} stars`}>
@@ -199,13 +208,13 @@ export function CardDetail({ card, liked, disliked, onLike, onDislike, onClose }
             className={`action-btn like-btn${liked ? " active" : ""}`}
             onClick={() => onLike(card.repo)}
           >
-            {liked ? "❤️ 已赞" : "👍 赞"}
+            👍
           </button>
           <button
             className={`action-btn dislike-btn${disliked ? " active" : ""}`}
             onClick={() => onDislike(card.repo)}
           >
-            ✕ 不感兴趣
+            👎
           </button>
           <a
             href={card.url}
