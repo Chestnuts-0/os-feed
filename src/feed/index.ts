@@ -79,12 +79,12 @@ function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
   }
 
   // 权威分区：官方组织 + 有一定热度
-  if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 1000) {
+  if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500) {
     return "authoritative";
   }
 
   // 每日分区：当天 star 增长高
-  if (card.starGrowth >= 50) {
+  if (card.starGrowth >= 5) {
     return "daily";
   }
 

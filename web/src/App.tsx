@@ -19,9 +19,11 @@ interface Feedback {
 }
 
 const SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
-  { key: "hot", icon: "🔥", title: "热门", desc: "持续高星项目" },
-  { key: "authoritative", icon: "🏛️", title: "权威", desc: "官方权威发布" },
-  { key: "daily", icon: "📈", title: "每日飙升", desc: "今日 star 增长" },
+  { key: "hot", icon: "🔥", title: "热门", desc: "高星项目" },
+  { key: "ai", icon: "🤖", title: "AI前沿", desc: "AI核心技术" },
+  { key: "daily", icon: "📈", title: "每日飙升", desc: "今日star增长" },
+  { key: "authoritative", icon: "🏛️", title: "权威", desc: "官方发布" },
+  { key: "rising", icon: "🚀", title: "新锐发现", desc: "小而美潜力股" },
   { key: "fun", icon: "🎮", title: "兴趣", desc: "好玩有趣" },
   { key: "skill", icon: "⚡", title: "技能", desc: "Agent Skill" },
   { key: "learning", icon: "📚", title: "学习", desc: "教程与资源" },
@@ -67,9 +69,8 @@ function normalizeCard(card: FeedCard): FeedCard {
       const cleaned = card.reasonCn.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
       const match = cleaned.match(/^[^。！？\n]*[。！？]?/);
       card.summaryCn = match ? match[0].trim() : cleaned.slice(0, 40);
-    } else if (card.desc) {
-      card.summaryCn = card.desc.slice(0, 40);
     } else {
+      // reasonCn 也为空时不回退到英文 desc，用项目名
       card.summaryCn = card.name;
     }
   }
@@ -89,9 +90,9 @@ function normalizeCard(card: FeedCard): FeedCard {
       card.category = "learning";
     } else if (card.aiDim === "非AI-好玩") {
       card.category = "fun";
-    } else if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 1000) {
+    } else if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500) {
       card.category = "authoritative";
-    } else if (card.starGrowth >= 50) {
+    } else if (card.starGrowth >= 5) {
       card.category = "daily";
     } else {
       card.category = "hot";
@@ -106,10 +107,14 @@ function normalizeCard(card: FeedCard): FeedCard {
 
 function getSectionCards(cards: FeedCard[], sectionKey: string): FeedCard[] {
   switch (sectionKey) {
-    case "hot": return cards.filter((c) => c.stars >= 5000);
+    case "hot": return cards.filter((c) => c.stars >= 1000);
+    case "ai": return cards.filter((c) =>
+      c.aiDim.startsWith("AI") || c.aiDim === "模型与训练" || c.aiDim === "RAG与知识"
+    );
+    case "daily": return cards.filter((c) => c.starGrowth > 0);
     case "authoritative": return cards.filter((c) => c.category === "authoritative");
-    case "daily": return cards.filter((c) => c.starGrowth >= 20);
-    case "fun": return cards.filter((c) => c.category === "fun");
+    case "rising": return cards.filter((c) => c.stars < 1000 && c.aiScore >= 0.6);
+    case "fun": return cards.filter((c) => c.category === "fun" || c.aiDim === "非AI-好玩");
     case "skill": return cards.filter((c) => c.category === "skill");
     case "learning": return cards.filter((c) => c.category === "learning");
     default: return cards;
@@ -199,7 +204,7 @@ export default function App() {
         if (aLiked !== bLiked) return bLiked - aLiked;
         return b.score - a.score;
       });
-      return { ...s, cards: list.slice(0, 12) };
+      return { ...s, cards: list.slice(0, 50) };
     }).filter((s) => s.cards.length > 0);
   }, [visibleCards, feedback]);
 

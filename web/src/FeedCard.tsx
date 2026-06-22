@@ -56,7 +56,7 @@ interface Props {
 
 function FeedCardComponent({ card, onOpen }: Props) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
-  const reason = cleanReason(card.reasonCn || card.desc);
+  const reason = cleanReason(card.reasonCn);
 
   return (
     <article className="card" onClick={() => onOpen(card)}>
@@ -123,7 +123,7 @@ interface DetailProps {
 
 export function CardDetail({ card, liked, disliked, onLike, onDislike, onClose }: DetailProps) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
-  const reason = cleanReason(card.reasonCn || card.desc);
+  const reason = cleanReason(card.reasonCn);
 
   return (
     <div className="detail-overlay" onClick={onClose}>

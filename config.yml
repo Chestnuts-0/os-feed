@@ -104,22 +104,36 @@ bigbros:
   - KKKKhazix
 
 # ── Trending/Search 主题 ───────────────────────────────────────
-# GitHub Search API 查询主题。默认 6 个 AI 主题，已拓宽到"好玩+实用"。
+# GitHub Search API 查询主题。覆盖 AI/工具/学习/好玩等多个领域。
 trending_topics:
+  # AI 核心
   - { q: "topic:llm", label: "llm" }
   - { q: "topic:ai-agent", label: "ai-agent" }
   - { q: "topic:rag", label: "rag" }
   - { q: "topic:vector-database", label: "vector-db" }
-  - { q: "topic:large-language-model", label: "llm-model" }
   - { q: "topic:machine-learning", label: "ml" }
-  - { q: "topic:awesome", label: "awesome" }
-  - { q: "topic:self-hosted", label: "self-hosted" }
+  - { q: "topic:deep-learning", label: "deep-learning" }
+  - { q: "topic:generative-ai", label: "gen-ai" }
+  - { q: "topic:stable-diffusion", label: "stable-diffusion" }
+  - { q: "topic:chatbot", label: "chatbot" }
+  - { q: "topic:transformer", label: "transformer" }
+  # 工具与开发
   - { q: "topic:cli", label: "cli" }
+  - { q: "topic:developer-tools", label: "dev-tools" }
+  - { q: "topic:self-hosted", label: "self-hosted" }
+  - { q: "topic:automation", label: "automation" }
   - { q: "topic:productivity", label: "productivity" }
+  # 学习资源
+  - { q: "topic:awesome", label: "awesome" }
+  - { q: "topic:tutorial", label: "tutorial" }
+  - { q: "topic:interview", label: "interview" }
+  # 好玩有趣
+  - { q: "topic:game", label: "game" }
+  - { q: "topic:emulator", label: "emulator" }
 
 # ── star 门槛 ──────────────────────────────────────────────────
-# 总 star 数低于此值的项目不进信息流（太冷门不看）
-star_threshold: 100
+# 总 star 数低于此值的项目不进信息流
+star_threshold: 50
 
 # ── 兴趣画像 ───────────────────────────────────────────────────
 # ai_interests_text 是给 AI 的自然语言兴趣描述（TrendRadar 式），

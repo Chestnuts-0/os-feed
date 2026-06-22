@@ -159,7 +159,7 @@ async function searchAiRepos(
     topics.map(async ({ q, label }) => {
       try {
         const query = `${q}+pushed:>${sevenDaysAgo}&sort=stars&order=desc`;
-        const url = `https://api.github.com/search/repositories?q=${query}&per_page=15`;
+        const url = `https://api.github.com/search/repositories?q=${query}&per_page=30`;
         const resp = await fetch(url, { headers });
         if (!resp.ok) {
           console.error(`  [trending/search] "${label}": HTTP ${resp.status}`);
