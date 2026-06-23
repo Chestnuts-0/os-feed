@@ -1,6 +1,6 @@
 {
   "anthropic": {
-    "lastChecked": "2026-06-23T09:59:46.897Z",
+    "lastChecked": "2026-06-23T19:59:28.647Z",
     "seenUrls": {
       "https://www.anthropic.com/news/responsible-scaling-policy-v3": "2026-02-25T23:57:06.000Z",
       "https://www.anthropic.com/research/deprecation-updates-opus-3": "2026-02-25T20:58:11.000Z",
@@ -403,11 +403,12 @@
       "https://www.anthropic.com/research/cyber-competitions": "2026-06-17T16:48:02.000Z",
       "https://www.anthropic.com/research/claude-4-cyber": "2026-06-17T16:47:45.000Z",
       "https://www.anthropic.com/research/biorisk": "2026-06-17T16:47:23.000Z",
-      "https://www.anthropic.com/research/project-fetch-phase-two": "2026-06-18T18:44:44.000Z"
+      "https://www.anthropic.com/research/project-fetch-phase-two": "2026-06-18T18:44:44.000Z",
+      "https://www.anthropic.com/news/introducing-claude-tag": "2026-06-23T19:22:44.000Z"
     }
   },
   "openai": {
-    "lastChecked": "2026-06-23T09:59:39.964Z",
+    "lastChecked": "2026-06-23T19:59:25.720Z",
     "seenUrls": {
       "https://openai.com/index/arvind-kc-chief-people-officer/": "2026-05-29T00:25:33.242Z",
       "https://openai.com/index/put-ai-to-work-for-your-product-team/": "2026-06-12T04:05:36.713Z",
@@ -418,7 +419,7 @@
       "https://openai.com/index/inside-our-in-house-data-agent/": "2026-06-09T23:34:58.570Z",
       "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/": "2026-06-04T10:37:00.451Z",
       "https://openai.com/index/openai-deutschland/": "2026-06-16T09:56:42.362Z",
-      "https://openai.com/news/": "2026-06-23T09:09:36.733Z",
+      "https://openai.com/news/": "2026-06-23T18:38:58.253Z",
       "https://openai.com/news/engineering/": "2026-06-16T18:12:52.761Z",
       "https://openai.com/news/safety-alignment/": "2026-06-16T18:12:27.655Z",
       "https://openai.com/news/product-releases/": "2026-06-16T18:12:07.281Z",
@@ -891,7 +892,7 @@
       "https://openai.com/index/gartner-2025-emerging-leader/": "2026-06-08T07:32:40.882Z",
       "https://openai.com/index/gpt-5-1-for-developers/": "2026-06-09T20:53:17.363Z",
       "https://openai.com/index/dall-e-3/": "2026-06-08T07:47:21.242Z",
-      "https://openai.com/devday/": "2026-06-08T21:51:55.208Z",
+      "https://openai.com/devday/": "2026-06-23T18:06:00.514Z",
       "https://openai.com/index/introducing-gpt-realtime/": "2026-05-22T19:18:36.512Z",
       "https://openai.com/index/introducing-gpt-oss-safeguard/": "2026-06-14T07:22:19.093Z",
       "https://openai.com/index/introducing-agentkit/": "2026-06-05T12:39:25.601Z",
@@ -1023,7 +1024,7 @@
       "https://openai.com/index/continuing-microsoft-partnership/": "2026-05-29T00:26:02.462Z",
       "https://openai.com/index/amazon-partnership/": "2026-06-08T07:44:52.264Z",
       "https://openai.com/index/scaling-ai-for-everyone/": "2026-06-08T07:45:19.098Z",
-      "https://openai.com/index/introducing-the-stateful-runtime-environment-for-agents-in-amazon-bedrock/": "2026-06-23T02:58:09.220Z",
+      "https://openai.com/index/introducing-the-stateful-runtime-environment-for-agents-in-amazon-bedrock/": "2026-06-23T15:32:31.871Z",
       "https://openai.com/index/our-agreement-with-the-department-of-war/": "2026-03-26T17:53:01.029Z",
       "https://openai.com/index/gpt-5-3-instant/": "2026-06-08T11:05:00.163Z",
       "https://openai.com/index/gpt-5-3-instant-system-card/": "2026-05-22T19:09:55.090Z",
@@ -1054,11 +1055,11 @@
       "https://openai.com/index/introducing-openai-safety-fellowship/": "2026-06-12T04:56:53.422Z",
       "https://openai.com/index/next-phase-of-enterprise-ai/": "2026-05-29T00:25:12.093Z",
       "https://openai.com/index/introducing-child-safety-blueprint/": "2026-06-12T04:50:59.482Z",
-      "https://openai.com/index/scaling-trusted-access-for-cyber-defense/": "2026-06-23T05:33:03.882Z",
+      "https://openai.com/index/scaling-trusted-access-for-cyber-defense/": "2026-06-23T13:20:49.867Z",
       "https://openai.com/index/the-next-evolution-of-the-agents-sdk/": "2026-06-04T12:06:25.716Z",
       "https://openai.com/index/codex-for-almost-everything/": "2026-06-09T03:43:07.300Z",
       "https://openai.com/index/introducing-gpt-rosalind/": "2026-06-04T20:29:29.170Z",
-      "https://openai.com/index/accelerating-cyber-defense-ecosystem/": "2026-06-23T00:53:38.968Z",
+      "https://openai.com/index/accelerating-cyber-defense-ecosystem/": "2026-06-23T13:18:50.204Z",
       "https://openai.com/business/guides-and-resources/staying-ahead-in-the-age-of-ai/": "2026-06-11T17:33:22.251Z",
       "https://openai.com/business/guides-and-resources/the-state-of-enterprise-ai-2025-report/": "2026-06-11T17:42:01.420Z",
       "https://openai.com/business/guides-and-resources/chatgpt-business-smb-guide/": "2026-06-11T17:41:01.571Z",
@@ -1111,20 +1112,20 @@
       "https://openai.com/index/openai-frontier-models-and-codex-are-now-available-on-aws/": "2026-06-12T09:31:28.021Z",
       "https://openai.com/index/codex-for-every-role-tool-workflow/": "2026-06-17T20:27:35.935Z",
       "https://openai.com/index/advancing-youth-safety-and-opportunity-through-global-leadership/": "2026-06-05T06:40:18.609Z",
-      "https://openai.com/index/introducing-new-capabilities-to-gpt-rosalind/": "2026-06-23T05:16:10.805Z",
+      "https://openai.com/index/introducing-new-capabilities-to-gpt-rosalind/": "2026-06-23T14:41:08.044Z",
       "https://openai.com/index/chatgpt-memory-dreaming/": "2026-06-16T23:10:43.853Z",
       "https://openai.com/index/openai-submits-confidential-s-1/": "2026-06-17T22:17:03.568Z",
       "https://openai.com/index/built-to-benefit-everyone-our-plan/": "2026-06-18T04:03:56.965Z",
       "https://openai.com/index/economic-research-exchange/": "2026-06-16T18:34:34.824Z",
       "https://openai.com/index/openai-on-oracle-cloud/": "2026-06-19T19:55:28.635Z",
       "https://openai.com/index/openai-to-acquire-ona/": "2026-06-19T05:51:09.079Z",
-      "https://openai.com/index/introducing-openai-partner-network/": "2026-06-20T16:32:22.688Z",
-      "https://openai.com/index/deployment-simulation/": "2026-06-23T07:31:26.563Z",
-      "https://openai.com/index/introducing-life-sci-bench/": "2026-06-23T05:16:10.576Z",
+      "https://openai.com/index/introducing-openai-partner-network/": "2026-06-23T13:22:27.216Z",
+      "https://openai.com/index/deployment-simulation/": "2026-06-23T15:50:26.414Z",
+      "https://openai.com/index/introducing-life-sci-bench/": "2026-06-23T17:03:52.444Z",
       "https://openai.com/index/improving-health-intelligence-in-chatgpt/": "2026-06-18T23:23:45.328Z",
-      "https://openai.com/index/chatgpt-enterprise-spend-controls/": "2026-06-23T06:54:49.787Z",
+      "https://openai.com/index/chatgpt-enterprise-spend-controls/": "2026-06-23T19:13:25.249Z",
       "https://openai.com/index/samsung-electronics-chatgpt-codex-deployment/": "2026-06-22T04:37:34.052Z",
-      "https://openai.com/index/daybreak-securing-the-world/": "2026-06-23T08:42:06.386Z"
+      "https://openai.com/index/daybreak-securing-the-world/": "2026-06-23T16:00:18.002Z"
     }
   }
 }

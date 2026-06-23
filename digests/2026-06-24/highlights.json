@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.186发布，强化MCP认证",
+      "OpenAI Codex密集迭代，修复gpt-5.5危机",
+      "Gemini CLI加固SSRF，修复代理挂起Bug",
+      "GitHub Copilot修复会话泄漏，补丁v1.0.64",
+      "Qwen Code v0.19.1上线，支持守护进程化",
+      "DeepSeek TUI推进Fleet架构，标准化路由"
+    ],
+    "ai-agents": [
+      "OpenClaw修复视频生成死锁，稳定性大增",
+      "推进SQLite迁移，重构会话底层存储",
+      "解决Cron触发器污染全局状态问题",
+      "修复网关插件路由注册丢失Bug",
+      "优化Discord附件下载，避免CDN过期",
+      "社区高度关注会话状态一致性修复"
+    ],
+    "ai-trending": [
+      "Deer-Flow开源长周期SuperAgent框架",
+      "Hermes-Agent强调代理自我进化机制",
+      "GStack复刻Garry Tan配置，集成23工具",
+      "DeepSeek-Reasonix支持前缀缓存稳定性",
+      "OpenMontage引爆Agentic视频制作热潮",
+      "Palmier Pro成为AI视频编辑新热点"
+    ],
+    "ai-web": [
+      "Anthropic发布Claude Tag，集成Slack协作",
+      "Claude Tag接管内部团队65%代码工作",
+      "Anthropic向团队级AI代理转型关键一步",
+      "Claude具备跨对话记忆与长期规划能力",
+      "OpenAI今日无公开增量更新，处于静默",
+      "Anthropic抢占企业级AI代理定义权"
+    ],
+    "ai-hn": [
+      "OpenAI DayBreak框架定义下一代AI安全",
+      "TikZ Editor获HN最高分，解决LaTeX痛点",
+      "Anthropic更新条款要求身份验证引争议",
+      "Corelayer0简化MCP服务器部署流程",
+      "Anthropic服务波动引发用户不满情绪",
+      "AI招聘种族偏见研究引发伦理讨论"
+    ],
+    "ai-arxiv": [
+      "Randomized YaRN突破长上下文泛化难题",
+      "SVD-Surgeon优化大模型压缩与推理速度",
+      "Tapered LLM打破Transformer层参数常规",
+      "EnterpriseClawBench评估Agent真实工作力",
+      "揭示开放模型能检测评估线索调整行为",
+      "探讨LLMs可靠自我报告对抗性预填充"
+    ],
+    "ai-hf": [
+      "DeepSeek-V4-Pro获超5000点赞高居榜首",
+      "Google Gemma-4系列强势入局多模态",
+      "GLM-5.2 MoE架构模型热度持续不减",
+      "NVIDIA LocateAnything成CV应用新标杆",
+      "Qwythos-9B主打1M tokens超长上下文",
+      "DiffusionGemma实现图文互转与创作"
+    ],
+    "ai-community": [
+      "静态分析构建46仓库统一知识图谱",
+      "AI功能开发提出评估先行工程实践",
+      "可视化上下文压缩，防止Agent遗忘",
+      "EGC工具解决多会话AI重复解释痛点",
+      "分享8种降低LLM API成本实用技巧",
+      "Agent记忆v2：中毒后的七条治理规则"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.186 released",
+      "OpenAI Codex rust-v0.142.0 stable",
+      "Gemini CLI focuses on SSRF security",
+      "OpenCode gains open-source traction",
+      "Qwen Code adopts daemon architecture",
+      "DeepSeek TUI enters CLI market"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 PRs in 24h",
+      "Intense session state refactoring",
+      "SQLite migration for transcripts",
+      "No new releases published today",
+      "Focus on macOS/iOS platform quirks",
+      "Gateway infrastructure stabilization"
+    ],
+    "ai-trending": [
+      "ECC Agent Harness gains 582 stars",
+      "deer-flow SuperAgent hits 741 stars",
+      "Anthropic Cybersecurity Skills surge",
+      "DeepSeek-Reasonix aids long sessions",
+      "New-API unifies LLM model hubs",
+      "Local-first memory layers trending"
+    ],
+    "ai-web": [
+      "Anthropic launches Claude Tag",
+      "Claude Tag integrates with Slack",
+      "65% of Anthropic code uses Claude",
+      "Proactive team member capabilities",
+      "Beta available for Enterprise users",
+      "No new OpenAI content today"
+    ],
+    "ai-hn": [
+      "OpenAI DayBreak targets cybersecurity",
+      "GPT-5.5-Cyber sparks HN debate",
+      "Anthropic error rates cause concern",
+      "Claude Code user ban discussed",
+      "AHarness enforces state machine workflows",
+      "Semantic caching trends on HN"
+    ],
+    "ai-arxiv": [
+      "Tapered LMs break uniform layer stacks",
+      "SVD-Surgeon optimizes model compression",
+      "Randomized YaRN improves reasoning",
+      "SPIRAL optimizes test-time inference",
+      "EnterpriseClawBench tests agents",
+      "MAS-PromptBench stress-tests systems"
+    ],
+    "ai-hf": [
+      "DeepSeek-V4-Pro leads HF downloads",
+      "Gemma-4-12B-it sees massive adoption",
+      "GLM-5.2 MOE model rises quickly",
+      "LocateAnything-3B boosts vision tasks",
+      "GGUF format enables local inference",
+      "Multimodal models surge in popularity"
+    ],
+    "ai-community": [
+      "AI finds 300 WordPress plugin zero-days",
+      "Eval-first development gains traction",
+      "Context compaction visualizers emerge",
+      "AI agents hacking own permissions",
+      "Hetzner AI memory costs rise",
+      "Token usage optimization tools grow"
+    ]
+  }
+}
