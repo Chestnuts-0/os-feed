@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.186发布，原生支持MCP认证",
+      "OpenAI Codex修复SQLite日志风暴，gpt-5.5可用",
+      "Gemini CLI加固SSRF，适配Node.js 24+",
+      "GitHub Copilot v1.0.64优化会话恢复",
+      "Kimi Code v1.48.0修复MCP路径解析Bug",
+      "DeepSeek TUI更名CodeWhale，重构Fleet执行"
+    ],
+    "ai-agents": [
+      "OpenClaw日更195 Issue 500 PR，活跃度极高",
+      "Microsoft Teams全功能接入，支持语音视频",
+      "SQLite迁移进展缓慢，核心会话追踪成热点",
+      "修复2026.5.27版本Codex停止回归严重Bug",
+      "内存核心索引优化，提升全文搜索精度",
+      "流式传输段落保留修复，改善长文本输出"
+    ],
+    "ai-trending": [
+      "Deer-Flow开源超智能体框架，支持多子代理协作",
+      "OpenMontage成全球首个开源Agentic视频制作系统",
+      "codebase-memory-mcp毫秒级索引代码库降Token",
+      "AirLLM支持4GB显存跑70B模型，边缘部署首选",
+      "Cognee开源记忆平台，赋予Agent持久化长期记忆",
+      "NVIDIA发布官方AI Agent技能库，推动生态建设"
+    ],
+    "ai-web": [
+      "Anthropic实证研究：专家用AI生产力提升25%",
+      "Anthropic获盖茨基金会2亿美元合作聚焦公益",
+      "Anthropic发布Agentic Coding经济价值深度报告",
+      "OpenAI今日仅更新元数据文章，无实质技术披露",
+      "Anthropic强化企业级落地，绑定社会影响力标准",
+      "OpenAI在AI官方内容追踪中呈现静默状态"
+    ],
+    "ai-hn": [
+      "GLM-5.2本地运行方案成今日最高分热门讨论",
+      "评估显示GLM-5.2代理任务超越GPT-5.5",
+      "Gemini模型长思考出现死循环，稳定性受质疑",
+      "AWS推出Lambda MicroVMs，解决AI代码隔离安全",
+      "PMB提供本地优先AI编码代理记忆管理方案",
+      "社区热议OpenAI IPO前法律压力与Anthropic封号"
+    ],
+    "ai-arxiv": [
+      "Randomized YaRN显著提升超长上下文泛化能力",
+      "Tapered架构挑战Transformer参数均匀分配范式",
+      "SVD-Surgeon实现大模型最优奇异值分解压缩",
+      "AIR机制让多模态模型自适应交错代码推理",
+      "CoorDex解决人形机器人灵巧操作协调难题",
+      "AutoDex突破具身智能数据收集瓶颈"
+    ],
+    "ai-hf": [
+      "DeepSeek-V4-Pro超5k赞领跑，下载量破225万",
+      "GLM-5.2 MoE架构发布，代表国产开源最新水平",
+      "Qwen3.6无限制微调版下载近400万，需求旺盛",
+      "NVIDIA LocateAnything-3B高精度定位模型受捧",
+      "MiniMax-M3多模态旗舰展示中国厂商强劲实力",
+      "Qwythos-9B优化1M长上下文，适配消费级硬件"
+    ],
+    "ai-community": [
+      "Typed Provenance提出向量信任解决Agent责任归属",
+      "开发者日建150+ PR却难就业，引发AI技能反思",
+      "静态分析整合46仓库代码，构建统一知识图谱",
+      "指出Agent缺乏长期记忆导致SDLC逆向痛点",
+      "澄清上下文窗口不等于Agent记忆的设计误区",
+      "AI 72小时发现300个WordPress零日漏洞"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.186 released",
+      "OpenAI Codex rust-v0.143.0 alpha",
+      "Gemini CLI sees 10 hot issues",
+      "GitHub Copilot CLI v1.0.64 out",
+      "Kimi Code CLI v1.48.0 released",
+      "OpenCode focuses on stability"
+    ],
+    "ai-agents": [
+      "OpenClaw has 500 PRs in 24h",
+      "Focus on session state integrity",
+      "Fixes for WhatsApp and Teams",
+      "Regressions in model fallbacks",
+      "Cron job robustness improvements",
+      "Embedded agent runner updates"
+    ],
+    "ai-trending": [
+      "System prompts leaks hit 45k stars",
+      "Rust SDK for Model Context Protocol",
+      "AIRLLM enables massive model inference",
+      "Shift to long-horizon autonomous agents",
+      "Local-first privacy-centric AI rises",
+      "Community demands prompt transparency"
+    ],
+    "ai-web": [
+      "Anthropic partners with Gates Foundation",
+      "$200M for global health AI initiative",
+      "Non-engineers match pros in coding",
+      "Claude Code boosts task value by 25%",
+      "Debugging time drops by half",
+      "OpenAI Daybreak lacks detail"
+    ],
+    "ai-hn": [
+      "GLM-5.2 sparks local deployment talk",
+      "GLM-5.2 beats GPT-5.5 in agents",
+      "Skepticism grows on Claude Code",
+      "Anthropic Extended Thinking questioned",
+      "OpenAI DayBreak security debated",
+      "Microsoft pivots to DeepSeek costs"
+    ],
+    "ai-arxiv": [
+      "Tapered LLMs optimize layer allocation",
+      "AdamW effectiveness under noise studied",
+      "Muown optimizer angular step-size decay",
+      "Multi-agent coordination benchmarks rise",
+      "Domain-specific robotics AI advances",
+      "Data quality prioritized over scaling"
+    ],
+    "ai-hf": [
+      "DeepSeek V4-Pro tops downloads",
+      "Gemma 4 variants gain coding traction",
+      "GLM-5.2 showcases MOE architecture",
+      "Uncensored Qwen3.6 fine-tune popular",
+      "NVIDIA LocateAnything vision model",
+      "Small efficient models under 10B rise"
+    ],
+    "ai-community": [
+      "Typed provenance for agent chains",
+      "Static analysis unifies repo knowledge",
+      "AI finds 300 WordPress plugin zero-days",
+      "Prompt injection vulnerabilities persist",
+      "Context windows lack true memory",
+      "Cost-benefit of self-hosting AI models"
+    ]
+  }
+}
