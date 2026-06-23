@@ -131,6 +131,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchVisible, setSearchVisible] = useState(10);
   const [detailCard, setDetailCard] = useState<FeedCard | null>(null);
+  const [sectionVisible, setSectionVisible] = useState<Record<string, number>>({});
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   // 加载 feed.json
@@ -202,7 +203,7 @@ export default function App() {
         if (aLiked !== bLiked) return bLiked - aLiked;
         return b.score - a.score;
       });
-      return { ...s, cards: list.slice(0, 300) };
+      return { ...s, cards: list };
     }).filter((s) => s.cards.length > 0);
   }, [visibleCards, feedback]);
 
@@ -256,6 +257,11 @@ export default function App() {
   const scrollToSection = useCallback((key: string) => {
     const el = document.getElementById(`section-${key}`);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  // 加载更多
+  const loadMore = useCallback((key: string) => {
+    setSectionVisible((prev) => ({ ...prev, [key]: (prev[key] ?? 20) + 20 }));
   }, []);
 
   const stats = useMemo(() => ({
@@ -334,7 +340,7 @@ export default function App() {
                   <span className="section-desc">{section.desc}</span>
                 </div>
                 <div className="feed-list">
-                  {section.cards.map((card) => (
+                  {section.cards.slice(0, sectionVisible[section.key] ?? 20).map((card) => (
                     <FeedCardMemo
                       key={card.repo}
                       card={card}
@@ -343,6 +349,11 @@ export default function App() {
                     />
                   ))}
                 </div>
+                {section.cards.length > (sectionVisible[section.key] ?? 20) && (
+                  <button className="load-more" onClick={() => loadMore(section.key)}>
+                    加载更多（还有 {section.cards.length - (sectionVisible[section.key] ?? 20)} 个）
+                  </button>
+                )}
               </section>
             ))}
           </>

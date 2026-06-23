@@ -623,6 +623,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .sentinel { display: flex; justify-content: center; padding: 24px; }
 .end-marker { text-align: center; padding: 28px; color: var(--text-muted); font-size: 0.85rem; }
 
+/* --- 加载更多 --- */
+.load-more {
+  display: block;
+  margin: 16px auto 24px;
+  padding: 12px 32px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 4px 16px rgba(99,102,241,0.25);
+}
+.load-more:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(99,102,241,0.35);
+}
+
 /* --- AI 对话占位 --- */
 .chat-placeholder { text-align: center; padding: 48px 24px; color: var(--text-secondary); }
 .chat-icon { font-size: 3rem; margin-bottom: 16px; }

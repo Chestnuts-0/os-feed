@@ -27,7 +27,7 @@ import type {
 
 const DATA_DIR = "data";
 const FEED_PATH = path.join(DATA_DIR, "feed.json");
-const BATCH_SIZE = 10;
+const BATCH_SIZE = 5;
 /** LLM 评分的仓库上限（按 star 排序，高 star 优先） */
 const MAX_LLM_SCORE_REPOS = 2000;
 /** LLM 并发批次数（与 report.ts 的 LLM_CONCURRENCY 匹配） */
@@ -205,64 +205,6 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
 }
 
 // ---------------------------------------------------------------------------
-// 模板中文描述（LLM 评分失败时的兜底，确保所有项目都有中文内容）
-// ---------------------------------------------------------------------------
-
-const TOPIC_CN_MAP: Record<string, string> = {
-  llm: "大语言模型",
-  "ai-agent": "AI智能体",
-  rag: "检索增强生成",
-  "machine-learning": "机器学习",
-  "deep-learning": "深度学习",
-  "generative-ai": "生成式AI",
-  "stable-diffusion": "图像生成",
-  chatbot: "对话机器人",
-  transformer: "Transformer架构",
-  "vector-database": "向量数据库",
-  "large-language-model": "大语言模型",
-  "developer-tools": "开发工具",
-  automation: "自动化",
-  tutorial: "教程",
-  interview: "面试",
-  game: "游戏",
-  emulator: "模拟器",
-  docker: "容器化",
-  terminal: "终端工具",
-  database: "数据库",
-  security: "安全",
-  "open-source": "开源",
-};
-
-function translateTopic(topic: string): string {
-  return TOPIC_CN_MAP[topic.toLowerCase()] ?? topic;
-}
-
-function generateTemplateDescriptions(m: MergedRepo): {
-  summaryCn: string;
-  reasonCn: string;
-  detailCn: string;
-} {
-  const lang = m.language || "未知";
-  const topics = m.topics.length > 0 ? m.topics.slice(0, 5) : [];
-  const topicCn = topics.map(translateTopic).join("、");
-  const topicStr = topicCn || "开源";
-  const starStr =
-    m.stars >= 10000
-      ? `${(m.stars / 10000).toFixed(1)}万`
-      : m.stars >= 1000
-        ? `${(m.stars / 1000).toFixed(1)}k`
-        : `${m.stars}`;
-
-  const summaryCn = `${lang}开发的${topicStr}项目，${starStr} star${m.starGrowth > 0 ? `，今日+${m.starGrowth}` : ""}`;
-
-  const reasonCn = `这是一个使用 ${lang} 开发的开源项目，在 GitHub 上拥有 ${m.stars} 个 star。${m.starGrowth > 0 ? `今日 star 增长 ${m.starGrowth}，社区热度上升中。` : ""}项目涉及 ${topicStr} 等方向，适合对这些领域感兴趣的开发者关注和使用。`;
-
-  const detailCn = `这是一个使用 ${lang} 编写的开源项目，目前在 GitHub 上获得 ${m.stars} 个 star。\n\n· 开发语言：${lang}\n· 项目标签：${topicStr}\n· Star 总数：${m.stars}${m.starGrowth > 0 ? `\n· 今日增长：+${m.starGrowth}` : ""}\n· 数据来源：${m.source === "trending" ? "GitHub 热门趋势" : m.source === "bigbro" ? "大牛关注" : "主题搜索"}\n\n如果你对 ${topicStr} 方向感兴趣，这个项目值得关注。建议直接访问 GitHub 主页查看完整的 README 文档、源代码和使用示例，了解更多技术细节。`;
-
-  return { summaryCn, reasonCn, detailCn };
-}
-
-// ---------------------------------------------------------------------------
 // 主管道
 // ---------------------------------------------------------------------------
 
@@ -369,41 +311,30 @@ export async function generateFeed(
   const scoringResults = await scoreBatched(reposToScore, config.interests.aiInterestsText);
   const scoringMap = new Map(scoringResults.map((r) => [r.repo, r]));
 
-  // 4. 组装 FeedCard（LLM 评分缺失时用模板中文描述兜底）
+  // 4. 组装 FeedCard（只保留 LLM 评分成功的仓库，不使用模板兜底）
   const cards: FeedCard[] = [];
-  let templateCount = 0;
+  let llmCount = 0;
   for (const m of repoMap.values()) {
     const sc = scoringMap.get(m.repo);
+    // LLM 评分失败的仓库直接跳过，不进信息流
+    if (!sc || !sc.reasonCn) continue;
     const [owner = "", ...nameParts] = m.repo.split("/");
     const name = nameParts.join("/") || m.repo;
-
-    let summaryCn = sc?.summaryCn ?? "";
-    let reasonCn = sc?.reasonCn ?? "";
-    let detailCn = sc?.detailCn ?? "";
-
-    // LLM 评分失败 → 模板中文描述兜底
-    if (!reasonCn) {
-      const tpl = generateTemplateDescriptions(m);
-      summaryCn = tpl.summaryCn;
-      reasonCn = tpl.reasonCn;
-      detailCn = tpl.detailCn;
-      templateCount++;
-    }
-
+    llmCount++;
     const partialCard = {
       repo: m.repo,
       owner,
       name,
       desc: m.desc,
-      summaryCn,
-      reasonCn,
-      detailCn,
+      summaryCn: sc.summaryCn,
+      reasonCn: sc.reasonCn,
+      detailCn: sc.detailCn,
       stars: m.stars,
       starGrowth: m.starGrowth,
       language: m.language,
       topics: m.topics,
-      aiDim: sc?.aiDim ?? "其他",
-      aiScore: sc?.aiScore ?? 0.5,
+      aiDim: sc.aiDim,
+      aiScore: sc.aiScore,
       source: m.source,
       bigbros: m.bigbros,
       url: `https://github.com/${m.repo}`,
@@ -415,9 +346,7 @@ export async function generateFeed(
       category: classifyCard(partialCard),
     });
   }
-  console.log(
-    `  [feed] ${templateCount}/${cards.length} repos used template descriptions (LLM scoring missed)`,
-  );
+  console.log(`  [feed] ${llmCount}/${repoMap.size} repos have LLM content (rest skipped)`);
 
   // 5. star 门槛过滤
   const filtered = cards.filter((c) => c.stars >= config.starThreshold);
