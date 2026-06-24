@@ -150,8 +150,8 @@ function buildTags(aiDims: string[], topics: string[], language: string): Tag[] 
     }
   }
 
-  // 去重后按权重降序排列，最多保留 15 个
-  return [...tagMap.values()].sort((a, b) => b.weight - a.weight).slice(0, 15);
+  // 去重后按权重降序排列，最多保留 25 个
+  return [...tagMap.values()].sort((a, b) => b.weight - a.weight).slice(0, 25);
 }
 
 // ---------------------------------------------------------------------------

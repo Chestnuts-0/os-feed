@@ -261,9 +261,8 @@ export default function App() {
   const [searchVisible, setSearchVisible] = useState(10);
   const [detailCard, setDetailCard] = useState<FeedCard | null>(null);
   const [sectionVisible, setSectionVisible] = useState<Record<string, number>>({});
-  const [activeSection, setActiveSection] = useState<string>("");
+  const [feedFilter, setFeedFilter] = useState<string>("");
   const sentinelRef = useRef<HTMLDivElement>(null);
-  const sectionObserverRef = useRef<IntersectionObserver | null>(null);
 
   // 加载 feed.json
   useEffect(() => {
@@ -428,25 +427,13 @@ export default function App() {
     }).filter((s) => s.cards.length > 0);
   }, [visibleCards, preferences]);
 
-  // 活跃分区检测
-  useEffect(() => {
-    if (tab !== "feed") return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const key = (entry.target as HTMLElement).dataset.sectionKey;
-            if (key) setActiveSection(key);
-          }
-        }
-      },
-      { rootMargin: "-112px 0px -40% 0px", threshold: 0 },
-    );
-    sectionObserverRef.current = observer;
-    const secElements = document.querySelectorAll("[data-section-key]");
-    secElements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [tab, sections]);
+  // 过滤后的分区（feedFilter 为空显示全部，否则只显示匹配分区）
+  const filteredSections = useMemo(() => {
+    if (feedFilter === "") return sections;
+    return sections.filter((s) => s.key === feedFilter);
+  }, [sections, feedFilter]);
+
+  // 活跃分区检测（已移除 IntersectionObserver，改用 feedFilter）
 
   // 大牛卡片
   const bigbroCards = useMemo(() => {
@@ -489,10 +476,9 @@ export default function App() {
     return () => observer.disconnect();
   }, [tab, searchResults]);
 
-  // 分区跳转
-  const scrollToSection = useCallback((key: string) => {
-    const el = document.getElementById(`section-${key}`);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  // 分区过滤切换
+  const switchFeedFilter = useCallback((key: string) => {
+    setFeedFilter((prev) => (prev === key ? "" : key));
   }, []);
 
   // 无限滚动 sentinel 回调（分区）
@@ -508,7 +494,7 @@ export default function App() {
     if (tab !== "feed") return;
     const sentinelMap = new Map<string, IntersectionObserver>();
 
-    for (const section of sections) {
+    for (const section of filteredSections) {
       const sentinelEl = document.getElementById(`sentinel-${section.key}`);
       if (!sentinelEl) continue;
       const observer = new IntersectionObserver(
@@ -525,7 +511,7 @@ export default function App() {
     return () => {
       sentinelMap.forEach((obs) => obs.disconnect());
     };
-  }, [tab, sections, handleSectionSentinel]);
+  }, [tab, filteredSections, handleSectionSentinel]);
 
   const stats = useMemo(() => ({
     total: cards.length,
@@ -562,15 +548,21 @@ export default function App() {
         </div>
       </header>
 
-      {/* 二级导航：分区标签固定栏（仅推荐 tab） */}
+      {/* 二级导航：分区过滤（仅推荐 tab） */}
       {tab === "feed" && !loading && !error && sections.length > 0 && (
         <nav className="sub-nav">
           <div className="sub-nav-inner">
+            <button
+              className={`sub-nav-pill${feedFilter === "" ? " active" : ""}`}
+              onClick={() => setFeedFilter("")}
+            >
+              🔥 全部
+            </button>
             {sections.map((s) => (
               <button
                 key={s.key}
-                className={`sub-nav-pill${activeSection === s.key ? " active" : ""}`}
-                onClick={() => scrollToSection(s.key)}
+                className={`sub-nav-pill${feedFilter === s.key ? " active" : ""}`}
+                onClick={() => switchFeedFilter(s.key)}
               >
                 {s.icon} {s.title}
               </button>
@@ -595,7 +587,7 @@ export default function App() {
             {!loading && !error && sections.length === 0 && (
               <div className="status"><p>📭 暂无内容</p></div>
             )}
-            {!loading && !error && sections.map((section) => {
+            {!loading && !error && filteredSections.map((section) => {
               const visible = sectionVisible[section.key] ?? INITIAL_VISIBLE;
               const shown = section.cards.slice(0, visible);
               const hasMore = section.cards.length > visible;
@@ -603,7 +595,6 @@ export default function App() {
                 <section
                   key={section.key}
                   id={`section-${section.key}`}
-                  data-section-key={section.key}
                   className="section"
                 >
                   <div className="section-header">

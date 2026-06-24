@@ -102,8 +102,20 @@ function FeedCardComponent({ card, liked, onOpen }: Props) {
             {card.language}
           </span>
         )}
-        <span className="dim-badge">{card.aiDim}</span>
       </div>
+
+      {card.tags && card.tags.length > 0 && (
+        <div className="card-tags">
+          {card.tags.slice(0, 8).map((tag) => (
+            <span key={tag.name} className={`tag-chip tag-${tag.source}`}>
+              {tag.name}
+            </span>
+          ))}
+          {card.tags.length > 8 && (
+            <span className="tag-chip tag-more">+{card.tags.length - 8}</span>
+          )}
+        </div>
+      )}
     </article>
   );
 }
