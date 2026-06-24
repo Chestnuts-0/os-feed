@@ -5,6 +5,26 @@
 
 export type FeedCategory = "hot" | "authoritative" | "daily" | "fun" | "skill" | "learning" | "ai" | "rising";
 
+/** 标签来源 */
+export type TagSource = "llm" | "github" | "language";
+
+/** 综合标签（多来源融合） */
+export interface Tag {
+  name: string;
+  source: TagSource;
+  weight: number;
+}
+
+/** 收藏夹 */
+export interface Collection {
+  id: string;
+  name: string;
+  repos: string[];
+  createdAt: string;
+  isAuto: boolean;
+  sourceTag?: string;
+}
+
 export interface FeedCard {
   repo: string;
   owner: string;
@@ -20,7 +40,12 @@ export interface FeedCard {
   starGrowth: number;
   language: string;
   topics: string[];
+  /** LLM 多维度标签 */
+  aiDims: string[];
+  /** @deprecated 向后兼容 */
   aiDim: string;
+  /** 综合标签（LLM + GitHub topics + language） */
+  tags: Tag[];
   aiScore: number;
   source: "trending" | "bigbro" | "search";
   bigbros: string[];

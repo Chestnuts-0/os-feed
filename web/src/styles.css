@@ -153,40 +153,55 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: 20px 24px 32px;
 }
 
-/* --- 分区导航 --- */
-.section-nav {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  margin-bottom: 24px;
+/* --- 二级导航（sticky sub-nav） --- */
+.sub-nav {
+  position: sticky;
+  top: 60px;
+  z-index: 99;
+  background: var(--header-bg);
+  backdrop-filter: var(--header-blur);
+  -webkit-backdrop-filter: var(--header-blur);
+  border-bottom: 1px solid var(--border);
 }
 
-.section-pill {
-  padding: 16px 12px;
-  border-radius: 14px;
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(139, 92, 246, 0.03));
-  border: 1px solid rgba(99, 102, 241, 0.12);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-weight: 500;
+.sub-nav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  gap: 6px;
+  height: 52px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.sub-nav-inner::-webkit-scrollbar { display: none; }
+
+.sub-nav-pill {
+  padding: 7px 18px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  transition: all 0.25s ease;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.section-pill:hover {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(139, 92, 246, 0.1));
-  border-color: rgba(99, 102, 241, 0.4);
-  color: var(--text);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
+.sub-nav-pill:hover { background: var(--accent-light); color: var(--text); }
+.sub-nav-pill.active {
+  background: var(--accent-gradient);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 12px var(--accent-glow);
 }
 
 /* --- 分区 --- */
-.section { margin-bottom: 36px; scroll-margin-top: 80px; }
+.section { margin-bottom: 36px; scroll-margin-top: 112px; }
 
 .section-header {
   display: flex;
@@ -249,6 +264,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transform: translateY(-4px);
 }
 .card:hover::before { opacity: 1; }
+
+/* 卡片已点赞标记 */
+.card-liked {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 2;
+}
 
 /* 卡片头部 */
 .card-header {
@@ -379,7 +405,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   border: 1px solid var(--card-border-hover);
-  max-width: 680px;
+  max-width: 1200px;
   width: 100%;
   padding: 32px;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
@@ -533,8 +559,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .action-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); transform: scale(1.1); }
-.like-btn.active { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); }
+.like-btn.active { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); color: var(--danger); }
 .dislike-btn.active { opacity: 0.4; }
+.bookmark-btn.active { background: rgba(245, 158, 11, 0.15); border-color: var(--warning); color: var(--warning); }
 .open-btn { margin-left: auto; width: auto; padding: 0 20px; border-radius: 24px; color: var(--accent); border-color: var(--accent); font-size: 0.9rem; font-weight: 600; }
 
 /* Topic 标签 */
@@ -551,6 +578,215 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transition: all 0.2s;
 }
 .topic-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+/* --- 收藏夹选择器 Popover --- */
+.collection-picker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  width: 320px;
+  max-height: 360px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border-hover);
+  border-radius: var(--radius);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.picker-close {
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.picker-close:hover { background: var(--accent-light); color: var(--text); }
+
+.picker-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.picker-empty {
+  text-align: center;
+  padding: 16px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.picker-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 0.85rem;
+}
+.picker-item:hover { background: var(--accent-light); }
+
+.picker-item input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+}
+
+.picker-item-name { flex: 1; color: var(--text); }
+.picker-item-count { color: var(--text-muted); font-size: 0.78rem; }
+
+.picker-create {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.picker-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  outline: none;
+}
+.picker-input:focus { border-color: var(--accent); }
+
+.picker-create-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.picker-create-btn:hover { opacity: 0.85; }
+.picker-create-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* --- 收藏 Tab --- */
+.collections-header {
+  padding: 12px 0 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.collections-stats {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.collection-folder {
+  margin-bottom: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+.folder-header:hover { background: var(--accent-light); }
+
+.folder-chevron {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+.folder-chevron.open { transform: rotate(90deg); }
+
+.folder-icon { font-size: 1.1rem; }
+.folder-name { font-size: 1rem; font-weight: 600; color: var(--text); }
+.folder-count { font-size: 0.8rem; color: var(--text-muted); }
+
+.folder-delete {
+  margin-left: auto;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: all 0.2s;
+  color: var(--text-muted);
+}
+.folder-header:hover .folder-delete { opacity: 1; }
+.folder-delete:hover { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+.folder-cards { padding: 0 16px 16px; }
+
+.folder-empty {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.folder-card-wrapper {
+  position: relative;
+}
+
+.folder-card-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border: 1px solid var(--border);
+}
+.folder-card-wrapper:hover .folder-card-remove { opacity: 1; }
+.folder-card-remove:hover { background: var(--danger); color: #fff; }
+
+.collection-create-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 28px;
+  border-radius: 24px;
+  background: var(--accent-gradient);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+.collection-create-btn:hover { opacity: 0.85; }
 
 /* --- 大牛页 --- */
 .bigbro-profile {
@@ -620,28 +856,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .spinner.small { width: 22px; height: 22px; border-width: 2px; margin: 0; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.sentinel { display: flex; justify-content: center; padding: 24px; }
-.end-marker { text-align: center; padding: 28px; color: var(--text-muted); font-size: 0.85rem; }
-
-/* --- 加载更多 --- */
-.load-more {
-  display: block;
-  margin: 16px auto 24px;
-  padding: 12px 32px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff;
-  border: none;
-  border-radius: 24px;
-  font-size: 0.95rem;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 4px 16px rgba(99,102,241,0.25);
-}
-.load-more:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(99,102,241,0.35);
-}
+/* --- 无限滚动 sentinel --- */
+.section-sentinel { display: flex; justify-content: center; padding: 28px 0; }
+.section-end-hint { text-align: center; padding: 28px; color: var(--text-muted); font-size: 0.85rem; }
 
 /* --- AI 对话占位 --- */
 .chat-placeholder { text-align: center; padding: 48px 24px; color: var(--text-secondary); }
@@ -675,11 +892,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .detail-card { padding: 24px 20px; }
   .bigbro-profile { padding: 16px; gap: 12px; }
   .bigbro-avatar { width: 56px; height: 56px; border-radius: 16px; }
-  .section-nav { grid-template-columns: repeat(3, 1fr); }
+  .sub-nav-inner { padding: 0 12px; height: 44px; }
+  .sub-nav-pill { padding: 5px 14px; font-size: 0.8rem; }
 }
 
 @media (max-width: 480px) {
   .tab { padding: 5px 12px; font-size: 0.78rem; }
   .card-meta { gap: 10px; font-size: 0.76rem; }
-  .section-pill { padding: 8px 4px; font-size: 0.82rem; }
+  .section { scroll-margin-top: 98px; }
 }

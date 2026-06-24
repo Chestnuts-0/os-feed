@@ -15,13 +15,21 @@ import type { BigbroStar } from "../bigbro-stars.ts";
 import type { RadarConfig } from "../config.ts";
 import { callLlm } from "../report.ts";
 import { buildFeedScoringPrompt, parseScoringResult } from "./prompts.ts";
-import { loadProfile, saveProfile, loadFeedback, applyFeedbackToProfile, rankCards } from "./personalize.ts";
+import {
+  loadProfile,
+  saveProfile,
+  loadFeedback,
+  applyFeedbackToProfile,
+  rankCards,
+  initTagWeights,
+} from "./personalize.ts";
 import type {
   FeedCard,
   FeedCategory,
   FeedSource,
   RepoForScoring,
   ScoringResult,
+  Tag,
   UserProfile,
 } from "./types.ts";
 
@@ -32,6 +40,10 @@ const BATCH_SIZE = 5;
 const MAX_LLM_SCORE_REPOS = 2000;
 /** LLM 并发批次数（与 report.ts 的 LLM_CONCURRENCY 匹配） */
 const SCORE_CONCURRENCY = 5;
+/** feed.json 最大保留条目数 */
+const MAX_FEED_SIZE = 2000;
+/** 卡片硬截止天数（超过此天数直接移除） */
+const MAX_CARD_AGE_DAYS = 90;
 
 // 权威组织/官方仓库 owner 前缀
 const AUTHORITATIVE_ORGS = new Set([
@@ -66,6 +78,8 @@ function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
   const descLower = card.desc.toLowerCase();
   const topicsLower = card.topics.map((t) => t.toLowerCase());
   const allText = `${repoLower} ${descLower} ${topicsLower.join(" ")}`;
+  // 检查 aiDims 数组中是否命中某类别
+  const dims = card.aiDims || [card.aiDim];
 
   // 1. SKILL 分区：名字或 topics 含 skill
   if (repoLower.includes("skill") || topicsLower.some((t) => t.includes("skill"))) {
@@ -77,13 +91,14 @@ function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
     return "learning";
   }
 
-  // 3. 兴趣分区：好玩但非 AI
-  if (card.aiDim === "非AI-好玩") {
+  // 3. 兴趣分区：好玩但非 AI（检查所有标签）
+  if (dims.some((d) => d === "非AI-好玩" || d === "游戏" || d === "创意工具")) {
     return "fun";
   }
 
-  // 4. AI 分区：AI 相关
-  if (card.aiDim.startsWith("AI") || card.aiDim === "模型与训练" || card.aiDim === "RAG与知识") {
+  // 4. AI 分区：任一标签命中 AI 相关
+  const aiPrefixes = ["AI", "模型", "RAG", "推理", "Agent", "大语言", "微调", "提示", "代码助手", "向量"];
+  if (dims.some((d) => aiPrefixes.some((p) => d.startsWith(p) || d.includes(p)))) {
     return "ai";
   }
 
@@ -104,6 +119,39 @@ function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
 
   // 8. 默认热门
   return "hot";
+}
+
+// ---------------------------------------------------------------------------
+// 综合标签构建
+// ---------------------------------------------------------------------------
+
+/** 从 LLM + GitHub topics + language 构建综合标签列表 */
+function buildTags(aiDims: string[], topics: string[], language: string): Tag[] {
+  const tagMap = new Map<string, Tag>();
+
+  // LLM 标签：最高权重 1.0
+  for (const dim of aiDims) {
+    tagMap.set(dim, { name: dim, source: "llm", weight: 1.0 });
+  }
+
+  // GitHub topics：权重 0.7
+  for (const t of topics) {
+    const existing = tagMap.get(t);
+    if (!existing || existing.weight < 0.7) {
+      tagMap.set(t, { name: t, source: "github", weight: 0.7 });
+    }
+  }
+
+  // Language：权重 0.5
+  if (language) {
+    const existing = tagMap.get(language);
+    if (!existing) {
+      tagMap.set(language, { name: language, source: "language", weight: 0.5 });
+    }
+  }
+
+  // 去重后按权重降序排列，最多保留 15 个
+  return [...tagMap.values()].sort((a, b) => b.weight - a.weight).slice(0, 15);
 }
 
 // ---------------------------------------------------------------------------
@@ -333,7 +381,9 @@ export async function generateFeed(
       starGrowth: m.starGrowth,
       language: m.language,
       topics: m.topics,
+      aiDims: sc.aiDims,
       aiDim: sc.aiDim,
+      tags: buildTags(sc.aiDims, m.topics, m.language),
       aiScore: sc.aiScore,
       source: m.source,
       bigbros: m.bigbros,
@@ -354,32 +404,54 @@ export async function generateFeed(
     `  [feed] ${filtered.length}/${cards.length} repos passed star threshold (>= ${config.starThreshold})`,
   );
 
-  // 6. 个性化：加载画像 → 应用反馈 → 排序 → 保存画像
+  // 6. 个性化：加载画像 → 初始化标签权重 → 应用反馈 → 排序 → 保存画像
   const fallbackProfile: UserProfile = {
     interests: {
       ai: config.interests.ai,
       fun: config.interests.fun,
       practical: config.interests.practical,
     },
+    tagWeights: initTagWeights(config.interests.aiInterestsText),
     aiInterestsText: config.interests.aiInterestsText,
     followedBigs: config.bigbros,
+    bookmarks: [],
+    lastActiveTs: new Date().toISOString(),
   };
   let profile = loadProfile(fallbackProfile);
   const feedback = loadFeedback();
   profile = applyFeedbackToProfile(profile, feedback, filtered);
   saveProfile(profile);
+  const twCount = Object.keys(profile.tagWeights).length;
   console.log(
-    `  [feed] profile updated: ai=${profile.interests.ai.toFixed(2)} fun=${profile.interests.fun.toFixed(2)} practical=${profile.interests.practical.toFixed(2)}`,
+    `  [feed] profile updated: ${twCount} tag weights, ai=${profile.interests.ai.toFixed(2)} fun=${profile.interests.fun.toFixed(2)} practical=${profile.interests.practical.toFixed(2)}`,
   );
 
   const ranked = rankCards(filtered, profile);
 
-  // 7. 写 data/feed.json
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(FEED_PATH, JSON.stringify(ranked, null, 2), "utf-8");
-  console.log(`  [feed] saved ${ranked.length} cards to ${FEED_PATH}`);
+  // 7. 内容淘汰：时间硬截止 + Top N 裁剪
+  const nowMs = Date.now();
+  const pruned = ranked.filter((c) => {
+    const ageDays = (nowMs - new Date(c.ts).getTime()) / (24 * 3600 * 1000);
+    if (ageDays > MAX_CARD_AGE_DAYS) return false;
+    if (c.score < 0.01) return false;
+    return true;
+  });
+  if (pruned.length < ranked.length) {
+    console.log(
+      `  [feed] pruned ${ranked.length - pruned.length} stale cards (age > ${MAX_CARD_AGE_DAYS}d or score < 0.01)`,
+    );
+  }
+  const final = pruned.length > MAX_FEED_SIZE ? pruned.slice(0, MAX_FEED_SIZE) : pruned;
+  if (pruned.length > MAX_FEED_SIZE) {
+    console.log(`  [feed] trimmed top ${MAX_FEED_SIZE} from ${pruned.length} cards`);
+  }
 
-  return ranked;
+  // 8. 写 data/feed.json
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.writeFileSync(FEED_PATH, JSON.stringify(final, null, 2), "utf-8");
+  console.log(`  [feed] saved ${final.length} cards to ${FEED_PATH}`);
+
+  return final;
 }
 
 // ---------------------------------------------------------------------------

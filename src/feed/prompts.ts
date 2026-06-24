@@ -8,16 +8,45 @@
 
 import type { RepoForScoring, ScoringResult } from "./types.ts";
 
-/** AI 维度分类候选（与 agents-radar 的 trending 维度对齐 + 拓宽非 AI） */
+/** AI 维度分类候选（扩展为约 28 个精细标签，覆盖 AI/工具/学习/好玩） */
 const AI_DIMS = [
+  // AI 基础设施
   "AI基础设施",
+  "推理引擎",
+  "向量数据库",
+  "模型部署",
+  // AI Agent
   "AI Agent",
+  "多模态Agent",
+  "工具调用",
+  // AI 应用
   "AI应用",
+  "代码助手",
+  "AI搜索",
+  "AI写作",
+  // 模型与训练
   "模型与训练",
+  "大语言模型",
+  "微调",
+  "提示工程",
+  // RAG 与知识
   "RAG与知识",
+  "知识图谱",
+  "文档理解",
+  // 非AI-好玩
   "非AI-好玩",
+  "游戏",
+  "创意工具",
+  "可视化",
+  // 非AI-实用
   "非AI-实用",
-  "其他",
+  "开发者工具",
+  "效率工具",
+  "安全工具",
+  // 学习资源
+  "学习资源",
+  "教程",
+  "论文",
 ];
 
 /**
@@ -46,7 +75,7 @@ ${list}
 # 评估要求
 对每个项目输出一个 JSON 对象，字段：
 - "repo": "owner/repo"（与输入一致）
-- "ai_dim": 从 [${AI_DIMS.join(", ")}] 中选一个最贴切的分类
+- "ai_dims": 从 [${AI_DIMS.join(", ")}] 中选 1-3 个最贴切的标签，按相关度降序排列组成数组。例如只和 AI Agent 有关：["AI Agent"]；横跨 Agent 和工具调用：["AI Agent", "工具调用"]；最多不要超过3个
 - "ai_score": 0 到 1 的浮点数，表示该项目与用户兴趣描述的相关度（1 = 非常相关，0 = 完全无关）。判断依据：是否 AI 相关、是否好玩有趣、是否实用能直接用、star 热度
 - "summary_cn": 一句话通俗描述，用大白话说清楚这玩意是干啥的。要求：有趣、接地气、让人一眼看懂且有兴趣继续了解，不超过30个字。像朋友给你安利一样。注意：不能和 reason_cn/detail_cn 的内容重复，必须用完全不同的角度和措辞。例如：“不用显卡也能在笔记本上跑大模型的神器”
 - "reason_cn": 简要介绍，两三行（约80-150字），一段连贯的文字。要求：比 summary_cn 更具体，可以出现专业术语和技术概念，但读者仍能在较短篇幅内看懂项目更细节的内容。不要用①②③等序号编号。不要重复 summary_cn 的内容。
@@ -60,7 +89,7 @@ ${list}
 
 # 输出格式
 只返回一个 JSON 数组，不要任何其他文字、不要 markdown 代码块标记。示例：
-[{"repo":"owner/repo","ai_dim":"AI Agent","ai_score":0.85,"summary_cn":"不用显卡也能在笔记本上跑大模型的神器","reason_cn":"基于ggml张量库开发的纯C++推理引擎，支持CPU/GPU混合推理和多种量化方案。提供Python/Node.js等多语言绑定，几行命令即可在本地跑起对话AI。","detail_cn":"简单来说，这个东西让你不用买几万块的显卡，用自己笔记本电脑就能跑ChatGPT级别的大语言模型。以前跑大模型得租云服务器，现在下载个文件就能本地对话。\n\n技术上，它的核心是一个叫ggml的张量计算库，纯C++写的，没有多余依赖，所以特别轻量。它支持4位、8位、16位量化——就是把模型参数压缩，比如一个本来要32GB内存的模型，4位量化后只要4GB左右，普通笔记本就能跑。它还支持CPU推理，不需要GPU，虽然慢一点但能跑起来。和Hugging Face Transformers相比，它不依赖PyTorch，安装包小得多，启动也快。\n\n安装很简单。Mac用户一行命令：brew install llama.cpp，然后下载一个GGUF格式的模型文件，运行./main -m model.gguf就能开始对话。Python用户可以pip install llama-cpp-python，在代码里调用。\n\n适合这几类人：想在本地体验大模型但没GPU的个人开发者；做AI应用原型需要快速验证想法的团队；研究模型量化和推理优化的学者；受限于数据安全不能调用云端API的企业。\n\n社区非常活跃，GitHub star已经超过6万，持续迭代中。它是开源LLM推理生态的核心组件之一，很多项目（如Ollama、LM Studio）底层都用了它。竞品有Transformers、vLLM等，但它们更侧重GPU推理，而llama.cpp在CPU/轻量GPU场景几乎没有对手。"}]`;
+[{"repo":"owner/repo","ai_dims":["AI Agent","AI基础设施"],"ai_score":0.85,"summary_cn":"不用显卡也能在笔记本上跑大模型的神器","reason_cn":"基于ggml张量库开发的纯C++推理引擎，支持CPU/GPU混合推理和多种量化方案。提供Python/Node.js等多语言绑定，几行命令即可在本地跑起对话AI。","detail_cn":"简单来说，这个东西让你不用买几万块的显卡，用自己笔记本电脑就能跑ChatGPT级别的大语言模型。以前跑大模型得租云服务器，现在下载个文件就能本地对话。\n\n技术上，它的核心是一个叫ggml的张量计算库，纯C++写的，没有多余依赖，所以特别轻量。它支持4位、8位、16位量化——就是把模型参数压缩，比如一个本来要32GB内存的模型，4位量化后只要4GB左右，普通笔记本就能跑。它还支持CPU推理，不需要GPU，虽然慢一点但能跑起来。和Hugging Face Transformers相比，它不依赖PyTorch，安装包小得多，启动也快。\n\n安装很简单。Mac用户一行命令：brew install llama.cpp，然后下载一个GGUF格式的模型文件，运行./main -m model.gguf就能开始对话。Python用户可以pip install llama-cpp-python，在代码里调用。\n\n适合这几类人：想在本地体验大模型但没GPU的个人开发者；做AI应用原型需要快速验证想法的团队；研究模型量化和推理优化的学者；受限于数据安全不能调用云端API的企业。\n\n社区非常活跃，GitHub star已经超过6万，持续迭代中。它是开源LLM推理生态的核心组件之一，很多项目（如Ollama、LM Studio）底层都用了它。竞品有Transformers、vLLM等，但它们更侧重GPU推理，而llama.cpp在CPU/轻量GPU场景几乎没有对手。"}]`;
 }
 
 /**
@@ -86,6 +115,7 @@ export function parseScoringResult(raw: string): ScoringResult[] {
   try {
     const arr = JSON.parse(text.slice(start, end + 1)) as Array<{
       repo?: string;
+      ai_dims?: string[];
       ai_dim?: string;
       ai_score?: number;
       summary_cn?: string;
@@ -94,14 +124,26 @@ export function parseScoringResult(raw: string): ScoringResult[] {
     }>;
     return arr
       .filter((x) => x && typeof x.repo === "string")
-      .map((x) => ({
-        repo: x.repo as string,
-        aiDim: x.ai_dim ?? "其他",
-        aiScore: typeof x.ai_score === "number" ? Math.max(0, Math.min(1, x.ai_score)) : 0.5,
-        summaryCn: x.summary_cn ?? "",
-        reasonCn: x.reason_cn ?? "",
-        detailCn: x.detail_cn ?? "",
-      }));
+      .map((x) => {
+        // 兼容新旧格式：优先 ai_dims 数组，回退到单 ai_dim
+        let dims: string[];
+        if (Array.isArray(x.ai_dims) && x.ai_dims.length > 0) {
+          dims = x.ai_dims.filter((d): d is string => typeof d === "string");
+        } else if (typeof x.ai_dim === "string" && x.ai_dim.trim()) {
+          dims = [x.ai_dim.trim()];
+        } else {
+          dims = ["其他"];
+        }
+        return {
+          repo: x.repo as string,
+          aiDims: dims,
+          aiDim: dims[0] || "其他",
+          aiScore: typeof x.ai_score === "number" ? Math.max(0, Math.min(1, x.ai_score)) : 0.5,
+          summaryCn: x.summary_cn ?? "",
+          reasonCn: x.reason_cn ?? "",
+          detailCn: x.detail_cn ?? "",
+        };
+      });
   } catch (err) {
     console.error(`[feed/scoring] JSON parse failed: ${err}`);
     return [];

@@ -1,22 +1,36 @@
 /**
- * 开源版抖音信息流 — 个性化层。
+ * 开源版抖音信息流 — 个性化层 v2。
  *
  * 三件事：
- * 1. 用户画像读写（data/profile.json）—— AI/好玩/实用 三维权重 + 兴趣描述
- * 2. 用户反馈读写（data/feedback.json）—— 点赞/不感兴趣的 repo 列表
- * 3. 推荐排序 —— score = 匹配度 × 热度 × 新鲜度 × 大牛背书
+ * 1. 用户画像读写（data/profile.json）—— 标签权重向量 + 兴趣描述
+ * 2. 用户反馈读写（data/feedback.json）—— 点赞/不感兴趣/收藏的 repo 列表
+ * 3. 推荐排序 —— score = aiScore × tagMatch × freshness × bigbro
  *
- * 反馈 loop：前端点赞/不感兴趣 → 写 feedback.json → 下次跑批时
- * applyFeedbackToProfile 据此微调画像权重，实现"越刷越准"。
+ * 反馈 loop：前端点赞/不感兴趣/收藏 → 写 feedback.json → 下次跑批时
+ * applyFeedbackToProfile 据此微调标签权重，实现"越刷越准"。
  */
 
 import fs from "node:fs";
 import path from "node:path";
-import type { FeedCard, UserProfile, UserFeedback } from "./types.ts";
+import type { FeedCard, Tag, UserProfile, UserFeedback } from "./types.ts";
 
 const DATA_DIR = "data";
 const PROFILE_PATH = path.join(DATA_DIR, "profile.json");
 const FEEDBACK_PATH = path.join(DATA_DIR, "feedback.json");
+
+// 默认标签权重（用于未初始化的用户）
+const DEFAULT_TAG_WEIGHT = 0.15;
+
+// 兴趣关键词 → 对应标签权重映射
+const INTEREST_KEYWORD_MAP: Record<string, { tags: string[]; weight: number }> = {
+  ai: {
+    tags: ["AI基础设施", "AI Agent", "AI应用", "模型与训练", "RAG与知识", "推理引擎", "大语言模型"],
+    weight: 0.5,
+  },
+  fun: { tags: ["非AI-好玩", "游戏", "创意工具", "可视化"], weight: 0.4 },
+  practical: { tags: ["非AI-实用", "开发者工具", "效率工具", "安全工具"], weight: 0.4 },
+  learn: { tags: ["学习资源", "教程", "论文"], weight: 0.3 },
+};
 
 // ---------------------------------------------------------------------------
 // Profile I/O
@@ -28,8 +42,11 @@ export function loadProfile(fallback: UserProfile): UserProfile {
       const raw = JSON.parse(fs.readFileSync(PROFILE_PATH, "utf-8"));
       return {
         interests: raw.interests ?? fallback.interests,
+        tagWeights: raw.tagWeights ?? (fallback.tagWeights || {}),
         aiInterestsText: raw.aiInterestsText ?? fallback.aiInterestsText,
         followedBigs: raw.followedBigs ?? fallback.followedBigs,
+        bookmarks: raw.bookmarks ?? (fallback.bookmarks || []),
+        lastActiveTs: raw.lastActiveTs ?? (fallback.lastActiveTs || new Date().toISOString()),
       };
     }
   } catch (err) {
@@ -51,12 +68,12 @@ export function loadFeedback(): UserFeedback {
   try {
     if (fs.existsSync(FEEDBACK_PATH)) {
       const raw = JSON.parse(fs.readFileSync(FEEDBACK_PATH, "utf-8"));
-      return { likes: raw.likes ?? [], dislikes: raw.dislikes ?? [] };
+      return { likes: raw.likes ?? [], dislikes: raw.dislikes ?? [], bookmarks: raw.bookmarks ?? [] };
     }
   } catch (err) {
     console.error(`[personalize] load feedback failed: ${err}`);
   }
-  return { likes: [], dislikes: [] };
+  return { likes: [], dislikes: [], bookmarks: [] };
 }
 
 export function saveFeedback(fb: UserFeedback): void {
@@ -65,28 +82,136 @@ export function saveFeedback(fb: UserFeedback): void {
 }
 
 // ---------------------------------------------------------------------------
-// Scoring
+// Tag Weights 初始化（从 aiInterestsText 语义推导）
 // ---------------------------------------------------------------------------
 
-/** 维度分类 -> 对应的兴趣权重 */
+/** 从用户兴趣描述文本推导初始标签权重 */
+export function initTagWeights(aiInterestsText: string): Record<string, number> {
+  const weights: Record<string, number> = {};
+  const lower = aiInterestsText.toLowerCase();
+
+  for (const [keyword, { tags, weight }] of Object.entries(INTEREST_KEYWORD_MAP)) {
+    if (lower.includes(keyword)) {
+      for (const tag of tags) {
+        weights[tag] = Math.max(weights[tag] ?? 0, weight);
+      }
+    }
+  }
+
+  // 如果没有任何匹配，给所有候选标签均等低权重
+  if (Object.keys(weights).length === 0) {
+    for (const entry of Object.values(INTEREST_KEYWORD_MAP)) {
+      for (const tag of entry.tags) {
+        weights[tag] = DEFAULT_TAG_WEIGHT;
+      }
+    }
+  }
+
+  return weights;
+}
+
+// ---------------------------------------------------------------------------
+// Tag Weights 衰减
+// ---------------------------------------------------------------------------
+
+/** 对标签权重应用时间衰减 */
+export function decayTagWeights(
+  weights: Record<string, number>,
+  daysSinceActive: number,
+): Record<string, number> {
+  const result: Record<string, number> = {};
+  for (const [tag, w] of Object.entries(weights)) {
+    if (w > 0.15) {
+      result[tag] = Math.max(0.01, w * Math.pow(0.995, daysSinceActive));
+    } else {
+      result[tag] = Math.max(0.01, w * Math.pow(0.98, daysSinceActive));
+    }
+  }
+
+  // 垃圾回收：超过50个标签裁剪最低10%
+  const entries = Object.entries(result);
+  if (entries.length > 50) {
+    entries.sort((a, b) => b[1] - a[1]);
+    const keep = entries.slice(0, Math.ceil(entries.length * 0.9));
+    const trimmed: Record<string, number> = {};
+    for (const [k, v] of keep) trimmed[k] = v;
+    return trimmed;
+  }
+
+  return result;
+}
+
+// ---------------------------------------------------------------------------
+// Tag Match 计算
+// ---------------------------------------------------------------------------
+
+/**
+ * 计算仓库标签与用户偏好的加权重叠度。
+ * 使用加权余弦相似度，结果线性变换到 [0.5, 1.0]。
+ */
+export function weightedCosine(cardTags: Tag[], userWeights: Record<string, number>): number {
+  let dotProduct = 0;
+  let cardNormSq = 0;
+
+  for (const tag of cardTags) {
+    const uw = userWeights[tag.name] ?? DEFAULT_TAG_WEIGHT;
+    dotProduct += tag.weight * uw;
+    cardNormSq += tag.weight * tag.weight;
+  }
+  const cardNorm = Math.sqrt(cardNormSq);
+
+  // 用户权重向量的L2范数
+  let userNormSq = 0;
+  for (const tag of cardTags) {
+    const uw = userWeights[tag.name] ?? DEFAULT_TAG_WEIGHT;
+    userNormSq += uw * uw;
+  }
+  const userNorm = Math.sqrt(userNormSq);
+
+  if (cardNorm === 0 || userNorm === 0) return 0.5;
+  const cosine = dotProduct / (cardNorm * userNorm);
+  return 0.5 + 0.5 * cosine;
+}
+
+// ---------------------------------------------------------------------------
+// 旧版 dimWeight（向后兼容，tagWeights 为空时回退）
+// ---------------------------------------------------------------------------
+
 function dimWeight(aiDim: string, interests: UserProfile["interests"]): number {
-  if (/^(AI|模型|RAG)/.test(aiDim)) return interests.ai;
-  if (aiDim === "非AI-好玩") return interests.fun;
-  if (aiDim === "非AI-实用") return interests.practical;
+  if (/^(AI|模型|RAG|推理|向量|大语言|微调|提示|代码助手)/.test(aiDim)) return interests.ai;
+  if (aiDim === "非AI-好玩" || aiDim === "游戏" || aiDim === "创意工具") return interests.fun;
+  if (aiDim === "非AI-实用" || aiDim === "开发者工具" || aiDim === "效率工具") return interests.practical;
   return (interests.ai + interests.fun + interests.practical) / 3;
 }
 
+// ---------------------------------------------------------------------------
+// Scoring
+// ---------------------------------------------------------------------------
+
 /**
- * 计算单张卡片推荐分。
- * score = 匹配度 × (0.4 + 0.6×热度) × (0.5 + 0.5×新鲜度) × (1 + 大牛背书)
+ * 计算单张卡片推荐分（v2 标签权重版）。
+ * score = aiScore × tagMatchBoost × freshnessFactor × bigbroBoost
  */
 export function computeScore(card: FeedCard, profile: UserProfile): number {
-  const match = card.aiScore * dimWeight(card.aiDim, profile.interests);
-  const starScore = Math.log10(Math.max(card.stars, 1)) / 6; // 100 万 star ≈ 1.0
+  const aiScore = card.aiScore;
+
+  // 标签匹配增强
+  let tagMatchBoost: number;
+  if (Object.keys(profile.tagWeights).length > 0 && card.tags && card.tags.length > 0) {
+    tagMatchBoost = weightedCosine(card.tags, profile.tagWeights);
+  } else {
+    // 回退到旧三维模型
+    tagMatchBoost = dimWeight(card.aiDim, profile.interests);
+  }
+
+  // 新鲜度（半衰期约5天）
   const daysSince = (Date.now() - new Date(card.ts).getTime()) / (24 * 3600 * 1000);
-  const timeDecay = Math.exp(-daysSince / 14); // 半衰期约 10 天
-  const bigbroBoost = card.bigbros.length > 0 ? 0.3 : 0;
-  return match * (0.4 + 0.6 * starScore) * (0.5 + 0.5 * timeDecay) * (1 + bigbroBoost);
+  const freshnessFactor = 0.4 + 0.6 * Math.exp(-daysSince / 7);
+
+  // 大牛背书
+  const bigbroBoost = 1 + (card.bigbros.length > 0 ? 0.25 : 0);
+
+  return aiScore * tagMatchBoost * freshnessFactor * bigbroBoost;
 }
 
 /** 批量打分并按 score 降序排序 */
@@ -95,49 +220,69 @@ export function rankCards(cards: FeedCard[], profile: UserProfile): FeedCard[] {
 }
 
 // ---------------------------------------------------------------------------
-// Feedback -> Profile 更新（反馈 loop）
+// Feedback -> Profile 更新（反馈 loop v2）
 // ---------------------------------------------------------------------------
 
 /**
- * 根据用户反馈微调画像权重。
- * 统计 likes/dislikes 中各维度的频次，按 0.05 步长增减，再归一化保持和为 1。
- * 反馈不足或无法映射到维度时，原样返回。
+ * 根据用户反馈更新标签权重向量。
+ * 点赞/收藏增加相关标签权重，点踩降低。
  */
 export function applyFeedbackToProfile(
   profile: UserProfile,
   feedback: UserFeedback,
   cards: FeedCard[],
 ): UserProfile {
-  if (feedback.likes.length === 0 && feedback.dislikes.length === 0) return profile;
+  const totalFeedback = feedback.likes.length + feedback.dislikes.length + (feedback.bookmarks?.length ?? 0);
+  if (totalFeedback === 0) return profile;
 
-  const dimMap = new Map<string, FeedCard>();
-  for (const c of cards) dimMap.set(c.repo, c);
+  // 确保 tagWeights 已初始化
+  let tagWeights = { ...profile.tagWeights };
+  if (Object.keys(tagWeights).length === 0) {
+    tagWeights = initTagWeights(profile.aiInterestsText);
+  }
 
-  const countDims = (repos: string[]) => {
-    const w = { ai: 0, fun: 0, practical: 0 };
-    for (const r of repos) {
-      const c = dimMap.get(r);
-      if (!c) continue;
-      if (/^(AI|模型|RAG)/.test(c.aiDim)) w.ai++;
-      else if (c.aiDim === "非AI-好玩") w.fun++;
-      else if (c.aiDim === "非AI-实用") w.practical++;
+  const cardMap = new Map<string, FeedCard>();
+  for (const c of cards) cardMap.set(c.repo, c);
+
+  // 更新标签权重
+  const applyDelta = (repos: string[], delta: number) => {
+    for (const repo of repos) {
+      const card = cardMap.get(repo);
+      if (!card) continue;
+      for (const tag of card.tags || []) {
+        // 只对 LLM 来源标签做较大调整
+        const factor = tag.source === "llm" ? 1.0 : 0.5;
+        const current = tagWeights[tag.name] ?? DEFAULT_TAG_WEIGHT;
+        tagWeights[tag.name] = Math.max(0.01, Math.min(1.0, current + delta * factor));
+      }
+      // 同时也更新旧的 interests（向后兼容）
+      if (card.aiDim) {
+        const old = profile.interests;
+        if (/^(AI|模型|RAG|推理)/.test(card.aiDim)) {
+          profile.interests.ai = Math.max(0.01, Math.min(0.9, old.ai + delta * 0.3));
+        } else if (/非AI-好玩|游戏/.test(card.aiDim)) {
+          profile.interests.fun = Math.max(0.01, Math.min(0.9, old.fun + delta * 0.3));
+        } else {
+          profile.interests.practical = Math.max(0.01, Math.min(0.9, old.practical + delta * 0.3));
+        }
+      }
     }
-    return w;
   };
 
-  const likeW = countDims(feedback.likes);
-  const dislikeW = countDims(feedback.dislikes);
-  const total = likeW.ai + likeW.fun + likeW.practical;
-  if (total === 0) return profile;
+  applyDelta(feedback.likes, 0.03);
+  applyDelta(feedback.bookmarks ?? [], 0.05);
+  applyDelta(feedback.dislikes, -0.05);
 
-  let ai = profile.interests.ai + (likeW.ai - dislikeW.ai) * 0.05;
-  let fun = profile.interests.fun + (likeW.fun - dislikeW.fun) * 0.05;
-  let practical = profile.interests.practical + (likeW.practical - dislikeW.practical) * 0.05;
+  // 时间衰减
+  const daysSinceActive = profile.lastActiveTs
+    ? Math.floor((Date.now() - new Date(profile.lastActiveTs).getTime()) / (24 * 3600 * 1000))
+    : 0;
+  tagWeights = decayTagWeights(tagWeights, daysSinceActive);
 
-  // 防负 + 归一化
-  ai = Math.max(0.01, ai);
-  fun = Math.max(0.01, fun);
-  practical = Math.max(0.01, practical);
-  const sum = ai + fun + practical;
-  return { ...profile, interests: { ai: ai / sum, fun: fun / sum, practical: practical / sum } };
+  return {
+    ...profile,
+    tagWeights,
+    bookmarks: [...new Set([...(profile.bookmarks || []), ...(feedback.bookmarks || [])])],
+    lastActiveTs: new Date().toISOString(),
+  };
 }

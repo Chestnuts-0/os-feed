@@ -8,6 +8,19 @@
 /** 项目进入信息流的来源 */
 export type FeedSource = "trending" | "bigbro" | "search";
 
+/** 标签来源 */
+export type TagSource = "llm" | "github" | "language";
+
+/** 综合标签（多来源融合） */
+export interface Tag {
+  /** 标签文本 */
+  name: string;
+  /** 来源 */
+  source: TagSource;
+  /** 来源权重 0-1（llm=1.0, github=0.7, language=0.5） */
+  weight: number;
+}
+
 /** 待 LLM 评分的项目（采集层产出的统一中间格式） */
 export interface RepoForScoring {
   /** owner/repo */
@@ -21,7 +34,9 @@ export interface RepoForScoring {
 /** LLM 评分结果（JSON 解析） */
 export interface ScoringResult {
   repo: string;
-  /** AI 维度分类 */
+  /** AI 维度分类（多个标签，1-3个，按相关度降序） */
+  aiDims: string[];
+  /** @deprecated 等于 aiDims[0]，向后兼容 */
   aiDim: string;
   /** 与用户兴趣的相关度 0-1 */
   aiScore: number;
@@ -55,7 +70,12 @@ export interface FeedCard {
   starGrowth: number;
   language: string;
   topics: string[];
+  /** LLM 多维度标签（1-3个） */
+  aiDims: string[];
+  /** @deprecated 等于 aiDims[0]，向后兼容 */
   aiDim: string;
+  /** 综合标签（LLM + GitHub topics + language 融合） */
+  tags: Tag[];
   aiScore: number;
   source: FeedSource;
   /** 哪些关注的大牛 star 了（source=bigbro 时有值） */
@@ -71,16 +91,23 @@ export interface FeedCard {
 
 /** 用户画像（个性化层） */
 export interface UserProfile {
-  /** AI/好玩/实用 三维权重，和为 1 */
+  /** @deprecated AI/好玩/实用 三维权重（迁移到 tagWeights） */
   interests: { ai: number; fun: number; practical: number };
+  /** 标签权重向量：key=标签名, value=偏好权重 0-1 */
+  tagWeights: Record<string, number>;
   /** 自然语言兴趣描述（喂给 AI 打分） */
   aiInterestsText: string;
   /** 关注的大牛 GitHub 用户名 */
   followedBigs: string[];
+  /** 收藏的 repo 列表 */
+  bookmarks: string[];
+  /** 最后活跃时间 ISO */
+  lastActiveTs: string;
 }
 
-/** 用户反馈（点赞/不感兴趣），用于更新画像 */
+/** 用户反馈（点赞/不感兴趣/收藏），用于更新画像 */
 export interface UserFeedback {
   likes: string[];
   dislikes: string[];
+  bookmarks: string[];
 }

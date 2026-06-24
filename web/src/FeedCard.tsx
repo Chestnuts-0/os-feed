@@ -1,5 +1,5 @@
-import { memo } from "react";
-import type { FeedCard as Card } from "./types.ts";
+import { memo, useState } from "react";
+import type { FeedCard as Card, Collection } from "./types.ts";
 
 // ---------------------------------------------------------------------------
 // 工具函数
@@ -51,15 +51,17 @@ const LANG_COLORS: Record<string, string> = {
 
 interface Props {
   card: Card;
+  liked: boolean;
   onOpen: (card: Card) => void;
 }
 
-function FeedCardComponent({ card, onOpen }: Props) {
+function FeedCardComponent({ card, liked, onOpen }: Props) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
   const reason = cleanReason(card.reasonCn);
 
   return (
     <article className="card" onClick={() => onOpen(card)}>
+      {liked && <span className="card-liked" title="已点赞">❤️</span>}
       <div className="card-header">
         <img
           src={`https://github.com/${card.owner}.png?size=40`}
@@ -116,14 +118,44 @@ interface DetailProps {
   card: Card;
   liked: boolean;
   disliked: boolean;
+  collections: Collection[];
   onLike: (repo: string) => void;
   onDislike: (repo: string) => void;
+  onUpdateCollections: (collections: Collection[]) => void;
   onClose: () => void;
 }
 
-export function CardDetail({ card, liked, disliked, onLike, onDislike, onClose }: DetailProps) {
+export function CardDetail({ card, liked, disliked, collections, onLike, onDislike, onUpdateCollections, onClose }: DetailProps) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
   const reason = cleanReason(card.reasonCn);
+
+  const [showPicker, setShowPicker] = useState(false);
+  const [newName, setNewName] = useState("");
+
+  const inCollections = collections.filter((c) => c.repos.includes(card.repo));
+
+  const toggleCollection = (colId: string) => {
+    const next = collections.map((c) => {
+      if (c.id !== colId) return c;
+      const has = c.repos.includes(card.repo);
+      return { ...c, repos: has ? c.repos.filter((r) => r !== card.repo) : [...c.repos, card.repo] };
+    });
+    onUpdateCollections(next);
+  };
+
+  const createAndAdd = () => {
+    const name = newName.trim();
+    if (!name) return;
+    const newCol: Collection = {
+      id: crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      name,
+      repos: [card.repo],
+      createdAt: new Date().toISOString(),
+      isAuto: false,
+    };
+    onUpdateCollections([...collections, newCol]);
+    setNewName("");
+  };
 
   return (
     <div className="detail-overlay" onClick={onClose}>
@@ -219,6 +251,13 @@ export function CardDetail({ card, liked, disliked, onLike, onDislike, onClose }
           >
             👎
           </button>
+          <button
+            className={`action-btn bookmark-btn${inCollections.length > 0 ? " active" : ""}`}
+            onClick={() => setShowPicker(!showPicker)}
+            title={inCollections.length > 0 ? `已收藏到 ${inCollections.map(c => c.name).join("、")}` : "收藏"}
+          >
+            ⭐
+          </button>
           <a
             href={card.url}
             target="_blank"
@@ -228,6 +267,48 @@ export function CardDetail({ card, liked, disliked, onLike, onDislike, onClose }
             GitHub 主页 ↗
           </a>
         </div>
+
+        {/* 收藏夹选择器 */}
+        {showPicker && (
+          <div className="collection-picker" onClick={(e) => e.stopPropagation()}>
+            <div className="picker-header">
+              <span>选择收藏夹</span>
+              <button className="picker-close" onClick={() => setShowPicker(false)}>✕</button>
+            </div>
+            <div className="picker-list">
+              {collections.length === 0 && (
+                <p className="picker-empty">暂无收藏夹，在下方创建</p>
+              )}
+              {collections.map((col) => {
+                const checked = col.repos.includes(card.repo);
+                return (
+                  <label key={col.id} className="picker-item">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => toggleCollection(col.id)}
+                    />
+                    <span className="picker-item-name">{col.name}</span>
+                    <span className="picker-item-count">({col.repos.length}个)</span>
+                  </label>
+                );
+              })}
+            </div>
+            <div className="picker-create">
+              <input
+                type="text"
+                className="picker-input"
+                placeholder="新建收藏夹…"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") createAndAdd(); }}
+              />
+              <button className="picker-create-btn" onClick={createAndAdd} disabled={!newName.trim()}>
+                + 创建
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
