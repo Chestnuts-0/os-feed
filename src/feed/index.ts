@@ -35,11 +35,11 @@ import type {
 
 const DATA_DIR = "data";
 const FEED_PATH = path.join(DATA_DIR, "feed.json");
-const BATCH_SIZE = 5;
-/** LLM 评分的仓库上限（按 star 排序，高 star 优先） */
-const MAX_LLM_SCORE_REPOS = 2000;
-/** LLM 并发批次数（与 report.ts 的 LLM_CONCURRENCY 匹配） */
-const SCORE_CONCURRENCY = 5;
+const BATCH_SIZE = 8;
+/** LLM 评分的新仓库上限（已有缓存的仓库不占额度） */
+const MAX_LLM_SCORE_REPOS = 1000;
+/** LLM 并发批次数 */
+const SCORE_CONCURRENCY = 8;
 /** feed.json 最大保留条目数 */
 const MAX_FEED_SIZE = 2000;
 /** 卡片硬截止天数（超过此天数直接移除） */
@@ -213,6 +213,37 @@ async function fetchRepoDetail(repo: string): Promise<RepoDetail | null> {
 }
 
 // ---------------------------------------------------------------------------
+// 加载已有评分缓存（避免重复 LLM 调用）
+// ---------------------------------------------------------------------------
+
+function loadExistingScores(): Map<string, ScoringResult> {
+  try {
+    if (!fs.existsSync(FEED_PATH)) return new Map();
+    const raw = fs.readFileSync(FEED_PATH, "utf-8");
+    const cards = JSON.parse(raw) as FeedCard[];
+    const map = new Map<string, ScoringResult>();
+    for (const c of cards) {
+      if (c.reasonCn && c.aiScore !== undefined) {
+        map.set(c.repo, {
+          repo: c.repo,
+          aiDims: c.aiDims || (c.aiDim ? [c.aiDim] : []),
+          aiDim: c.aiDim || c.aiDims?.[0] || "其他",
+          aiScore: c.aiScore,
+          summaryCn: c.summaryCn,
+          reasonCn: c.reasonCn,
+          detailCn: c.detailCn || "",
+        });
+      }
+    }
+    console.log(`  [feed/cache] loaded ${map.size} existing scores from ${FEED_PATH}`);
+    return map;
+  } catch {
+    console.log(`  [feed/cache] no existing feed.json, scoring all repos`);
+    return new Map();
+  }
+}
+
+// ---------------------------------------------------------------------------
 // LLM 批量评分
 // ---------------------------------------------------------------------------
 
@@ -344,20 +375,30 @@ export async function generateFeed(
     );
   }
 
-  // 3. LLM 批量评分（按 star 排序，高 star 优先，cap MAX_LLM_SCORE_REPOS）
+  // 3. LLM 批量评分（增量模式：跳过已有缓存的仓库，只给新仓库评分）
+  const existingScores = loadExistingScores();
   const sortedRepos = [...repoMap.values()].sort((a, b) => b.stars - a.stars);
-  const reposToScore: RepoForScoring[] = sortedRepos.slice(0, MAX_LLM_SCORE_REPOS).map((m) => ({
-    repo: m.repo,
-    description: m.desc,
-    stars: m.stars,
-    language: m.language,
-    topics: m.topics,
-  }));
+  const reposNeedingScore: RepoForScoring[] = sortedRepos
+    .filter((m) => !existingScores.has(m.repo))
+    .slice(0, MAX_LLM_SCORE_REPOS)
+    .map((m) => ({
+      repo: m.repo,
+      description: m.desc,
+      stars: m.stars,
+      language: m.language,
+      topics: m.topics,
+    }));
   console.log(
-    `[feed] scoring ${reposToScore.length}/${repoMap.size} repos via LLM (top by stars, cap ${MAX_LLM_SCORE_REPOS})...`,
+    `[feed] ${existingScores.size} cached, scoring ${reposNeedingScore.length}/${repoMap.size} new repos via LLM (cap ${MAX_LLM_SCORE_REPOS})...`,
   );
-  const scoringResults = await scoreBatched(reposToScore, config.interests.aiInterestsText);
-  const scoringMap = new Map(scoringResults.map((r) => [r.repo, r]));
+  const newScoringResults =
+    reposNeedingScore.length > 0
+      ? await scoreBatched(reposNeedingScore, config.interests.aiInterestsText)
+      : [];
+  const scoringMap = new Map<string, ScoringResult>([
+    ...existingScores,
+    ...newScoringResults.map((r) => [r.repo, r] as const),
+  ]);
 
   // 4. 组装 FeedCard（只保留 LLM 评分成功的仓库，不使用模板兜底）
   const cards: FeedCard[] = [];
