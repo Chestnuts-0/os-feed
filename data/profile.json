@@ -4,6 +4,15 @@
     "fun": 0.3,
     "practical": 0.2
   },
+  "tagWeights": {
+    "AI基础设施": 0.5,
+    "AI Agent": 0.5,
+    "AI应用": 0.5,
+    "模型与训练": 0.5,
+    "RAG与知识": 0.5,
+    "推理引擎": 0.5,
+    "大语言模型": 0.5
+  },
   "aiInterestsText": "我想看 AI 相关、好玩的、能直接拿来用的开源工具和软件",
   "followedBigs": [
     "torvalds",
@@ -11,5 +20,7 @@
     "yyx990803",
     "tj",
     "sindresorhus"
-  ]
+  ],
+  "bookmarks": [],
+  "lastActiveTs": "2026-06-25T19:20:56.934Z"
 }

@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.191发布，引入Rewind上下文恢复功能",
+      "OpenAI Codex极高活跃，修复配额激增严重Bug",
+      "Gemini CLI修复路径遍历漏洞，关注Wayland兼容",
+      "OpenCode引入会话快照回滚，Windows平台现稳定性回归",
+      "DeepSeek TUI高活跃，优化Plan/Agent模式路由",
+      "Qwen Code修复PowerShell内存泄漏，推进语音听写集成"
+    ],
+    "ai-agents": [
+      "OpenClaw发布v2026.6.11-beta，增强渠道控制能力",
+      "里程碑PR：会话数据迁移至SQLite，解决性能瓶颈",
+      "移除OAuth误导Base64编码，提升配置透明度",
+      "修复iOS首次运行引导，降低移动端上手门槛",
+      "社区高频讨论内存泄漏与OOM资源管理痛点",
+      "多代理编排稳定性成为生产环境核心关注点"
+    ],
+    "ai-trending": [
+      "OpenMontage单日增星3553，开源Agentic视频制作系统",
+      "OpenAI Codex登顶Trending，正式开源成为CLI新基准",
+      "AWS发布Agent Toolkit，赋能云原生MCP服务器构建",
+      "字节DeerFlow开源，支持长周期SuperAgent沙箱协作",
+      "StablyAI Orca上线，并行管理多个编码智能体",
+      "Chrome DevTools MCP发布，打通Web调试最后一公里"
+    ],
+    "ai-web": [
+      "Anthropic联手NNSA开发核扩散风险自动分类器",
+      "8.1万人调查显示AI提升生产力但加剧就业焦虑",
+      "OpenAI与Broadcom合作Jalapeno推理芯片取得进展",
+      "Anthropic计划分享核安全护栏方法至前沿模型论坛",
+      "OpenAI发布Agent重塑工作深度分析文章",
+      "行业焦点转向安全合规基础设施与宏观经济治理"
+    ],
+    "ai-hn": [
+      "Anthropic指控阿里非法提取Claude能力，引700+分热议",
+      "GLM-5.2被指存在安全隐患，呼应模型安全担忧",
+      "OpenAI Codex导致SSD过度写入，引发工程反噬质疑",
+      "苹果跳过M6直接推出AI专用M7芯片，端侧竞争升级",
+      "Visual multi-agent工具发布，优化Claude Code编排",
+      "社区对商业化侵蚀体验及模型黑箱操作高度警惕"
+    ],
+    "ai-arxiv": [
+      "FORCE方法突破具身智能VLA模型模仿学习瓶颈",
+      "实时语音AI研究揭示系统在语调情感理解上的缺陷",
+      "对策自蒸馏提升准确率但导致输出多样性下降",
+      "提出模型法医学，区分有害行为源于对齐或混淆",
+      "MLLMs对输入顺序高度敏感，挑战可靠性基准",
+      "合成数据对分类性能的理论边界被深入探讨"
+    ],
+    "ai-hf": [
+      "DeepSeek-V4-Pro超5000赞居首，通用对话模型统治力",
+      "GLM-5.2热度飙升，智谱MoE架构在开源生态强势",
+      "Gemma-4-12B-it下载破200万，边缘计算首选基座",
+      "NVIDIA LocateAnything-3B高精度定位，潜力巨大",
+      "Krea-2系列平衡生成速度与质量，受创意者关注",
+      "Nemotron-3.5流式ASR模型，展现小模型效率优化"
+    ],
+    "ai-community": [
+      "开发者呼吁AI编码Agent需项目级记忆而非更长Prompt",
+      "多Agent编排策略分享，展示如何避免系统复杂性失控",
+      "自动化红队测试实战，演示如何发现Agent安全漏洞",
+      "2026向量数据库全面对比，助力RAG架构组件选型",
+      "揭示AI评估指标不确定性，推动更严谨测试方法论",
+      "结构化工具权限矩阵构建，实现Agent团队可视化策略"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.191 released",
+      "OpenAI Codex has 10 critical issues",
+      "Gemini CLI v0.49.0-nightly out",
+      "Copilot v1.0.65 released recently",
+      "Kimi Code CLI joins the fray",
+      "OpenCode offers open-source alt"
+    ],
+    "ai-agents": [
+      "OpenClaw hits 500 issues daily",
+      "OpenClaw v2026.6.11-beta.1 out",
+      "New Slack relay mode added",
+      "Native Mattermost support added",
+      "Per-DM model overrides available",
+      "Race conditions cause instability"
+    ],
+    "ai-trending": [
+      "AWS agent toolkit gains stars",
+      "Eino Go framework trending up",
+      "New-API unifies LLM costs",
+      "Casdoor secures agent access",
+      "DeerFlow SuperAgent hits 74k stars",
+      "Local-first agents gain traction"
+    ],
+    "ai-web": [
+      "Anthropic partners with DOE",
+      "Nuclear safeguards classifier live",
+      "81k-user AI economic index out",
+      "OpenAI focuses on silicon infra",
+      "Custom chips harden OpenAI stack",
+      "Agentic workflows evolve at OpenAI"
+    ],
+    "ai-hn": [
+      "Alibaba accused of stealing Claude",
+      "Anthropic cites illicit extraction",
+      "Ornith-1.0 enables self-scaffolding",
+      "Self-scaffolding LLMs trend now",
+      "OpenAI adds ads to paid tiers",
+      "CODEX resource inefficiency criticized"
+    ],
+    "ai-arxiv": [
+      "Model forensics audits misalignment",
+      "Facet-Probe finds order sensitivity",
+      "Multimodal models hate input order",
+      "Self-distillation reduces diversity",
+      "RL limits tool-use innovation",
+      "Voice emotion benchmarks tested"
+    ],
+    "ai-hf": [
+      "DeepSeek-V4-Pro tops HF charts",
+      "GLM-5.2 gains 2.4k likes",
+      "Gemma-4-12B-it sees 2M downloads",
+      "LocateAnything-3B trends in vision",
+      "Uncensored models see huge downloads",
+      "Abliterated fine-tunes popular"
+    ],
+    "ai-community": [
+      "Coding agents need project memory",
+      "Automated red teaming boosts safety",
+      "Multi-agent orchestration avoids mess",
+      "Flaky evals undermine testing trust",
+      "Prompt injection risks grow",
+      "Local-first AI infra preferred"
+    ]
+  }
+}
