@@ -35,7 +35,7 @@ import type {
 
 const DATA_DIR = "data";
 const FEED_PATH = path.join(DATA_DIR, "feed.json");
-const BATCH_SIZE = 8;
+const BATCH_SIZE = 5;
 /** LLM 评分的新仓库上限（已有缓存的仓库不占额度） */
 const MAX_LLM_SCORE_REPOS = 1000;
 /** LLM 并发批次数 */

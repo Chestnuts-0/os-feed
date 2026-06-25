@@ -94,7 +94,7 @@ ${list}
 
 /**
  * 解析 LLM 返回的评分为 ScoringResult[]。
- * 容错：去除 markdown 代码块标记、提取首个 JSON 数组。
+ * 容错：去除 markdown 代码块标记、修复 JSON 控制字符、提取首个 JSON 数组。
  */
 export function parseScoringResult(raw: string): ScoringResult[] {
   let text = raw.trim();
@@ -112,8 +112,13 @@ export function parseScoringResult(raw: string): ScoringResult[] {
     return [];
   }
 
+  let jsonStr = text.slice(start, end + 1);
+
+  // 修复 JSON 字符串值中的原始控制字符（LLM 常见问题）
+  jsonStr = sanitizeJsonControlChars(jsonStr);
+
   try {
-    const arr = JSON.parse(text.slice(start, end + 1)) as Array<{
+    const arr = JSON.parse(jsonStr) as Array<{
       repo?: string;
       ai_dims?: string[];
       ai_dim?: string;
@@ -145,7 +150,110 @@ export function parseScoringResult(raw: string): ScoringResult[] {
         };
       });
   } catch (err) {
+    // 二次容错：尝试逐项提取（LLM 输出可能被截断）
+    const partial = extractPartialResults(jsonStr);
+    if (partial.length > 0) {
+      console.log(`  [feed/scoring] recovered ${partial.length} partial results from truncated JSON`);
+      return partial;
+    }
     console.error(`[feed/scoring] JSON parse failed: ${err}`);
     return [];
   }
+}
+
+/**
+ * 修复 JSON 字符串值中的原始控制字符。
+ * LLM 经常在字符串内输出原始换行符/制表符，导致 JSON.parse 失败。
+ * 仅修复字符串值内部的控制字符，不影响 JSON 结构。
+ */
+function sanitizeJsonControlChars(text: string): string {
+  let result = "";
+  let inString = false;
+  let escaped = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text.charAt(i);
+
+    if (!inString) {
+      if (ch === '"') inString = true;
+      result += ch;
+    } else {
+      if (escaped) {
+        result += ch;
+        escaped = false;
+      } else if (ch === "\\") {
+        result += ch;
+        escaped = true;
+      } else if (ch === '"') {
+        inString = false;
+        result += ch;
+      } else if (ch.charCodeAt(0) < 0x20) {
+        // 控制字符：转义
+        switch (ch) {
+          case "\n":
+            result += "\\n";
+            break;
+          case "\r":
+            result += "\\r";
+            break;
+          case "\t":
+            result += "\\t";
+            break;
+          default:
+            result += "\\u" + ch.charCodeAt(0).toString(16).padStart(4, "0");
+        }
+      } else {
+        result += ch;
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * 从截断的 JSON 数组中逐项提取有效结果。
+ * 例：[{...},{...},{... （被截断）
+ * 能提取前几个完整对象。
+ */
+function extractPartialResults(jsonStr: string): ScoringResult[] {
+  const results: ScoringResult[] = [];
+  const objRegex = /\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g;
+  const matches = jsonStr.match(objRegex);
+  if (!matches) return [];
+
+  for (const objStr of matches) {
+    try {
+      const x = JSON.parse(objStr) as {
+        repo?: string;
+        ai_dims?: string[];
+        ai_dim?: string;
+        ai_score?: number;
+        summary_cn?: string;
+        reason_cn?: string;
+        detail_cn?: string;
+      };
+      if (typeof x.repo !== "string") continue;
+      let dims: string[];
+      if (Array.isArray(x.ai_dims) && x.ai_dims.length > 0) {
+        dims = x.ai_dims.filter((d): d is string => typeof d === "string");
+      } else if (typeof x.ai_dim === "string" && x.ai_dim.trim()) {
+        dims = [x.ai_dim.trim()];
+      } else {
+        dims = ["其他"];
+      }
+      results.push({
+        repo: x.repo,
+        aiDims: dims,
+        aiDim: dims[0] || "其他",
+        aiScore: typeof x.ai_score === "number" ? Math.max(0, Math.min(1, x.ai_score)) : 0.5,
+        summaryCn: x.summary_cn ?? "",
+        reasonCn: x.reason_cn ?? "",
+        detailCn: x.detail_cn ?? "",
+      });
+    } catch {
+      // skip unparseable object
+    }
+  }
+  return results;
 }
