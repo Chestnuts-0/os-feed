@@ -39,7 +39,7 @@ const BATCH_SIZE = 5;
 /** LLM 评分的新仓库上限（已有缓存的仓库不占额度） */
 const MAX_LLM_SCORE_REPOS = 1000;
 /** LLM 并发批次数 */
-const SCORE_CONCURRENCY = 8;
+const SCORE_CONCURRENCY = 5;
 /** feed.json 最大保留条目数 */
 const MAX_FEED_SIZE = 2000;
 /** 卡片硬截止天数（超过此天数直接移除） */
