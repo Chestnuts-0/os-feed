@@ -1,134 +1,134 @@
 {
   "zh": {
     "ai-cli": [
-      "Claude Code v2.1.193发布，强化Auto Mode安全控制",
-      "OpenAI Codex遭费率暴涨与配额Bug困扰",
-      "Gemini CLI v0.51.0-nightly修复Agent异常",
-      "OpenCode引入会话快照回滚，修复Win崩溃",
-      "Qwen Code扩展系统增强，修复Win内存泄漏",
-      "DeepSeek更名为CodeWhale，完善多智能体"
+      "Claude Code v2.1.193发布，增强Auto-Mode安全策略",
+      "OpenAI Codex Rust版修复计费Bug，MCP工具搜索默认启用",
+      "Gemini CLI v0.51.0夜间版，强化子代理行为可靠性",
+      "GitHub Copilot引入MCP开关，解决会话恢复认证问题",
+      "OpenCode v1.17.11发布会话快照功能，Windows适配成热点",
+      "DeepSeek TUI改名为CodeWhale，重构本地化与Fleet模型"
     ],
     "ai-agents": [
-      "OpenClaw每日500 Issue PR，生态极度活跃",
-      "强化插件信任检查，提升生态安全性",
-      "修复Gateway内存泄漏与会话上下文丢失",
-      "解决子代理yield提前终止的状态一致性问题",
-      "社区热议Issue Body注入的安全风险边界",
-      "集中式文件名编码工具引发开发者关注"
+      "OpenClaw日更千条Issue PR，社区活跃度极高",
+      "托管市场Feed栈PR密集合并，自动化安装基础已搭建",
+      "修复macOS launchd死循环及孤立会话车道残留问题",
+      "限制Google Media JSON响应读取，防止OOM崩溃",
+      "安装版渠道配置解析失败修复，提升部署稳定性",
+      "大量PR标记待审核，代码库处于集成测试前夜"
     ],
     "ai-trending": [
-      "OpenMontage开源视频制作系统引爆社区",
-      "AWS官方发布Agent Toolkit集成云服务",
-      "字节开源Deer-Flow长周期SuperAgent框架",
-      "Go语言Eino框架解决AI开发碎片化问题",
-      "Hiring-Agent展示AI在HR垂直领域应用",
-      "Multica平台让编程智能体转为团队成员"
+      "OpenMontage爆火，开源智能体视频制作系统获3434星",
+      "OpenAI Codex CLI首登GitHub趋势，获近300星",
+      "AWS推出Agent Toolkit，标准化云原生智能体接入",
+      "字节Deer Flow开源，展示长周期超级智能体架构",
+      "Stably AI Orca上线，支持多智能体并行编码环境",
+      "Multica平台开源，助力编码智能体向管理型转化"
     ],
     "ai-web": [
-      "Anthropic联手NNSA开发核扩散风险分类器",
-      "8.1万人调查显示AI提升生产力却加剧焦虑",
-      "OpenAI Broadcom合作Jalapeno推理芯片进展",
-      "OpenAI分析Agent如何重塑未来工作方式",
-      "Anthropic计划建立行业通用安全标准",
-      "OpenAI基础设施动作频繁，聚焦算力优化"
+      "Anthropic联手NNSA开发核扩散风险AI分类器",
+      "8.1万人调查显示AI提升生产力但加剧失业焦虑",
+      "OpenAI披露Broadcom定制推理芯片Jalapeno进展",
+      "Anthropic计划分享核安全护栏方法至前沿论坛",
+      "OpenAI发布Agent重塑工作深度分析文章",
+      "行业焦点转向安全合规基础设施与宏观经济治理"
     ],
     "ai-hn": [
-      "特朗普要求OpenAI延迟发布GPT-5.6引争议",
-      "中国Zai模型迅速缩小与OpenAI技术差距",
-      "DeepSeek-V4-Pro实现20秒极速启动服务",
-      "OpenKnowledge成HN高分，主打AI原生知识管理",
-      "DeepSeek Flash颠覆Agent产品经济模型",
-      "Visual多智能体编排工具受Claude Code用户关注"
+      "OpenKnowledge获HN最高分，开源AI原生知识管理工具",
+      "中国AI模型迅速缩小与美系顶尖模型性能差距",
+      "Anthropic指控阿里发起史上最大AI蒸馏攻击",
+      "2千人黑客演练实录，揭示AI助手安全脆弱性",
+      "特朗普政府要求OpenAI推迟GPT-5.6发布引热议",
+      "OpenAI付费产品植入广告及IPO延期传闻引争议"
     ],
     "ai-arxiv": [
-      "Hierarchical Muon优化器降低矩阵运算复杂度",
-      "改进稀疏自编码器提升视觉模型可解释性",
-      "BINEVAL框架用二元问题解决LLM评估黑盒",
-      "多模型路由收益存在共同失败天花板",
-      "具身智能从孤立技能向日常物理自主演进",
-      "结合RL与VLA解决具身智能突破性方案"
+      "提出RiVER框架，无真值环境下强化学习提升LLM",
+      "分析序列概率与正确性关系，优化LLM置信度校准",
+      "改进Top-k稀疏自编码器，增强视觉特征可解释性",
+      "BINEVAL框架将LLM评估分解为二元问题，提升透明度",
+      "引入用户意图信号训练，显著改善安全分类效果",
+      "探索世界模型幻觉及GUI智能体自主探索经验利用"
     ],
     "ai-hf": [
-      "DeepSeek-V4-Pro下载超187万，热度领跑",
-      "Gemma 4-12B下载超218万，轻量基座受欢迎",
-      "empero-ai推出支持1M token长上下文模型",
-      "NVIDIA LocateAnything-3B实现零样本视觉定位",
-      "MiniMax-M3多模态旗舰模型中文表现优异",
-      "百度Unlimited-OCR更新，垂直小模型成标配"
+      "DeepSeek-V4-Pro登顶HF，获超5000赞及187万下载",
+      "智谱GLM-5.2发布，MoE架构成国产LLM新标杆",
+      "Qwen3.6去护栏版本下载量激增，满足红队测试需求",
+      "Gemma-4-12B-it持续热销，边缘部署轻量级应用首选",
+      "NVIDIA LocateAnything-3B上线，高精度图像定位模型",
+      "百度Unlimited-OCR发布，解决无限分辨率文档识别痛点"
     ],
     "ai-community": [
-      "探讨单Agent与多Agent架构权衡与编排",
-      "指出多Agent失败常源于模块间交接断层",
-      "可视化工具权限矩阵解决AI生产环境治理",
-      "AWS账单警示不当AI基建配置导致巨额费用",
-      "提供SQL生成信任危机下的数据恢复方法论",
-      "强调AI Agent核心难点在于任务规划而非执行"
+      "探讨单智能体与多智能体架构选择，Git审查案例分享",
+      "可视化工具管理AI Agent团队权限，解决失控风险",
+      "反直觉架构：限制LLM直接分类邮件以保障准确性",
+      "指出多智能体系统失败主因在于智能体间交接环节",
+      "2026年向量数据库选型指南：pgvector vs Pinecone等",
+      "AI Agent难点不在执行而在规划，分享实战经验"
     ]
   },
   "en": {
     "ai-cli": [
-      "Claude Code v2.1.193 released",
-      "OpenAI Codex rust-v0.142.2 out",
+      "Claude Code v2.1.193 stable",
+      "OpenAI Codex alpha active dev",
       "Gemini CLI v0.51.0 nightly",
-      "Copilot CLI v1.0.66-0 live",
-      "OpenCode v1.17.11 shipped",
-      "Kimi Code v0.19.2 stable"
+      "OpenCode major refactor ongoing",
+      "GitHub Copilot v1.0.66 minor",
+      "Kimi Code CLI low activity"
     ],
     "ai-agents": [
-      "OpenClaw sees 500 issues daily",
-      "No new OpenClaw releases today",
-      "PR #72267 fixes zsh completion",
-      "PR #81364 blocks untrusted plugins",
-      "Heavy maintenance phase ongoing",
-      "Memory leak patches merged"
+      "OpenClaw 500 issues today",
+      "OpenClaw 500 PRs updated",
+      "No new releases published",
+      "Marketplace infrastructure advancing",
+      "Session stability fixes merged",
+      "Security boundary improvements"
     ],
     "ai-trending": [
-      "OpenMontage gains 3,434 stars",
-      "NVIDIA SkillSpector trending",
-      "AWS agent-toolkit for enterprise",
-      "Bytedance Deer-Flow harness",
-      "OpenAI Codex +298 stars today",
-      "Go Eino framework rising fast"
+      "ECC harness hits 221k stars",
+      "OpenMontage video prod surges",
+      "New API unifies model hub",
+      "AWS agent toolkit trending",
+      "Local-first AI infrastructure",
+      "Agentic content production matures"
     ],
     "ai-web": [
       "Anthropic nuclear safeguards AI",
-      "U.S. DOE co-develops classifier",
-      "96% accuracy on nuclear queries",
-      "Anthropic economic index survey",
-      "81,000 users surveyed for data",
-      "OpenAI custom silicon updates"
+      "81k user economic index survey",
+      "OpenAI custom silicon updates",
+      "Anthropic safety policy pivot",
+      "OpenAI agentic workflow evolution",
+      "Gov-backed AI safety protocols"
     ],
     "ai-hn": [
-      "Trump asks OpenAI to delay GPT-5.6",
-      "GPT-5.6 staggered for safety",
-      "Chinese AI models close gap",
-      "US dominance eroding fast",
-      "OpenKnowledge: Obsidian alternative",
-      "DeepSeek Flash drives economy"
+      "Trump asks OpenAI to stagger GPT",
+      "OpenAI IPO delay rumors",
+      "Ads introduced in OpenAI subs",
+      "Chinese models close gap with US",
+      "OpenKnowledge Obsidian alternative",
+      "DeepSeek Flash cost efficiency"
     ],
     "ai-arxiv": [
-      "Ensembles hit co-failure ceiling",
-      "Beta-failure limits model gains",
-      "Fine-tuning creates stealth evasion",
-      "Invisible safety vulnerabilities found",
-      "Boltzmann generators for molecules",
-      "Sparse autoencoders for inspection"
+      "LLM sequence probability study",
+      "LMs as task-specific KBs",
+      "Sparse autoencoders improved",
+      "Binary questions for LLM eval",
+      "Hallucinations in world models",
+      "Robotic manipulation frameworks"
     ],
     "ai-hf": [
-      "DeepSeek-V4-Pro tops HF trends",
-      "1.8M downloads for DeepSeek-V4",
-      "GLM-5.2 emerges as strong rival",
-      "Zhipu AI GLM-5.2 gains traction",
-      "Qwen-AgentWorld-35B for agents",
-      "Baidu Unlimited-OCR trending"
+      "DeepSeek V4-Pro tops HF",
+      "GLM-5.2 robust open-source",
+      "Gemma 4 12B-it popular",
+      "NVIDIA Lo specialized models",
+      "GGUF quantization for coding",
+      "Baidu OCR innovation continues"
     ],
     "ai-community": [
       "One agent vs many orchestration",
-      "Debugging agent handoffs critical",
+      "Agent handoff debugging tips",
       "Tool permission matrix builder",
-      "Local execution prioritized now",
-      "Evidence-based observability needed",
-      "Cost-aware infra replacing clouds"
+      "Multi-agent identity verification",
+      "Decouple planning from execution",
+      "Kernel-level AI optimizations"
     ]
   }
 }

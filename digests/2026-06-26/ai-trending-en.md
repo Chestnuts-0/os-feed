@@ -1,70 +1,78 @@
 # AI Open Source Trends 2026-06-26
 
-> Sources: GitHub Trending + GitHub Search API | Generated: 2026-06-26 02:15 UTC
+> Sources: GitHub Trending + GitHub Search API | Generated: 2026-06-26 05:34 UTC
 
 ---
 
-# AI Open Source Trends Report
-**Date:** June 26, 2026
-**Source:** GitHub Trending & Topic Search
+# AI Open Source Trends Report — June 26, 2026
 
 ### 1. Today's Highlights
-The AI open-source ecosystem is aggressively pivoting from single-agent experimentation to **Agentic Infrastructure and Security**. The most significant trend today is the emergence of specialized tooling for securing and managing AI agents, evidenced by NVIDIA’s SkillSpector and Anthropic’s Cybersecurity Skills gaining rapid traction. Simultaneously, the "Coding Agent" wars have intensified with new harnesses like **StablyAI Orca** and **Bytedance Deer-Flow** aiming to orchestrate multi-agent teams for long-horizon tasks. Finally, **Video Production** has become a viable agentic domain, with OpenMontage demonstrating that complex creative pipelines can now be automated via code agents.
+The AI ecosystem is witnessing a massive shift from experimental agent frameworks to **production-grade "Agent Harnesses"** and **specialized skill registries**, with projects like *affaan-m/ECC* and *mukul975/Anthropic-Cybersecurity-Skills* dominating the trending charts. There is a concurrent surge in **local-first, privacy-centric AI infrastructure**, evidenced by the popularity of *QuantumNous/new-api* and *TencentCloud/TencentDB-Agent-Memory*, signaling a move away from pure cloud-dependency. Furthermore, **agentic video and content production** is maturing rapidly, with *OpenMontage* and *OpenDesign* showing that AI agents can now handle complex, multi-stage creative pipelines autonomously.
 
 ### 2. Top Projects by Category
 
 #### 🔧 AI Infrastructure
-*   **[aws/agent-toolkit-for-aws](https://github.com/aws/agent-toolkit-for-aws)** (⭐0, +47 today)
-    Official AWS-supported MCP servers and plugins, signaling enterprise readiness for agentic workflows on cloud infrastructure.
-*   **[cloudwego/eino](https://github.com/cloudwego/eino)** (⭐0, +25 today)
-    The ultimate LLM/AI application development framework in Go, addressing the performance gap in backend AI services.
-*   **[openai/codex](https://github.com/openai/codex)** (⭐0, +298 today)
-    OpenAI’s lightweight terminal-based coding agent, continuing to gain momentum as a local-first alternative to cloud IDEs.
+*   **[affaan-m/ECC](https://github.com/affaan-m/ECC)**
+    *   ⭐ Total: 221,823 | Today: +610
+    *   An agent harness performance optimization system focusing on skills, instincts, memory, and security for Claude Code, Codex, and Cursor.
+*   **[QuantumNous/new-api](https://github.com/QuantumNous/new-api)**
+    *   ⭐ Total: N/A (Trending) | Today: +174
+    *   A unified AI model hub for aggregation & distribution, supporting cross-converting various LLMs into OpenAI/Claude/Gemini-compatible formats with cost tracking.
+*   **[aws/agent-toolkit-for-aws](https://github.com/aws/agent-toolkit-for-aws)**
+    *   ⭐ Total: N/A (Trending) | Today: +47
+    *   Official AWS-supported MCP servers and plugins to help AI agents build infrastructure on AWS, marking major cloud provider adoption of agentic workflows.
 
 #### 🤖 AI Agents / Workflows
-*   **[calesthio/OpenMontage](https://github.com/calesthio/OpenMontage)** (⭐0, +3,434 today)
-    The world’s first open-source agentic video production system, leveraging 500+ agent skills to automate complex video pipelines.
-*   **[bytedance/deer-flow](https://github.com/bytedance/deer-flow)** (⭐0, +282 today)
-    A "SuperAgent" harness for long-horizon tasks, combining sandboxes, memory, and sub-agents to handle multi-hour research and coding workflows.
-*   **[stablyai/orca](https://github.com/stablyai/orca)** (⭐0, +694 today)
-    An Agent Development Environment (ADE) allowing users to run fleets of parallel coding agents with isolated subscriptions and task tracking.
-*   **[multica-ai/multica](https://github.com/multica-ai/multica)** (⭐0, +153 today)
-    A managed agents platform that treats coding agents as teammates, enabling task assignment, progress tracking, and skill compounding.
+*   **[calesthio/OpenMontage](https://github.com/calesthio/OpenMontage)**
+    *   ⭐ Total: N/A (Trending) | Today: +3,434
+    *   The world's first open-source, agentic video production system with 12 pipelines and 500+ agent skills, turning coding assistants into full video studios.
+*   **[bytedance/deer-flow](https://github.com/bytedance/deer-flow)**
+    *   ⭐ Total: 74,776 | Today: +282
+    *   An open-source long-horizon "SuperAgent" harness that researches, codes, and creates using sandboxes, memories, and subagents for tasks taking minutes to hours.
+*   **[Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach)**
+    *   ⭐ Total: 41,480 | Today: +1,547
+    *   Gives AI agents "eyes" to see the internet by reading/searching Twitter, Reddit, YouTube, GitHub, and more via a single CLI with zero API fees.
 
 #### 📦 AI Applications
-*   **[Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach)** (⭐0, +1,547 today)
-    Gives AI agents "eyes" to browse the entire internet (Twitter, Reddit, GitHub, etc.) via a single CLI with zero API fees, solving the data access bottleneck.
-*   **[NanmiCoder/MediaCrawler](https://github.com/NanmiCoder/MediaCrawler)** (⭐0, +398 today)
-    A powerful crawler for Chinese social media platforms (Xiaohongshu, Douyin, Bilibili), providing structured data for agent training and analysis.
-*   **[interviewstreet/hiring-agent](https://github.com/interviewstreet/hiring-agent)** (⭐0, +683 today)
-    An AI agent specifically designed to evaluate and score resumes, automating the initial stages of technical hiring.
+*   **[ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis)**
+    *   ⭐ Total: 49,696 | Today: +1,209
+    *   An LLM-powered multi-market stock analysis system with real-time news, decision dashboards, and automated notifications, supporting zero-cost scheduled runs.
+*   **[jamiepine/voicebox](https://github.com/jamiepine/voicebox)**
+    *   ⭐ Total: N/A (Trending) | Today: +395
+    *   An open-source AI voice studio for cloning, dictating, and creating audio, representing the growing trend of local-first multimodal generation tools.
+*   **[interviewstreet/hiring-agent](https://github.com/interviewstreet/hiring-agent)**
+    *   ⭐ Total: N/A (Trending) | Today: +683
+    *   An AI agent specifically designed to evaluate and score resumes, showcasing the verticalization of agent use cases in HR and recruitment.
 
 #### 🧠 LLMs / Training
-*   **[pytorch/pytorch](https://github.com/pytorch/pytorch)** (⭐0, +180 today)
-    Core deep learning framework continues to see high engagement as the backbone for most new agent and LLM developments.
-*   **[NVIDIA-NeMo/Speech](https://github.com/NVIDIA-NeMo/Speech)** (⭐0, +12 today)
-    Scalable generative AI framework for Speech AI (ASR/TTS), highlighting the growing importance of multimodal audio agents.
+*   **[NVIDIA-NeMo/Speech](https://github.com/NVIDIA-NeMo/Speech)**
+    *   ⭐ Total: 17,563 | Today: +12
+    *   A scalable generative AI framework for Speech AI (ASR and TTS), highlighting NVIDIA's continued dominance in specialized multimodal model infrastructure.
+*   **[unslothai/unsloth](https://github.com/unslothai/unsloth)**
+    *   ⭐ Total: 67,369 | Today: N/A (Stable High)
+    *   Enables efficient training and running of open models like Gemma and Qwen locally, remaining a staple for accessible LLM fine-tuning.
 
 #### 🔍 RAG / Knowledge
-*   **[opendatalab/MinerU](https://github.com/opendatalab/MinerU)** (⭐0, +644 today)
-    Transforms complex PDFs and Office docs into LLM-ready markdown/JSON, a critical preprocessing step for high-fidelity RAG pipelines.
-*   **[TencentCloud/TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory)** (⭐0, +52 today)
-    Delivers fully local, persistent long-term memory for AI agents via a 4-tier progressive pipeline without external API dependencies.
-*   **[mem0ai/mem0](https://github.com/mem0ai/mem0)** (⭐59,464 total)
-    Universal memory layer for AI agents, enabling persistent context across sessions for any LLM framework.
+*   **[TencentCloud/TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory)**
+    *   ⭐ Total: 6,188 | Today: +52
+    *   Delivers fully local long-term memory for AI Agents via a 4-tier progressive pipeline with zero external API dependencies, addressing critical context persistence needs.
+*   **[opendatalab/MinerU](https://github.com/opendatalab/MinerU)**
+    *   ⭐ Total: N/A (Trending) | Today: +644
+    *   Transforms complex documents (PDFs, Office docs) into LLM-ready markdown/JSON, a crucial preprocessing step for high-fidelity RAG pipelines.
+*   **[thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)**
+    *   ⭐ Total: 84,326 | Today: +190
+    *   Provides persistent context across sessions for agents by capturing, compressing, and injecting relevant context back into future sessions.
 
 ### 3. Trend Signal Analysis
-The dominant signal today is **Agentic Security and Governance**. With the rise of autonomous agents executing code and accessing sensitive data, tools like **NVIDIA SkillSpector** and **Anthropic Cybersecurity Skills** are exploding in popularity (+352 and +571 stars respectively). This indicates a maturation phase where the community is prioritizing safety and auditability alongside capability.
+The dominant signal today is the **professionalization of "Agent Harnesses"**. Early 2026 saw a wave of generic agent frameworks; today's trending data shows a consolidation around specialized "harnesses" (like *ECC*, *deer-flow*, and *OpenMontage*) that prioritize **skills, memory, and security** over mere orchestration. The explosive growth of *Anthropic-Cybersecurity-Skills* (817 structured skills mapped to MITRE/NIST frameworks) indicates that enterprises are moving beyond playful agents to **regulated, compliant agentic workflows** in high-stakes domains.
 
-Secondly, there is a clear shift toward **Orchestration over Single Agents**. Projects like **Deer-Flow** and **Orca** are not just building better LLM wrappers, but are constructing "harnesses" that manage sub-agents, memory, and tool execution over long horizons. The term "SuperAgent" is becoming prevalent, suggesting that complex tasks are being decomposed into multi-agent workflows rather than relying on a single monolithic prompt.
-
-Finally, **Video and Creative Workflows** are entering the agentic realm. **OpenMontage**’s massive daily star count (+3,434) suggests that users are eager to apply coding agents to creative industries, moving beyond text and code into multimodal production pipelines.
+Simultaneously, there is a strong **"Local-First" and "Cost-Optimization"** trend. Projects like *new-api* (model aggregation), *TencentDB-Agent-Memory* (zero-API local memory), and *Agent-Reach* (zero-API web access) suggest developers are actively decoupling from expensive, rate-limited cloud APIs. This is likely driven by the maturity of smaller, efficient open-weight models (like Qwen3.6 and Gemma 4) that can run locally, making the "agentic loop" economically viable for individual developers and small teams without enterprise budgets.
 
 ### 4. Community Hot Spots
-*   **SkillSpector & Cybersecurity Skills**: Developers should closely monitor these projects as they define the standards for securing AI agent skills. The mapping to MITRE ATT&CK and NIST frameworks is a key indicator of enterprise adoption.
-*   **Agent-Reach**: Solving the "internet access" problem for agents without expensive API calls is a critical infrastructure need. This tool provides a free, local-first way to fetch data from major platforms.
-*   **MinerU**: As RAG becomes more common, the quality of document parsing is the bottleneck. MinerU’s ability to handle complex layouts in PDFs/Office docs makes it an essential component for high-quality knowledge bases.
-*   **OpenMontage**: Watch this project to see how agentic workflows evolve in creative industries. Its scale (500+ skills) demonstrates the complexity required to automate non-textual tasks.
+*   **[mukul975/Anthropic-Cybersecurity-Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills)**: Essential for any developer building security-focused agents. Its mapping to 6 major security frameworks makes it a standard for compliant agentic coding.
+*   **[calesthio/OpenMontage](https://github.com/calesthio/OpenMontage)**: Represents the next frontier of AI productivity—moving from text/code to complex media production. Watch this for advancements in agentic video pipelines.
+*   **[Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach)**: Solves the "web access" bottleneck for agents without incurring API costs. A critical tool for researchers and autonomous agents needing real-time data.
+*   **[TencentCloud/TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory)**: Highlights the industry's pivot towards **local, persistent memory** as a key differentiator for reliable agents, reducing reliance on external vector DBs for simple context retention.
 
 ---
 *This digest is auto-generated by [agents-radar](https://github.com/Chestnuts-0/os-feed).*
