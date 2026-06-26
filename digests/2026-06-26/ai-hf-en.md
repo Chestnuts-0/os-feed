@@ -1,68 +1,67 @@
 # Hugging Face Trending Models Digest 2026-06-26
 
-> Source: [Hugging Face Hub](https://huggingface.co/) | 30 models | Generated: 2026-06-25 18:45 UTC
+> Source: [Hugging Face Hub](https://huggingface.co/) | 30 models | Generated: 2026-06-26 02:15 UTC
 
 ---
 
 # Hugging Face Trending Models Digest
 **Date:** 2026-06-26
 
-### 1. Today's Highlights
-The ecosystem is currently dominated by the rapid adoption of **DeepSeek-V4-Pro**, which leads with over 5,000 weekly likes, signaling strong community preference for high-performance open-weight reasoning models. Concurrently, there is significant momentum around **Gemma 4** variants, particularly specialized coder and agentic versions, reflecting a shift toward domain-specific optimization. Finally, the proliferation of **uncensored and abliterated fine-tunes** indicates a robust community demand for unrestricted creative and analytical capabilities, with several community-hosted models seeing millions of downloads.
+## 1. Today's Highlights
+The open-weight landscape is dominated by advanced MoE architectures, with DeepSeek’s V4-Pro leading engagement and GLM-5.2 emerging as a strong competitor in general conversational tasks. There is significant community activity around efficient inference formats, particularly GGUF quantizations of Gemma-4 and Qwen variants, reflecting a push toward accessible, high-performance local deployment. Meanwhile, specialized tools like NVIDIA’s LocateAnything and Baidu’s Unlimited-OCR demonstrate the growing demand for robust, task-specific multimodal capabilities beyond standard LLMs.
 
-### 2. Trending Models
+## 2. Trending Models
 
-#### 🧠 Language Models (LLMs, chat models, instruction-tuned)
+### 🧠 Language Models (LLMs, chat models, instruction-tuned)
 *   **[deepseek-ai/DeepSeek-V4-Pro](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro)**
-    *   **Author:** deepseek-ai | **Likes:** 5,058 | **Downloads:** 1,878,217
-    *   Leading the chart with exceptional engagement, this model sets a new benchmark for conversational and reasoning tasks among open-weight offerings.
+    *   **Author:** deepseek-ai | **Likes:** 5,061 | **Downloads:** 1,878,217
+    *   This flagship conversational model leads the list with massive adoption, showcasing the continued strength of DeepSeek’s MoE architecture for complex reasoning and dialogue.
 *   **[zai-org/GLM-5.2](https://huggingface.co/zai-org/GLM-5.2)**
-    *   **Author:** zai-org | **Likes:** 2,454 | **Downloads:** 67,107
-    *   A top-tier text-generation model leveraging GLM Mo architecture, gaining traction for its balanced performance in general-purpose applications.
-*   **[google/gemma-4-12B-it](https://huggingface.co/google/gemma-4-12B-it)**
-    *   **Author:** google | **Likes:** 1,174 | **Downloads:** 2,187,644
-    *   Google’s latest instruction-tuned Gemma variant continues to see massive usage due to its efficiency and strong alignment capabilities.
+    *   **Author:** zai-org | **Likes:** 2,479 | **Downloads:** 67,107
+    *   A top-tier text-generation model from Zhipu AI, gaining rapid traction as a competitive alternative for general-purpose Chinese and English tasks.
+*   **[Qwen/Qwen-AgentWorld-35B-A3B](https://huggingface.co/Qwen/Qwen-AgentWorld-35B-A3B)**
+    *   **Author:** Qwen | **Likes:** 244 | **Downloads:** 3,389
+    *   An instruction-tuned variant focused on agentic workflows, highlighting the trend of optimizing base models specifically for autonomous agent behaviors.
 
-#### 🎨 Multimodal & Generation (image, video, audio, text-to-X)
+### 🎨 Multimodal & Generation (image, video, audio, text-to-X)
+*   **[baidu/Unlimited-OCR](https://huggingface.co/baidu/Unlimited-OCR)**
+    *   **Author:** baidu | **Likes:** 898 | **Downloads:** 70,743
+    *   A powerful image-to-text pipeline designed for high-accuracy OCR, addressing the critical need for reliable document understanding in enterprise applications.
 *   **[nvidia/LocateAnything-3B](https://huggingface.co/nvidia/LocateAnything-3B)**
-    *   **Author:** nvidia | **Likes:** 2,360 | **Downloads:** 407,838
-    *   A powerful image-text-to-text model for precise object localization and visual grounding, addressing critical needs in computer vision pipelines.
+    *   **Author:** nvidia | **Likes:** 2,365 | **Downloads:** 407,838
+    *   A versatile image-feature-extraction model enabling precise object localization, demonstrating NVIDIA’s push into granular visual understanding tools.
 *   **[krea/Krea-2-Turbo](https://huggingface.co/krea/Krea-2-Turbo)**
-    *   **Author:** krea | **Likes:** 235 | **Downloads:** 2,996
-    *   An optimized text-to-image generation model designed for speed and quality, catering to real-time creative workflows.
-*   **[nvidia/nemotron-3.5-asr-streaming-0.6b](https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b)**
-    *   **Author:** nvidia | **Likes:** 691 | **Downloads:** 50,553
-    *   A lightweight yet highly efficient streaming automatic speech recognition model, ideal for low-latency audio applications.
+    *   **Author:** krea | **Likes:** 243 | **Downloads:** 2,996
+    *   A fast text-to-image generation model, representing the ongoing evolution of generative AI tools optimized for speed and creative iteration.
 
-#### 🔧 Specialized Models (code, math, medical, embeddings)
+### 🔧 Specialized Models (code, math, medical, embeddings)
 *   **[yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF](https://huggingface.co/yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF)**
-    *   **Author:** yuxinlu1 | **Likes:** 2,347 | **Downloads:** 495,813
-    *   A highly popular GGUF-quantized version of Gemma 4 tailored specifically for coding tasks, offering excellent performance on constrained hardware.
-*   **[MiniMaxAI/MiniMax-M3](https://huggingface.co/MiniMaxAI/MiniMax-M3)**
-    *   **Author:** MiniMaxAI | **Likes:** 1,236 | **Downloads:** 154,350
-    *   A multimodal model from MiniMax showing strong potential in complex image-text understanding and generation scenarios.
-*   **[moonshotai/Kimi-K2.7-Code](https://huggingface.co/moonshotai/Kimi-K2.7-Code)**
-    *   **Author:** moonshotai | **Likes:** 990 | **Downloads:** 502,106
-    *   Specialized for code-related image-text extraction and processing, bridging the gap between visual documentation and executable code.
+    *   **Author:** yuxinlu1 | **Likes:** 2,367 | **Downloads:** 495,813
+    *   A highly popular GGUF-quantized coding model based on Gemma-4, favored by developers for its balance of performance and local deployability.
+*   **[WeiboAI/VibeThinker-3B](https://huggingface.co/WeiboAI/VibeThinker-3B)**
+    *   **Author:** WeiboAI | **Likes:** 715 | **Downloads:** 51,717
+    *   A small but potent model tuned for mathematical reasoning, proving that smaller parameter counts can still deliver strong results in specific domains.
 
-#### 📦 Fine-tunes & Quantizations (community fine-tunes, GGUF, AWQ)
+### 📦 Fine-tunes & Quantizations (community fine-tunes, GGUF, AWQ)
 *   **[HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive](https://huggingface.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive)**
-    *   **Author:** HauhauCS | **Likes:** 2,229 | **Downloads:** 3,520,206
-    *   An aggressively uncensored fine-tune of Qwen 3.6, demonstrating immense community interest in removing safety filters for unrestricted generation.
+    *   **Author:** HauhauCS | **Likes:** 2,237 | **Downloads:** 3,520,206
+    *   An uncensored, aggressive fine-tune of Qwen3.6 with massive download numbers, indicating strong community interest in unrestricted model variants.
 *   **[empero-ai/Qwythos-9B-Claude-Mythos-5-1M-GGUF](https://huggingface.co/empero-ai/Qwythos-9B-Claude-Mythos-5-1M-GGUF)**
-    *   **Author:** empero-ai | **Likes:** 455 | **Downloads:** 134,294
-    *   A large-context (1M token) GGUF quantization targeting long-document reasoning and retrieval-augmented generation use cases.
-*   **[unsloth/GLM-5.2-GGUF](https://huggingface.co/unsloth/GLM-5.2-GGUF)**
-    *   **Author:** unsloth | **Likes:** 379 | **Downloads:** 88,915
-    *   Optimized via Unsloth techniques, this GGUF version provides faster inference speeds for GLM-5.2 on consumer-grade GPUs.
+    *   **Author:** empero-ai | **Likes:** 489 | **Downloads:** 134,294
+    *   A long-context (1M token) GGUF quantization leveraging Qwen3.5, catering to users requiring extensive context windows on consumer hardware.
+*   **[nvidia/Qwen3.6-35B-A3B-NVFP4](https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4)**
+    *   **Author:** nvidia | **Likes:** 342 | **Downloads:** 4,602,255
+    *   A heavily quantized version of Qwen3.6 using NVIDIA’s NVFP4 format, showcasing industry efforts to optimize large models for efficient inference.
 
-### 3. Ecosystem Signal
-The current landscape is defined by the **consolidation of "pro" open-weight models**. DeepSeek-V4-Pro’s dominance suggests that users are prioritizing raw capability over brand recognition, driving a shift away from smaller, generic LLMs toward specialized, high-parameter models. There is a marked trend toward **multimodal integration in non-visual domains**; even text-heavy models like Kimi-K2.7-Code incorporate vision features for OCR and diagram parsing, highlighting the value of any-to-any capabilities. Furthermore, **quantization and fine-tuning activity is exploding**, particularly around Gemma 4 and Qwen 3.6 architectures. The high download counts for "uncensored" and "abliterated" variants indicate a persistent, high-demand niche for unrestricted models, while GGUF formats remain the standard for local deployment efficiency. NVIDIA’s presence in both ASR and model optimization tools underscores the hardware-software co-evolution driving these trends.
+## 3. Ecosystem Signal
+The current ecosystem is defined by the maturation of Mixture-of-Experts (MoE) models, which are now the standard for balancing performance with computational efficiency. DeepSeek and Qwen families are showing dominant momentum, with their variants appearing frequently in both official releases and community fine-tunes. There is a distinct shift towards "agentic" capabilities, where models are not just conversational but equipped for tool use and multi-step reasoning, as seen in Qwen-AgentWorld and various Gemma-4 coder variants.
 
-### 4. Worth Exploring
-1.  **[deepseek-ai/DeepSeek-V4-Pro](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro)**: As the most liked model, it represents the current state-of-the-art for open-weight reasoning. Evaluating its cost-performance ratio against proprietary APIs is essential for enterprise adoption.
-2.  **[nvidia/LocateAnything-3B](https://huggingface.co/nvidia/LocateAnything-3B)**: With nearly 2,500 likes and high downloads, this model solves a specific, difficult problem (precise visual grounding) efficiently. It is worth studying for its architectural approach to spatial understanding.
-3.  **[empero-ai/Qwythos-9B-Claude-Mythos-5-1M-GGUF](https://huggingface.co/empero-ai/Qwythos-9B-Claude-Mythos-5-1M-GGUF)**: For developers working with long-context documents, this 1M token context window model offers a practical solution for local deployment, balancing size and capability effectively.
+Quantization remains a critical area of innovation. While standard GGUF formats dominate community usage, there is notable activity around proprietary quantization techniques like NVIDIA’s NVFP4, suggesting a move toward hardware-aware optimization. Furthermore, the high download counts for "uncensored" or abliterated models indicate a persistent demand for models free from restrictive safety layers, likely driven by local deployment needs for creative or unrestricted research. The gap between open-weight and proprietary models is narrowing, with open models like GLM-5.2 and DeepSeek-V4-Pro challenging incumbents in benchmark performance and user engagement.
+
+## 4. Worth Exploring
+1.  **[nvidia/LocateAnything-3B](https://huggingface.co/nvidia/LocateAnything-3B)**: Essential for applications requiring precise object detection or grounding within images, offering a robust alternative to general-purpose vision-language models for specific spatial tasks.
+2.  **[yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF](https://huggingface.co/yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF)**: Highly recommended for developers seeking a performant, locally runnable coding assistant; its massive download volume validates its effectiveness in real-world scenarios.
+3.  **[baidu/Unlimited-OCR](https://huggingface.co/baidu/Unlimited-OCR)**: A critical tool for any workflow involving document digitization or text extraction, providing high accuracy that is often lacking in general multimodal models.
 
 ---
 *This digest is auto-generated by [agents-radar](https://github.com/Chestnuts-0/os-feed).*
