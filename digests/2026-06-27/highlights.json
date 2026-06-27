@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.195 发布，修复 Opus 4.8 回归问题",
+      "OpenAI Codex Alpha 版上线，Token 燃烧异常引争议",
+      "Gemini CLI 夜间版聚焦子代理挂起与 Thought 泄露",
+      "Qwen Code Mode B 生产就绪，解决 Windows OOM",
+      "DeepSeek TUI RC 版发布，集成 OpenModel",
+      "OpenCode 遭遇会话压缩死循环，Pay Go 定价引不满"
+    ],
+    "ai-agents": [
+      "OpenClaw 修复 SSE 流无限制读取，防内存耗尽",
+      "OpenClaw 解决 ClawHub 安装权限覆盖导致数据丢失",
+      "修复飞书机器人 @提及被错误剥离导致无法回复",
+      "实现 Agent Cron 操作权限隔离，确保任务可见性",
+      "Nostr 渠道 Seen Tracker 修复，防止重复消息追踪失效",
+      "修复语音通话结束状态查询返回 false 的 Bug"
+    ],
+    "ai-trending": [
+      "vLLM 增 178 星，成 LLM 推理降本行业标准",
+      "AWS 推出官方 MCP 服务器，降低企业 Agent 门槛",
+      "OpenMontage 增 1754 星，开源 Agentic 视频制作系统",
+      "Google design.md 增 2407 星，定义 Agent 视觉规范",
+      "Cognee 增 729 星，解决 AI 记忆持久化与跨会话连贯",
+      "Orca 增 578 星，支持多编码智能体并行调度开发"
+    ],
+    "ai-web": [
+      "Anthropic 推出 Claude Tag，集成 Slack 成团队协作者",
+      "Claude Corps 启动，1.5 亿美元资助 AI 社会服务",
+      "DXC 将 Claude 集成至银行航空等受监管行业核心系统",
+      "Anthropic 发布 Economic Index，认定长运行代理为主流",
+      "TCS 深化 Claude 合作，加速企业级合规落地进程",
+      "OpenAI 今日低调，仅 GPT-5.6 Sol 预览暗示架构迭代"
+    ],
+    "ai-hn": [
+      "GPT-5.6 Sol 预览引热议，获 850 分 510 评论",
+      "美国允许 Anthropic 向可信伙伴发布 Mythos 模型",
+      "开源权重与闭源前沿模型性能差距分析引开发者关注",
+      "Show HN: 直接在 Claude/Codex 中实现智能模型路由",
+      "Codex 无用写操作致 SSD 磨损，每月成本数百万美元",
+      "代码版权争议再起，社区审视 AI 生成代码法律风险"
+    ],
+    "ai-arxiv": [
+      "提出 RiVER 框架，无真值下强化学习提升 LLM 能力",
+      "探究序列概率与正确性关系，揭示解码概率假设局限",
+      "将 LLM 参数视为知识库，分析任务特异性查询一致性",
+      "利用 Fisher 信息对齐，解决激活暗区无需训练选源",
+      "BINEVAL 框架通过二元问题提升 LLM 评估可解释性",
+      "改进稀疏自编码器正则化，提升视觉模型特征可解释性"
+    ],
+    "ai-hf": [
+      "GLM-5.2 获赞 2595，智谱 MoE 模型对话推理卓越",
+      "Unlimited-OCR 下载 13 万，百度开源无限分辨率 OCR",
+      "MiniMax-M3 下载 17 万，稀宇科技多模态模型热度飙升",
+      "LocateAnything-3B 下载 49 万，英伟达开放词汇定位利器",
+      "Qwen-AgentWorld-35B 专为 Agent 工作流设计，支持图文",
+      "FastContext-1.0 针对长上下文微调，适配子代理任务"
+    ],
+    "ai-community": [
+      "Guardrails 策略解析：如何防止 AI Agent 越权或偏离",
+      "警示：AI 生成代码功能可用但逻辑可能错误，需重测试",
+      "对比 Cloudflare/Docker/AWS，解析微 VM 沙箱架构差异",
+      "理念更新：仓库即记忆模型即工人，纠正过度依赖上下文",
+      "ChatGPT 克隆封装日益沉重，揭示 AI 应用构建技术壁垒",
+      "MCP 作为上下文分发器比提示词工程在 DevOps 中更关键"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.195 released",
+      "OpenAI Codex rust-v0.143.0-alpha",
+      "Gemini CLI nightly builds active",
+      "GitHub Copilot v1.0.66-beta live",
+      "Qwen Code v0.19.2-nightly out",
+      "DeepSeek TUI stabilization ongoing"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 daily issues",
+      "55 PRs merged for stability",
+      "SSE response bounding added",
+      "Linux/Windows platform expansion",
+      "Security enhancements prioritized",
+      "No new official releases today"
+    ],
+    "ai-trending": [
+      "vLLM gains 178 stars today",
+      "Ollama supports Kimi-K2.6",
+      "LiteLLM routes 100+ LLM providers",
+      "AWS Agent Toolkit trending",
+      "MCP adoption standardizes agent I/O",
+      "Local-first AI apps surge in popularity"
+    ],
+    "ai-web": [
+      "DXC integrates Claude into regulated sys",
+      "TCS partners with Anthropic for AI",
+      "Claude Corps: $150M nonprofit fellowship",
+      "Economic shifts from agentic workflows",
+      "Cybersecurity exploit dev demoed",
+      "OpenAI GPT-5.6 Sol metadata only"
+    ],
+    "ai-hn": [
+      "GPT-5.6 Sol preview generates buzz",
+      "US gov vets GPT-5.6 users",
+      "White House requests release delay",
+      "Mythos model faces similar restrictions",
+      "Open vs closed LLM gap discussed",
+      "Smart model routing optimization debated"
+    ],
+    "ai-arxiv": [
+      "Co-failure ceiling limits multi-model gains",
+      "LMs act as inconsistent knowledge bases",
+      "Indirect linguistic encoding taxonomy",
+      "Test-time scaling optimizes reasoning",
+      "Robustness safety in world models",
+      "Linear models compete via feature steering"
+    ],
+    "ai-hf": [
+      "GLM-5.2 leads HF trending charts",
+      "Qwen3.6 NVFP4 hits 5M downloads",
+      "Qwen-AgentWorld focuses on tool use",
+      "Gemma-4 uncensored variants popular",
+      "LocateAnything enhances vision pipelines",
+      "Qwen3.6 quantizations drive efficiency"
+    ],
+    "ai-community": [
+      "Agents shift to stateful runtime systems",
+      "Context engineering replaces prompt eng",
+      "Local repos serve as agent memory",
+      "Skepticism grows on vibe coding",
+      "Strict verification needed for AI code",
+      "Sandboxing via microVMs secures agents"
+    ]
+  }
+}
