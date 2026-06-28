@@ -1,0 +1,102 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Gemini CLI 1.0 Nightly 发布，安全加固与 Agent 自主性平衡",
+      "OpenAI Codex Rust Alpha 上线，高频迭代应对配额危机",
+      "Qwen Code 极高活跃，协作同步与成本控制优化成重点",
+      "OpenCode 爆发期，WSL 兼容性与内存泄漏修复引关注",
+      "MCP 集成成分水岭，OAuth 刷新与并发安全成社区焦点",
+      "跨平台一致性受挫，Windows/WSL 路径解析成主要痛点"
+    ],
+    "ai-agents": [
+      "OpenClaw 24h 500 Issue PR，社区活跃度爆表",
+      "修复 Telegram 数学公式渲染，多模态交互体验升级",
+      "引入 Windows 守护进程与自动化修复，降低维护负担",
+      "解决定时任务上下文压缩占用，提升资源效率",
+      "修复嵌入式会话转录本丢失，增强数据持久性保障",
+      "Anthropic 思维链签名重放失效，影响高热度 Agent 稳定"
+    ],
+    "ai-trending": [
+      "Claude Code Skills 爆火，技能编排成 Agent 核心热点",
+      "Cognee 成黑马，开源记忆平台解决 Agent 上下文丢失",
+      "Agent-Reach 狂揽 1145 星，零 API 费获取全网信息",
+      "One-API 热度平稳，国内自建 AI 中台首选基础设施",
+      "MoneyPrinterTurbo 增 427 星，AI 短视频生成走向成熟",
+      "FreeLLMAPI 增 354 星，堆叠免费额度降低开发成本"
+    ],
+    "ai-hn": [
+      "亚洲初创推出类 Mythos 模型，地缘技术脱钩引热议",
+      "中国 AI 网络安全追平 Anthropic，暗示技术壁垒打破",
+      "Alibaba 被指用 2.5 万账号挖掘 Claude，揭示新型安全威胁",
+      "AMD Strix Halo RDMA 集群指南，填补非 NVIDIA 部署空白",
+      "Mac 唤醒策略优化，让 Agent 工作时才保持电脑活跃",
+      "KV Cache 修剪与本地化优化，硬核开发者关注推理降本"
+    ],
+    "ai-hf": [
+      "GLM-5.2 领跑，智谱最新 MoE 模型受中文社区热捧",
+      "Qwen3.6 去限制微调版下载超 330 万，创意写作需求旺盛",
+      "Unlimited-OCR 下载 21 万，百度通用 OCR 模型工业需求强",
+      "NVIDIA LocateAnything-3B 获 2409 赞，细粒度视觉定位填补空白",
+      "Gemma-4 GGUF 量化版涌现，社区加速向本地低成本推理迁移",
+      "NVFP4 优化模型发布，开发者探索特定场景性能极致压榨"
+    ],
+    "ai-community": [
+      "揭示 LLM 账单隐藏费用，提供审计优化策略控制云支出",
+      "在随机 AI 上构建确定性系统，设计可靠应用的关键方法",
+      "解析 OpenAI 定制 ASIC 芯片，预判推理基础设施新趋势",
+      "提出上下文腐烂问题，通过编译手段优化 Agent 长期记忆",
+      "150 行代码实现自进化 Agent，验证小模型自我修正潜力",
+      "反思 AI 项目隐性成本，警惕将陷阱误认为成功的误区"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code has 10 hot issues",
+      "OpenAI Codex released 3 alphas",
+      "Gemini CLI v0.51.0 nightly out",
+      "Qwen Code v0.19.2 nightly live",
+      "OpenCode sees medium activity",
+      "Kimi Code shows no activity"
+    ],
+    "ai-agents": [
+      "OpenClaw had 500 issues today",
+      "500 PRs updated in 24 hours",
+      "No new releases published",
+      "Fixing session state integrity",
+      "Hunting memory leak vulnerabilities",
+      "Hardening Mattermost callbacks"
+    ],
+    "ai-trending": [
+      "Shift to enterprise agent orchestration",
+      "Cognee and MemPalace trending",
+      "Context window solutions surge",
+      "Open-Generative-AI hits 21k stars",
+      "freellmapi offers zero-cost routing",
+      "agentos provides Rust sandboxing"
+    ],
+    "ai-hn": [
+      "Asian startups launch Mythos models",
+      "Anthropic claims Alibaba mined Claude",
+      "Tech giants cut 40% jobs to AI",
+      "Debate on voice cloning ethics",
+      "Optimizing local LLM deployments",
+      "Adrafinil keeps Mac awake for agents"
+    ],
+    "ai-hf": [
+      "GLM-5.2 leads with 99k downloads",
+      "Ornith-1.0-35B-GGUF gains traction",
+      "VibeThinker-3B excels at math",
+      "Unlimited-OCR hits 212k downloads",
+      "MoE architectures dominate trends",
+      "Uncensored fine-tunes surge"
+    ],
+    "ai-community": [
+      "Nemotron floor challenges agent size",
+      "Auditing hidden LLM bill costs",
+      "OpenAI launches custom Jalapeño ASIC",
+      "Local-first AI on legacy hardware",
+      "Running models on Mac Minis",
+      "Building offline voice assistants"
+    ]
+  }
+}
