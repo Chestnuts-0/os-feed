@@ -1,0 +1,118 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code 认证不稳，子代理失控引焦虑",
+      "OpenAI Codex 计费异常，SQLite 严重膨胀",
+      "Gemini CLI 发 v0.51.0，修复挂起问题",
+      "Qwen Code 推 v0.19.3，聚焦协作 Agent",
+      "Kimi Code 现内存泄漏，死循环 Bug 待修",
+      "DeepSeek TUI 品牌迁移，缓存成本优化"
+    ],
+    "ai-agents": [
+      "OpenClaw 发 v2026.6.11-beta.2 增强渠道控制",
+      "OpenClaw 核心重构：会话存储转 SQLite",
+      "修复会话工具结果刷新竞态条件",
+      "优化安全审计，避免非密钥误报",
+      "细化模型统计，防止中断信号被吞",
+      "社区高频互动，500 Issue 500 PR 显活跃"
+    ],
+    "ai-trending": [
+      "DeusData MCP 成代码智能基础设施",
+      "ai-berkshire 用多 Agent 自动化价值投资",
+      "LocalAI 热度回升，无 GPU 运行 LLM",
+      "BitFun 展示 Rust 构建复杂本地 AI 优势",
+      "Craft-Agents 开源模块化 Agent 编排工具",
+      "FluidVoice 极速离线听写，主打隐私保护"
+    ],
+    "ai-web": [
+      "Anthropic 今日官网静默无更新",
+      "OpenAI 新增 HP 前沿合作伙伴关系页",
+      "HP 合作细节未明，仅存元数据",
+      "OpenAI 或巩固算力供应链优势",
+      "Anthropic 沉默或专注内部模型迭代",
+      "今日缺乏实质技术突破，属信息真空日"
+    ],
+    "ai-hn": [
+      "GLM 5.2 安全基准击败 Claude 引热议",
+      "用户用 Claude Code 分析 MRI 获高赞",
+      "NanoEuler 纯 C/CUDA 从零实现 GPT-2",
+      "Ornith-1.0 提出代理编程自我脚手架",
+      "Google 限制 Meta 用 Gemini 现地缘风险",
+      "奥地利欲吸引 Anthropic 落户欧洲"
+    ],
+    "ai-hf": [
+      "百度 Unlimited-OCR 下载近 30 万领跑",
+      "GLM-5.2 获赞 2800+，MoE 架构受捧",
+      "Unsloth 量化 GLM-5.2 下载超 14 万",
+      "HauhauCS 非受限 Qwen3.6 下载 324 万",
+      "DeepSeek V4 Pro DSpark 发布预示新竞争",
+      "Krea-2 Turbo 实时图像生成技术成熟"
+    ],
+    "ai-community": [
+      "向量数据库选型：Pinecone vs Weaviate 等",
+      "MCP 服务器未打字先烧 5 万 Token",
+      "Cursor 生成代码硬编码密钥致 CWE-798",
+      "长周期 Agent 崩溃因缺‘结构与灵魂’",
+      "给 Agent 加类型签名提升输出稳定性",
+      "OxCaml 特性被推荐其他语言借鉴"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Gemini CLI nightly build released",
+      "Qwen Code v0.19.3 released",
+      "Claude Code forks session state",
+      "OpenAI Codex pushes 10 PRs",
+      "DeepSeek TUI gains traction",
+      "Pi mono shows high activity"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.6.11-beta.2 out",
+      "Slack relay mode improved",
+      "Mattermost /oc_queue added",
+      "SQLite session storage shifts",
+      "500 issues and PRs in 24h",
+      "Per-DM model overrides enabled"
+    ],
+    "ai-trending": [
+      "DeusData MCP indexes fast",
+      "LocalAI runs without GPUs",
+      "Router cuts API costs 40%",
+      "RTK proxy saves 90% tokens",
+      "AI-Berkshire uses Claude Code",
+      "Craft-Agents OSS launched"
+    ],
+    "ai-web": [
+      "OpenAI posts HP partnership",
+      "Hp Frontier Partnership link",
+      "Anthropic had zero updates",
+      "Focus on enterprise integration",
+      "Frontier models in hardware",
+      "No Anthropic content today"
+    ],
+    "ai-hn": [
+      "GLM 5.2 beats Claude benchmarks",
+      "Mythos model sparks debate",
+      "Fords rehires engineers for AI",
+      "Sophon PFG-1 ASIC whitepaper",
+      "Do LLMs pass mirror test?",
+      "Google restricts Meta Gemini"
+    ],
+    "ai-hf": [
+      "GLM-5.2 has 118k downloads",
+      "Qwen-AgentWorld-35B trending",
+      "DeepSeek V4 Pro DSpark released",
+      "HauhauCS uncensored models surge",
+      "Gemma4 architecture adopted",
+      "NVFP4 quantization popular"
+    ],
+    "ai-community": [
+      "MCP servers burn 50k tokens",
+      "Cursor hardcodes secrets risk",
+      "Pinecone vs Weaviate comparison",
+      "Vector DBs compared in 2026",
+      "Adaptive malware fears rise",
+      "RAG benchmark reliability questioned"
+    ]
+  }
+}
