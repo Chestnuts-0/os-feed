@@ -55,6 +55,14 @@
       "长周期 Agent 崩溃因缺‘结构与灵魂’",
       "给 Agent 加类型签名提升输出稳定性",
       "OxCaml 特性被推荐其他语言借鉴"
+    ],
+    "ai-weekly": [
+      "Claude Tag集成Slack，AI变身企业协作者",
+      "GLM 5.2击败Claude，全球AI多极化加剧",
+      "OpenAI预览GPT-5.6，政府介入引争议",
+      "OpenClaw重构SQLite，解决高并发瓶颈",
+      "Anthropic实证研究：人机协作提升25%价值",
+      "字节跳动开源Deer-Flow，填补Agent编排空白"
     ]
   },
   "en": {
@@ -113,6 +121,14 @@
       "Vector DBs compared in 2026",
       "Adaptive malware fears rise",
       "RAG benchmark reliability questioned"
+    ],
+    "ai-weekly": [
+      "Claude Tag joins Slack teams",
+      "GLM-5.2 beats Claude on cyber",
+      "GPT-5.6 preview released",
+      "OpenAI Codex SSD bug hits",
+      "Mythos export controls rise",
+      "OpenMontage goes viral on GH"
     ]
   }
 }
