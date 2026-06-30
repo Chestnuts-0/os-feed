@@ -1,0 +1,118 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.196发布，组织默认模型成热点",
+      "OpenAI Codex资源消耗引热议，Git沙箱受关注",
+      "Gemini CLI修复思维链泄漏，子代理恢复机制上线",
+      "GitHub Copilot Windows兼容性问题频发",
+      "OpenCode V2架构重构，Bun段错误待解",
+      "Qwen Code Daemon架构支持热重载，流式超时修复"
+    ],
+    "ai-agents": [
+      "OpenClaw日均PR 500，社区活跃度极高",
+      "修复Anthropic/OAI传输层SSRF防护安全隐患",
+      "解决Google Chat应用认证下媒体附件发送故障",
+      "Discord展示Anthropic模型思考过程逻辑优化",
+      "Matrix/Signal渠道格式错误导致崩溃问题修复",
+      "Web UI新增生成式图片交互控件，增强多模态"
+    ],
+    "ai-trending": [
+      "Ollama支持Kimi-K2.6等新模型，本地部署首选",
+      "RTK CLI网关压缩上下文，Token消耗降低60-90%",
+      "Bifrost企业级AI网关，声称比LiteLLM快50倍",
+      "Hermes Agent开源框架，强调随交互持续成长",
+      "Vercel Skills工具推动Agent能力标准化扩展",
+      "Browser Use让Agent像人类一样操控浏览器"
+    ],
+    "ai-hn": [
+      "Micro-Agent通过模型内协作超越前沿单一大模型",
+      "Anthropic CEO重提开源AI危险，引发安全辩论",
+      "Robusta指南：勿向Claude Code复制粘贴错误",
+      "ScreenMind在端侧截图运行视觉模型，隐私保护",
+      "HN热议韩国万亿芯片投资，硬件军备竞赛加剧",
+      "开发者转向效率优先，拒绝盲目烧钱扩张"
+    ],
+    "ai-arxiv": [
+      "揭示扩散LLM评估幻象，去噪步数影响性能波动",
+      "自适应块扩散解决训练推理不匹配，提升生成质",
+      "多块扩散利用KV缓存，提高推理效率与序列处理",
+      "开源LLM规模扩大后意识增强，可能策略性行为",
+      "记忆巩固机制将传闻转自信事实，存在造假风险",
+      "贝叶斯自适应秩分配优化LoRA，提高预测校准度"
+    ],
+    "ai-hf": [
+      "GLM-5.2 MoE模型获2944赞，点赞最高纯文本模型",
+      "NVIDIA LocateAnything-3B下载超72万，视觉定位强",
+      "百度Unlimited-OCR支持无限上下文，文档处理热门",
+      "Krea 2系列图像生成模型迭代快，LoRA生态活跃",
+      "Ornith-1.0-397B超大参数模型，专注高端科研推理",
+      "LFM2.5-230M微型模型仅2.3亿参数，专攻边缘设备"
+    ],
+    "ai-community": [
+      "Dev.to热议：模型不需记忆，情境才是关键",
+      "Flama框架实战构建MCP服务器，紧跟Agent热点",
+      "分析Claude Code账单，指出团队支付3倍过高成本",
+      "解决46个仓库语义搜索难题，AI进入大型项目",
+      "Lobste.rs反思AI时代数学定义，探讨底层逻辑",
+      "资深作者前瞻AI未来方向，引发87条评论高互动"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.196 stable release",
+      "OpenAI Codex alpha v0.143.0 active",
+      "Gemini CLI nightly v0.51.0 updates",
+      "GitHub Copilot CLI v1.0.66 stable",
+      "10 tools tracked in digest",
+      "Focus on agent orchestration"
+    ],
+    "ai-agents": [
+      "OpenClaw: 395 issues, 500 PRs",
+      "No new releases today",
+      "Fixing session state regressions",
+      "PR #97868 wires buildGuardedModelFetch",
+      "Prioritizing bug squashing",
+      "Cross-platform compatibility focus"
+    ],
+    "ai-trending": [
+      "ollama/ollama hits 175k stars",
+      "Hermes agent leads workflows",
+      "Rust shimmy gains WebGPU support",
+      "Local-first privacy tools surge",
+      "Consolidation around agentic infra",
+      "Specialized finance agents rising"
+    ],
+    "ai-hn": [
+      "South Korea pledges $1T in chips",
+      "Chinese funds warn of AI bubble",
+      "Micro-agents beat frontier models",
+      "Anthropic CEO recalls open-source risks",
+      "Debate on agent collaboration",
+      "Shift to local self-hosted AI"
+    ],
+    "ai-arxiv": [
+      "Process Advantage Signal for GRPO",
+      "Adaptive Block Diffusion resolves mismatch",
+      "Credit assignment in policy gradients",
+      "Robustness in LLM reasoning",
+      "Diffusion processes for text gen",
+      "Domain-specific financial transformers"
+    ],
+    "ai-hf": [
+      "GLM-5.2 leads with 133k downloads",
+      "Qwen 3.5/3.6 variants trending",
+      "Uncensored fine-tunes gain traction",
+      "NVIDIA Model Optimizer popular",
+      "Krea leads text-to-image generation",
+      "Ornith-1.0-35B-GGUF quantized release"
+    ],
+    "ai-community": [
+      "What's Next for AI? discussion",
+      "Context matters more than memory",
+      "LLM API call mechanics explained",
+      "AI Engineer World's Fair coverage",
+      "Security: secrets in prompts",
+      "Dual-model inference optimization"
+    ]
+  }
+}
