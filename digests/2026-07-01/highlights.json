@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.197发布，默认启用Sonnet 5",
+      "OpenAI Codex紧急修复Linux GUI与Git沙箱漏洞",
+      "Gemini CLI v0.51.0修复Agent挂起与内存泄漏",
+      "Qwen Code高频迭代，优化多Agent稳定性",
+      "DeepSeek更名为CodeWhale，优化Windows体验",
+      "GitHub Copilot插件钩子回归引发争议"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.6.11修复会话状态与连接Bug",
+      "OpenClaw每日500+PR，社区活跃度极高",
+      "PR #98315修复代理权限绕过安全漏洞",
+      "GPT-5.6模型支持加入，紧跟OpenAI发布",
+      "用户热切呼吁官方预构建Android APK",
+      "Steer模式消息注入失败成高频报错点"
+    ],
+    "ai-trending": [
+      "Google推出agents-cli标准化Agent部署",
+      "RTK CLI工具可减少60-90% Token消耗",
+      "Caveman技能用极简对话节省65% Tokens",
+      "Video-use Agent支持代码智能编辑视频",
+      "Agent-Reach赋予AI全网读取能力免API费",
+      "Headroom技术压缩数据节省60-95% Token"
+    ],
+    "ai-web": [
+      "Anthropic发布Claude Sonnet 5，默认免费",
+      "Sonnet 5智能体能力接近昂贵的Opus 4.8",
+      "推出Claude Science，专注生命科学AI工作",
+      "OpenAI发布Genebench Pro，详情待确认",
+      "Anthropic红队研究聚焦AI发现零日漏洞",
+      "Sonnet 5降低Agent门槛，加速民主化"
+    ],
+    "ai-hn": [
+      "Claude Sonnet 5发布引爆HN，获889高分",
+      "美国解除Claude Fable 5与Mythos 5出口管制",
+      "开发者指控Claude Code嵌入间谍软件",
+      "143.dev开源内部编码代理基础设施",
+      "第三方基准测试显示Sonnet 5性能卓越",
+      "出口管制解除引发地缘政治与AI格局讨论"
+    ],
+    "ai-arxiv": [
+      "FARS系统实现大规模全自动科研部署",
+      "ECHO选择性记忆解决Agent长上下文衰减",
+      "揭示LLM道德评估中的表演性顺从现象",
+      "TabPATE实现无公共数据隐私保护ICL",
+      "优化器选择显著影响LLM涌现不对齐行为",
+      "形式化分析自改进在线对齐算法收敛性"
+    ],
+    "ai-hf": [
+      "GLM-5.2凭MoE架构成HF最受欢迎模型",
+      "Qwen3.6去对齐版下载量超300万，需求旺盛",
+      "Krea-2系列重塑开源文生图领域标准",
+      "DeepSeek V4 Pro结合DSpark优化复杂推理",
+      "NVIDIA NVFP4量化技术提升开源部署效率",
+      "百度Unlimited-OCR成视觉理解高人气选择"
+    ],
+    "ai-community": [
+      "提出日志是AI代理可观测性与调试核心",
+      "深度解读Anthropic报告：AI自举改变软件工程",
+      "欧盟网络弹性法案给AI开发者合规指南",
+      "揭示思维链机制潜在的安全攻击面",
+      "对比MCP与A2A协议，指导Agent通信选型",
+      "警示免费AI服务背后的数据隐私与支付陷阱"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.197 stable",
+      "OpenAI Codex rust-v0.142.5 hotfix",
+      "Gemini CLI v0.51.0 nightly",
+      "GitHub Copilot v1.0.67 stable",
+      "OpenCode 10 key PRs active",
+      "Kimi Code CLI no new release"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.6.11 released",
+      "305 issues, 500 PRs in 24h",
+      "Fixes message loss and stuck sends",
+      "Resolved reconnection logic failures",
+      "Fixed model setup init errors",
+      "Safer admin config defaults"
+    ],
+    "ai-trending": [
+      "Litellm leads LLM proxy gateway",
+      "RTK reduces tokens by 60-90%",
+      "OmniRoute connects 231+ providers",
+      "Google agents-cli gains 445 stars",
+      "Agentic workflows dominate trends",
+      "Cost-efficiency infrastructure surges"
+    ],
+    "ai-web": [
+      "Anthropic launches Claude Sonnet 5",
+      "Sonnet 5 optimized for agentic work",
+      "Performance nears Opus 4.8 at lower cost",
+      "Launched Claude Science workbench",
+      "OpenAI updates limited to metadata",
+      "Genebench Pro added to OpenAI"
+    ],
+    "ai-hn": [
+      "Claude Sonnet 5 sparks intense debate",
+      "Commerce lifts export controls on Fable",
+      "Mythos model restrictions reversed",
+      "Claude Code accused of spyware",
+      "Data retention policies criticized",
+      "Benchmark results posted on HN"
+    ],
+    "ai-arxiv": [
+      "Puzzled Cues expose performative compliance",
+      "SAIL algorithm convergence proven",
+      "TabPATE enables private in-context learning",
+      "FARS automates scientific research",
+      "Healthcare AI handles uncertainty",
+      "Robotics models gain provable guarantees"
+    ],
+    "ai-hf": [
+      "GLM-5.2 uses NVIDIA NVFP4 optimization",
+      "Ornith-1.0-35B-GGUF gains 553 likes",
+      "Qwen3.6 uncensored fine-tune explodes",
+      "Unlimited-OCR sees massive downloads",
+      "Krea-2 ecosystem anchors visual gen",
+      "3D-realism LoRAs emerge on HF"
+    ],
+    "ai-community": [
+      "Shift to local open-source architectures",
+      "Gemma and agent frameworks gain traction",
+      "EU Cyber Resilience Act discussed",
+      "Chain-of-Thought hijacking risks highlighted",
+      "Log is the Agent concept explored",
+      "AI Engineer World’s Fair reflects on future"
+    ]
+  }
+}
