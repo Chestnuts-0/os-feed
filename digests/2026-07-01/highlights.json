@@ -63,6 +63,14 @@
       "揭示思维链机制潜在的安全攻击面",
       "对比MCP与A2A协议，指导Agent通信选型",
       "警示免费AI服务背后的数据隐私与支付陷阱"
+    ],
+    "ai-monthly": [
+      "Anthropic融资650亿，估值逼近万亿",
+      "Anthropic因禁令关停Fable 5模型",
+      "Jane Street用Claude Code替代Figma",
+      "OpenAI秘密提交IPO文件启动上市",
+      "AI CLI工具爆发稳定性危机频发",
+      "字节跳动开源Deer-Flow代理框架"
     ]
   },
   "en": {
@@ -129,6 +137,14 @@
       "Chain-of-Thought hijacking risks highlighted",
       "Log is the Agent concept explored",
       "AI Engineer World’s Fair reflects on future"
+    ],
+    "ai-monthly": [
+      "Anthropic hits $965B valuation",
+      "Fable 5 banned in US",
+      "Claude Opus 4.8 launched",
+      "MCP governance standardized",
+      "SQLite session persistence rises",
+      "Stop Slop movement grows"
     ]
   }
 }
