@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.198 GA发布，Chrome集成引争议",
+      "OpenAI Codex Rust重写，Git安全大幅加固",
+      "Gemini CLI v0.51.0修复符号链接逃逸漏洞",
+      "GitHub Copilot CLI v1.0.69补全沙盒功能",
+      "Qwen Code v0.19.4稳定版优化Daemon冷启动",
+      "DeepSeek TUI v0.8.67引入动态MCP支持"
+    ],
+    "ai-agents": [
+      "OpenClaw修复HuggingFace模型发现OOM风险",
+      "OpenClaw限制SSH沙箱输出防内存耗尽",
+      "OpenClaw修复飞书流式卡片响应读取Bug",
+      "OpenClaw会话归档增加时区前缀便于检索",
+      "OpenClaw修复Fal扩展Grok路由错误",
+      "OpenClaw聚焦v2026.6.11回归问题紧急修复"
+    ],
+    "ai-trending": [
+      "Google agents-cli标准化Agent部署流程",
+      "FluidVoice成macOS最快本地语音听写应用",
+      "LangChain deepagents简化多步复杂任务构建",
+      "ECC系统优化Claude Code等工具内存溢出",
+      "VulnClaw实现AI Agent自动化渗透测试全流程",
+      "OpenWiki CLI自动维护代码库Agent文档"
+    ],
+    "ai-web": [
+      "Anthropic解除Fable 5全球访问限制",
+      "Fable 5恢复商用，Pro用户享50%限额",
+      "Mythos 5出口管制解除，全球重新可用",
+      "Anthropic推出Claude Science科研工作台",
+      "Claude Science整合工具链加速生命科学发现",
+      "OpenAI官网今日无新增公开内容发布"
+    ],
+    "ai-hn": [
+      "Fable 5回归引热议，HN成今日最高热度话题",
+      "Fable 5编码默认切换Opus 4.8引发争议",
+      "智谱AI ZCode工具链获HN高分关注",
+      "Meta因成本逼近十亿封顶内部AI Token支出",
+      "OpenWiki CLI解决Agent文档维护痛点",
+      "社区理性审视AI营销与过度自动化风险"
+    ],
+    "ai-arxiv": [
+      "GSRQ技术实现亚1-bit KV Cache大幅省显存",
+      "OpenAgent框架揭示静态训练工具泛化脆弱性",
+      "MemSyco-Bench首次评估Agent记忆谄媚行为",
+      "模型生物解释性高度依赖训练方法论",
+      "Logit-Contribution识别非字面检索注意力头",
+      "LLM在细粒度情感分类上存在显著零样本差距"
+    ],
+    "ai-hf": [
+      "GLM-5.2 MoE模型获3172赞领跑开源LLM",
+      "百度Unlimited-OCR下载超63万展现统治力",
+      "Krea-2 Turbo加速版图像生成受创意者喜爱",
+      "Qwen-AgentWorld-35B专为自主智能体任务设计",
+      "DeepSeek V4 Pro优化推理效率成性能首选",
+      "DeepSeek V4 Flash版适合低延迟敏感场景"
+    ],
+    "ai-community": [
+      "WebMCP教程让浏览器页面暴露工具给AI代理",
+      "探讨代理时代软件自愈架构设计模式",
+      "语义可观测性工程解决生产环境RAG可靠性",
+      "工具描述成新攻击向量，日志难捕捉欺骗输入",
+      "Node.js中确保LLM输出结构化数据最佳实践",
+      "GPT-5.6安全指南警示开发者关注新型AI代理风险"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.198 GA released",
+      "OpenAI Codex Alpha security hardening",
+      "Gemini CLI nightly v0.51.0 updates",
+      "Copilot sandbox path completion fix",
+      "Anthropic Skills framework expanded",
+      "Qwen Code open source growth"
+    ],
+    "ai-agents": [
+      "OpenClaw 275 issues, 500 PRs daily",
+      "v2026.6.11 regression surge noted",
+      "Session state integrity critical fix",
+      "Auth override bugs under review",
+      "Tool output handling improvements",
+      "High-severity bug merges active"
+    ],
+    "ai-trending": [
+      "Strix AI pen-testing tool trends",
+      "OmniRoute gateway connects 231 providers",
+      "FluidVoice local macOS dictation app",
+      "Google agents-cli skill sets launch",
+      "Agent harness ecosystems surge",
+      "Local-first privacy AI infrastructure"
+    ],
+    "ai-web": [
+      "Anthropic restores Claude Fable 5 access",
+      "Fable 5 export ban officially lifted",
+      "Claude Science workbench launched",
+      "Phased rollout for Pro/Max plans",
+      "Global access resumes July 7",
+      "OpenAI no new content updates"
+    ],
+    "ai-hn": [
+      "Fable 5 back sparks 326 upvotes",
+      "Default Fable 5 routes to Opus 4.8",
+      "GLM-5.2 ZCode harness launches",
+      "Chinese AI landscape heats up",
+      "Meta internal cost controls discussed",
+      "Skepticism on AI note-takers grows"
+    ],
+    "ai-arxiv": [
+      "GSRQ achieves sub-1-bit KV cache",
+      "Model organism interpretability varies",
+      "LLM persona generations unstable",
+      "Asynchronous RL optimization progress",
+      "Agent generalization benchmarks released",
+      "Medical domain AI evaluation methods"
+    ],
+    "ai-hf": [
+      "GLM-5.2 tops HF with 3k likes",
+      "Ornith-1.0 GGUF sees 233k downloads",
+      "DeepSeek V4-Pro DSpark released",
+      "Baidu Unlimited OCR model trending",
+      "Quantized formats drive local adoption",
+      "Abliterated models gain popularity"
+    ],
+    "ai-community": [
+      "Minimal WebMCP agent with Gemini",
+      "Self-healing software in agentic era",
+      "Provenance vectors die at storage",
+      "Prompt injection risks highlighted",
+      "Debugging non-deterministic agents hard",
+      "Human-centric AI design advocated"
+    ]
+  }
+}
