@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.199发布，修复SSL并堆叠技能",
+      "OpenAI Codex修复Git沙箱逃逸，强化Windows稳定",
+      "Gemini CLI v0.51.0修复子代理挂起与Thought泄露",
+      "Qwen Code v0.19.5适配企微QQ Bot，支持子代理嵌套",
+      "DeepSeek TUI重构修复Fleet内存泄漏与原子状态写入",
+      "OpenCode V2重构会话Runner，引发Go订阅计费争议"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.7.1-beta.1正式发布，新增GPT-5.6支持",
+      "OpenClaw推进Sessions存储迁移至SQLite提升性能",
+      "OpenClaw修复OAuth认证及Android/iOS通信稳定性",
+      "OpenClaw社区热议工具调用间文本泄露至消息通道Bug",
+      "OpenClaw重构Provider懒加载逻辑减少启动内存占用",
+      "OpenClaw增强secrets audit命令严重性阈值控制"
+    ],
+    "ai-trending": [
+      "ollama新增支持Kimi-K2.6与GLM-5.1模型",
+      "TencentCubeSandbox凭Rust高性能沙箱今日增314星",
+      "herdr终端Agent多路复用器今日暴涨571星",
+      "claude-code持续升温，官方原生Agent工具需求强劲",
+      "ZLUDA在非N卡运行CUDA，降低AI部署硬件门槛",
+      "tree-sitter热度回升，反映Agent代码解析需求深化"
+    ],
+    "ai-web": [
+      "Anthropic发布Claude Sonnet 5，代理能力逼近Opus",
+      "Claude Sonnet 5成Free/Pro默认模型，成本更低更安全",
+      "Anthropic公布Fable 5全球部署及详细网络安全机制",
+      "Anthropic提出行业首个AI越狱严重程度评估框架",
+      "OpenAI今日无新增官方内容发布，市场焦点转移",
+      "Claude Sonnet 5强化安全护栏，不良行为发生率降低"
+    ],
+    "ai-hn": [
+      "OpenAI拟向美国政府出售5%股权，引发政治博弈争议",
+      "Anthropic被指Claude Code嵌入间谍软件企图隐瞒",
+      "社区热议No LLM Code in Dependencies保障供应链安全",
+      "Claude-real-video展示任意LLM观看视频能力",
+      "开发者构建开源替代Claude Cowork的工具Valmis",
+      "社区焦虑LLM代码依赖安全性及AI对网络内容影响"
+    ],
+    "ai-arxiv": [
+      "提出线性注意力海马体记忆机制，恢复关键信息检索",
+      "DALorRA方法结合变分贝叶斯缓解大模型过度自信",
+      "贝叶斯主动学习优化LLM裁判排名，减少位置偏差",
+      "分析LLM-as-Judge在多语言及低资源环境下的局限性",
+      "构建容错自主研究管道，实现计算物理学全流程自动化",
+      "AgenticSTS测试集评估长视界LLM智能体的内存管理"
+    ],
+    "ai-hf": [
+      "GLM-5.2凭借MoE架构对话推理能力获17万下载",
+      "DeepSeek V4-Pro/Flash系列持续霸榜展现统治力",
+      "Qwen-AgentWorld-35B-A3B专为复杂智能体任务设计",
+      "百度Unlimited-OCR解决长文档识别痛点下载超75万",
+      "NVIDIA LocateAnything-3B获百万下载成视觉标杆",
+      "Krea 2 Turbo专注提升文生图推理速度满足实时创作"
+    ],
+    "ai-community": [
+      "Dev.to热议AI Agent多玩家协作新范式与架构思路",
+      "开发者批判性探讨LLM在测试生成中的局限与谎言",
+      "SaaS场景AI模型成本与路由策略对比实战指南",
+      "Cory Doctorow深度解析AI对劳动力与技术冲击",
+      "本地AI崛起讨论，回应数据隐私与离线部署需求",
+      "防范LLM被注入攻击的实用防御建议与代码审查实践"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.199 stable release",
+      "OpenAI Codex adds Rust backend",
+      "Gemini CLI fixes recursive loops",
+      "Copilot CLI non-stable status",
+      "Kimi Code CLI joins ecosystem",
+      "DeepSeek TUI available on GitHub"
+    ],
+    "ai-agents": [
+      "OpenClaw hits 500 PRs in 24h",
+      "OpenClaw supports GPT-5.6 models",
+      "New attach command for harnesses",
+      "Critical session state regressions",
+      "Message loss issues reported",
+      "Auth reliability problems found"
+    ],
+    "ai-trending": [
+      "Ollama stars rise to 175k",
+      "VLLM critical for agent workflows",
+      "Tencent launches Rust sandbox",
+      "Claude Code sets coding standards",
+      "Hermes Agent gains popularity",
+      "Local-first agents dominate trends"
+    ],
+    "ai-web": [
+      "Anthropic launches Claude Sonnet 5",
+      "Sonnet 5 rivals Opus 4.8 performance",
+      "Sonnet 5 now default for free users",
+      "Anthropic details Claude Fable 5 safety",
+      "New jailbreak severity framework proposed",
+      "OpenAI publishes zero new articles"
+    ],
+    "ai-hn": [
+      "OpenAI offers 5% stake to US gov",
+      "Debate on corporate-state relations",
+      "Claude Code timeout reliability issues",
+      "Goldman Sachs AI job apocalypse report",
+      "LMDB 1.0 release sparks interest",
+      "Concerns over LLM code injection"
+    ],
+    "ai-arxiv": [
+      "Hippocampus solves linear attention memory",
+      "Bayesian LoRA reduces LLM overconfidence",
+      "Context governance advances reported",
+      "Uncertainty-aware reasoning methods",
+      "Conformal prediction for high stakes",
+      "Domain adaptation in healthcare"
+    ],
+    "ai-hf": [
+      "Qwen 3.6 uncensored variant trends",
+      "GLM-5.2 leads in likes",
+      "NVIDIA LocateAnything-3B surges",
+      "DeepSeek V4 Pro introduces optimizations",
+      "GGUF formats drive massive downloads",
+      "Community ablated models popular"
+    ],
+    "ai-community": [
+      "EU-hosted inference providers compared",
+      "Google VP says he gave up coding",
+      "AI test generation flaws exposed",
+      "Local sovereign AI infrastructure rises",
+      "Multi-agent cooperation strategies debated",
+      "RF chip design meets AI"
+    ]
+  }
+}
