@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.201发布，功能变更引热议",
+      "OpenAI Codex密集发布安全加固PR",
+      "Gemini CLI v0.51.0夜间构建活跃",
+      "Agent稳定性成焦点，解决子代理泄漏",
+      "OpenCode进入V2架构重构期",
+      "Kimi Code CLI陷入静默期无更新"
+    ],
+    "ai-agents": [
+      "OpenClaw日增314 Issue 500 PR",
+      "统一Secret原语提升审计安全性",
+      "修复macOS登录项环境变量保留问题",
+      "打磨iOS引导流程及聊天界面体验",
+      "整合中止原语防止错误处理漂移",
+      "修复嵌入式代理重试时签名失效Bug"
+    ],
+    "ai-trending": [
+      "herdr终端Agent多路复用器爆火",
+      "Rust主导AI基础设施构建",
+      "qdrant向量数据库成RAG首选基石",
+      "Google发布Go语言AI开发工具包ADK",
+      "NVIDIA OpenShell提供Agent安全沙箱",
+      "Harness Engineering成社区开发焦点"
+    ],
+    "ai-web": [
+      "Claude 3.7 Sonnet引入扩展思维模式",
+      "Anthropic发布负责任扩展政策RSP",
+      "建立AI安全等级ASL应对灾难风险",
+      "Claude Fable 5公开网络安全防护细节",
+      "提出首个AI越狱严重性框架草案",
+      "OpenAI今日官网无新增官方公告"
+    ],
+    "ai-hn": [
+      "本地运行SOTA模型指南登顶HN热榜",
+      "社区质疑AI实际生产力ROI未转化",
+      "Mistral Leanstral 1.5聚焦数学证明",
+      "GLM5.2在AMD MI355X高效低成本运行",
+      "字节跳动发现新缩放定律支撑AI热潮",
+      "Anthropic安全漏洞争议引发关注"
+    ],
+    "ai-arxiv": [
+      "警告代码代理面临持久化分布式攻击",
+      "提出实时在线LLM安全监控器方案",
+      "揭示拒绝回答行为编码于多维子空间",
+      "发布评估LLM遗忘定位精度测试床",
+      "探索文学工具分析文化AI相遇边界",
+      "递归证据重放提升长上下文推理能力"
+    ],
+    "ai-hf": [
+      "Qwen3.6去限制化版下载量超300万",
+      "GLM-5.2采用MoE架构受社区关注",
+      "Empero发布Qwythos 9B结合Claude风格",
+      "DeepSeek V4 Pro附带DSpark优化发布",
+      "百度Unlimited-OCR支持无限分辨率识别",
+      "NVIDIA推出LocateAnything 3B定位模型"
+    ],
+    "ai-community": [
+      "CreateOS基于Firecracker运行不可信代码",
+      "揭示AI Agent隐蔽侧信道数据泄露攻击",
+      "提出写链污染概念强化Agent网关安全",
+      "结合Cognee框架为Agent记忆建防火墙",
+      "分享构建Git-LRC微AI工具的对抗测试",
+      "解析BPE Tokenizer语法对AI成本影响"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.201 stable",
+      "OpenAI Codex alpha 35",
+      "Gemini CLI nightly build",
+      "Qwen Code v0.19.6 stable",
+      "Copilot CLI no updates",
+      "Kimi CLI zero activity"
+    ],
+    "ai-agents": [
+      "OpenClaw 500 PRs daily",
+      "OpenClaw 314 issues open",
+      "Security refactoring active",
+      "Consolidating secrets",
+      "Fixing v2026.6.11 regressions",
+      "No new releases today"
+    ],
+    "ai-trending": [
+      "Herdr agent multiplexer",
+      "NVIDIA OpenShell runtime",
+      "RTK proxy cuts tokens 90%",
+      "Agent harness consolidation",
+      "Caveman prompting goes viral",
+      "Rust dominates local AI"
+    ],
+    "ai-web": [
+      "Anthropic Visible Thinking",
+      "Claude 3.7 Sonnet insights",
+      "Responsible Scaling Policy",
+      "Tiered AI Safety Levels",
+      "Claude Fable 5 deployed",
+      "Jailbreak severity framework"
+    ],
+    "ai-hn": [
+      "SOTA LLMs run locally",
+      "GLM5.2 on AMD MI355X",
+      "Mistral Leanstral 1.5 out",
+      "Alibaba bans Claude Code",
+      "Meta claims OpenAI catch-up",
+      "AI ROI skepticism rises"
+    ],
+    "ai-arxiv": [
+      "LACUNA LLM unlearning test",
+      "RFM-AGOP refusal subspaces",
+      "Neuron-aware data selection",
+      "Typo vulnerabilities in VLMs",
+      "Physical sim optimizer novel",
+      "Diffusion transformer quantization"
+    ],
+    "ai-hf": [
+      "GLM-5.2 MOE-DSA popular",
+      "Qwythos 9B 1M context GGUF",
+      "Qwen3.6 Uncensored trending",
+      "Ornith MoE coding model",
+      "NVIDIA LocateAnything hits",
+      "Krea video tools surge"
+    ],
+    "ai-community": [
+      "Hardening AI orchestrators",
+      "Trust firewall for memory",
+      "CreateOS sandbox on Firecracker",
+      "Local models on Apple Silicon",
+      "Labor automation debates",
+      "AI alignment philosophy shifts"
+    ]
+  }
+}
