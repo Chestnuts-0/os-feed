@@ -1,0 +1,94 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code 无新版，聚焦 Opus 4.8 回退与稳定性修复",
+      "OpenAI Codex 发 Alpha 版，紧急修复 Windows 崩溃",
+      "Gemini CLI 夜间构建活跃，强化代理挂起与安全加固",
+      "OpenCode 无发布，PR 密集修复 V2 协议死循环 Bug",
+      "Qwen Code 夜间版优化 Daemon 冷启动与 Token 消耗",
+      "GitHub Copilot 小幅更新，重点增强 MCP 管理能力"
+    ],
+    "ai-agents": [
+      "OpenClaw 24小时500 Issue，高强度稳定化迭代",
+      "PR #100140 突破：实现跨平台私有会话记忆共享",
+      "PR #99059 重构：提取 AI 运行时包降低模块耦合",
+      "修复云实例余额误报及网关内存泄漏等 P0/P1 关键 Bug",
+      "引入策略分类机制，提升 clawdbot doctor 智能化水平",
+      "修复 Web UI 工作区面板折叠后遗留空白间隙的视觉 Bug"
+    ],
+    "ai-trending": [
+      "Claude Code 霸榜，催生 Skills 与 MCP 插件生态爆发",
+      "AgentSkills 定义标准化技能格式，推动多工具互操作",
+      "Ruflo 元框架受捧，支持自适应记忆的多玩家智能体集群",
+      "OpenAI Codex 热度激增，与 Claude Code 形成直接竞争",
+      "Google ADK-Python 推出，旨在提供比 LangChain 更灵活控制",
+      "Ollama 支持 Kimi-K2.6 等新模型，巩固本地 AI 基石地位"
+    ],
+    "ai-hn": [
+      "Anthropic 遭封禁且陷会话泄露争议，社区信任危机升温",
+      "GPT-5.5 推理聚类疑致性能下降，质疑‘越大越好’范式",
+      "阿里达摩院 AI 代理发现四种新超导材料，科研里程碑",
+      "AI 用 Rust 重写 PHP 引擎，非专家亦能驾驭复杂重构",
+      "本地化隐私优先替代微软 Recall，Gemma 4 加持受关注",
+      "LLM 瑞典大选投票模拟研究，揭示模型价值观与政治偏见"
+    ],
+    "ai-hf": [
+      "GLM-5.2 成最高赞原生开源 LLM，MoE 架构低延迟",
+      "Qwen3.6 无限制微调版下载近 300 万，去除安全护栏",
+      "DeepSeek V4 系列双版本发布，持续展现强大生态影响力",
+      "Qwythos 结合 Qwen3.5 与 Claude 风格，实现 1M 上下文",
+      "百度 Unlimited-OCR 突破分辨率瓶颈，工业应用价值极高",
+      "NVIDIA LocateAnything 支持零样本检测，高精度且轻量化"
+    ],
+    "ai-community": [
+      "Vercel AI 误报 842 密钥实为 0，揭示上下文检测局限",
+      "AI Agent 隐蔽数据泄露曝光，首个开源捕捉工具填补盲区",
+      "提出 50ms SLA 检查点引擎，解决长运行 Agent 稳定性难题",
+      "五大全景向量数据库横向评测，为 2026 生产选型提供实证",
+      "AI 处理故障发明从未存在的 Hack，警示幻觉引发灾难",
+      "Session-indexer 赋予 Claude Code 跨项目持久记忆能力"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code faces Opus 4.8 stability issues",
+      "OpenAI Codex Alpha shows Windows instability",
+      "Gemini CLI addresses agent hang bugs",
+      "Copilot CLI releases v1.0.69 update",
+      "Cost control remains top priority",
+      "Long-running sessions remain fragile"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 daily issues",
+      "Session state bugs cause message loss",
+      "Subagent orchestration security risks",
+      "PR #100096 closed recently",
+      "Multi-agent concurrency challenges",
+      "No new official releases today"
+    ],
+    "ai-trending": [
+      "Google ADK Python hits 20k stars",
+      "OpenAI Codex trends with 165 stars",
+      "Claude Code dominates with 357 stars",
+      "Ollama supports Kimi-K2.6 models",
+      "Ruflo emerges as agent meta-harness",
+      "MCP standards drive interoperability"
+    ],
+    "ai-hn": [
+      "GPT-5.5 reasoning token issues found",
+      "Damo AI discovers superconductors",
+      "US-China AI model dominance discussed",
+      "Alibaba bans Anthropic tools",
+      "Claude Code session leakage feared",
+      "Prompt injection allegations rise"
+    ],
+    "ai-community": [
+      "AI agents leaking data via tools",
+      "Regex scanners cause false positives",
+      "Vector DB comparison: Qdrant vs others",
+      "Cursor vs Claude Code debated",
+      "OpenAI gateway rate-limit fixes",
+      "Safety guardrails miss exfiltration"
+    ]
+  }
+}
