@@ -1,4 +1,22 @@
 {
-  "zh": {},
-  "en": {}
+  "zh": {
+    "ai-weekly": [
+      "Anthropic解除Fable 5全球出口限制",
+      "Claude Sonnet 5成全系默认模型",
+      "OpenAI Codex激进修复GPT-5.5危机",
+      "Anthropic发布可调节思维预算机制",
+      "OpenClaw v2026.7.1正式支持GPT-5.6",
+      "智谱AI推出ZCode对标Claude Code"
+    ]
+  },
+  "en": {
+    "ai-weekly": [
+      "Claude Sonnet 5 launches",
+      "Anthropic lifts export controls",
+      "OpenAI Codex alpha phase",
+      "Harness engineering rises",
+      "AI security debates surge",
+      "Local privacy tools grow"
+    ]
+  }
 }
