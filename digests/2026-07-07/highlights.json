@@ -1,0 +1,118 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.202发布，强化多账户与安全过滤",
+      "OpenAI Codex alpha版支持GPT-5.5 Token聚类优化",
+      "Gemini CLI夜间版修复macOS沙箱与Wayland兼容",
+      "GitHub Copilot优化MCP OAuth及插件生态治理",
+      "OpenCode重构V2架构，提升MCP代码适配器性能",
+      "Qwen Code夜间版修复大文件Context与Shell兼容"
+    ],
+    "ai-agents": [
+      "OpenClaw修复事件循环阻塞，解决高负载消息丢失",
+      "Signal与WhatsApp会话初始化冲突增加重试逻辑",
+      "Twilio webhook重复处理Bug修复，提升SMS准确性",
+      "社区强烈呼吁Linux/Windows原生应用支持",
+      "多代理编排稳定性成为当前核心痛点与优化重点",
+      "大量PR集中修复渠道特异性通信故障与竞态条件"
+    ],
+    "ai-trending": [
+      "meetily凭纯本地Rust AI会议助手登顶热榜",
+      "taste-skill获1458星标，赋予AI代码生成品味",
+      "caveman削减65% Token，让Claude像穴居人说话",
+      "alibaba/zvec轻量向量库，适配边缘与Agent场景",
+      "terax-ai仅7MB，极致轻量终端优先AI开发环境",
+      "Chrome官方推出DevTools MCP服务器标准化交互"
+    ],
+    "ai-web": [
+      "阿尔伯塔省用Claude Code 20小时审计4.66亿行代码",
+      "发现J-space神经模式，实证语言模型全局工作空间理论",
+      "百万对话分析揭示模型阿谀奉承风险，优化价值观对齐",
+      "Opus 4.7与Mythos Preview针对性平衡帮助性与真实性",
+      "Anthropic密集发布可解释性与用户行为研究前沿成果",
+      "OpenAI今日无新增内容，处于官方静默期"
+    ],
+    "ai-hn": [
+      "GLM 5.2引发价格战预期，预测AI服务利润率将崩溃",
+      "Anthropic全局工作空间理论引发学术热情与隐私争议",
+      "XGBoost击败LLM，展示传统算法在特定任务反直觉优势",
+      "Pulpie提供Pareto最优模型方案，直击Web数据清洗痛点",
+      "Otari开源LLM控制平面，Mozilla AI项目受关注",
+      "社区情绪两极分化，理性审视ROI取代狂热扩张"
+    ],
+    "ai-hf": [
+      "GLM-5.2热度攀升，智谱MoE架构成开源基座新标杆",
+      "Qwythos-9B模拟Claude风格，1M上下文下载量破百万",
+      "Unlimited-OCR支持无限分辨率，解决高清文档提取难题",
+      "LocateAnything-3B零样本检测，NVIDIA多模态理解利器",
+      "Ornith-35B-GGUF平衡性能与资源，适合中等算力设备",
+      "DeepSeek-V4-Pro-DSpark优化分布式推理，迈向大规模并发"
+    ],
+    "ai-community": [
+      "OpenAI Assistants API即将停用，开发者紧急讨论迁移",
+      "36模式检查清单助开发者识别并修正AI生成文本瑕疵",
+      "深入剖析LLM API密钥在依赖项泄露中的安全风险",
+      "分享LLM API错误处理最佳实践，填补生产环境认知空白",
+      "PagedAttention以游戏形式直观解释GPU VRAM碎片化调度",
+      "Google官方推出gemma-trainer，降低本地微调门槛"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.202 stable release",
+      "OpenAI Codex alpha v0.143.0 active",
+      "Gemini CLI nightly v0.51.0 updates",
+      "Copilot CLI v1.0.69 stable status",
+      "MCP protocol standardization efforts",
+      "Multi-agent race condition fixes"
+    ],
+    "ai-agents": [
+      "OpenClaw 500 issues PRs daily",
+      "Focus on session state integrity",
+      "Hardening multi-agent orchestration",
+      "Fixing regressions from v2026.3.7",
+      "Security boundary enforcement PRs",
+      "Message delivery reliability fixes"
+    ],
+    "ai-trending": [
+      "Ollama gains 93 stars today",
+      "New Kimi-K2.6 model support added",
+      "Google Antigravity SDK released",
+      "Local-first Meetily assistant trends",
+      "caveman proxy optimizes token usage",
+      "Persistent memory agents gain traction"
+    ],
+    "ai-web": [
+      "Anthropic publishes Global Workspace",
+      "J-space reveals internal model patterns",
+      "Alberta case study shows Claude utility",
+      "Personal Guidance research published",
+      "Enterprise cybersecurity use cases",
+      "OpenAI released zero new content"
+    ],
+    "ai-hn": [
+      "Global Workspace sparks architecture debate",
+      "GLM 5.2 threatens AI profit margins",
+      "XGBoost beats LLMs on Telegram data",
+      "Hyperscalers warn of AI bubble",
+      "Pulpie and Otari open-source tools rise",
+      "Skepticism grows on pure LLM dominance"
+    ],
+    "ai-hf": [
+      "GLM-5.2 gains 231k downloads",
+      "Ornith-1.0-35B-GGUF highly popular",
+      "Uncensored Qwen3.6 variant trends",
+      "NVIDIA LocateAnything CV tool hot",
+      "Baidu Unlimited OCR sees massive usage",
+      "GGUF quantization enables local MoE"
+    ],
+    "ai-community": [
+      "Daniel Nwaneri's 36-pattern AI checker",
+      "Security risks of LLM API key storage",
+      "New observability design for AI era",
+      "VRAM management optimization tips",
+      "Local fine-tuning workflow advice",
+      "Migration from OpenAI Assistants API"
+    ]
+  }
+}
