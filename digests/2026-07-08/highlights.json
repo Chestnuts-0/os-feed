@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.204发布，成本激增引发极高热度",
+      "OpenAI Codex v0.143.0，GPT-5.5推理异常引关注",
+      "Gemini CLI子代理恢复缺陷，Auto Memory遭吐槽",
+      "GitHub Copilot沙盒网络兼容成Windows用户痛点",
+      "OpenCode V2架构迁移，macOS终端渲染Bug待修",
+      "Pi项目TUI稳定性提升，支持GLM/Azure多模型"
+    ],
+    "ai-agents": [
+      "OpenClaw处理500 Issue，高强度修复会话锁死",
+      "修复上下文溢出误报，长对话连续性显著提升",
+      "媒体理解优化：大图压缩解决维度限制错误",
+      "MCP协议合规修复，纠正JSON-RPC通知响应错误",
+      "安全热点：工具调用间文本泄露至消息渠道",
+      "Cron任务持久化修复，避免状态不一致挂起"
+    ],
+    "ai-trending": [
+      "Pocket-TTS纯CPU运行，极致轻量化边缘TTS",
+      "Meetily隐私优先，Rust构建100%本地会议助手",
+      "Agent-Skills标准化，Addy Osmani定义工程实践",
+      "OfficeCLI无需安装，单二进制实现跨平台办公",
+      "CubeSandbox轻量隔离，解决Agent执行安全风险",
+      "Free-LLM-APIs聚合，降低AI开发门槛与成本"
+    ],
+    "ai-web": [
+      "Anthropic发布Claude Sonnet 5，代理能力民主化",
+      "Sonnet 5性能逼近Opus，大幅降低推理成本",
+      "揭露J-space神经模式，大模型可解释性新突破",
+      "Anthropic深化对齐技术，J-space助力思维链调试",
+      "OpenAI今日静默无更新，市场焦点全在Anthropic",
+      "Sonnet 5成免费默认模型，代理场景安全受控"
+    ],
+    "ai-hn": [
+      "Claude Code技术架构揭秘，理解顶级编程助手",
+      "Rowboat开源本地首选，获HN最高分93分热议",
+      "Shellular手机运行Claude，打破移动端开发限制",
+      "Meta首发Muse媒体模型，多模态竞赛再升温",
+      "美企转向中国AI模型，算力成本飙升致供应链裂",
+      "Cowork移动端发布，Agent生态向手机延伸"
+    ],
+    "ai-arxiv": [
+      "首提世界模型定义路线图，统一强化学习范式",
+      "22种语言不确定性研究，填补非英语校准空白",
+      "Pluralis基准揭示文化偏见，推动AI安全全球化",
+      "事实图记忆协调数学推理，解决智能体扩展难题",
+      "部分可观测下LLM审议协作，提升联合决策质量",
+      "结构性张力驱动异构AI演化，批判状态无涉性"
+    ],
+    "ai-hf": [
+      "GLM-5.2 MoE架构，对话连贯性引28万次下载",
+      "Qwythos-9B支持1M上下文，本地部署性价比之王",
+      "Qwen3.6去对齐模型下载近300万，自由度高引争议",
+      "DeepSeek-V4-Pro专注复杂逻辑，官方迭代新标杆",
+      "Qwen-AgentWorld强化工具调用，专为Agent场景设计",
+      "百度Unlimited-OCR支持无限分辨率，文档解析卓越"
+    ],
+    "ai-community": [
+      "反思过度依赖AI，工程师呼吁回归底层系统知识",
+      "AI工程化转向可靠性，关注长期运行行为一致性",
+      "EchoLeak漏洞曝光，Microsoft 365 Copilot存零点击风险",
+      "构建LLM成本账本，平衡推理成本与检索精度",
+      "紧急迁移指南，OpenAI旧版API将于8月26日关停",
+      "ORVIX开源自组织AI公司，探索去中心化协作模式"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.204 released",
+      "OpenAI Codex adds remote plugins",
+      "Gemini CLI hardens sandbox",
+      "Copilot fixes session leaks",
+      "DeepSeek TUI gains traction",
+      "Kimi Code CLI expands options"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 daily PRs",
+      "Fixes critical multi-agent bugs",
+      "Resolves token estimation issues",
+      "Stabilizes message delivery",
+      "Aligns context overflow triggers",
+      "Focus on regression fixes"
+    ],
+    "ai-trending": [
+      "RuView tracks vitals via WiFi",
+      "Pocket TTS fits on CPU",
+      "CubeSandbox secures AI agents",
+      "AI job search app goes viral",
+      "Agent skills gain popularity",
+      "Local-first AI trends rising"
+    ],
+    "ai-web": [
+      "Claude Sonnet 5 released",
+      "Optimized for agentic workflows",
+      "Cost-efficient vs Opus models",
+      "Anthropic explores J-space theory",
+      "Enhanced browser and terminal use",
+      "OpenAI quiet on new content"
+    ],
+    "ai-hn": [
+      "Claude Fable 5 for all tiers",
+      "Rowboat offers local alternative",
+      "Chinese AI costs drop for US",
+      "Making of Claude Code deep dive",
+      "Energy costs strain manufacturers",
+      "LLMs impact org efficiency"
+    ],
+    "ai-arxiv": [
+      "Pluralis benchmarks AI reliability",
+      "Uncertainty study across 22 langs",
+      "LongCrafter aids long-context",
+      "Multicultural AI risk benchmark",
+      "Crosslingual MCQA performance",
+      "Evidence-graph instruction synthesis"
+    ],
+    "ai-hf": [
+      "Qwen-AgentWorld-35B-A3B trending",
+      "Ornith 1.0 35B GGUF popular",
+      "GLM-5.2 leads in likes",
+      "Qwythos supports 1M context",
+      "MoE models optimize agent work",
+      "Quantized GGUF formats surge"
+    ],
+    "ai-community": [
+      "Shift to AI reliability focus",
+      "Agent loops inflate AI bills",
+      "OpenAI Assistants API closing Aug",
+      "RAG vulnerabilities expose data",
+      "Embeddings leak sensitive info",
+      "Migrate from deprecated APIs"
+    ]
+  }
+}
