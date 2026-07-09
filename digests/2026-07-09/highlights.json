@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.205发布，Windows适配滞后引争议",
+      "OpenAI Codex gpt-5.5工具调用回归致危机",
+      "Gemini CLI密集安全修复，Agent稳定性待提升",
+      "Qwen Code v0.19.8领先多工作区本土化集成",
+      "DeepSeek TUI冲刺v0.8.68，优化Rust高性能",
+      "OpenCode热修复中，攻坚V2架构稳定性"
+    ],
+    "ai-agents": [
+      "OpenClaw日交互千次，极高活跃度修复会话死锁",
+      "P1议题：Agent内部文本意外泄漏至外部频道",
+      "P1议题：子代理完成结果静默丢失成核心痛点",
+      "PR修复网关重启后主会话无限恢复循环问题",
+      "技能扫描器扩展，检测Markdown文件注入威胁",
+      "修复OpenAI接口拒绝理由未转助手文本Bug"
+    ],
+    "ai-trending": [
+      "阿里zvec开源，轻量极速进程内向量数据库",
+      "Addy Osmani发起agent-skills，定义标准行为",
+      "TencentDB-Agent-Memory，本地零依赖长期记忆",
+      "9router路由中间件，连接40+提供商自动故障转移",
+      "系统提示词泄露合集，揭示主流模型核心指令",
+      "superpowers框架，经验证的Agent技能方法论"
+    ],
+    "ai-web": [
+      "Anthropic提出双用途知识关闭开关，精准隔离高危",
+      "宪法分类器防御通用越狱，鲁棒性强拒绝率低",
+      "代理不对齐研究：模型面临威胁可能变内部威胁",
+      "人格向量控制技术，监控并管理语言模型性格",
+      "OpenAI疑似推出Gpt Live新产品形态",
+      "OpenAI披露编码评估去噪方法论，提升准确性"
+    ],
+    "ai-hn": [
+      "OpenAI GPT-Live引爆HN，实时多模态交互成新标",
+      "微软开源Flint，可视化语言解决Agent黑盒难题",
+      "第三方指Anthropic分类器过激，误拦有用信息",
+      "OpenAI探讨剔除代码基准测试噪声，重估SOTA",
+      "Foreman开源LLM网关，实现成本感知的模型路由",
+      "社区热议Agent沙箱缺失，工程化落地成焦点"
+    ],
+    "ai-arxiv": [
+      "分析驱动Transformer线性化，突破长上下文瓶颈",
+      "RoPE频率使用解析，数据决定位置尺度匹配",
+      "PALS剪枝法，基于激活百分位数打破统一稀疏",
+      "GIFT利用几何信息指导低精度梯度通信",
+      "TF-Engram免训练突触记忆，SSD扩展LLM容量",
+      "Bielik模型激活分散度区分实体熟悉度与事实"
+    ],
+    "ai-hf": [
+      "Qwythos-9B-GGUF百万下载，主打1M长上下文",
+      "Qwen3.6-35B无审查激进微调，下载破280万",
+      "Unsloth优化Qwen3.6-27B，MTP技术极致提效",
+      "GLM-5.2 MoE架构发布，开源对话模型竞争力强",
+      "Ornith-35B-GGUF平衡性能硬件，本地部署首选",
+      "百度Unlimited-OCR热度飙升，高精度视觉受关注"
+    ],
+    "ai-community": [
+      "Agent伪造测试日志并深信，溯源性成可靠性关键",
+      "扩大上下文窗口未让RAG更聪明，需重估检索策略",
+      "建议用MCP协议替代注入海量i18n文件省Token",
+      "单一模型难自检代码缺陷，交叉审查成最佳实践",
+      "Google指数级路径致气候数字膨胀引社区忧虑",
+      "新开发者平台探索Agent人类协作超越人类速度"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.205 released",
+      "OpenAI Codex alpha v0.144.0 out",
+      "Gemini CLI v0.51.0 preview live",
+      "Claude Code hits 10 hot issues",
+      "OpenAI Codex faces critical bugs",
+      "9 major AI CLI tools covered"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 daily issues",
+      "500 PRs merged in 24 hours",
+      "Session state corruption fixed",
+      "Message delivery failures resolved",
+      "Imminent patch cycle expected",
+      "No new official releases today"
+    ],
+    "ai-trending": [
+      "OfficeCLI stars surge to 11k",
+      "LMCache boosts LLM inference speed",
+      "Alibaba zvec hits 14k stars",
+      "Prisma integrates with AI agents",
+      "Rust agents gain traction",
+      "Focus on local-first memory"
+    ],
+    "ai-web": [
+      "Anthropic releases 35 new articles",
+      "Off-switch for dual-use knowledge",
+      "Agentic misalignment study published",
+      "Economic Index tracks labor shifts",
+      "OpenAI posts metadata-only updates",
+      "Gpt Live metadata added"
+    ],
+    "ai-hn": [
+      "GPT-5.6 launches publicly Thursday",
+      "Debate on AI coding benchmark integrity",
+      "University exam cheating scandal",
+      "Trump admin regulatory changes discussed",
+      "Cost-aware model routing gains interest",
+      "Visualization languages for agents"
+    ],
+    "ai-arxiv": [
+      "Linearization reduces attention costs",
+      "RoPE frequency usage explained",
+      "PALS pruning method introduced",
+      "Sample-efficient alignment explored",
+      "Sparse delta memory proposed",
+      "Biologically-informed NNs studied"
+    ],
+    "ai-hf": [
+      "GLM-5.2 trends with 3.6k likes",
+      "Ornith-1.0-35B downloads hit 500k",
+      "Qwythos-9B reaches 1.6M downloads",
+      "LocateAnything-3B boosts visual grounding",
+      "Unlimited-OCR enhances document understanding",
+      "Qwen 3.5/3.6 variants dominate"
+    ],
+    "ai-community": [
+      "Agent-human collaboration platform launched",
+      "Self-editing harness provenance problem",
+      "Bigger context windows don't fix RAG",
+      "Loop engineering debates intensify",
+      "Runaway API costs highlighted",
+      "Pushback against complex vector DBs"
+    ]
+  }
+}
