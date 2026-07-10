@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.206 发布，聚焦模型幻觉修复",
+      "OpenAI Codex v0.144.1 修复安装缺陷与沙箱重构",
+      "Gemini CLI v0.52.0 夜间版强化安全与 Thoughts 泄漏修复",
+      "GitHub Copilot CLI v1.0.70 遭遇 TUI 稳定性与企业策略阻断",
+      "OpenCode v1.17.16 解决剪贴板失效与子代理稳定性问题",
+      "DeepSeek TUI v0.8.68 落地 Fleet 架构并支持 Termux"
+    ],
+    "ai-agents": [
+      "OpenClaw 无新版，但修复子代理无限重试致命 Bug",
+      "OpenClaw 修复 CI 超时假阴性，提升发布流程可靠性",
+      "OpenClaw 防御性修复：拒绝零值配置防静默数据丢失",
+      "OpenClaw 优化 Doctor 命令输出，减少运维调试噪音",
+      "OpenClaw 社区极高活跃，24小时千次 Issue/PR 更新",
+      "OpenClaw 核心挑战：长会话稳定性与多渠道状态同步"
+    ],
+    "ai-trending": [
+      "ai-job-search 今日狂揽 3716 星，AI 求职框架爆火",
+      "agent-skills 获 2554 星，Addy Osmani 推出标准化技能库",
+      "OfficeCLI 涨 1929 星，AI 代理无需安装即可操作 Office",
+      "Codex 热度不减，推动终端 AI 编程标准化进程",
+      "MCP Servers 稳定增长，体现生态接口成熟度",
+      "Deer-flow 获 136 星，字节开源长周期 SuperAgent 框架"
+    ],
+    "ai-web": [
+      "Anthropic 联手 UST，将 Claude 集成至半导体物理 AI",
+      "前美联储主席 Bernanke 加入 Anthropic 长期利益信托",
+      "Anthropic 发布反思仪表板，引导用户审视 AI 使用伦理",
+      "Anthropic 直面失业等艰难问题，构建防御性透明策略",
+      "OpenAI 暗示 GPT-5.6 及生物安全赏金，但无细节披露",
+      "OpenAI 更新多为元数据，显示发布节奏克制或延迟"
+    ],
+    "ai-hn": [
+      "GPT-5.6 引爆 HN，1000+ 高分热议代理式编码效率",
+      "GPT-5.6 公布 ARC-AGI 结果，展示抽象推理实证表现",
+      "智谱 GLM-5.2 税务记账精度近人，引发垂直领域讨论",
+      "Context.dev 解决网页结构化数据提取痛点，获 72 星",
+      "OpenAI 被指隐瞒训练数据日志，版权诉讼丑闻发酵",
+      "开发者关注 Claude/Cursor 安全策略及反爬机制"
+    ],
+    "ai-arxiv": [
+      "BiSCo-LLM 提出无需查表的二进制球面编码实现极致压缩",
+      "MAESTRO 剪枝稀疏 MoE 坏专家，缓解部署内存压力",
+      "揭示量化评估局限性，指出量化可能引发隐蔽行为偏差",
+      "质疑超级权重普适性，证明选择性训练策略存在失效",
+      "Remember When 提出主动记忆代理，解决长轨迹检索难题",
+      "DominoTree 基于树结构投机解码，显著提升推理加速潜力"
+    ],
+    "ai-hf": [
+      "GLM-5.2 获赞 3729，智谱最新 MoE 模型成本周最热",
+      "Qwythos-9B 下载超 187 万，融合 Claude 推理支持 1M 上下文",
+      "NVIDIA LocateAnything-3B 获赞 2687，精准视觉定位工具",
+      "百度 Unlimited-OCR 下载超 124 万，工业级文档处理利器",
+      "DeepSeek-V4-Pro 针对复杂推理优化，展现国产高端竞争力",
+      "腾讯 Hy3 专注高质量文本生成，引入新架构优化效率"
+    ],
+    "ai-community": [
+      "Lena and P 寓言揭示多供应商 AI 环境下日志审计重要性",
+      "辩论手打代码诚实度，挑战开发者对纯手工编码的道德优越",
+      "删除未编写的 AI 代码，逆向工程学习心得引发共鸣",
+      "提出确定性路由替代 LLM 自判质量，解决逻辑悖论",
+      "倡导为 AI Agent 增加不可篡改事件日志，增强调试防骗",
+      "警示 Cursor 生成命令注入漏洞，主流 AI 编辑器安全隐患"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.206 stable",
+      "OpenAI Codex rust-v0.144.1 patch",
+      "Gemini CLI v0.52.0 nightly",
+      "GitHub Copilot v1.0.70 stable",
+      "OpenCode v1.17.18 stable",
+      "Pi v0.80.6 stable released"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 issues daily",
+      "No new OpenClaw releases today",
+      "Codex subagent retry fix merged",
+      "Dashboard enhancements added",
+      "High stability concerns noted",
+      "Robust issue triage observed"
+    ],
+    "ai-trending": [
+      "MCP matures as critical standard",
+      "Local-first memory infrastructure grows",
+      "Langfuse gains 94 stars today",
+      "LMCache boosts long-context speed",
+      "OpenAI Codex adds 299 stars",
+      "DeerFlow powers superagent harness"
+    ],
+    "ai-web": [
+      "Anthropic partners with UST for Physical AI",
+      "Ben Bernanke joins Anthropic trust",
+      "Research on dual-use off switch",
+      "OpenAI prepares GPT-5.6 integration",
+      "GPT-5.6 links Microsoft 365 Copilot",
+      "Content mostly metadata-only now"
+    ],
+    "ai-hn": [
+      "GPT-5.6 sparks intense coding debate",
+      "OpenAI accused of hiding training logs",
+      "Nobel laureate moves to China",
+      "GLM 5.2 achieves bookkeeper accuracy",
+      "GPT-5.6 passes ARC-AGI test",
+      "Anthropic faces intl regulatory scrutiny"
+    ],
+    "ai-arxiv": [
+      "Quantization effects challenge accuracy",
+      "Selective training theory questioned",
+      "Binary spherical coding for LLMs",
+      "Inference costs optimized via speculation",
+      "Agent reliability benchmarks needed",
+      "Domain knowledge integrated in AI"
+    ],
+    "ai-hf": [
+      "GLM-5.2 tops HF trending list",
+      "Ornith-1.0-35B hits 957k downloads",
+      "DeepSeek-V4-Pro-DSpark gains traction",
+      "Qwythos-9B multimodal model popular",
+      "Qwen 3.5/3.6 GGUF formats dominate",
+      "NVIDIA reasoning models rise"
+    ],
+    "ai-community": [
+      "AI agents need event logs, not tools",
+      "Deterministic routing beats quality gates",
+      "Vendor lock-in risks highlighted",
+      "Attention tax of AI reviews discussed",
+      "Local inference optimizations explored",
+      "Ethical critiques of resource use persist"
+    ]
+  }
+}
