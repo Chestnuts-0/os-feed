@@ -1,0 +1,118 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.207发布，Auto Mode成默认",
+      "OpenAI Codex曝GPT-5.5/5.6行为异常",
+      "Gemini CLI强化A2A安全与子代理稳定",
+      "GitHub Copilot TUI在WSL2出现渲染死锁",
+      "Qwen Code修复子代理死循环与内存溢出",
+      "DeepSeek TUI集成RustSec进行安全审计"
+    ],
+    "ai-agents": [
+      "OpenClaw修复session.pruneAfter配置失效",
+      "网关重启后会话恢复死循环问题已解决",
+      "引入工作树租赁机制防止GC误删文件",
+      "修复macOS应用转发执行批准撤销逻辑",
+      "限制外部内容扫描窗口防性能瓶颈",
+      "社区日更PR达500条，活跃度极高"
+    ],
+    "ai-trending": [
+      "NVIDIA推出OpenShell代理安全沙箱",
+      "Addy Osmani发布agent-skills引爆社区",
+      "Matt Pocock分享真实工程师技能配置",
+      "goose超越代码建议支持全栈代理执行",
+      "tokscale提供跨代理Token用量追踪",
+      "Pentagi实现全自主渗透测试代理系统"
+    ],
+    "ai-hn": [
+      "Apple起诉OpenAI窃取商业机密霸榜",
+      "GPT-5.6 Sol Ultra证明Cycle Double Cover",
+      "多模型同质化生成引发开发者厌倦",
+      "AI2Web提出开放协议统一Agent交互",
+      "GPT-5.6被指造成用户数据丢失",
+      "Agent记忆策略选择树受资深开发者关注"
+    ],
+    "ai-arxiv": [
+      "量化效应研究指出传统指标存在幻觉",
+      "BiSCo-LLM实现无需查表的极端低比特压缩",
+      "MAESTRO策略剪除MoE模型中的坏专家",
+      "WebSwarm实现递归多代理深层网页搜索",
+      "研究揭示超级权重并非普遍存在且无效",
+      "评估LLM作为引用验证器的校准偏差"
+    ],
+    "ai-hf": [
+      "GLM-5.2下载超39万，稀疏注意力优异",
+      "百度Unlimited-OCR下载131万，支持任意分辨率",
+      "NVIDIA LocateAnything-3B精准识别物体边界",
+      "DeepSeek-V4-Pro-DSpark优化高精度推理",
+      "Qwen3.5/3.6系列凭借MoE架构主导榜单",
+      "Hy3混元迭代获官方背书，文本生成强劲"
+    ],
+    "ai-community": [
+      "构建统一错误模型应对各AI提供商失败",
+      "AI模板推广中的隐性风险与伦理博弈",
+      "优化网站结构以便AI代理更准确抓取",
+      "Linter自动捕获AI助手编写的常见安全漏洞",
+      "解决AI流式响应计费与日志不同步问题",
+      "搭建API缓存代理节省70%推理成本"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.207 released",
+      "OpenAI Codex alpha for Win",
+      "Gemini CLI nightly builds",
+      "Copilot CLI v1.0.71 released",
+      "9 major AI CLI tools tracked",
+      "Focus on stability and security"
+    ],
+    "ai-agents": [
+      "OpenClaw: 500 PRs in 24h",
+      "No new OpenClaw release yet",
+      "Fixing critical memory leaks",
+      "Session state consistency fixes",
+      "MacOS and Discord bug fixes",
+      "Imminent patch cycle expected"
+    ],
+    "ai-trending": [
+      "Agentic engineering surges",
+      "Lmcache boosts inference speed",
+      "Nvidia OpenShell for agents",
+      "Tencent CubeSandbox for safety",
+      "Aaif Goose agent expands",
+      "MCP and A2A standards converge"
+    ],
+    "ai-hn": [
+      "GPT-5.6 proves math conjecture",
+      "Apple sues OpenAI over secrets",
+      "Frontier models build same apps",
+      "Huge debate on AI math proofs",
+      "Legal battles dominate HN",
+      "Mixed sentiment on AI costs"
+    ],
+    "ai-arxiv": [
+      "Quantization effects in LLMs",
+      "Binary coding for LLM compression",
+      "Super weights in LLMs fail",
+      "Speculative decoding advances",
+      "Robust agent evaluation metrics",
+      "Interdisciplinary AI applications"
+    ],
+    "ai-hf": [
+      "Qwen3.5/3.6 GGUFs trending",
+      "GLM-5.2 MoE model gains likes",
+      "DeepSeek V4 Pro DSark released",
+      "Tencent Hy3 variant launched",
+      "Thinking models gain traction",
+      "Community fine-tunes popular"
+    ],
+    "ai-community": [
+      "Custom error models for AI APIs",
+      "Linter catches AI security bugs",
+      "Resilient multi-agent pipelines",
+      "Production engineering focus",
+      "Cost management concerns rise",
+      "Environmental impact of AI"
+    ]
+  }
+}
