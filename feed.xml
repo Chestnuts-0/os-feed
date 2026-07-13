@@ -6,7 +6,7 @@
     <description>AI 开源生态每日简报 · Daily AI ecosystem digest</description>
     <language>zh-CN</language>
     <atom:link href="https://duanyytop.github.io/agents-radar/feed.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 13 Jul 2026 02:51:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Jul 2026 04:36:25 +0000</lastBuildDate>
     <item>
       <title>AI CLI 工具社区动态日报 2026-07-13</title>
       <link>https://duanyytop.github.io/agents-radar/#2026-07-13/ai-cli</link>
@@ -2651,6 +2651,269 @@ Author: zai-org | Likes: 3,857 | Downloads: 441,41</li>
 </ol>
 <hr>
 <p><em>本日报由 <a href="https://github.com/Chestnuts-0/os-feed">agents-radar</a> 自动生成。</em></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>AI 工具生态周报 2026-07-13</title>
+      <link>https://duanyytop.github.io/agents-radar/#2026-07-13/ai-weekly</link>
+      <guid isPermaLink="true">https://duanyytop.github.io/agents-radar/#2026-07-13/ai-weekly</guid>
+      <pubDate>Mon, 13 Jul 2026 00:00:00 +0000</pubDate>
+      <description>AI 工具生态周报 2026-W29 覆盖日期: 2026-07-07 ~ 2026-07-13 | 生成时间: 2026-07-13 04:34 UTC 📊 AI 工具生态周报 | 2026-W29 (07.07 - 07.13) 1. 本周要闻 [07-08] Anthropic 正式发布 Claude Sonnet 5，将高阶代理能力下放至中端模型，实现性能逼近 Opus 系列的同时显著降低推理成本。 [07-09] Anthropic 密集发布安全对齐研究：提出“双用途知识关闭开关”、宪法分类器防御机制及“人格向量”控制技术，标志着从行为对齐向认知对齐迈进。 [07-10] OpenAI 公布 GPT-5.6 架构与 ARC-AGI 基准测试结果，引发开发者对模型推理跃迁与多模态实时交互的广泛关注。 [07-11] GitHub 涌现 agent-skills、superpowers 等标准化技能库，Addy Osmani 与 Matt Pocock 主导的工程实践项目单日星标破千，Agent 编排进入模块化时代。 [07-12] Apple 正式起诉 OpenAI 指控窃取...</description>
+      <content:encoded><![CDATA[<h1>AI 工具生态周报 2026-W29</h1>
+<blockquote>
+<p>覆盖日期: 2026-07-07 ~ 2026-07-13 | 生成时间: 2026-07-13 04:34 UTC</p>
+</blockquote>
+<hr>
+<h1>📊 AI 工具生态周报 | 2026-W29 (07.07 - 07.13)</h1>
+<h2>1. 本周要闻</h2>
+<ul>
+<li><strong>[07-08]</strong> Anthropic 正式发布 <strong>Claude Sonnet 5</strong>，将高阶代理能力下放至中端模型，实现性能逼近 Opus 系列的同时显著降低推理成本。</li>
+<li><strong>[07-09]</strong> Anthropic 密集发布安全对齐研究：提出“双用途知识关闭开关”、宪法分类器防御机制及“人格向量”控制技术，标志着从行为对齐向认知对齐迈进。</li>
+<li><strong>[07-10]</strong> OpenAI 公布 <strong>GPT-5.6</strong> 架构与 ARC-AGI 基准测试结果，引发开发者对模型推理跃迁与多模态实时交互的广泛关注。</li>
+<li><strong>[07-11]</strong> GitHub 涌现 <code>agent-skills</code>、<code>superpowers</code> 等标准化技能库，Addy Osmani 与 Matt Pocock 主导的工程实践项目单日星标破千，Agent 编排进入模块化时代。</li>
+<li><strong>[07-12]</strong> Apple 正式起诉 OpenAI 指控窃取硬件/AI 集成商业机密，科技巨头知识产权纠纷升级，企业部署合规风险显著升温。</li>
+<li><strong>[07-13]</strong> 全生态 CLI 工具反馈高度收敛：<strong>跨平台稳定性（尤其 Windows）</strong>、<strong>Token 成本透明化</strong>与<strong>子代理路由可靠性</strong>成为生产环境落地的核心分水岭。</li>
+</ul>
+<hr>
+<h2>2. CLI 工具进展</h2>
+<p>本周 AI CLI 生态全面转向“生产级稳健性”攻坚，功能扩张期结束，底层工程化成为主线。</p>
+<table>
+<thead>
+<tr>
+<th align="left">工具</th>
+<th align="left">核心动态与关键变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Claude Code</strong></td>
+<td align="left">推进 v2.1.x 系列，重点修复多会话编排与 MCP 安全硬化；Windows Cowork 兼容性与子代理 Token 爆炸问题为社区最高频反馈。</td>
+</tr>
+<tr>
+<td align="left"><strong>OpenAI Codex</strong></td>
+<td align="left">Rust SDK Alpha 阶段迭代加速；GPT-5.5/5.6 路由异常、沙箱进程稳定性及 SQLite 日志架构优化是本周攻关重心。</td>
+</tr>
+<tr>
+<td align="left"><strong>Gemini CLI</strong></td>
+<td align="left">夜间构建活跃，聚焦 Agent 调度可靠性、Wayland/macOS 沙箱加固及 Auto Memory 资源消耗治理。</td>
+</tr>
+<tr>
+<td align="left"><strong>GitHub Copilot CLI</strong></td>
+<td align="left">TUI 渲染死锁（WSL2/WinTerm）、MCP OAuth 握手断裂、语音 ASR 稳定性修复占据 Issue 前列。</td>
+</tr>
+<tr>
+<td align="left"><strong>OpenCode / Pi / Qwen / DeepSeek</strong></td>
+<td align="left">OpenCode 推进 V2 架构重构与 Ollama 本地兼容；Pi 专注 TUI 现代化与多提供商统一鉴权；Qwen/DeepSeek 强化多工作区 Daemon 与跨 Unix-like 编译容错。</td>
+</tr>
+</tbody></table>
+<p><strong>共性趋势</strong>：会话状态强一致性（JSONL 原子写入/快照回滚）、多代理防挂起/超时熔断、终端 ANSI 渲染与 Ctrl+C 信号捕获、离线成本核算与配额透明查询成为各团队并行修复的底层基建。</p>
+<hr>
+<h2>3. AI Agent 生态</h2>
+<p>个人 AI 助手与自主智能体框架已进入“运行时隔离与可观测性”深水区。</p>
+<ul>
+<li><strong>OpenClaw</strong>：作为生态锚点保持极高活跃度（日均 500+ PR/Issue）。本周核心进展集中在<strong>会话生命周期管理</strong>（<code>session.pruneAfter</code> 修复、网关重启死循环解除）、<strong>子代理静默丢失防御</strong>及<strong>多渠道协议对齐</strong>（WhatsApp/Slack/Discord 消息路由与状态同步）。</li>
+<li><strong>同赛道项目分化</strong>：<ul>
+<li><code>Hermes Agent</code>：聚焦企业级调度、模型路由与 Cron 任务容错，PR 积压明显但健康度高。</li>
+<li><code>ZeroClaw</code>：强化内存子系统与上下文预算控制，推进 Turn-level OTel 链路追踪。</li>
+<li><code>IronClaw</code> / <code>CoPaw</code>：处于 Reborn 重构与 v2.0 磨合期，侧重 Guard Seam 守卫决策与细粒度工具审批。</li>
+<li><code>NanoBot</code> / <code>PicoClaw</code>：深耕边缘部署与本地化兼容，技术栈轻量化。</li>
+</ul>
+</li>
+<li><strong>技术共识</strong>：多通道协议映射内联键盘、僵尸进程锁自动清理、上下文压缩孤儿消息防御、密钥生命周期控制成为各框架竞逐的标准基座。</li>
+</ul>
+<hr>
+<h2>4. 开源趋势</h2>
+<p>GitHub Trending 显示生态重心从“大模型能力验证”全面转向“生产级工作流构建”。</p>
+<table>
+<thead>
+<tr>
+<th align="left">趋势方向</th>
+<th align="left">代表项目</th>
+<th align="left">开发者优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Agent 技能标准化</strong></td>
+<td align="left"><code>addyosmani/agent-skills</code>、<code>obra/superpowers</code></td>
+<td align="left">定义 Agent 行为范式，解决输出不一致与 Token 效率问题</td>
+</tr>
+<tr>
+<td align="left"><strong>本地优先与隐私计算</strong></td>
+<td align="left"><code>TencentCloud/TencentDB-Agent-Memory</code>、<code>Zackriya-Solutions/meetily</code></td>
+<td align="left">零外部依赖记忆持久化、纯本地会议转录，契合数据主权诉求</td>
+</tr>
+<tr>
+<td align="left"><strong>高性能 Rust 基础设施</strong></td>
+<td align="left"><code>alibaba/zvec</code>、<code>ruvnet/RuVector</code></td>
+<td align="left">进程内向量检索、低延迟图神经网络内存，适配边缘与 Agent 场景</td>
+</tr>
+<tr>
+<td align="left"><strong>垂直场景 Agent</strong></td>
+<td align="left"><code>vxcontrol/pentagi</code>、<code>iOfficeAI/OfficeCLI</code></td>
+<td align="left">自主渗透测试、无 Office 依赖的办公自动化，落地 ROI 明确</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5. HN 社区热议</h2>
+<ul>
+<li><strong>模型竞赛与基准</strong>：GPT-5.6 发布与 ARC-AGI 表现引爆讨论；第三方指出 Anthropic Fable 前置分类器过于激进导致可用性下降，安全护栏与效能平衡成焦点。</li>
+<li><strong>法律与伦理焦虑</strong>：Apple vs OpenAI 诉讼占据榜首；GLM-5.2 引发的价格战预期促使社区热议 AI 服务利润率坍塌与泡沫风险。</li>
+<li><strong>工程务实转向</strong>：对“同质化输出”产生厌倦；《Separating signal from noise in coding evaluations》等文章受资深开发者青睐，反映基层正从宏观叙事回归到可观测性、调试工具（如 Microsoft Flint）与本地化替代方案（Rowboat）的实战需求。</li>
+<li><strong>整体情绪</strong>：兴奋与审慎并存，技术信任危机与工程化刚需交织。</li>
+</ul>
+<hr>
+<h2>6. 官方动态</h2>
+<ul>
+<li><strong>Anthropic</strong>：本周内容密度极高。除 Sonnet 5 发布外，连续公开可解释性突破（J-space 全局工作空间理论）、双用途知识精准屏蔽、人格向量监控及企业级落地案例（阿尔伯塔省代码审计、UST 物理 AI 集成）。前美联储主席 Ben Bernanke 加入长期利益信托，强化治理背书。战略清晰指向**“负责任的大规模代理应用”**。</li>
+<li><strong>OpenAI</strong>：官方博客处于静默期，市场动作集中于 GPT-5.6 产品化 rollout 与 ARC-AGI 数据披露。结合版权诉讼争议，其策略更偏向产品迭代与市场占位，而非公开安全研究透明化。</li>
+</ul>
+<hr>
+<h2>7. 下周信号</h2>
+<ol>
+<li><strong>Windows 稳定性补丁集中发布</strong>：Copilot CLI、Codex、Claude Code 预计将推出针对文件独占锁、IME 死锁与 WSL2 渲染的专项修复版本。</li>
+<li><strong>Agent 治理框架压力测试</strong>：微软 <code>agent-governance-toolkit</code> 与 Anthropic 宪法分类器将面临真实企业环境的对抗样本检验，合规策略可能强制下沉至 CLI 默认配置。</li>
+<li><strong>本地记忆向主流 Runtime 渗透</strong>：腾讯 <code>Agent-Memory</code> 与阿里 <code>zvec</code> 等轻量组件将被更多 Agent 框架原生集成，缓解上下文窗口成本瓶颈。</li>
+<li><strong>多模型路由计费透明化</strong>：受 Token 争议驱动，OpenCode、Pi、DeepSeek TUI 或率先开放原生的 <code>usage/cost</code> CLI 命令与沙箱配额隔离接口。</li>
+<li><strong>GPT-5.6 vs Sonnet 5 生态分化</strong>：开发者将根据子代理调度开销、MCP 兼容性与企业审计需求，在闭源生态与开源本地化方案间加速选型分流。</li>
+</ol>
+<hr>
+<p><em>报告生成时间：2026-07-14 | 分析师：Agnes-2.0-Flash (Sapiens AI)</em></p>
+<hr>
+<p><em>本日报由 <a href="https://github.com/Chestnuts-0/os-feed">agents-radar</a> 自动生成。</em></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>AI Tools Weekly Digest 2026-07-13</title>
+      <link>https://duanyytop.github.io/agents-radar/#2026-07-13/ai-weekly-en</link>
+      <guid isPermaLink="true">https://duanyytop.github.io/agents-radar/#2026-07-13/ai-weekly-en</guid>
+      <pubDate>Mon, 13 Jul 2026 00:00:00 +0000</pubDate>
+      <description>AI Tools Ecosystem Weekly Report 2026-W29 Coverage: 2026-07-07 ~ 2026-07-13 | Generated: 2026-07-13 04:34 UTC Weekly AI Open-Source Ecosystem Report | 2026-W29 (Jul 7–13) 1. Week&amp;#39;s Top Stories Jul 8 – Anthropic releases Claude Sonnet 5, officially democratizing agentic capabilities with near-Opus performance at significantly lower inference costs. Jul 10 – OpenAI publishes GPT-5.6 alongside live multimodal streaming (GPT-Live) and ARC-AGI benchmark results, reinforcing its push toward autono...</description>
+      <content:encoded><![CDATA[<h1>AI Tools Ecosystem Weekly Report 2026-W29</h1>
+<blockquote>
+<p>Coverage: 2026-07-07 ~ 2026-07-13 | Generated: 2026-07-13 04:34 UTC</p>
+</blockquote>
+<hr>
+<h1>Weekly AI Open-Source Ecosystem Report | 2026-W29 (Jul 7–13)</h1>
+<h2>1. Week&#39;s Top Stories</h2>
+<ul>
+<li><strong>Jul 8</strong> – Anthropic releases <strong>Claude Sonnet 5</strong>, officially democratizing agentic capabilities with near-Opus performance at significantly lower inference costs.</li>
+<li><strong>Jul 10</strong> – OpenAI publishes <strong>GPT-5.6</strong> alongside live multimodal streaming (<code>GPT-Live</code>) and ARC-AGI benchmark results, reinforcing its push toward autonomous coding workflows.</li>
+<li><strong>Jul 11</strong> – <strong>Apple vs. OpenAI trade secret lawsuit</strong> dominates developer discourse, highlighting rising IP tensions and scrutiny over hardware-software-AI integration.</li>
+<li><strong>Jul 7–10</strong> – Explosive growth in <strong>Agent Skill Standardization</strong>. Repos like <code>addyosmani/agent-skills</code> and <code>obra/superpowers</code> trend rapidly as the community codifies reproducible behaviors for CLI agents.</li>
+<li><strong>Jul 7–13</strong> – Cross-tool convergence on <strong>session state persistence &amp; sub-agent routing</strong>. Fatal hangs, token bloat, and silent failures become the primary blockers for production deployment.</li>
+<li><strong>Jul 8–10</strong> – <strong>Local-first &amp; privacy computing</strong> gains momentum with Rust-native tools for offline memory, vector search, and meeting transcription surging on GitHub Trending.</li>
+</ul>
+<h2>2. CLI Tools Progress</h2>
+<table>
+<thead>
+<tr>
+<th align="left">Tool</th>
+<th align="left">Version/Status</th>
+<th align="left">Key Developments &amp; Community Focus</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Claude Code</strong></td>
+<td align="left"><code>v2.1.20x</code></td>
+<td align="left">Auto-mode defaulting; intense scrutiny on token cost transparency, Windows Cowork compatibility, and sub-agent state loss.</td>
+</tr>
+<tr>
+<td align="left"><strong>OpenAI Codex</strong></td>
+<td align="left"><code>rust-v0.144.x-alpha</code></td>
+<td align="left">GPT-5.5/5.6 routing anomalies; Windows sandbox/process stability; hooks trust mechanism &amp; rate-limit refinement.</td>
+</tr>
+<tr>
+<td align="left"><strong>Gemini CLI</strong></td>
+<td align="left"><code>v0.52.0-nightly</code></td>
+<td align="left">A2A security hardening; Wayland/macOS sandbox fixes; thought-leakage patches and agent suspension recovery.</td>
+</tr>
+<tr>
+<td align="left"><strong>GitHub Copilot CLI</strong></td>
+<td align="left"><code>v1.0.70/71</code></td>
+<td align="left">TUI deadlock fixes (WSL2/WinTerm); MCP OAuth friction; voice ASR stability &amp; plugin market governance.</td>
+</tr>
+<tr>
+<td align="left"><strong>Kimi Code CLI</strong></td>
+<td align="left">Maintenance</td>
+<td align="left">Low activity; focusing on Windows build standardization, SSL/MCP compatibility, and background task observability.</td>
+</tr>
+<tr>
+<td align="left"><strong>OpenCode</strong></td>
+<td align="left"><code>v1.17.x</code></td>
+<td align="left">V2 TUI overhaul; SQLite concurrency fixes; clipboard/TUI rendering stability &amp; provider metadata alignment.</td>
+</tr>
+<tr>
+<td align="left"><strong>Pi (Mono)</strong></td>
+<td align="left"><code>v0.80.x</code></td>
+<td align="left">Max thinking-level support; self-hosted HTTP timeout fixes; unified auth for Bedrock/Vertex/Scaleway.</td>
+</tr>
+<tr>
+<td align="left"><strong>Qwen Code</strong></td>
+<td align="left"><code>v0.19.x</code></td>
+<td align="left">Sub-agent infinite-loop resolution; web-shell multi-workspace; OOM mitigation &amp; Ollama local model compatibility.</td>
+</tr>
+<tr>
+<td align="left"><strong>DeepSeek TUI</strong></td>
+<td align="left"><code>v0.8.6x</code></td>
+<td align="left">Fleet architecture rollout; NetBSD/Termux cross-compilation; offline cost accounting &amp; RustSec audit integration.</td>
+</tr>
+</tbody></table>
+<p><strong>Cross-Tool Consensus:</strong> Sub-agent lifecycle management, MCP/ACP protocol security, cross-platform (especially Windows) parity, and granular cost/token visibility are the top engineering priorities.</p>
+<h2>3. AI Agent Ecosystem</h2>
+<ul>
+<li><strong>OpenClaw:</strong> Remains the ecosystem anchor. Processes ~500+ PRs/Issues daily. Core efforts target session state stability, gateway security, multi-channel routing (Slack/Discord/WhatsApp/Telegram), and cron fault tolerance. Critical merges include session prune logic, zombie process cleanup, and MCP notification compliance.</li>
+<li><strong>Peer Projects:</strong> <ul>
+<li><code>Hermes Agent</code>: Enterprise scheduling &amp; model routing (high PR backlog).</li>
+<li><code>ZeroClaw</code>: Memory subsystem &amp; multi-channel alignment.</li>
+<li><code>IronClaw</code>: <code>Reborn</code> architecture refactor &amp; cross-platform hardening.</li>
+<li><code>CoPaw/QwenPaw</code>: v2.0 stability攻坚, context compression &amp; guard seam enforcement.</li>
+<li><code>NanoBot/PicoClaw</code>: Edge deployment &amp; local-first runtime optimization.</li>
+</ul>
+</li>
+<li><strong>Ecosystem Maturity:</strong> Shift from functional prototyping to production-grade reliability. Modular plugin architectures, enterprise audit trails, and standardized agent runtimes are becoming baseline expectations.</li>
+</ul>
+<h2>4. Open Source Trends</h2>
+<ul>
+<li><strong>Agent Skill Standardization:</strong> Structured skill packs are replacing ad-hoc prompts, enforcing consistent behavior, token efficiency, and engineering best practices across coding agents.</li>
+<li><strong>Local-First Infrastructure:</strong> Rising demand for zero-cloud dependencies. Notable: <code>zvec</code> (embedded vector DB), <code>meetily</code> (offline meeting assistant), <code>TencentDB-Agent-Memory</code> (local long-term memory pipeline).</li>
+<li><strong>Rust Dominance in AI Infra:</strong> High-performance inference engines, vector stores, agent sandboxes, and TUI frameworks are increasingly Rust-native for safety, concurrency, and low latency.</li>
+<li><strong>Meta-Harness &amp; Cost Observability:</strong> Tools like <code>ECC</code>, <code>Foreman</code>, and <code>Otari</code> enable token tracking, cost-aware routing, and LLM control planes, reflecting a industry-wide pivot toward financial predictability in agent workloads.</li>
+<li><strong>Vertical Agent Adoption:</strong> Rapid productionization in finance (<code>Vibe-Trading</code>), office automation (<code>OfficeCLI</code>), security pentesting (<code>pentagi</code>), and video rendering (<code>hyperframes</code>).</li>
+</ul>
+<h2>5. HN Community Highlights</h2>
+<ul>
+<li><strong>Legal &amp; IP Tensions:</strong> The Apple vs. OpenAI lawsuit sparked extensive debate over trade secrets, Silicon Valley talent mobility, and the sustainability of closed-model monopolies.</li>
+<li><strong>Capability vs. Verification:</strong> GPT-5.6’s mathematical proof generation and GLM-5.2’s pricing pressure triggered discussions on benchmark noise, margin collapse, and the realism of AGI timelines.</li>
+<li><strong>Safety &amp; Transparency:</strong> Anthropic’s classifier aggression on Fable models and the viral <code>system_prompts_leaks</code> repo highlight growing demand for interpretability and defense-in-depth.</li>
+<li><strong>Engineering Pragmatism:</strong> Community sentiment has cooled from hype to ROI-focused evaluation. Developers prioritize stable routing, local fallbacks, cost tracking, and reproducible benchmarks over raw parameter counts.</li>
+</ul>
+<h2>6. Official Announcements</h2>
+<p><strong>Anthropic (Jul 7–10)</strong></p>
+<ul>
+<li><strong>Claude Sonnet 5:</strong> Positioned as the first widely accessible agentic model, balancing Opus-tier performance with stricter safety guardrails for security tasks.</li>
+<li><strong>Research Breakthroughs:</strong> <ul>
+<li><code>J-space</code> mapping: First empirical evidence of deliberate reasoning pathways in deployed models.</li>
+<li><code>Dual-use Knowledge Off-Switch</code>: Surgical isolation of hazardous knowledge without degrading general capability.</li>
+</ul>
+</li>
+<li><strong>Governance &amp; Ethics:</strong> Ben Bernanke appointed to Long-Term Benefit Trust; <code>Reflect with Claude</code> dashboard launched for usage pattern auditing.</li>
+<li><strong>Enterprise Validation:</strong> Government of Alberta case study demonstrates Claude Code processing 466M lines of legacy code for security auditing in 20 hours.</li>
+</ul>
+<p><strong>OpenAI (Jul 7–10)</strong></p>
+<ul>
+<li><strong>GPT-5.6 &amp; GPT-Live:</strong> Emphasizes real-time multimodal streaming and agentic coding efficiency. Published ARC-AGI performance data.</li>
+<li><strong>Evaluation Methodology:</strong> Blog post on separating signal from noise in coding benchmarks addresses contamination concerns and aims to standardize reproducibility.</li>
+<li><em>Note:</em> Public output was lighter than Anthropic’s, suggesting internal scaling or gated release strategies.</li>
+</ul>
+<h2>7. Next Week&#39;s Signals</h2>
+<ul>
+<li><strong>MCP/ACP Protocol Maturation:</strong> Expect stricter RFCs around OAuth scoping, tool permission boundaries, and cross-terminal compatibility as CLI vendors converge on a shared standard.</li>
+<li><strong>Cost &amp; Context Control:</strong> Native token accounting, aggressive context compaction toggles, and dynamic model routing will become table stakes for any agent framework.</li>
+<li><strong>OS Parity Race:</strong> Windows/macOS terminal rendering, file-locking conflicts, and subprocess encoding bugs will see accelerated patch cycles to clear enterprise adoption barriers.</li>
+<li><strong>Agent Governance by Default:</strong> Following Microsoft’s governance toolkit and Anthropic’s dual-use research, expect open-source agents to ship with sandboxing, audit logging, and policy enforcement out-of-the-box.</li>
+<li><strong>Local/Edge Consolidation:</strong> Rust-based, zero-cloud memory, TTS, and vector search modules will gain traction as compliance pressures and API cost volatility push developers toward hybrid or fully offline stacks.</li>
+</ul>
+<hr>
+<p><em>This digest is auto-generated by <a href="https://github.com/Chestnuts-0/os-feed">agents-radar</a>.</em></p>
 ]]></content:encoded>
     </item>
     <item>
@@ -11030,231 +11293,6 @@ The project is currently tracking progress toward <strong>v0.8.3</strong>, evide
 <li><strong>unsloth/Qwen3.6-27B-MTP-GGUF</strong>: 推荐理由：结合 Unsloth 的速度优化与 MTP 预测技术，这是目前本地运行 27B 级别模型效率最高的选择之一，适合资源有限但追求高性能的用户。</li>
 <li><strong>baidu/Unlimited-OCR</strong>: 推荐理由：百度发布的工业级 OCR 模型，解决了传统模型在处理复杂版面和非自然文本时的痛点，对于需要高精度文档数字化的项目极具价值。</li>
 <li><strong>internscience/Agents-A1</strong>: 推荐理由：作为专为 Agent 设计的 MoE 模型，它在工具使用和逻辑规划上优于通用 LLM，是搭建复杂自动化工作流的理想基座。</li>
-</ol>
-<hr>
-<p><em>本日报由 <a href="https://github.com/Chestnuts-0/os-feed">agents-radar</a> 自动生成。</em></p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Hugging Face Trending Models Digest 2026-07-11</title>
-      <link>https://duanyytop.github.io/agents-radar/#2026-07-11/ai-hf-en</link>
-      <guid isPermaLink="true">https://duanyytop.github.io/agents-radar/#2026-07-11/ai-hf-en</guid>
-      <pubDate>Sat, 11 Jul 2026 00:00:00 +0000</pubDate>
-      <description>Hugging Face Trending Models Digest 2026-07-11 Source: Hugging Face Hub | 30 models | Generated: 2026-07-11 01:43 UTC Hugging Face Trending Models Digest Date: 2026-07-11 1. Today&amp;#39;s Highlights The Hugging Face ecosystem is currently dominated by the widespread adoption of Qwen3.5 and Qwen3.6 architectures, particularly through highly optimized GGUF quantizations that have achieved massive download volumes. There is a significant surge in &amp;quot;thinking&amp;quot; and agentic models, with communit...</description>
-      <content:encoded><![CDATA[<h1>Hugging Face Trending Models Digest 2026-07-11</h1>
-<blockquote>
-<p>Source: <a href="https://huggingface.co/">Hugging Face Hub</a> | 30 models | Generated: 2026-07-11 01:43 UTC</p>
-</blockquote>
-<hr>
-<h1>Hugging Face Trending Models Digest</h1>
-<p><strong>Date:</strong> 2026-07-11</p>
-<h3>1. Today&#39;s Highlights</h3>
-<p>The Hugging Face ecosystem is currently dominated by the widespread adoption of Qwen3.5 and Qwen3.6 architectures, particularly through highly optimized GGUF quantizations that have achieved massive download volumes. There is a significant surge in &quot;thinking&quot; and agentic models, with community fine-tunes leveraging advanced reasoning traces gaining substantial traction. Meanwhile, specialized multimodal capabilities continue to expand, with new releases in video generation and identity-preserving editing drawing attention alongside robust OCR solutions.</p>
-<h3>2. Trending Models</h3>
-<h4>🧠 Language Models (LLMs, chat models, instruction-tuned)</h4>
-<ul>
-<li><strong>tencent/Hy3</strong><ul>
-<li><a href="https://huggingface.co/tencent/Hy3">Link</a> | Author: tencent | Likes: 664 | Downloads: 6,923</li>
-<li>Tencent’s latest Hunyuan variant offers strong text-generation performance, signaling continued investment in high-quality Chinese-centric LLMs.</li>
-</ul>
-</li>
-<li><strong>zai-org/GLM-5.2</strong><ul>
-<li><a href="https://huggingface.co/zai-org/GLM-5.2">Link</a> | Author: zai-org | Likes: 3,785 | Downloads: 392,655</li>
-<li>A major update to the GLM family featuring Mixture-of-Experts (MoE) architecture, driving high engagement due to its balance of efficiency and conversational capability.</li>
-</ul>
-</li>
-<li><strong>deepseek-ai/DeepSeek-V4-Pro-DSpark</strong><ul>
-<li><a href="https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-DSpark">Link</a> | Author: deepseek-ai | Likes: 463 | Downloads: 33,088</li>
-<li>The official release of DeepSeek V4 Pro, showcasing the company&#39;s ongoing advancements in reasoning and code generation capabilities.</li>
-</ul>
-</li>
-<li><strong>empero-ai/Qwythos-9B-Claude-Mythos-5-1M</strong><ul>
-<li><a href="https://huggingface.co/empero-ai/Qwythos-9B-Claude-Mythos-5-1M">Link</a> | Author: empero-ai | Likes: 761 | Downloads: 184,315</li>
-<li>A community fine-tune aiming to replicate Claude-level reasoning in a smaller 9B parameter model, popular for its accessible size and enhanced logic.</li>
-</ul>
-</li>
-</ul>
-<h4>🎨 Multimodal &amp; Generation (image, video, audio, text-to-X)</h4>
-<ul>
-<li><strong>krea/Krea-2-Turbo</strong><ul>
-<li><a href="https://huggingface.co/krea/Krea-2-Turbo">Link</a> | Author: krea | Likes: 575 | Downloads: 164,525</li>
-<li>An accelerated version of Krea-2, offering faster text-to-image generation while maintaining high fidelity, appealing to developers needing speed.</li>
-</ul>
-</li>
-<li><strong>baidu/Unlimited-OCR</strong><ul>
-<li><a href="https://huggingface.co/baidu/Unlimited-OCR">Link</a> | Author: baidu | Likes: 1,921 | Downloads: 1,319,683</li>
-<li>Baidu’s powerful OCR model handles complex layouts and diverse languages, explaining its massive download count as a utility staple for document processing.</li>
-</ul>
-</li>
-<li><strong>nvidia/LocateAnything-3B</strong><ul>
-<li><a href="https://huggingface.co/nvidia/LocateAnything-3B">Link</a> | Author: nvidia | Likes: 2,701 | Downloads: 1,456,269</li>
-<li>NVIDIA’s versatile image-text-to-text model excels at precise object localization and grounding, making it essential for advanced vision-language tasks.</li>
-</ul>
-</li>
-<li><strong>Alissonerdx/LTX-Best-Face-ID</strong><ul>
-<li><a href="https://huggingface.co/Alissonerdx/LTX-Best-Face-ID">Link</a> | Author: Alissonerdx | Likes: 84 | Downloads: 0</li>
-<li>A specialized video generation model focusing on identity preservation, addressing a key pain point in current text-to-video pipelines.</li>
-</ul>
-</li>
-</ul>
-<h4>🔧 Specialized Models (code, math, medical, embeddings)</h4>
-<ul>
-<li><strong>google/tabfm-1.0.0-pytorch</strong><ul>
-<li><a href="https://huggingface.co/google/tabfm-1.0.0-pytorch">Link</a> | Author: google | Likes: 345 | Downloads: 18,626</li>
-<li>Google’s Tabular Foundation Model provides robust zero-shot classification and regression for tabular data, filling a gap in structured data handling.</li>
-</ul>
-</li>
-<li><strong>InternScience/Agents-A1</strong><ul>
-<li><a href="https://huggingface.co/InternScience/Agents-A1">Link</a> | Author: InternScience | Likes: 471 | Downloads: 25,772</li>
-<li>Designed specifically for agentic workflows, this MoE-based model integrates vision and text to support complex multi-step task execution.</li>
-</ul>
-</li>
-</ul>
-<h4>📦 Fine-tunes &amp; Quantizations (community fine-tunes, GGUF, AWQ)</h4>
-<ul>
-<li><strong>unsloth/Qwen3.6-27B-MTP-GGUF</strong><ul>
-<li><a href="https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF">Link</a> | Author: unsloth | Likes: 1,036 | Downloads: 2,895,457</li>
-<li>A heavily quantized and optimized version of Qwen3.6, leveraging Unsloth’s techniques for maximum inference speed on consumer hardware.</li>
-</ul>
-</li>
-<li><strong>empero-ai/Qwythos-9B-Claude-Mythos-5-1M-GGUF</strong><ul>
-<li><a href="https://huggingface.co/empero-ai/Qwythos-9B-Claude-Mythos-5-1M-GGUF">Link</a> | Author: empero-ai | Likes: 1,976 | Downloads: 1,909,705</li>
-<li>The GGUF quantization of the popular Claude-Mythos fine-tune, enabling local deployment of high-reasoning models on standard CPUs/GPUs.</li>
-</ul>
-</li>
-<li><strong>HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive</strong><ul>
-<li><a href="https://huggingface.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive">Link</a> | Author: HauhauCS | Likes: 2,623 | Downloads: 2,660,170</li>
-<li>An uncensored, aggressive fine-tune of the Qwen3.6 MoE architecture, catering to users seeking unrestricted creative or role-play capabilities.</li>
-</ul>
-</li>
-<li><strong>deepreinforce-ai/Ornith-1.0-35B-GGUF</strong><ul>
-<li><a href="https://huggingface.co/deepreinforce-ai/Ornith-1.0-35B-GGUF">Link</a> | Author: deepreinforce-ai | Likes: 835 | Downloads: 1,085,554</li>
-<li>A quantized version of the Ornith model, optimized for efficient text generation while preserving core instructional tuning.</li>
-</ul>
-</li>
-</ul>
-<h3>3. Ecosystem Signal</h3>
-<p>The current trend landscape highlights a decisive shift toward <strong>efficiency and accessibility</strong>. The overwhelming download numbers for GGUF quantizations of Qwen3.5/3.6 and DeepSeek V4 variants indicate that the community prioritizes running large-scale models locally on constrained hardware. <strong>Mixture-of-Experts (MoE)</strong> architectures are becoming the standard for balancing performance and cost, as seen in GLM-5.2 and Qwen3.6-35B-A3B. Furthermore, there is a notable rise in <strong>&quot;reasoning-focused&quot; fine-tunes</strong> (e.g., Claude-Mythos, ThinkingCap), suggesting that users are increasingly valuing explicit chain-of-thought capabilities over simple next-token prediction. While proprietary giants like Google and NVIDIA release foundational tools (TabFM, LocateAnything), the vibrant community activity around uncensored and agentic wrappers demonstrates a strong demand for customizable, open-weight alternatives that can be tailored for specific ethical or functional boundaries.</p>
-<h3>4. Worth Exploring</h3>
-<ol>
-<li><strong>unsloth/Qwen3.6-27B-MTP-GGUF</strong>: With nearly 3 million downloads, this model represents the peak of current optimization efforts. It is essential for anyone looking to deploy high-performance LLMs locally without sacrificing reasoning quality.</li>
-<li><strong>baidu/Unlimited-OCR</strong>: This model has crossed 1.3 million downloads, proving its utility. For projects involving document digitization or visual data extraction, this is a robust, production-ready choice.</li>
-<li><strong>google/tabfm-1.0.0-pytorch</strong>: As tabular data remains critical in enterprise AI, Google’s entry into foundation models for structured data offers a fresh, powerful approach to classification and regression tasks that outperforms traditional ML methods.</li>
-</ol>
-<hr>
-<p><em>This digest is auto-generated by <a href="https://github.com/Chestnuts-0/os-feed">agents-radar</a>.</em></p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>技术社区 AI 动态日报 2026-07-11</title>
-      <link>https://duanyytop.github.io/agents-radar/#2026-07-11/ai-community</link>
-      <guid isPermaLink="true">https://duanyytop.github.io/agents-radar/#2026-07-11/ai-community</guid>
-      <pubDate>Sat, 11 Jul 2026 00:00:00 +0000</pubDate>
-      <description>技术社区 AI 动态日报 2026-07-11 数据来源: Dev.to (30 篇) + Lobste.rs (4 条) | 生成时间: 2026-07-11 01:43 UTC 技术社区 AI 动态日报 日期： 2026-07-11 来源： Dev.to &amp;amp; Lobste.rs 1. 今日速览 今日技术社区聚焦于 AI 工程化的成熟与反思。开发者不再仅关注模型能力，而是深入探讨多智能体（Agent）系统的可靠性、生产环境的成本控制（FinOps）以及安全边界。从构建错误模型到解决“语义漂移”，再到对 AI 导致数字膨胀的伦理担忧，社区呈现出从“兴奋期”向“务实落地期”过渡的特征，强调可验证性、可观测性及系统韧性。 2. Dev.to 精选 Stratagems #10: Lena Watched a Team Adopt Her AI Template. Leo Didn&amp;#39;t Know the Knife Was in the Contract. 链接: https://dev.to/xulingfeng/stratagems-10-lena-watched-a-t...</description>
-      <content:encoded><![CDATA[<h1>技术社区 AI 动态日报 2026-07-11</h1>
-<blockquote>
-<p>数据来源: <a href="https://dev.to/">Dev.to</a> (30 篇) + <a href="https://lobste.rs/">Lobste.rs</a> (4 条) | 生成时间: 2026-07-11 01:43 UTC</p>
-</blockquote>
-<hr>
-<h1>技术社区 AI 动态日报</h1>
-<p><strong>日期：</strong> 2026-07-11
-<strong>来源：</strong> Dev.to &amp; Lobste.rs</p>
-<h2>1. 今日速览</h2>
-<p>今日技术社区聚焦于 <strong>AI 工程化的成熟与反思</strong>。开发者不再仅关注模型能力，而是深入探讨多智能体（Agent）系统的可靠性、生产环境的成本控制（FinOps）以及安全边界。从构建错误模型到解决“语义漂移”，再到对 AI 导致数字膨胀的伦理担忧，社区呈现出从“兴奋期”向“务实落地期”过渡的特征，强调可验证性、可观测性及系统韧性。</p>
-<h2>2. Dev.to 精选</h2>
-<ol>
-<li><p><strong>Stratagems #10: Lena Watched a Team Adopt Her AI Template. Leo Didn&#39;t Know the Knife Was in the Contract.</strong></p>
-<ul>
-<li>链接: <a href="https://dev.to/xulingfeng/stratagems-10-lena-watched-a-team-adopt-her-ai-template-leo-didnt-know-the-knife-was-in-the-4khj">https://dev.to/xulingfeng/stratagems-10-lena-watched-a-team-adopt-her-ai-template-leo-didnt-know-the-knife-was-in-the-4khj</a></li>
-<li>数据: 51 赞 | 18 评论</li>
-<li>核心价值: 以叙事形式揭示 AI 模板在团队推广中的隐性风险与职场博弈，引发关于 AI 采用伦理的深度讨论。</li>
-</ul>
-</li>
-<li><p><strong>Every AI provider fails in its own way. I stopped checking status codes and built an error model instead.</strong></p>
-<ul>
-<li>链接: <a href="https://dev.to/manolito99/every-ai-provider-fails-in-its-own-way-i-stopped-checking-status-codes-and-built-an-error-model-25do">https://dev.to/manolito99/every-ai-provider-fails-in-its-own-way-i-stopped-checking-status-codes-and-built-an-error-model-25do</a></li>
-<li>数据: 22 赞 | 7 评论</li>
-<li>核心价值: 提供跨多家 AI 提供商（OpenAI, Anthropic, Gemini）的统一错误处理架构思路，提升应用鲁棒性。</li>
-</ul>
-</li>
-<li><p><strong>Make AI Agents See Your Website</strong></p>
-<ul>
-<li>链接: <a href="https://dev.to/kumakint/make-ai-agents-see-your-website-1d23">https://dev.to/kumakint/make-ai-agents-see-your-website-1d23</a></li>
-<li>数据: 20 赞 | 3 评论</li>
-<li>核心价值: 指导开发者如何优化网站结构以便 AI 编码代理能更准确地理解和抓取，适应 Agent 辅助编程的新工作流。</li>
-</ul>
-</li>
-<li><p><strong>I Built a Linter That Catches the Security Bugs AI Assistants Keep Writing</strong></p>
-<ul>
-<li>链接: <a href="https://dev.to/ri5hu/i-built-a-linter-that-catches-the-security-bugs-ai-assistants-keep-writing-58m8">https://dev.to/ri5hu/i-built-a-linter-that-catches-the-security-bugs-ai-assistants-keep-writing-58m8</a></li>
-<li>数据: 10 赞 | 4 评论</li>
-<li>核心价值: 针对 AI 生成的代码常见安全隐患，分享了一种自动化 linting 解决方案，保障 AI 辅助开发的安全性。</li>
-</ul>
-</li>
-<li><p><strong>Delivered but Unbilled: Your AI Stream Logged Zero Tokens</strong></p>
-<ul>
-<li>链接: <a href="https://dev.to/alex_spinov/delivered-but-unbilled-your-ai-stream-logged-zero-tokens-3c99">https://dev.to/alex_spinov/delivered-but-unbilled-your-ai-stream-logged-zero-tokens-3c99</a></li>
-<li>数据: 3 赞 | 1 评论</li>
-<li>核心价值: 剖析 AI 流式响应中常见的计费与日志不同步问题，帮助开发者优化监控与成本管理。</li>
-</ul>
-</li>
-<li><p><strong>I Built a Drop-in AI API Caching Proxy — Save 70% on Inference Costs</strong></p>
-<ul>
-<li>链接: <a href="https://dev.to/alex_wang212/i-built-a-drop-in-ai-api-caching-proxy-save-70-on-inference-costs-1ff1">https://dev.to/alex_wang212/i-built-a-drop-in-ai-api-caching-proxy-save-70-on-inference-costs-1ff1</a></li>
-<li>数据: 2 赞 | 0 评论</li>
-<li>核心价值: 介绍一种即插即用的缓存代理方案，显著降低大模型推理成本，适合高并发场景。</li>
-</ul>
-</li>
-</ol>
-<h2>3. Lobste.rs 精选</h2>
-<ol>
-<li><p><strong>Google’s exponential path to climate-wrecking digital bloat</strong></p>
-<ul>
-<li>链接: <a href="https://ketanjoshi.co/2026/07/01/googles-exponential-path-to-climate-wrecking-digital-bloat/">https://ketanjoshi.co/2026/07/01/googles-exponential-path-to-climate-wrecking-digital-bloat/</a></li>
-<li>讨论: <a href="https://lobste.rs/s/v8hk8q/google_s_exponential_path_climate">https://lobste.rs/s/v8hk8q/google_s_exponential_path_climate</a></li>
-<li>数据: 139 分 | 25 评论</li>
-<li>推荐理由: 高热度讨论，批判 AI 基础设施扩张带来的环境代价，引发对技术伦理与可持续性的深刻反思。</li>
-</ul>
-</li>
-<li><p><strong>A Prolog library for interfacing with LLMs</strong></p>
-<ul>
-<li>链接: <a href="https://github.com/vagos/llmpl">https://github.com/vagos/llmpl</a></li>
-<li>讨论: <a href="https://lobste.rs/s/ad7cm6/prolog_library_for_interfacing_with_llms">https://lobste.rs/s/ad7cm6/prolog_library_for_interfacing_with_llms</a></li>
-<li>数据: 6 分 | 1 评论</li>
-<li>推荐理由: 展示传统逻辑编程语言与现代 LLM 结合的创新尝试，为符号主义 AI 与神经网络的融合提供新视角。</li>
-</ul>
-</li>
-<li><p><strong>Native-speed vLLM transformers modeling backend</strong></p>
-<ul>
-<li>链接: <a href="https://huggingface.co/blog/native-speed-vllm-transformers-backend">https://huggingface.co/blog/native-speed-vllm-transformers-backend</a></li>
-<li>讨论: <a href="https://lobste.rs/s/az2jfb/native_speed_vllm_transformers_modeling">https://lobste.rs/s/az2jfb/native_speed_vllm_transformers_modeling</a></li>
-<li>数据: 4 分 | 0 评论</li>
-<li>推荐理由: 技术前沿更新，介绍 vLLM 原生后端性能优化，对追求极致推理速度和部署效率的开发者和工程师极具参考价值。</li>
-</ul>
-</li>
-</ol>
-<h2>4. 社区脉搏</h2>
-<p>当前开发者社区对 AI 的态度已从“盲目追捧”转向“严谨工程化”。<strong>多智能体协作（Multi-Agent）</strong> 是核心热点，大家关注如何让多个 Agent 稳定并行工作并解决冲突（如共享状态管理）。同时，<strong>成本与可观测性</strong> 成为实际痛点，许多文章集中在如何追踪 Token 消耗、避免无效请求以及通过缓存和代理降低成本。<strong>安全性</strong> 亦被高度重视，包括 AI 生成代码的漏洞扫描及防止 Agent 误操作生产环境。此外，Lobste.rs 上关于 AI 环境影响的讨论，反映了技术精英阶层对长期可持续性的深层关切。</p>
-<h2>5. 值得精读</h2>
-<ol>
-<li><p><strong>Every AI provider fails in its own way. I stopped checking status codes and built an error model instead.</strong></p>
-<ul>
-<li>理由: 提供了处理异构 AI 服务失败模式的通用设计模式，对于构建生产级 AI 应用至关重要。</li>
-<li>链接: <a href="https://dev.to/manolito99/every-ai-provider-fails-in-its-own-way-i-stopped-checking-status-codes-and-built-an-error-model-25do">https://dev.to/manolito99/every-ai-provider-fails-in-its-own-way-i-stopped-checking-status-codes-and-built-an-error-model-25do</a></li>
-</ul>
-</li>
-<li><p><strong>Google’s exponential path to climate-wrecking digital bloat</strong></p>
-<ul>
-<li>理由: 不仅是一篇技术批评，更是对 AI 算力增长与社会/环境成本之间关系的宏观审视，值得每一位技术决策者阅读。</li>
-<li>链接: <a href="https://ketanjoshi.co/2026/07/01/googles-exponential-path-to-climate-wrecking-digital-bloat/">https://ketanjoshi.co/2026/07/01/googles-exponential-path-to-climate-wrecking-digital-bloat/</a></li>
-</ul>
-</li>
-<li><p><strong>Native-speed vLLM transformers modeling backend</strong></p>
-<ul>
-<li>理由: 代表了当前开源模型推理优化的最新进展，对于需要私有化部署或优化 LLM 运行效率的技术团队具有高实用价值。</li>
-<li>链接: <a href="https://huggingface.co/blog/native-speed-vllm-transformers-backend">https://huggingface.co/blog/native-speed-vllm-transformers-backend</a></li>
-</ul>
-</li>
 </ol>
 <hr>
 <p><em>本日报由 <a href="https://github.com/Chestnuts-0/os-feed">agents-radar</a> 自动生成。</em></p>
