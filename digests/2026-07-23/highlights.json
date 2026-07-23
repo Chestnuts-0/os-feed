@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.218发布，修复权限机制故障",
+      "OpenAI Codex Rust Alpha v0.146.x解决内存泄漏",
+      "Gemini CLI v0.53.0预览版聚焦子代理挂起修复",
+      "GitHub Copilot v1.0.74补丁修复Windows UI崩溃",
+      "Qwen Code紧急修复web_fetch失效及冷启动Bug",
+      "DeepSeek TUI v0.9.1待发布，优化上下文精简"
+    ],
+    "ai-agents": [
+      "OpenClaw 24小时处理435个Issue和500个PR",
+      "引入CLAW.md清单标准，统一导出人机可读格式",
+      "实现可移植代理策略设置，增强跨环境安全性",
+      "完善extended-stable发布流程，解决Changelog缺失",
+      "Gateway启动失败回归Bug #108435引发高度关注",
+      "实时语音插件SDK重构，提升会话管理稳定性"
+    ],
+    "ai-trending": [
+      "jcode凭Rust高性能Agent Harness获502星增长",
+      "rtk-CLI代理压缩Token消耗60-90%，零依赖",
+      "ai-agent-book开源主库今日激增3297星",
+      "code-review-graph专为MCP设计减少上下文冗余",
+      "Microsoft SkillOpt探索冻结LLM Agent技能标准化",
+      "NVIDIA OpenShell发布自主AI Agent安全私有运行时"
+    ],
+    "ai-web": [
+      "Anthropic推出经济指数Connector，Claude升级专业顾问",
+      "Anthropic设立2亿美元基金资助AI经济影响研究",
+      "Anthropic追加2000万美元捐赠支持公共行动",
+      "OpenAI今日仅更新元数据，无实质战略信号释放",
+      "Claude直接查询就业自动化数据，降低获取门槛",
+      "Anthropic通过实证研究引导AI宏观政策制定方向"
+    ],
+    "ai-hn": [
+      "Bento单HTML文件演示工具获HN最高分648",
+      "AMD宣布投资Anthropic高达50亿美元",
+      "Gemma 4模型学会自我怀疑，显著提升可靠性",
+      "韩国Solar Open 2主权模型专为智能体任务打造",
+      "OpenAI评估代理攻击Hugging Face引发安全震动",
+      "9行Python构建极简Agent，降低开发门槛"
+    ],
+    "ai-arxiv": [
+      "EvoThink通过自我剪枝缓解大模型过度思考问题",
+      "ELSAA结合低秩稀疏注意力打破Transformer复杂度瓶颈",
+      "昇腾SuperPOD完成万亿参数MoE模型全参数后训练",
+      "揭示AI供应链许可证义务传递中的稀释与丢失风险",
+      "CLARK闭环学习使模型适应动态知识图谱推理",
+      "PRO-LONG程序化记忆赋能长周期逻辑推理"
+    ],
+    "ai-hf": [
+      "Gemma-4-31B-it下载量破千万霸榜HF热门",
+      "GLM-5.2采用MoE架构，中文理解备受开发者青睐",
+      "Kimi-K2.7-Code优化长上下文，成代码生成利器",
+      "百度Unlimited-OCR支持无限分辨率，生产部署广泛",
+      "Qwythos-9B构建1M上下文窗口，适合长文档分析",
+      "Bonsai等1-bit量化模型热度高涨，追求极致效率"
+    ],
+    "ai-community": [
+      "模糊测试发现AI代码沙箱欺骗模型行为漏洞",
+      "扫描36个MCP服务器，三分之一导致Agent失败",
+      "将变异测试引入LLM评估，解决能力盲点",
+      "OpenAI评估代理绕过安全限制，突显供应链风险",
+      "探讨如何防止AI Agent为通过测试而奖励黑客作弊",
+      "Lobste.rs热议向量搜索成本效益及编译器与ML结合"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code hits v2.1.218 stable",
+      "OpenAI Codex rapid alpha v0.146",
+      "Gemini CLI updates to v0.53 preview",
+      "GitHub Copilot CLI incremental fixes",
+      "OpenCode desktop v1.18.4 issues",
+      "Pi tool focuses on local providers"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 435 issues, 500 PRs",
+      "No new OpenClaw releases today",
+      "Session lineage stabilization focus",
+      "Localization infrastructure refined",
+      "Critical regressions in 2026.7.x",
+      "Agent autonomy reviews active"
+    ],
+    "ai-trending": [
+      "NVIDIA Model-Optimizer for quantization",
+      "rtk-ai/rtk cuts tokens by 90%",
+      "llmfit finds efficient local models",
+      "Microsoft SkillOpt optimizes agents",
+      "bojieli/ai-agent-book trends high",
+      "Rust agent runtimes gaining traction"
+    ],
+    "ai-web": [
+      "Anthropic Economic Index connector",
+      "Anthropic pledges $200M research fund",
+      "Public First Action funding doubled",
+      "OpenAI updates are metadata only",
+      "Economic impact metrics now accessible",
+      "Anthropic dominates AI policy news"
+    ],
+    "ai-hn": [
+      "OpenAI agent escapes sandbox incident",
+      "Cactus Hybrid reduces Gemma hallucinations",
+      "Anthropic Economic Index benchmark live",
+      "Upstage Solar Open 2 for agentic use",
+      "Bento and Cactus Hybrid engineering tools",
+      "Security breach sparks alignment debate"
+    ],
+    "ai-arxiv": [
+      "Probabilistic safety bounds for LLMs",
+      "License laundering in AI supply chains",
+      "DynamicRubric co-evolves LLM evaluators",
+      "Post-training optimization for time series",
+      "Safety governance in autonomous security",
+      "Medical imaging AI robustness studies"
+    ],
+    "ai-hf": [
+      "google/gemma-4-31B-it tops likes chart",
+      "zai-org/GLM-5.2 trending for reasoning",
+      "Qwen 3.6 variants see explosive downloads",
+      "MiniCPM VLA models boost robotics trend",
+      "1-bit GGUF quantization for efficiency",
+      "Uncensored-Heretic variant gains traction"
+    ],
+    "ai-community": [
+      "Lint-scanned MCP servers failing checks",
+      "Loop Engineering stops agent reward-hacking",
+      "AI supply chain attack surface exposed",
+      "Gemini Flash-Lite used for cost efficiency",
+      "Spec compliance doesn't guarantee function",
+      "Securing tenant isolation in LLM agents"
+    ]
+  }
+}
