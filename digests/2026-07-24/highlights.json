@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code 聚焦 Fable 5 计费争议与网络稳定性",
+      "OpenAI Codex 发布 rust-v0.146.0-alpha.5 版本",
+      "Kimi Code CLI PR 激增，侧重 Windows 适配修复",
+      "Qwen Code 拓展多模态与企业级记忆集成能力",
+      "MCP 生态成为各工具争夺的核心扩展标准",
+      "GitHub Copilot 新版引发 MCP 兼容性与内存泄漏问题"
+    ],
+    "ai-agents": [
+      "OpenClaw 24小时处理321 Issues和500 PRs",
+      "修复子代理完成结果静默丢失的关键 Bug",
+      "新增 MiniMax 提供商 API 兼容性与支持",
+      "Matrix 渠道增强原生 HTML 元素渲染支持",
+      "修复 Cron 任务清理导致的后台作业资源泄漏",
+      "集中清理近期版本引入的会话状态丢失回归缺陷"
+    ],
+    "ai-trending": [
+      "微软 SkillOpt 介入 Agent 技能标准化优化领域",
+      "stablyai/orca 并行多智能体开发环境热度飙升",
+      "rtk-ai/rtk 通过压缩技术减少 LLM 令牌消耗95%",
+      "Rapid-MLX 声称比 Ollama 快 4.2 倍",
+      "skypilot 整合碎片化 AI 算力为超级计算机",
+      "earendil-works/pi 简化编码代理开发统一 LLM API"
+    ],
+    "ai-web": [
+      "Anthropic 正式商用发布 Claude Opus 4.7 模型",
+      "Opus 4.7 实施差分能力降低以增强网络安全",
+      "推出 Adobe、Ableton 等连接器嵌入创意工作流",
+      "Anthropic 构建基于工具集成的专业护城河",
+      "OpenAI 今日仅更新 ChatGPT 健康功能元数据",
+      "Anthropic 战略分层：区分最强通用与高安全模型"
+    ],
+    "ai-hn": [
+      "HN 热议 OpenAI 与 Anthropic 联合抵制开源模型",
+      "Echo 项目展示开源模型实现 Fable 级别低成本推理",
+      "Palmier Pro 发布专为 AI 优化的 macOS 视频编辑器",
+      "OneCLI 提供 OSS 凭据网关保护 AI Agent 密钥安全",
+      "Fable 5 在基准测试登顶，Opus 4.8 出现逻辑退化",
+      "社区警惕大厂垄断，积极关注本地化隐私安全工具"
+    ],
+    "ai-arxiv": [
+      "提出随机化 KV-Cache 驱逐设计以提供误差证书",
+      "反周期位置编码解决长上下文检索中的位置偏差",
+      "QuantiBias 揭示量化过程引入安全评估难以捕捉的偏见",
+      "GaugeQuant 利用 Transformer 对称性优化量化基",
+      "RegretBench 将澄清策略评估转化为序贯决策问题",
+      "GS-Agent 从自然语言创建具有物理真实感的 4D 世界"
+    ],
+    "ai-hf": [
+      "Google gemma-4-31B-it 下载量突破千万级领跑",
+      "GLM-5.2 凭借卓越对话能力位居中文开源榜首",
+      "Qwen3-TTS 高精度文本转语音支持自定义音色合成",
+      "empero-ai 发布基于 Qwen3.5 的 1M 上下文窗口模型",
+      "百度 Unlimited-OCR 展现强大长文档复杂版面处理能力",
+      "Poolside Laguna-S-2.1 专注代码与结构化数据生成"
+    ],
+    "ai-community": [
+      "揭露 AI Agent 实际应用中的隐性陷阱与去魅演示",
+      "分享优化 TypeScript 上下文管理降低 95% Token 消耗技巧",
+      "剖析 RAG 系统隐藏成本结构以指导财务架构决策",
+      "提出规则优先小模型辅助 LLM 兜底的高效架构模式",
+      "指出单纯连接向量库无法解决生产环境 RAG 失败问题",
+      "AgentScaffold 结合知识图谱与同行评审改进编码 Agent"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code fixes billing bugs",
+      "OpenAI Codex hits Alpha status",
+      "Gemini CLI improves agent reliability",
+      "Copilot CLI reaches v1.0.74 release",
+      "Kimi Code CLI gains traction",
+      "DeepSeek TUI offers open alternative"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 PRs in 24h",
+      "v2026.7.2-beta.3 fixes Telegram routing",
+      "Gateway startup failures patched",
+      "Session state regressions reported",
+      "Cron tool incompatibilities fixed",
+      "Multi-agent orchestration security improved"
+    ],
+    "ai-trending": [
+      "Rapid-MLX claims 4.2x speedup",
+      "RTK proxy cuts LLM tokens by 90%",
+      "Bifrost gateway is 50x faster than LiteLLM",
+      "Microsoft SkillOpt optimizes agent skills",
+      "Local-first AI infrastructure surges",
+      "Rust-based inference engines emerge"
+    ],
+    "ai-web": [
+      "Anthropic adds Adobe Creative Cloud connector",
+      "Claude Opus 4.7 released for safety",
+      "Opus 4.7 targets cyber safeguards",
+      "Claude integrates with Ableton",
+      "Affinity tools now supported by Claude",
+      "OpenAI focuses on health apps"
+    ],
+    "ai-hn": [
+      "Echo claims Fable-level results cheaply",
+      "Claude Opus 5 benchmarked",
+      "Fable 5 tops handwritten-edit benchmark",
+      "Opus 4.8 regresses on miscounting",
+      "OneCLI security utility discussed",
+      "Community unites against open models"
+    ],
+    "ai-arxiv": [
+      "Möbius RoPE fixes long-context retrieval",
+      "QuantiBias reveals quantization bias",
+      "Regret-based multi-turn benchmark introduced",
+      "Legal citation trustworthiness evaluated",
+      "Greek publishing workflow AI explored",
+      "Indonesian cultural commonsense benchmarked"
+    ],
+    "ai-hf": [
+      "GLM-5.2 trends with high downloads",
+      "Gemma-4-31B-it hits 12M downloads",
+      "Solar-Open2-250B pushes large models",
+      "Laguna-S-2.1 gains efficiency traction",
+      "Qwen 3.6 variants dominate HF trends",
+      "Baidu Unlimited-OCR leads multimodal niche"
+    ],
+    "ai-community": [
+      "RAG hidden costs exposed in analysis",
+      "Go classifier replaces 7B LLM filter",
+      "MCP integrates agents with Firefox DevTools",
+      "Stateful video editors adopt MCP",
+      "AI endpoints change traditional API flow",
+      "Put the LLM last strategy gains popularity"
+    ]
+  }
+}
