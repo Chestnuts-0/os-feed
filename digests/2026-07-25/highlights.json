@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.220发布，默认Opus 5并增强企业沙箱",
+      "OpenAI Codex Rust Alpha版上线，修复Windows稳定性危机",
+      "Gemini CLI Agent子代理稳定性优化，Auto Memory隐私增强",
+      "GitHub Copilot v1.0.75发布，回归问题频发引发关注",
+      "Kimi Code CLI新增远程控控需求及企业代理SSL支持",
+      "OpenCode v1.18.5发布，实现自动发现模型与无锁重构"
+    ],
+    "ai-agents": [
+      "OpenClaw日处理963更新，专注SQLite一致性修复",
+      "修复Anthropic OAuth令牌过期导致的服务中断问题",
+      "集中修复Google Chat等渠道在HTTP代理下的模型发现失败",
+      "新增Buzz频道插件，扩展即时通讯支持范围",
+      "修复iOS端媒体附件渲染缺失及语音语言配置问题",
+      "Gateway Crash-Loop及内存冲突成社区最痛点讨论"
+    ],
+    "ai-trending": [
+      "阿里开源代码审查工具，混合架构获千星关注",
+      "vLLM推出智能路由组件，降低异构推理延迟成本",
+      "Rust CLI代理通过上下文压缩减少90% Token消耗",
+      "开源AI求职助手本地运行，保护隐私并定制简历",
+      "Browser-use库让智能体自动化完成复杂在线任务",
+      "Agent-Reach赋予AI视觉，零费用读取全网信息"
+    ],
+    "ai-web": [
+      "Anthropic设2亿美元基金，实证研究AI劳动力冲击",
+      "Claude Opus 5发布，成本减半逼近旗舰模型智能水平",
+      "Project Pilot展示AI控制无人机自主任务能力",
+      "推出Drone-Bench基准测试，评估具身智能安全风险",
+      "OpenAI今日无新增内容，处于官方静默期",
+      "Opus 5在编码基准刷新SOTA，确立高性价比优势"
+    ],
+    "ai-hn": [
+      "Claude Opus 5引爆HN，1300分热度居首引激烈辩论",
+      "开发者热议Opus 5能力边界及上下文工程新规则",
+      "官方Claude Cookbook发布，提供最佳实践指南资源",
+      "OpenAI负面新闻发酵，黑客代理故事真实性受质疑",
+      "Debian社区LLM使用投票争议，反映技术伦理分歧",
+      "亚马逊要求AI生成图像合规，引发法律合规讨论"
+    ],
+    "ai-arxiv": [
+      "提出结构化抵抗机制，超越LLM顺从性对齐局限",
+      "揭示思维链收敛双峰分布，实现推理早期机制检测",
+      "多语言模型在日常知识测试中暴露显著短板",
+      "指出智能体失败主因是上下文管理失控而非推理",
+      "论证Surprisal理论缺乏理性基础，呼吁严格建模",
+      "OpenForgeRL支持在任何环境中训练原生智能体"
+    ],
+    "ai-hf": [
+      "Gemma-4-31B-it下载超千万，稳居HF热门榜首",
+      "GLM-5.2点赞数全场最高，展现中国模型强劲势头",
+      "Qwen3.6 MoE版本下载破六百万，兼顾性能与效率",
+      "百度Unlimited-OCR支持复杂场景，文档处理标杆",
+      "Kimi-K2.7-Code结合视觉与代码，受开发者欢迎",
+      "Solar-Open2-250B发布，顶级大模型转开源值得关注"
+    ],
+    "ai-community": [
+      "Sentry追踪发现5-Agent管道静默重试，提供修复方案",
+      "探讨上下文压缩技巧，解决长对话Agent成本延迟",
+      "批判审视RAG评估方法，指出仅靠重排可能掩盖缺陷",
+      "Unlimited-OCR实践解析40页PDF，避免GPU显存溢出",
+      "梳理1.1万+ MCP服务器生态，重塑AI工具链集成",
+      "作者自建框架解决AI Agent测试难题，分享实战经验"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.220 patches Opus 5 stability",
+      "OpenAI Codex Alpha v0.146.x fixes Git leaks",
+      "Gemini CLI focuses on Wayland stability fixes",
+      "OpenCode gains traction via local model support",
+      "Qwen Code integrates with GitHub Copilot CLI",
+      "DeepSeek TUI addresses context degradation bugs"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 PRs in 24 hours",
+      "SQLite integrity fixes address stale quarantine",
+      "Proxy stability improved for Google Chat",
+      "Venice provider connectivity issues resolved",
+      "Kilocode integration regressions patched",
+      "Session state management bugs fixed heavily"
+    ],
+    "ai-trending": [
+      "vllm semantic-router optimizes LLM costs",
+      "flashinfer boosts GPU inference speed",
+      "Alibaba open-code-review hits 1066 stars",
+      "rtk CLI proxy cuts token usage by 90%",
+      "ego-lite agent harness trends strongly",
+      "Local-first productivity suites surge"
+    ],
+    "ai-web": [
+      "Anthropic launches Claude Opus 5 today",
+      "Opus 5 doubles coding performance of v4.8",
+      "Economic Futures Fund gets $200M commitment",
+      "Project Pilot introduces Drone-Bench safety",
+      "Opus 5 halves price vs Fable 5 competitor",
+      "Anthropic expands physical world risk benchmarks"
+    ],
+    "ai-hn": [
+      "Claude Opus 5 dominates HN with 1300 score",
+      "Apertus 1.5 70B open model released",
+      "Codex pushed private repo to OpenAI infra",
+      "OpenAI breach detection criticized heavily",
+      "Debian debates internal LLM usage policies",
+      "Amazon enforces AI content compliance rules"
+    ],
+    "ai-arxiv": [
+      "Surprisal theory lacks rational grounding",
+      "LLMs overuse epanorthosis rhetorical figure",
+      "Multilingual LLMs fail everyday trivia",
+      "Efficient context management methods emerge",
+      "Test-time scaling robustifies training harnesses",
+      "KV-cache eviction error certification proposed"
+    ],
+    "ai-hf": [
+      "GLM-5.2 tops Hugging Face trending models",
+      "Gemma-4-31B-it sees exponential usage growth",
+      "Qwen3.6-35B-A3B excels in code generation",
+      "Solar-Open2-250B supports constrained hardware",
+      "Laguna S runs locally via NVFP4 quantization",
+      "Multimodal robotics OCR capabilities expand"
+    ],
+    "ai-community": [
+      "Sentry exposed silent retry in 5-agent pipeline",
+      "RAG reranking gave false sense of security",
+      "Context compression strategies for long sessions",
+      "Unlimited-OCR tool par excellence highlighted",
+      "Dev.to focuses on agent observability tools",
+      "Lobste.rs discusses cloud inference pricing"
+    ]
+  }
+}
