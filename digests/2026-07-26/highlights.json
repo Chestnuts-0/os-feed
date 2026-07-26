@@ -1,0 +1,118 @@
+{
+  "zh": {
+    "ai-cli": [
+      "OpenAI Codex 发布 rust-v0.146.0-alpha.10.1",
+      "OpenCode Issues 激增50，聚焦TUI性能优化",
+      "Pi 发布 v0.82.1，支持 Opus 5 模型",
+      "Qwen Code v0.21.0-nightly 修复沙盒逻辑",
+      "Claude Code 推进 AGENTS.md 标准化",
+      "Gemini CLI 修复子代理挂起及 Shell 限流"
+    ],
+    "ai-agents": [
+      "OpenClaw 24小时处理332 Issue和500 PR",
+      "实时语音中继重构，解决Gateway稳定性",
+      "提议内存信任源标记以防记忆投毒攻击",
+      "MCP工具调用审批管道实现显式同意",
+      "任务注册表重构移除硬编码插件ID",
+      "修复远程浏览器节点无限重试循环Bug"
+    ],
+    "ai-trending": [
+      "aisuite提供统一接口简化多模型管理",
+      "ego-lite极速浏览器助力Agent网页自动化",
+      "rtk工具压缩技术降低LLM令牌消耗90%",
+      "PageIndex探索无需向量的推理型RAG方案",
+      "Kronos金融大模型填补垂直领域空白",
+      "ECC系统增强Claude Code等Agent安全性"
+    ],
+    "ai-web": [
+      "Anthropic发布Claude Opus 5旗舰模型",
+      "Opus 5成本减半且性能超越上一代",
+      "Opus 5成为Claude Max默认及Pro最强选项",
+      "新模型主打深思熟虑且主动的代理模式",
+      "Anthropic战略转向经济可行的智能规模部署",
+      "OpenAI今日无新增官方内容更新"
+    ],
+    "ai-hn": [
+      "Claude 5系列定义上下文工程新规则",
+      "在$8微控制器上运行28.9M参数LLM",
+      "AMD发布机器可读ISA供前沿模型编写内核",
+      "探讨调整计算资源对LLM输出质量影响",
+      "社区热议LLM持续学习现状与未来突破",
+      "OpenAI Codex宕机引发基础设施焦虑"
+    ],
+    "ai-hf": [
+      "Qwen3.6-35B-A3B MoE模型下载超641万",
+      "百度Unlimited-OCR以百万下载领跑榜单",
+      "GLM-5.2凭借卓越对话能力获4446赞",
+      "Qwythos-9B支持1M上下文窗口适合长文档",
+      "去限制版Qwen3.6微调模型下载近200万",
+      "Microsoft Mage-Flow预示机器人控制落地"
+    ],
+    "ai-community": [
+      "Anthropic降价Opus 5加剧开源防御态势",
+      "连接3个MCP服务器导致Agent权限失控",
+      "用SigNoz监控多智能体系统发现认知偏差",
+      "Git Refs技术解决双Agent代码合并冲突",
+      "MCP协议曝出新漏洞：授权后工具变恶意",
+      "生产级RAG系统失败原因及预防策略分析"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "OpenAI Codex releases v0.146.0-alpha.10.1",
+      "Gemini CLI updates nightly build to v0.54.0",
+      "Pi reaches stable release v0.82.1",
+      "Qwen Code releases nightly build v0.21.0",
+      "Claude Code Skills integration gains traction",
+      "Cross-platform crashes remain a key issue"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 PRs in 24 hours",
+      "Focus on session state integrity fixes",
+      "Readiness framework adoption advances",
+      "Agent recovery mechanisms being refactored",
+      "Gateway startup failures under investigation",
+      "Hotfix imminent for P0/P1 regressions"
+    ],
+    "ai-trending": [
+      "ego-lite gains 986 stars for agent browser",
+      "rtk proxy cuts LLM tokens by up to 90%",
+      "aisuite unifies multi-provider AI integration",
+      "MCP Go SDK enables secure tool connections",
+      "Sana achieves efficient high-res image synthesis",
+      "Local-first agent OSs dominate open source"
+    ],
+    "ai-web": [
+      "Anthropic launches Claude Opus 5 model",
+      "Opus 5 halves cost of Fable 5 performance",
+      "New model leads Frontier-Bench and CursorBench",
+      "Optimized for software engineering tasks",
+      "Anthropic increases content activity today",
+      "OpenAI posts zero new articles today"
+    ],
+    "ai-hn": [
+      "Context engineering rules for Claude 5 models",
+      "28.9M parameter LLM runs on $8 microcontroller",
+      "AMD opens ISA for AI hardware democratization",
+      "Stanford brief separates AI job hype from reality",
+      "Major OpenAI outages spark community debate",
+      "Global decision-making impact faces skepticism"
+    ],
+    "ai-hf": [
+      "GLM-5.2 MOE model hits 707k downloads",
+      "Qwen3.6-35B-A3B base release gains popularity",
+      "Laguna-S-2.1 specializes in code generation",
+      "Baidu's Unlimited-OCR becomes a staple tool",
+      "MiniCPM drives robotics-focused multimodal trends",
+      "Extreme quantization enables edge device usage"
+    ],
+    "ai-community": [
+      "Anthropic cuts costs with Opus 5 release",
+      "SigNoz instrumented for AI agent swarm telemetry",
+      "MCP server connections raise security fears",
+      "Debate on defending open-weight models heats up",
+      "RTX 5070 enables powerful local AI solutions",
+      "RL and RAG failures drive deep technical dives"
+    ]
+  }
+}
