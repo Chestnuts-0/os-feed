@@ -1,20 +1,20 @@
 {
   "zh": {
     "ai-cli": [
-      "Claude Code v2.1.220 修复 Windows 稳定性与自动模式 Bug",
-      "OpenAI Codex Linux 原生 App 需求热度居首",
-      "Gemini CLI 发布 v0.54.0-nightly 热更修复 Agent 挂起",
-      "Qwen Code v0.21.0-nightly 强化多 Workspace Daemon",
-      "DeepSeek TUI PR 密集合并聚焦 Markdown 解析性能",
-      "GitHub Copilot CLI 僵尸进程引发开发者广泛关注"
+      "Anthropic Claude Opus 5 发布：深思模式性能接近 Fable 5，成本减半",
+      "Claude Code v2.1.220 更新：Windows 稳定性提升与思考过程透明度强化",
+      "OpenAI Codex Rust Alpha 频繁更新，Linux 支持与 MCP 安全性成为焦点",
+      "GitHub Copilot v1.0.74 后无新版本，社区担忧僵尸进程与 MCP 认证问题",
+      "Gemini CLI v0.54.0-nightly 热更中，Agent 挂起与变量绕过安全漏洞频发",
+      "Qwen Code v0.21.0-nightly 发布 MCP 安全补丁，多 Workspace Daemon 优化"
     ],
     "ai-agents": [
-      "OpenClaw 24 小时处理 344 Issue/500 PR，活跃度极高",
-      "PR #114056 修复 Codex 会话原地重置严重逻辑错误",
-      "#75 热点：Linux/Windows Clawbot App 缺失获 80 赞",
-      "Issue #99241: ANSI 输出折叠成图影响 Agent 证据链",
-      "P0 级 bug：树莓派 5 上 Gateway 崩溃循环未修复",
-      "QQBot 插件优化热加载机制减少对网关重启依赖"
+      "AI 开源趋势明确：Agent 基础设施化与本地隐私优先双轮驱动",
+      "Rust 工具、Token 压缩方案 RTK 及垂直模型 Kronos 受开发者热捧",
+      "OpenClaw 集中修复 Gateway 崩溃与会话冲突等 P0/P1 问题进入攻坚期",
+      "Claude Code Skills 社区 Issue #8477 热度激增，用户关注 Agent 可观测性",
+      "AI CLI 跨平台痛点显著，MCP 资源泄漏与 TUI 挂起影响多工具体验",
+      "DeepSeek 计费争议与子代理状态误报突出，企业级信任度面临考验"
     ],
     "ai-trending": [
       "ollama 单日涨 83 Star，成 LLM 本地运行首选基础设施",
@@ -69,6 +69,14 @@
     "ai-community": [
       "SigNoz + Otel Swarm helps trace complex multi-agent system failures.",
       "TraceGate exposes hidden auth checks in passing AI agent demos."
+    ],
+    "ai-weekly": [
+      "Claude Opus 5 launched as flagship model at half previous cost",
+      "Anthropic commits $200M to AI economic impact research fund",
+      "Microsoft cuts in-house model costs by up to 89% vs OpenAI",
+      "OpenAI & Anthropic coalition sparks debate on open-weight models",
+      "Project Pilot explores autonomous drone control via frontier models",
+      "Opus 4.7 refined with discriminative capability reductions for safety"
     ]
   }
 }
