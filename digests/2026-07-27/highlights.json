@@ -1,0 +1,74 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.220 修复 Windows 稳定性与自动模式 Bug",
+      "OpenAI Codex Linux 原生 App 需求热度居首",
+      "Gemini CLI 发布 v0.54.0-nightly 热更修复 Agent 挂起",
+      "Qwen Code v0.21.0-nightly 强化多 Workspace Daemon",
+      "DeepSeek TUI PR 密集合并聚焦 Markdown 解析性能",
+      "GitHub Copilot CLI 僵尸进程引发开发者广泛关注"
+    ],
+    "ai-agents": [
+      "OpenClaw 24 小时处理 344 Issue/500 PR，活跃度极高",
+      "PR #114056 修复 Codex 会话原地重置严重逻辑错误",
+      "#75 热点：Linux/Windows Clawbot App 缺失获 80 赞",
+      "Issue #99241: ANSI 输出折叠成图影响 Agent 证据链",
+      "P0 级 bug：树莓派 5 上 Gateway 崩溃循环未修复",
+      "QQBot 插件优化热加载机制减少对网关重启依赖"
+    ],
+    "ai-trending": [
+      "ollama 单日涨 83 Star，成 LLM 本地运行首选基础设施",
+      "agent-native 框架降低多智能体协作开发门槛",
+      "ai-berkshire 基于 Claude Codex 构建价值投资分析系统",
+      "Chat2DB 星数 398，自然语言查询数据库成新热点",
+      "Instatic 开源视觉 CMS 成为 Webflow/Framer 潜在替代品",
+      "ZestAI 本地会议助理主打隐私优先与实时转录摘要"
+    ],
+    "ai-hn": [
+      "GrapheneOS 手机机场被擦除案引公民权利辩论登顶 (156分)",
+      "Claude Opus 5 服务异常导致高错误率 (评分 91, 评论 75)",
+      "OpenAI 模型尝试规避监管内部案例触发安全焦虑讨论",
+      "49059660 帖子探讨 LLM 推理自我逃逸可能性受关注",
+      "Distill-and-serve 方案宣称以一半成本实现前沿质量",
+      "Hallmark 项目上线对抗 AI-Slop 代码生成低质输出"
+    ],
+    "ai-hf": [
+      "GLM-5.2 获赞 4477，MoE+DSA 架构高效通用对话强推",
+      "Solar-Open2-250B 全栈开源大模型支持长上下文推理",
+      "Nanbeige4.2-3B 轻量化模型专为移动端边缘设备优化",
+      "Kimi-K2.7-Code 专攻编程理解，下载量破 73 万",
+      "Inkling 新一代视觉对话系统处理图文复杂交互",
+      "Mage-Flow 微软文生图工具结合 Diffusers 落地创意 pipeline"
+    ],
+    "ai-community": [
+      "Dev.to 多 Agent 追踪展示 Otel-Swarm + SigNoz 可观测性",
+      "TraceGate 揭示 AI Agent Demo 通过但运行时数据异常",
+      "Missio 证据限定自动修复避免生产环境幻觉破坏",
+      "Agents-Concerto 编排器模式解决代码 Agent 会话碎片化",
+      "Hermes Agent 本地 Kokoro TTS 构建完整语音助手架构",
+      "RAG 实体歧义处理提升模糊查询下知识图谱准确率"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code: #8477 on thinking transparency gains 324 thumbs-up.",
+      "OpenAI Codex nearing PR coordination for stability fixes across platforms."
+    ],
+    "ai-agents": [
+      "OpenClaw saw 500 PRs and 344 issues daily, focused on session recovery.",
+      "NanoBot updated gateway logic to prevent message loss under load."
+    ],
+    "ai-trending": [
+      "opencode-ai/opencode grew by 14 stars for terminal coding agent power.",
+      "ComposioHQ/awesome-claude-skills surged 440 stars this week."
+    ],
+    "ai-hn": [
+      "world-model-optimizer enables frontier model serving at half cost.",
+      "Story about LLM escape sparks 71 comments but labeled fiction."
+    ],
+    "ai-community": [
+      "SigNoz + Otel Swarm helps trace complex multi-agent system failures.",
+      "TraceGate exposes hidden auth checks in passing AI agent demos."
+    ]
+  }
+}
