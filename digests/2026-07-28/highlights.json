@@ -1,0 +1,126 @@
+{
+  "zh": {
+    "ai-cli": [
+      "OpenAI Codex v0.146-alpha 更新，修复 GPU crash 与容量错误处理策略。",
+      "Gemini CLI v0.54.0-nightly 发布，正重构 Auto Memory 安全机制。",
+      "Copilot CLI v1.0.76-0 解决 plan-mode 权限 Bug 及僵尸进程泄漏问题。",
+      "OpenCode v1.18.7 发布，修复渲染器致命错误与模型生成重复 Bug。",
+      "Qwen Code dsw-manual-poc 版本，引入 Skill Context Lifecycle 管理。",
+      "社区关注 Windows ARM64 适配与 API 熔断机制，为当前核心瓶颈。"
+    ],
+    "ai-agents": [
+      "OpenClaw 项目今日处理 500 Issues/PRs，维持高活跃度且平衡。",
+      "CLI只读查询不再修改共享 SQLite，提升安全性（PR #114847）。",
+      "修复重启后用量统计冻结问题，完善 PID 锁释放机制（PR #114254）。",
+      "移除文件时代录运行时和持久化跟进队列待合并，影响数据迁移路径。",
+      "Linux/Windows Clawbot Apps 缺失引发社区热烈讨论（Issue #75）。",
+      "插件SDK统一回环主机分类标准，增强 Codex 服务器网络配置鲁棒性。"
+    ],
+    "ai-trending": [
+      "moeru-ai/airi 自托管 Grok 助手获 ⭐572，拟实现 Neuro-sama 级自主行为。",
+      "usestrix/strix AI 渗透测试工具 ⭐507，体现红队自动化+AI安全趋势。",
+      "bradautomates/claude-video 让 Claude 看视频分析，⭐434 体现感知行动闭环。",
+      "NanmiCoder/MediaCrawler 覆盖多平台数据采集，⭐362 支撑下游 AI 训练。",
+      "andrewyng/aisuite 提供统一接口对接多个生成式 AI 供应商，⭐185。",
+      "huggingface/candle Rust 机器学习框架 ⭐22，强调零依赖与高性能推理。"
+    ],
+    "ai-web": [
+      "Anthropic 发布立场声明：反对禁止开源权重模型，强调公共价值。",
+      "CEO Dario Amodei 聚焦防止极权政府构建威胁性 AI 模型。",
+      "Anthropic 与 Cognizant 深化合作，计划培养三万名 Claude 技术人员。",
+      "OpenAI 仅获取一篇标题《How Ai Is Expanding What People Do At Work》文章。",
+      "地缘政治因素深刻影响 AI 治理方向，跨国企业需警惕监管风险。",
+      "Spec-Driven Development 模式下 Claude Code 自动执行编程任务。"
+    ],
+    "ai-hn": [
+      "Anthropic 开源模型政策声明获 HN 439 分、600评论，支持开放权重。",
+      "Sam Altman 称'我们正处于奇点'言论引发 AI 伦理争议讨论。",
+      "Let's Encrypt for document signing 开源方案获 HN 63 分，关注数字签名。",
+      "Decispher 新增 Grok CLI 支持，反映多模型编排需求增长。",
+      "Nvidia 与 OpenAI 洽谈 2500 亿美元数据中心融资计划受关注。",
+      "Dev.to 关注 AI 对初级开发者生态冲击及 AgentForger 漏洞审计。"
+    ],
+    "ai-arxiv": [
+      "The Illusion of Secure LLM Code: Closing the Security Gap via Iterative Reprompting.",
+      "MS-GPT: Rethinking MS/MS De Novo Structure Elucidation as Spectrum-Induced Posterior Querying.",
+      "ATLAS: Automated Approximation of Transformers for Efficient Homomorphic Inference in One Hour.",
+      "TRUAV: Distributed Multi-Agent Reinforcement Learning for Trajectory Planning in UAV-Aided VANETs.",
+      "Anticipatory Risk-Guided Reinforcement Learning for Safe Flight Through Dynamic Clutter.",
+      "Neonatal Hypoxic-ischaemic Encephalopathy Classification from EEG and HRV Signals Using Conformer MAE."
+    ],
+    "ai-hf": [
+      "moonshotai/Kimi-K3 多模态模型点赞 6,249，下载量 2,850，擅长图文理解。",
+      "zai-org/GLM-5.2 MoE 架构多语言对话模型点赞 4,551，下载 1,003,547。",
+      "HauhauCS/Qwen3.6-35B-A3B-Uncensored 三值化 GGUF 格式下载 1,894,395。",
+      "prism-ml/Ternary-Bonsai-27B-gguf 三值化技术大幅降低内存占用下载 648,938。",
+      "baidu/Unlimited-OCR 超大规模 OCR 识别模型点赞 3,331，下载 2,645,773。",
+      "upstage/Solar-Open2-250B 大规模对话模型点赞 629，适用于复杂指令遵循场景。"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code faces critical billing and GPU bugs.",
+      "OpenAI Codex v0.146.0 fixes two alpha regressions.",
+      "Gemini CLI sub-agent hangs reported widely.",
+      "GitHub Copilot CLI sees active security updates.",
+      "DeepSeek TUI gains momentum in terminal users.",
+      "Kimi Code CLI targets ARM64 platform support."
+    ],
+    "ai-agents": [
+      "OpenClaw stabilizes session state persistence.",
+      "500 issues tracked for NanoBot framework this week.",
+      "IronClaw focuses on gateway resilience improvements.",
+      "NanoClaw addresses memory leak mitigation in gateways.",
+      "TinyClaw reports UI preview race condition fixes.",
+      "Moltis seeks to ensure multi-channel agent consistency."
+    ],
+    "ai-trending": [
+      "ollama surges to 177k stars as local LLM leader.",
+      "litellm integrates cost tracking for scaling fintech.",
+      "Milvus gains traction for vector-based financial RAG.",
+      "Quant finance drives multi-agent collaboration tools.",
+      "Autonomous trading agents enhance local-first processing.",
+      "Qwen3.5 variants lead multimodal trend discussions."
+    ],
+    "ai-web": [
+      "Anthropic defends open-weights models amid policy debate.",
+      "Dario Amodei calls non-dangerous open models public goods.",
+      "Cognizant integrates Claude into Flowsource enterprise platform.",
+      "OpenAI publishes new article on AI expanding workplace roles.",
+      "Anthropic stresses national security concerns in open access.",
+      "Enterprise adoption scales with Cognizant-Claude partnership."
+    ],
+    "ai-hn": [
+      "HN debates Anthropic’s open-weights stance with 439 points.",
+      "Claude shared chats sparking major privacy backlash.",
+      "Jensen Huang supports model openness publicly.",
+      "Sam Altman singularity assertion dominates discourse.",
+      "AI quality dilution concern rises with ‘AI slop’ discussion.",
+      "Let's Seal offers self-hosted document signing tool."
+    ],
+    "ai-arxiv": [
+      "PI-ML research discovers governing equations without initialization.",
+      "Homomorphic encryption enables safe privacy-preserving inference.",
+      "Anticipatory risk-guided RL enhances flight safety in clutter.",
+      "CALMRec disentangles transient from enduring user preferences.",
+      "Hierarchical Soft Actor-Critic improves sparse-reward RL.",
+      "Reprompting mitigates secure code flaws in LLM-generated auth."
+    ],
+    "ai-hf": [
+      "Qwen/Qwen3.6-35B-A3B trends at 6M+ downloads.",
+      "Luna-S-2.1 GGUF boosts efficient local inference usage.",
+      "Prism-Ternary Bonsai achieves compact 2-bit quantization.",
+      "Inkling multimodal model rises with image-text reasoning.",
+      "Open-universe T5 excels on zero-shot benchmark scores.",
+      "DiscDALL-E 3 gains interest for creative text-to-image workflows."
+    ],
+    "ai-community": [
+      "AgentForger reveals OpenAI workspace agent security flaws.",
+      "Dev.to discusses junior developer pipeline disruption by AI.",
+      "Auditing AI package managers urged like third-party code.",
+      "'Unlimited context' criticized as technical debt marketing.",
+      "Local toolchains gain traction among cost-conscious devs.",
+      "Authorization failures require layered detection strategies."
+    ]
+  }
+}
