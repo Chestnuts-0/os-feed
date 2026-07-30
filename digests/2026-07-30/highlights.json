@@ -1,0 +1,126 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code 多 Workspace 支持引发 Slack 社区热议",
+      "OpenAI Codex v0.146 Alpha 发布 Rust SDK 更新",
+      "GitHub Copilot CLI v1.0.76 安全补丁稳定发布",
+      "Pi 工具 v0.8.30 新特性：支持 LaTeX 渲染与 tmux 图像",
+      "Qwen Code Nightly 版修复 Unicode 乱码与鼠标故障",
+      "Kimi Code CLI 优化 API 网关适配与文件编辑计数"
+    ],
+    "ai-agents": [
+      "OpenClaw 日活极高，500+ Issue/PR 推动稳定性重构",
+      "RFC 0026 Phase 1 完成 'Cron' 到 'Automations' 全链路术语替换",
+      "#91009 Issue 引发关注：Codex 钩子导致 CPU 飙升至 100%",
+      "会话组并发修复解决多标签页操作状态丢失问题",
+      "队列持久化实现跨网关重启消息防丢（SQLite）",
+      "Feishu 时间戳保留与技能调用策略修正细节优化"
+    ],
+    "ai-trending": [
+      "HuggingFace speech-to-speech 本地语音平台日增 827 Stars",
+      "Microsoft agent-governance-toolkit 热度飙升 442 Stars",
+      "OpenMontage 开源视频生产系统成创意工作流新星",
+      "ECC 智能体性能优化系统获 857 Stars，支持 Claude Code",
+      "burn Rust 张量库渗透 AI 推理中间层非主流新选择",
+      "nono 智能体沙盒秒级隔离任意 AI 运行环境无需配置"
+    ],
+    "ai-web": [
+      "OpenAI 新增 7 篇官方内容，总数达 890 条 sitemap",
+      "Anthropic sitemap 新增 1 篇，总计 428 条站点记录",
+      "agents-radar 自动生成了今日官网追踪内容汇总报告",
+      "官方数据覆盖 2 家头部公司：OpenAI 与 Anthropic",
+      "生成时间统一为 UTC 2026-07-30 01:24",
+      "无具体文章标题摘要，仅记录 sitemap 数量变化"
+    ],
+    "ai-hn": [
+      "Gemma 26B 模型在 M-series Mac 2GB RAM 中成功运行成最大热点",
+      "Tokenless YC S26 上线自动切换模型以节省企业成本",
+      "JuliaHub 物理 AI 评估对比 GPT-5.6 与 Claude Fable 5 引热议",
+      "本地合并队列方案提升 Claude Code 多代理协作效率",
+      "GPT-5.6 效率优化内部说明披露但技术细节匮乏讨论少",
+      "OpenAI 两项参数调整使 ARC-AGI-3 基准分三倍提升"
+    ],
+    "ai-arxiv": [
+      "VetClaw 边缘云多模态系统实现兽医疾病零样本筛查",
+      "Desktop-Delta Bench 新基准评测 GUI 代理因果理解力",
+      "Penelope 局部潜藏循环加速结构化思维推理降低成本",
+      "Pictura 视角自玩强化学习缩小仿真与真实驾驶差距",
+      "Trajectory-Relayed On-Policy Distillation 纠正前缀失效",
+      "Input-Only Suppression 隐式抑制评估感知潜在变量行为"
+    ],
+    "ai-community": [
+      "Kimi K3 1.56TB 模型能力在 Dev.to 引发深度反思讨论",
+      "Andrew Ng OpenWorker 本地首推 AI 协作者获开发者关注",
+      "AI 代理安全可观测性成为 Lobste.rs 社区最热话题",
+      "PDF 表格提取等工程痛点多篇解决方案分享上线",
+      "科学论文解析工具成为技术社区开发焦点",
+      "AI 代理行为可控性实践分享获得广泛点赞和评论"
+    ],
+    "ai-hf": [
+      "Kimi-K3 图像→文本模型登上 HF 榜单下载破百万",
+      "Qwen3.6 家族霸榜 Hugging Face 热门模型下载区",
+      "Solar-Open2-250B 开源大模型对话长上下文表现卓越",
+      "GLM-5.2 国产 MOE 架构对标国际主流 LLM 性能突出",
+      "Nanbeige4.2-3B 小体积高能效边缘设备友好响应快",
+      "Laguna-S-2.1 文学创作风格柔和细腻用户反馈积极"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Gemini CLI v0.55.0-nightly shows high activity with 10 PRs.",
+      "OpenAI Codex Alpha v0.147.0 sees rapid updates and stability.",
+      "GitHub Copilot CLI remains stable at v1.0.76 with ongoing support.",
+      "Claude Code maintains focus on security and debugging observability.",
+      "Qwen Code enhances CLI tooling for enterprise-grade agent orchestration.",
+      "DeepSeek TUI gains traction among developers seeking terminal efficiency."
+    ],
+    "ai-agents": [
+      "OpenClaw faces crisis with 500+ open issues and low merge rate.",
+      "IronClaw emerges as a robust contender in autonomous agent frameworks.",
+      "ZeptoClaw focuses on lightweight, scalable designs for edge deployment.",
+      "NanoBot introduces modular agent architecture for distributed workloads.",
+      "Moltis leads in secure, auditable AI agent governance protocols.",
+      "TinyClaw gains attention for ultra-low-memory agentic applications."
+    ],
+    "ai-trending": [
+      "burn rust package surges in popularity for AI infrastructure efficiency.",
+      "LTX-2 video generation tool trends as agentic workflows adopt media production.",
+      "ModelContextProtocol/rust-sdk gains 21 stars, signaling cross-language momentum.",
+      "unslothai/unsloth drives democratization of local model training on consumer hardware.",
+      "Affaan's ECC agent harness achieves record star growth (+857 in one day).",
+      "Lightseekorg/tokenspeed becomes top trending LLM inference engine for speed-focused devs."
+    ],
+    "ai-web": [
+      "Anthropic reveals Claude Mythos Preview found flaws in HAWK and AES crypto algorithms.",
+      "OpenAI publishes no substantive technical content today—only metadata titles.",
+      "Claude blog post details theoretical advances without impacting production systems.",
+      "Anthropic prioritizes transparency; OpenAI indexes capabilities without engineering narratives.",
+      "Research report highlights frontier models’ potential to audit cryptographic safety.",
+      "Divergence noted: Anthropic deep dives vs. OpenAI promotional index pages."
+    ],
+    "ai-hn": [
+      "Gemma 4 runs impressively on just 2 GB RAM across M-series Macs.",
+      "Claude elevated errors spark community concern over model reliability.",
+      "HN users skeptical of regulatory slowdowns pushed by major AI firms.",
+      "Enabling two settings reportedly tripled scores on ARC-AGI-3 benchmark.",
+      "GPT-5.6 vs. Claude Fable 5 debate centers on physical AI performance metrics.",
+      "Optimism mixed with caution: innovation vs. safety trade-offs dominate discourse."
+    ],
+    "ai-arxiv": [
+      "Pass the Baton distills trajectory knowledge to fix prefix failure in LLMs.",
+      "UniMem combines episodic and parametric memory to prevent catastrophic forgetting.",
+      "VetClaw deploys vision-language models for zero-shot veterinary disease screening.",
+      "MDTransformer co-designs hardware and software for efficient transformer inference.",
+      "Instruction-Tuned Models re-use human syntax more than humans do, per new analysis.",
+      "Falling Behind Drives Unsafe Development: safety risks in competitive AI environments identified."
+    ],
+    "ai-hf": [
+      "Kimi-K3 tops charts with 8,600 likes and nearly 100K downloads.",
+      "Qwen3.6-35B-A3B attracts over 6 million downloads for enterprise use.",
+      "Solar-Open2-250B excels in long-context document processing tasks.",
+      "GLM-5.2 remains leading open multilingual chat model with strong engagement.",
+      "Bonsai-27B Ternary redefines edge inference via extreme quantization efficiency.",
+      "Unsloth’s Luna-S sets new standard for low-cost, high-speed local deployment."
+    ]
+  }
+}
