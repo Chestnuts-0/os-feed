@@ -1,0 +1,61 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Kimi Code CLI API熔断机制急需增强，跨会话持久化内存探索中",
+      "Gemini CLI Wayland适配与SSRF P1级安全修复受社区高度关注",
+      "GitHub Copilot v1.0.77发布，浏览器OAuth默认化策略调整",
+      "OpenAI Codex企业自动化架构重构，Windows内核崩溃修复紧迫",
+      "Qwen Code v0.21.1-nightly更新，Agent团队消息队列确定性执行优化",
+      "Pi-mono底层Protocol Package重构，Wayland剪贴板功能显著提升"
+    ],
+    "ai-agents": [
+      "OpenClaw Gateway内存泄漏P0危机修复，本地化基础建设推进",
+      "Tool Call文本泄露到聊天通道隐私问题引发38条热烈评论",
+      "Telegram Business Bot Feature Request点赞数最高获6赞支持",
+      "Steer mode注入功能失效导致关键消息流控制BUG严重受关注",
+      "Android/WearOS设备活动切换丢失工作Bug已PR #116593合并修复",
+      "Agent所有权重构移除全局强制显式拥有从根源解决任务归属错"
+    ],
+    "ai-trending": [
+      "ollama 轻量级本地 LLM 推理引擎支持开箱即用多种模型",
+      "LangChain 通用 LLM 应用开发框架提供丰富 Chain 组件",
+      "CAMEL 首个多智能体协作框架支持 Agent 间通信任务分工",
+      "shareAI-lab/learn-claude-code Claude Code Agent 入门速通手册",
+      "sglang 面向大规模语言模型的高效 Serving 框架低延迟推理",
+      "Mem0 本地记忆模块流行反映开发者对隐私与成本双重顾虑"
+    ],
+    "ai-web": [
+      "Anthropic 披露 Claude 三起网络隔离突破事件重塑安全基准",
+      "OpenAI GPT-5.6 性能价格比预告正文不可见存疑引发讨论",
+      "双方安全透明度对比：主动暴露问题 vs 低调维持期待",
+      "欧盟 AI Act 第 28 条强制红队测试条款或加速落地执行",
+      "企业 API 招标或纳入安全事件响应时效等非功能性指标",
+      "VC 机构可能重新评估 AI Startup 安全架构投资价值权重"
+    ],
+    "ai-hn": [
+      "GPT-5.6 发布引发性能提升与价格战策略热议社区焦点",
+      "Agent-Manager Tmux 工具集整合 Claude Code/Codex/OpenCode",
+      "论文审核系统漏洞被揭露两篇 fake author 论文被接受为口头报告",
+      "Widen 开源 Mac Postgres GUI 工具支持本地云转 SQL 降低门槛",
+      "Tuneloop 本地 CLI 分析编码 agent 会话 transcript 工具上线展示",
+      "I flagged two research papers for fake authors and both were accepted as orals"
+    ],
+    "ai-hf": [
+      "moonshotai/Kimi-K3 多模态大模型获赞 9,013 下载量 38 万+",
+      "baidu/Unlimited-OCR 工业级 OCR 模型下载量爆表近 260 万",
+      "qwen/Qwen3.6-35B-A3B MoE 架构官方权重多语言多模态强",
+      "upstage/Solar-Open2-250B 巨型对话模型开放源罕见大参数量级",
+      "HauhauCS/Qwen3.6 GGUF 去限制版高速下载量证明定制需求",
+      "prism-ml/Ternary-Bonsai-27B-gguf 极致 2-bit 量化压缩节省显存"
+    ],
+    "ai-community": [
+      "MCP（Model Context Protocol）成为企业级落地安全治理核心焦点",
+      "Dev.to Skills vs MCP 梳理 AI 工具演进逻辑插件架构设计",
+      "The RAG Bug That Isn't an Error: Bad Retrieval 揭示检索错误致幻觉",
+      "微软 Open Weights 声明引发全球关于技术垄断与伦理深度辩论",
+      "You Could Have Come Up With Kimi Delta Attention 架构创新解读",
+      "Testing Non-Deterministic LLM Pipelines in CI 契约测试方案工程化"
+    ]
+  },
+  "en": {}
+}
