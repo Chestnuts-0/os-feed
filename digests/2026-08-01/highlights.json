@@ -1,20 +1,20 @@
 {
   "zh": {
     "ai-cli": [
-      "OpenAI Codex 活跃迭代，24h 9 PR 密集更新",
-      "Claude Code 安全漏洞议题集中爆发",
-      "DeepSeek TUI v0.9.3 品牌迁移期",
-      "Pi 架构重构期，24h PR 与 Issues 各 10",
-      "Qwen Code v0.21.2 发布，功能快速扩展",
-      "AI CLI 从功能竞赛转向可靠性竞赛"
+      "OpenAI Codex Rust Alpha高频灰度修复Windows崩溃问题",
+      "智谱AI发布ZCode终端编码工具对标Claude Code",
+      "Claude Code v2.1.215新增/verify与/code-review命令",
+      "Qwen Code v0.20.0正式版Autofix流程接管上线",
+      "OpenClaw v2026.7.1-beta.2正式发布支持GPT-5.6",
+      "Claude Code Skills社区Issue #8477热度飙升引关注"
     ],
     "ai-agents": [
-      "OpenClaw 500 Issue+500 PR，维护修复主导",
-      "P1 级会话状态丢失 Bug 持续涌入",
-      "PR #116396 修复 turn 中断后 tool_use 残留",
-      "PR #105374 修复 plugin 升级误报逻辑",
-      "Core Maintainers 推进底层重构",
-      "2026.7.1 版本回归问题仍在修复中"
+      "Anthropic发布Claude Opus 5旗舰模型成本减半性能逼近Fable 5",
+      "Claude Sonnet 5成为全层级默认代理模型",
+      "GitHub agent-skills项目单日星标破千进入模块化时代",
+      "Anthropic扩展思维模式引入可调节思维预算机制",
+      "Anthropic密集发布安全对齐研究构建行业护城河",
+      "Apple正式起诉OpenAI指控窃取硬件AI集成商业机密"
     ],
     "ai-trending": [
       "Hermes-agent 今日 +568 stars 达 22 万",
@@ -59,20 +59,24 @@
   },
   "en": {
     "ai-cli": [
-      "Gemini CLI has highest release velocity this cycle",
-      "OpenAI Codex ships aggressive alpha builds in Rust",
-      "Claude Code Fable 5 launch caused issue spike",
-      "GitHub Copilot CLI released v1.0.78-0",
-      "Pi and Qwen Code emerging as architecture differentiators",
-      "Kimi Code CLI joins growing CLI tool ecosystem"
+      "Zhipu AI launches ZCode CLI competitor",
+      "Codex rust-v0.143.0-alpha.36 fixes crashes",
+      "OpenClaw v2026.7.1-beta.2 adds GPT-5.6",
+      "42% Microsoft 365 AI price hike sparks backlash",
+      "Claude Sonnet 5 becomes free Anthropic default",
+      "GPT-5.6 reveals multi-modal real-time interaction",
+      "Anthropic lifts Fable 5 export controls globally",
+      "OpenAI Codex fixes GPT-5.5 quota anomalies",
+      "GitHub agent-skills ecosystem explodes in July",
+      "Claude Sonnet 5 halves Opus agentic reasoning cost"
     ],
     "ai-agents": [
-      "OpenClaw: 500 issues, 500 PRs in 24h",
-      "OpenClaw strips orphaned tool_use blocks on abort",
-      "OpenClaw fixes session reply lifecycle state bugs",
-      "OpenClaw handles Unix child process cleanup on cancel",
-      "443 open issues signal heavy maintenance phase",
-      "OpenClaw delivers ask_user prompts to originating channel"
+      "Zhipu AI launches ZCode CLI competitor",
+      "Claude Sonnet 5 becomes default Anthropic tier",
+      "Anthropic releases Claude Sonnet 5 formally",
+      "OpenClaw v2026.7.1 adds GPT-5.6 support",
+      "GitHub agent-skills ecosystems explode",
+      "OpenAI reveals GPT-5.6 ARC-AGI benchmarks"
     ],
     "ai-web": [
       "OpenAI publishes new index: Building Abundant Intelligence",
