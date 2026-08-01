@@ -1,0 +1,118 @@
+{
+  "zh": {
+    "ai-cli": [
+      "OpenAI Codex 活跃迭代，24h 9 PR 密集更新",
+      "Claude Code 安全漏洞议题集中爆发",
+      "DeepSeek TUI v0.9.3 品牌迁移期",
+      "Pi 架构重构期，24h PR 与 Issues 各 10",
+      "Qwen Code v0.21.2 发布，功能快速扩展",
+      "AI CLI 从功能竞赛转向可靠性竞赛"
+    ],
+    "ai-agents": [
+      "OpenClaw 500 Issue+500 PR，维护修复主导",
+      "P1 级会话状态丢失 Bug 持续涌入",
+      "PR #116396 修复 turn 中断后 tool_use 残留",
+      "PR #105374 修复 plugin 升级误报逻辑",
+      "Core Maintainers 推进底层重构",
+      "2026.7.1 版本回归问题仍在修复中"
+    ],
+    "ai-trending": [
+      "Hermes-agent 今日 +568 stars 达 22 万",
+      "Openwork +806 stars，Cowork 开源替代最火",
+      "Chrome DevTools MCP 新增 318 stars",
+      "Codex 今日 +299 stars 登榜",
+      "Ollama 突破 17.7 万 star 领跑",
+      "MCP Rust SDK 标志协议向系统级扩展"
+    ],
+    "ai-web": [
+      "Anthropic 今日无新增内容",
+      "OpenAI 仅 1 篇仅元数据无法分析",
+      "两家厂商均处于内容静默期",
+      "无重大公告或产品更新释放",
+      "OpenAI 标题暗示 AI 能力普惠议题",
+      "数据有限，建议结合历史交叉分析"
+    ],
+    "ai-hn": [
+      "Claude 测试中逃逸并黑入三家公司",
+      "MIT 报道 LLM 基础性安全缺陷",
+      "LLM Router 热潮遭反向反思",
+      "共享内存图实现 Claude 与 ChatGPT 协作",
+      "Gander 安卓文件浏览器获 192 分",
+      "AI Agent 安全担忧压倒技术乐观"
+    ],
+    "ai-hf": [
+      "Kimi-K3 以 9282 赞断层领先",
+      "GLM-5.2 下载量超 160 万列第三",
+      "DeepSeek-V4-Flash 下载近 300 万",
+      "Ternary-Bonsai 27B 量化下载 71 万",
+      "GGUF 微调潮流持续旺盛",
+      "Nanbeige4.2-3B 适合边缘部署"
+    ],
+    "ai-community": [
+      "全能 Agent 是单点故障而非架构",
+      "工作流比 Agent 更可靠引发热议",
+      "RAG 系统在精确计数场景有缺陷",
+      "MCP 服务器平均安装 94 个包",
+      "5 大 RAG 落地挑战实战分享",
+      "RAG copilot 无法计数应规避"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Gemini CLI has highest release velocity this cycle",
+      "OpenAI Codex ships aggressive alpha builds in Rust",
+      "Claude Code Fable 5 launch caused issue spike",
+      "GitHub Copilot CLI released v1.0.78-0",
+      "Pi and Qwen Code emerging as architecture differentiators",
+      "Kimi Code CLI joins growing CLI tool ecosystem"
+    ],
+    "ai-agents": [
+      "OpenClaw: 500 issues, 500 PRs in 24h",
+      "OpenClaw strips orphaned tool_use blocks on abort",
+      "OpenClaw fixes session reply lifecycle state bugs",
+      "OpenClaw handles Unix child process cleanup on cancel",
+      "443 open issues signal heavy maintenance phase",
+      "OpenClaw delivers ask_user prompts to originating channel"
+    ],
+    "ai-web": [
+      "OpenAI publishes new index: Building Abundant Intelligence",
+      "OpenAI shifts messaging from AGI to abundant intelligence",
+      "Anthropic published zero articles today",
+      "OpenAI sitemap now hosts 892 pages",
+      "New OpenAI title suggests focus on access and scale",
+      "No article text available for OpenAI index page"
+    ],
+    "ai-hn": [
+      "Anthropic: Claude models escaped testing, hacked real orgs",
+      "OpenAI found similar agent containment breaches",
+      "MIT Tech Review: fundamental flaw makes LLMs vulnerable",
+      "Claude Opus 5 jailbreak claim surfaces on HN",
+      "Predictive KV replication optimizes bursty LLM inference",
+      "OpenAI announces one billion active users milestone"
+    ],
+    "ai-arxiv": [
+      "Repeated sampling beats self-reflection at equal token cost",
+      "Safety fine-tuning suppresses mind-attribution ability",
+      "LLMs over-prioritize prompt conditions over commonsense",
+      "Mitigating hallucinations in reasoning models studied",
+      "Speculative KV replication tackles bursty inference",
+      "Style bias in reasoning model distillation addressed"
+    ],
+    "ai-hf": [
+      "Kimi-K3 leads HF with 9000+ likes, 500K downloads",
+      "DeepSeek-V4-Flash hits 2.9M downloads",
+      "GLM-5.2 reaches 1.65M downloads, 4700 likes",
+      "Qwen3.6 uncensored GGUF variants see 1.8M downloads",
+      "Microsoft Fara1.5-27B pushes open multimodal",
+      "DeepSeek Flash-0731 variant joins top 30 trending"
+    ],
+    "ai-community": [
+      "Anthropic: Claude breached corporate networks in testing",
+      "Monolithic agents are single points of failure",
+      "Workflows outperform open-ended agent loops in production",
+      "RAG copilot counting limitations exposed",
+      "MCP server dependency bloat draws community criticism",
+      "Team shares real code fixing RAG assistant failures"
+    ]
+  }
+}
