@@ -1,0 +1,110 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code 2.1.220发布，OAuth与子代理稳定性成三大焦点",
+      "Codex issues积压约30条，VS Code Diff崩溃112引关注",
+      "Gemini CLI夜间版v0.55.0发布，P1子代理bug集中",
+      "Pi社区最活跃，44条新增issues领跑",
+      "OpenCode v1.18.11迭代，UI布局与隐私争议并存",
+      "DeepSeek TUI v0.9.4候选版，多Provider路由成关键"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.7.2-beta.6发布，引入崩溃恢复机制",
+      "OpenClaw日均500条issue，积压释放率仅19%",
+      "v2.7.2新增隔离存储与SQLite快照恢复能力",
+      "CLI启动诊断PR合并，定位Kova性能瓶颈",
+      "WhatsApp测试用例去重重构，提升可维护性",
+      "Beta版集中爆发会话损坏、消息丢失等P0问题"
+    ],
+    "ai-web": [
+      "OpenAI发布数学领域十项进展技术文章",
+      "Anthropic官网今日零新增，维持低频节奏",
+      "OpenAI文章涵盖定理证明与符号计算突破",
+      "数学推理成为两家模型能力竞赛关键指标",
+      "GPT系列AI for Science竞争力持续强化",
+      "Anthropic或聚焦Claude 3.6与Agent工作流"
+    ],
+    "ai-hn": [
+      "OpenAI数学十大进展获415分断层领跑HN",
+      "未发布OpenAI模型已解决10个重大数学问题",
+      "研究：LLM无法胜任交易，推理提升也无济",
+      "Nano LLM轻量后训练工具受8GB GPU玩家青睐",
+      "Rust实现Claude Code代理控制台管理工具",
+      "LLM能力边界理论论文引发CS社区关注"
+    ],
+    "ai-hf": [
+      "DeepSeek V4 Flash下载量破280万领跑榜单",
+      "Kimi K3获9490赞登顶本周热门模型榜",
+      "GLM-5.2获4737赞，MoE架构成多模态新标杆",
+      "百度Unlimited-OCR下载超245万实用亮眼",
+      "Solar-Open2-250B以250B参数成最大开源LLM",
+      "Nanbeige4.2-3B适合端侧部署的轻量选择"
+    ],
+    "ai-community": [
+      "Agent评估比模型评估更难引发工程反思",
+      "AI辅助编码提速却弱化工程判断力成痛点",
+      "MCP协议7.28重大更新后AWS实测报告发布",
+      "Rust重写ML管道实现Docker镜像缩减400倍",
+      "GPT-Transcribe利用上下文提升ASR准确率",
+      "12微秒级JSON流截断重建优化方案实用"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "9 AI CLI tools compared in August 2026 digest",
+      "Claude Code Desktop 1.24012.9 released",
+      "OpenAI Codex stalled with no new release",
+      "Open-source tools shipping frequent fixes",
+      "Session integrity becomes key differentiator",
+      "Cost transparency emerges as top community demand"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.7.2-beta.6 released",
+      "500 issues and 500 PRs in 24 hours",
+      "Quarantine store survives database damage",
+      "Crash-recoverable SQLite snapshots added",
+      "Schema-upgrade data-loss rejection implemented",
+      "405 open PRs show strong community activity"
+    ],
+    "ai-trending": [
+      "DeepSeek-Reasonix gains 274 stars today",
+      "mcp-toolbox hits 16,095 total stars",
+      "OpenAI Codex trending with +199 stars",
+      "Microsoft Copilot SDK gains 142 stars",
+      "Google Workspace CLI at 30,140 stars",
+      "Rust-native agent infrastructure emerging"
+    ],
+    "ai-web": [
+      "OpenAI publishes Ten Advances In Mathematics",
+      "Math reasoning framed as key differentiator",
+      "Anthropic had no new content today",
+      "OpenAI has 893 total sitemap articles",
+      "Enterprise buyers targeted with math claims",
+      "Continuous push on formal reasoning milestones"
+    ],
+    "ai-hn": [
+      "OpenAI math advances hits 415 points 280 comments",
+      "Community debates benchmark hygiene claims",
+      "Amazon Claude overage blunder hits $1.8M",
+      "MIT study finds AI financial advice surprisingly good",
+      "Wired explores legal gray zone of AI hacking",
+      "Mood shifts from hype to cost scrutiny"
+    ],
+    "ai-hf": [
+      "Kimi-K3 dominates with 9,490 weekly likes",
+      "DeepSeek-V4-Flash hits 2.8M downloads",
+      "GLM-5.2 earns 4,737 likes 1.6M downloads",
+      "baidu/Unlimited-OCR surpasses 2.4M downloads",
+      "DavidAU Heretic Qwen3.6 fine-tune trending",
+      "LuffyTheFox Genesis-Hermes variants popular"
+    ],
+    "ai-community": [
+      "GPT-5.6 Luna launches at $1.40 per M tokens",
+      "Agent evaluation harder than model evaluation",
+      "AI coding may erode engineering judgment",
+      "MCP specs tested on AWS infrastructure",
+      "Voice assistant security concerns surface",
+      "Local model running on constrained hardware discussed"
+    ]
+  }
+}
