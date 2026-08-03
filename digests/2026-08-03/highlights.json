@@ -1,0 +1,102 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Gemini CLI v0.55.0-nightly 日更新量显著领先",
+      "DeepSeek TUI v0.9.4进入发布冲刺阶段",
+      "Claude Code v2.1.220 处于功能稳定期",
+      "AI CLI工具竞争转向多Agent协作可靠性",
+      "Qwen Code v0.21.3-nightly持续推送",
+      "插件系统与MCP协议集成成差异化关键"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.7.2-beta.7强化崩溃恢复",
+      "24小时处理1000条Issue/PR更新",
+      "引入隔离存储保护持久化数据",
+      "WhatsApp自动回复修复自聊场景状态",
+      "DeepSeek v4 Flash静默失败引社区热议",
+      "LINE渠道过滤无效位置消息"
+    ],
+    "ai-trending": [
+      "DeepSeek-Reasonix 29102 stars专为prefix-cache设计",
+      "AirLLM单4GB GPU推理70B模型今日+819 stars",
+      "OmniRoute 290+提供商网关今日+832 stars登顶",
+      "字节Deer-Flow 78994 stars长周期SuperAgent框架",
+      "Hermes-Agent 224337 stars自进化AI代理",
+      "Agent-Reach 64751 stars零API全网爬取"
+    ],
+    "ai-hn": [
+      "OpenAI Astra宣称解决10个重大数学难题引争议",
+      "学术论文反驳OpenAI康涅斯刚性猜想证明",
+      "创意SVG青蛙benchmark测试AI多模态理解",
+      "Claude恶意代码与密钥泄露事件频发",
+      "EU AI法规正式生效监管实质性推进",
+      "AI安全事件集中爆发引发治理焦虑"
+    ],
+    "ai-hf": [
+      "Kimi-K3周赞9640下载837202登顶热榜",
+      "DeepSeek-V4-Flash累计下载280万社区采用度高",
+      "GLM-5.2累计下载205万中文理解增强",
+      "Solar-Open2-250B开源250B参数级模型",
+      "Unlimited-OCR获大量下载关注",
+      "GGUF量化格式仍是本地部署首选"
+    ],
+    "ai-community": [
+      "OpenAI将Auto-review升级至GPT-5.6 Luna",
+      "AI无需完美关键是通过验证循环保障可靠性",
+      "上下文窗口增长是Agent流水线无声故障源",
+      "真实Agent行为比理论模型评估更复杂",
+      "125M轻量模型CPU上比14B快40倍",
+      "MCP工具描述应面向机器而非人类"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Gemini CLI and Qwen Code shipped nightlies",
+      "Claude Code Skills repo now live",
+      "9 AI CLI tools now tracked in ecosystem",
+      "Cross-platform gaps persist on Windows/Linux",
+      "Remote session control converging as standard",
+      "Cross-session memory becoming key differentiator"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.7.2-beta.7 released",
+      "500 issues and 500 PRs in 24 hours",
+      "Crash-recoverable SQLite snapshots added",
+      "Schema migration now rejects data loss",
+      "Quarantine store protects persisted data",
+      "Telegram ingress fixes landing this cycle"
+    ],
+    "ai-trending": [
+      "DeepSeek-Reasonix hits 29K stars",
+      "airllm surges 819 stars today",
+      "Microsoft AI edu repos gain thousands daily",
+      "rtk proxy cuts 60-90% LLM token usage",
+      "Antirez releases ds4 for local DeepSeek inference",
+      "headroom compresses tool output before LLM"
+    ],
+    "ai-hn": [
+      "OpenAI Astra solved 10 open math problems",
+      "Connes conjecture disproof declared invalid",
+      "Frog SVG benchmark goes viral with 104 score",
+      "EU AI-model rules now enforceable",
+      "OpenAI and Anthropic hacking sprees spark debate",
+      "Coding agents dominate today's trending"
+    ],
+    "ai-hf": [
+      "Kimi-K3 leads with 9,640 weekly likes",
+      "DeepSeek-V4-Flash hits 2.79M downloads",
+      "GLM-5.2 accumulates 2.05M downloads",
+      "Unlimited-OCR surpasses 2.5M downloads",
+      "Poolside Laguna-S-2.1 trending for efficiency",
+      "Nanbeige4.2-3B gains community traction"
+    ],
+    "ai-community": [
+      "Build verification loops instead of trusting AI",
+      "Context window growth is silent failure mode",
+      "Better models can break old agent workflows",
+      "OpenAI launches GPT-5.6 Luna for auto-review",
+      "MCP tool description best practices discussed",
+      "Agent eval harnesses must survive real usage"
+    ]
+  }
+}
