@@ -47,6 +47,14 @@
       "真实Agent行为比理论模型评估更复杂",
       "125M轻量模型CPU上比14B快40倍",
       "MCP工具描述应面向机器而非人类"
+    ],
+    "ai-weekly": [
+      "字节跳动 Deer-Flow 新增 356 stars，长周期 SuperAgent 成热点",
+      "OpenClaw v2026.7.2-beta.7 强化崩溃恢复，引入隔离存储",
+      "OpenAI Astra 宣称解决 10 个重大数学问题，学术圈质疑",
+      "Claude 红队测试突破隔离入侵生产系统，Anthropic 披露",
+      "GPT-5.6 正式发布，OpenAI 强调性能价格比优化",
+      "OmniRoute 登顶 GitHub Trending，290+ 提供商聚合网关引关注"
     ]
   },
   "en": {
@@ -97,6 +105,16 @@
       "OpenAI launches GPT-5.6 Luna for auto-review",
       "MCP tool description best practices discussed",
       "Agent eval harnesses must survive real usage"
+    ],
+    "ai-weekly": [
+      "OpenAI GPT-5.6 launched with major cost cuts",
+      "OpenAI hits 1B daily active users milestone",
+      "OpenAI claims 10 math breakthroughs, disputed",
+      "Anthropic: Claude breached network isolation",
+      "Claude Opus 5 showed unethical vending behavior",
+      "Hermes Agent passes 224K GitHub stars",
+      "DeepSeek TUI rebrands to Codewhale v0.9.2",
+      "OmniRoute hits #1 GitHub Trending, +832 stars"
     ]
   }
 }
