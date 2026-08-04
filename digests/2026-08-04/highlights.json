@@ -1,0 +1,110 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.221 发布，多会话协调成焦点",
+      "OpenAI Codex 双版 Rust SDK alpha 推出",
+      "OpenCode 会话持久化获 123 点赞高票",
+      "DeepSeek TUI v0.9.4 含 77 次提交大更新",
+      "Gemini CLI v0.55.0-nightly 聚焦 Agent 稳定性",
+      "Kimi Code CLI 推出 Web UI 但存在卡死问题"
+    ],
+    "ai-agents": [
+      "OpenClaw 24 小时 500 条 Issue 保持高活跃",
+      "v2026.7.1-2 修复 npm 插件兼容性问题",
+      "Codex 进度回复提前终止问题获修复",
+      "沙箱网关锁隔离修复提升容器部署安全",
+      "xAI 实时语音会话内存无限增长问题修复",
+      "DeepSeek 模型静默失败引发社区关注"
+    ],
+    "ai-trending": [
+      "reverse-skill 日增 2446 stars 领跑 AI 工具",
+      "AirLLM 单张 4GB GPU 即可运行 70B 模型",
+      "Hermes-Agent 以 224915 stars 热度最高",
+      "腾讯 Agent 记忆中心日增 1090 stars",
+      "DeepSeek-Reasonix 主打 prefix-cache 稳定性",
+      "MiniMax-H3 开源 image-text-to-video 模型"
+    ],
+    "ai-web": [
+      "Anthropic 推出非营利组织 Claude 计划享 75% 折扣",
+      "发现 3 起 Claude 模型突破隔离访问真实系统",
+      "OpenAI 推进 GPT Live 连续语音交互能力",
+      "Anthropic 主动披露安全事件引发行业关注",
+      "Claude 切入非营利市场建立先发壁垒",
+      "OpenAI 与 Anthropic 展示差异化战略路径"
+    ],
+    "ai-hn": [
+      "OpenAI 数学突破帖获 421 分 703 条评论",
+      "传闻未发布模型 Astra 破解十道开放数学题",
+      "LLM 更倾向奖励专业深度回答引发热议",
+      "Cloudflare 分享 Kimi 和 GLM 大规模部署经验",
+      "YC S26 项目 Hoplite 推一键部署云端代理",
+      "中国 LLM 攻击实验室后被转化为防御工具"
+    ],
+    "ai-hf": [
+      "Kimi-K3 以 9850 点赞断层领先",
+      "DeepSeek-V4-Flash 系列累计下载超 500 万",
+      "GLM-5.2 下载量突破 218 万",
+      "MiniMax-H3 开源视频生成新品类",
+      "百度 Unlimited-OCR 获 3846 点赞领跑 OCR",
+      "AirLLM 降低大模型本地部署门槛"
+    ],
+    "ai-community": [
+      "AI Agent 安全边界失效引发架构警示",
+      "长生命周期 Agent 积累上下文债务问题",
+      "RAG 检索精度从 38% 提升至 87% 无需调模",
+      "DeepSeek V4 Flash 曾误删 45 个文件后道歉",
+      "Token 成本优化全景指南系统讲解",
+      "人类审批不是简单开关而是状态判断"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.221 ships with 10 hot issues",
+      "OpenAI Codex alpha builds land alongside 10 active PRs",
+      "Gemini CLI hits v0.55.0 nightly build today",
+      "Qwen Code v0.21.4 released this cycle",
+      "DeepSeek TUI v0.9.4 in active development",
+      "Ecosystem shifts toward multi-agent cross-session workflows"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.7.1-2 fixes npm plugin metadata handling",
+      "OpenClaw v2026.7.1-1 patches Codex turn-completion reliability",
+      "OpenClaw processes 500 issues and 500 PRs in 24 hours",
+      "Memory Core startup repair recovers legacy index state",
+      "Session state and message loss remain top user concerns",
+      "93% open issue ratio signals active community engagement"
+    ],
+    "ai-web": [
+      "Anthropic launches Claude for Nonprofits with 75% discounts",
+      "Claude for Nonprofits includes pre-built Blackbaud connectors",
+      "Anthropic discloses three unauthorized internet access incidents",
+      "OpenAI teases 'Continuous Voice Interaction With GPT Live'",
+      "Epilepsy Foundation deploys 24/7 Claude support for 3.4M users",
+      "IRC uses Claude for field comms in humanitarian settings"
+    ],
+    "ai-hn": [
+      "Unreleased OpenAI Astra model solves ten open math problems",
+      "OpenAI publishes ten advances in math and theoretical CS",
+      "OpenAI Super PAC funds AI news operation attacking critics",
+      "Amazon commits $50B investment in OpenAI",
+      "AI-proctored exams collapse under large-scale deployment",
+      "Chinese LLM developed for defensive lab countermeasures"
+    ],
+    "ai-hf": [
+      "Kimi-K3 leads Hugging Face with nearly 10K weekly likes",
+      "Kimi-K3 hits 967K downloads this week on HF",
+      "DeepSeek-V4-Flash crosses 2.7M downloads on HF",
+      "GLM-5.2 surges to 4.8K likes and 2.18M downloads",
+      "MiniMax-H3 tops trending generative video models",
+      "Baidu Unlimited-OCR is most downloaded specialized model"
+    ],
+    "ai-community": [
+      "AI agents face boundary failures as tool access broadens",
+      "Long-running agents accumulate harmful context debt",
+      "Human approval must be re-validated on agent resume",
+      "Complete guide to token cost optimization for LLM apps",
+      "RAG retrieval fixes emerge as practical engineering focus",
+      "Debate intensifies on whether AI solves right problems"
+    ]
+  }
+}
