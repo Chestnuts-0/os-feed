@@ -74,10 +74,10 @@ function parseTrendingHtml(html: string): TrendingRepo[] {
       const todayMatch = block.match(/([\d,]+)\s+stars?\s+today/i);
       const todayStars = todayMatch?.[1] ? parseInt(todayMatch[1].replace(/,/g, ""), 10) : 0;
 
-      const totalMatch = block.match(/href="\/[^"]+\/stargazers"[^>]*>\s*<[^>]+>\s*([\d,]+)/);
+      const totalMatch = block.match(/\/stargazers"[^>]*>[\s\S]*?<\/svg>[\s\S]*?([\d,]+)<\/a>/);
       const totalStars = totalMatch?.[1] ? parseInt(totalMatch[1].replace(/,/g, ""), 10) : 0;
 
-      const forkMatch = block.match(/href="\/[^"]+\/forks"[^>]*>\s*<[^>]+>\s*([\d,]+)/);
+      const forkMatch = block.match(/\/forks"[^>]*>[\s\S]*?<\/svg>[\s\S]*?([\d,]+)<\/a>/);
       const forks = forkMatch?.[1] ? parseInt(forkMatch[1].replace(/,/g, ""), 10) : 0;
 
       repos.push({
