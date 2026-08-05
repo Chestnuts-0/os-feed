@@ -1,0 +1,110 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code发布v2.1.222安全修复版",
+      "OpenAI Codex推出4个alpha版本",
+      "Gemini CLI集中修复子代理安全问题",
+      "Kimi Code CLI完善ACP协议支持",
+      "OpenCode修复DeepSeek V4 Flash稳定性",
+      "Pi解决企业用户Compaction故障"
+    ],
+    "ai-agents": [
+      "OpenClaw修复Synology Chat webhook误报",
+      "Slack通道消息投递问题已修复",
+      "子代理交付机制优化完成",
+      "压缩回收功能得到修复",
+      "测试性能提升通过优化实现",
+      "Linux插件发现测试已隔离"
+    ],
+    "ai-trending": [
+      "DeepSeek-Reasonix单日新增922 stars",
+      "RTK代理降低Token消耗60-90%",
+      "AirLLM实现单卡4GB运行70B模型",
+      "腾讯DB团队推出Agent记忆中枢",
+      "Uber发布企业级Agent安全观测平台",
+      "LiveKit填补语音Agent基础设施空白"
+    ],
+    "ai-web": [
+      "Anthropic任命首任首席全球事务官",
+      "OpenAI发布经济研究平台公告",
+      "Anthropic强化全球政策布局",
+      "OpenAI推出ChatGPT教学工作坊",
+      "Anthropic高管具备政府背景",
+      "OpenAI经济研究Exchange上线"
+    ],
+    "ai-hn": [
+      "AI基准测试工具支持OpenRouter多模型",
+      "斯坦福推出自改进AI Agent课程",
+      "团队级Coding Agent标准化方案开源",
+      "新编码代理宣称性能超越Codex",
+      "纯Go PII检测工具速度提升百倍",
+      "Capshelf引入Lockfile解决Skill碎片化"
+    ],
+    "ai-hf": [
+      "Kimi-K3获超万点赞领跑开源模型",
+      "GLM-5.2 MoE模型下载量突破223万",
+      "DeepSeek V4-Flash优化对话场景",
+      "MiniMax开源首款视频生成模型",
+      "百度OCR模型下载量达270万",
+      "Qwen3.6-35B微调版持续涌现"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code ships v2.1.222 focused on security hardening",
+      "OpenAI Codex drops four alpha releases in rapid iteration",
+      "Gemini CLI holds 14 open PRs in active bug-fix cycle",
+      "GitHub Copilot CLI hits v1.0.79 with breaking changes",
+      "Nine AI CLI tools battle for enterprise reliability",
+      "Ecosystem shifts from feature race to quality race"
+    ],
+    "ai-agents": [
+      "OpenClaw processes 500 issues and 500 PRs in 24 hours",
+      "Synology Chat fix surfaces rejected webhook messages",
+      "Slack integration resolves active question control bug",
+      "UI split-pane now clears after answers and cancellations",
+      "OpenClaw covers 13 projects including NanoBot and Hermes",
+      "Dense maintenance phase targets subagent orchestration"
+    ],
+    "ai-web": [
+      "Anthropic hires Tino Cuellar as first Chief Global Affairs Officer",
+      "OpenAI publishes three new blog articles today",
+      "OpenAI drops commentary titled Apple Is Getting This Wrong",
+      "Cuellar is former California Supreme Court Justice",
+      "Anthropic sitemap now holds 430 total articles",
+      "OpenAI sitemap reaches 897 total articles"
+    ],
+    "ai-hn": [
+      "Apple vs OpenAI legal conflict tops HN with 800+ comments",
+      "OpenAI settles $3.2M U.S. worker discrimination claim",
+      "White House excludes open models from AI safety framework",
+      "Flowise AI tool shuts down citing unsustainable costs",
+      "Bending Spoons acquires Airtable for $1.28 billion",
+      "Michael Burry places bearish bet on AI chip stocks"
+    ],
+    "ai-arxiv": [
+      "AURORA-LM applies continuous latent diffusion to text",
+      "Structured Memory injects context via O(1) SSM state",
+      "GradCuit replaces token decoding with optimized latents",
+      "Real-time agent failure detection paper released",
+      "oneopot-Bench 0 pushes domain-specific AI evaluation",
+      "MedPRESS benchmark advances medical AI assessment"
+    ],
+    "ai-hf": [
+      "Kimi-K3 tops HF with 10,001 likes and 1.1M downloads",
+      "GLM-5.2 reaches 2.2M downloads on Z.ai MoE architecture",
+      "DeepSeek V4 Flash hits 2.7M downloads total",
+      "V4 Flash 0731 refined checkpoint shows better reasoning",
+      "Uncensored Qwen3.6 MoE fine-tunes see 1.6M+ downloads",
+      "Moonshot and DeepSeek models dominate this week"
+    ],
+    "ai-community": [
+      "MCP ecosystem tackles context limits and slow tool latency",
+      "Frontier benchmarks miss real production AI workloads",
+      "Claude Code MCP setup produces usable HTML layouts",
+      "Understanding behavior matters more than tracing origins",
+      "OpenAI Lean-certified formal proofs spark discussion",
+      "Smaller models on real tasks beat frontier model hype"
+    ]
+  }
+}
