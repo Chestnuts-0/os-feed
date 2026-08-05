@@ -1,0 +1,102 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Qwen Code发布v0.21.6正式版及Desktop v0.1.0首发",
+      "OpenCode v1.18.14发布，V2迁移PR推进中",
+      "GitHub Copilot CLI v1.0.79-3/4预发布优化alt-screen",
+      "DeepSeek TUI v0.9.4分支待合并",
+      "Claude Code底层修复PR推进中无新版本",
+      "安全PR密集：SSRF、凭证脱敏、只读Shell绕过修复"
+    ],
+    "ai-agents": [
+      "OpenClaw维持高强度活跃：500条Issues和PRs",
+      "PR修复诊断OTEL启动失败在回滚时被吞掉问题",
+      "移除GitHub Copilot不支持的raptor-mini条目避免400报错",
+      "恢复CI中Telegram beta验收通道的包验证能力",
+      "议题聚焦session状态管理与子代理可靠性",
+      "项目进入数据库优先运行时深度磨合期"
+    ],
+    "ai-trending": [
+      "NousResearch/hermes-agent飙升至226,041 stars领跑",
+      "OpenAI Codex达104,168 stars今日增277",
+      "DeepSeek-Reasonix今日增747 stars反映国产Agent趋势",
+      "litellm以55,644 stars成为多模型网关事实标准",
+      "rtk CLI代理可降低60-90%开发Token消耗",
+      "headroom上下文压缩库对JSON减少60-95% Token"
+    ],
+    "ai-hn": [
+      "前OpenAI研究员宣布转攻脑机接口引发热议",
+      "英国安全测试显示OpenAI/Anthropic模型突破边界",
+      "基准测试答案通过预训练数据污染模型",
+      "ExANS在H100实现622 GB/s无损KV Cache压缩",
+      "HyperProbe允许Agent生产环境只读调试",
+      "论文揭示评测体系可靠性面临严肃质疑"
+    ],
+    "ai-arxiv": [
+      "ParVL打破多模态模型参数与计算刚性分配",
+      "ALiBi位置编码存在浮点下溢致注意力失明",
+      "测试时扩展推理算法首篇综述基准论文",
+      "扩散模型对齐提出潜空间奖励寄存器机制",
+      "Omega-S无需旧数据即可抑制微调灾难性遗忘",
+      "回合级后见自蒸馏改善长程工具推理信用分配"
+    ],
+    "ai-community": [
+      "AWS开源Kiro Crew跨会话AI编程代理编排器",
+      "81%开发者陷入AI代码审查负担而非提效",
+      "Claude拒绝三分之一Stripe任务暴露真实性问题",
+      "企业级MCP网关需OAuth 2.0加RBAC安全加固",
+      "MCP检索小仓库比grep多耗4倍Token",
+      "AGENTS.md成为AI编码代理新工程实践标准"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code: 10 hot issues, stable with high intensity",
+      "OpenAI Codex: v0.146.1 released with 6 alpha releases",
+      "Gemini CLI: Active security hardening underway",
+      "GitHub Copilot CLI: v1.0.79-4, minor release with MCP friction",
+      "OpenCode: v1.18.14, V2 migration in progress",
+      "Kimi Code CLI: Low volume, targeted fixes only"
+    ],
+    "ai-agents": [
+      "OpenClaw: 500 issues and 500 PRs in 24 hours",
+      "Session-state reliability is top bug cluster",
+      "Message-loss bugs remain unresolved",
+      "Auth-provider hiccups reported frequently",
+      "77 PRs merged/closed, none major releases",
+      "Project in sustained maintenance-heavy cycle"
+    ],
+    "ai-trending": [
+      "OpenAI Codex CLI surges past 100K stars",
+      "DeepSeek Reasonix: +747 stars today",
+      "MCP ecosystem sees explosive growth",
+      "Rust dominates new AI infrastructure projects",
+      "LiteLLM: +105 stars as unified AI gateway",
+      "Token-efficiency tooling emerging as category"
+    ],
+    "ai-hn": [
+      "Meta ads with AI-generated CSAM spark outrage",
+      "OpenAI and Anthropic failed UK security tests",
+      "OpenAI faces $3.2M discrimination settlement",
+      "HN essay: hobby programmers turning against LLMs",
+      "Guardian questions Anthropic's open-source stance",
+      "Benchmark contamination threatens evaluation reliability"
+    ],
+    "ai-arxiv": [
+      "ParVL: parallel scaling for multimodal LLMs",
+      "ALiBi positional encoding has numerical failure",
+      "Cross-model KV cache transfer proposed",
+      "SocietyBench tests LLMs on live events",
+      "Test-time scaling papers published",
+      "Agent capability evolution explored"
+    ],
+    "ai-community": [
+      "81% of devs buried in AI code review",
+      "Token waste in agent tool-calling loops grows",
+      "AWS opens agent orchestrator",
+      "MCP gateway hardening with OAuth and RBAC",
+      "Building fast with Claude Code is easy, securing is hard",
+      "Reasoning effort doesn't equal output quality"
+    ]
+  }
+}
