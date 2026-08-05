@@ -76,16 +76,19 @@ interface AvatarProps {
 function GithubAvatar({ owner, size, className }: AvatarProps) {
   const ref = useRef<HTMLImageElement | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const src = `https://avatars.githubusercontent.com/${owner}?s=${size}&v=4`;
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     // 已加载完成（含失败）无需再观察
     if (loaded) return;
+    // src 已就绪：浏览器原生 lazy 会自己加载视口内的图；
+    // observer 仅做「提前 500px 预加载」—— 进入 rootMargin 范围就把 src 再设一次触发加载
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting) {
-          el.src = `https://github.com/${owner}.png?size=${size}`;
+          el.src = src;
           observer.disconnect();
         }
       },
@@ -93,7 +96,7 @@ function GithubAvatar({ owner, size, className }: AvatarProps) {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [owner, size, loaded]);
+  }, [src, loaded]);
 
   return (
     <span className={`avatar-wrap ${className}-wrap`}>
@@ -102,6 +105,7 @@ function GithubAvatar({ owner, size, className }: AvatarProps) {
         ref={ref}
         alt=""
         className={className}
+        src={src}
         loading="lazy"
         decoding="async"
         onLoad={() => setLoaded(true)}

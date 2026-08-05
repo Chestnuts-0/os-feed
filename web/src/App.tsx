@@ -956,7 +956,7 @@ export default function App() {
           <>
             <div className="bigbro-profile">
               <img
-                src={`https://github.com/${BIGBRO_NAME}.png?size=72`}
+                src={`https://avatars.githubusercontent.com/${BIGBRO_NAME}?s=72&v=4`}
                 alt={BIGBRO_NAME}
                 className="bigbro-avatar"
                 loading="lazy"
