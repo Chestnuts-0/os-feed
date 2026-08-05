@@ -1,155 +1,148 @@
 # ArXiv AI Research Digest 2026-08-05
 
-> Source: [ArXiv](https://arxiv.org/) (cs.AI, cs.CL, cs.LG) | 50 papers | Generated: 2026-08-05 06:51 UTC
+> Source: [ArXiv](https://arxiv.org/) (cs.AI, cs.CL, cs.LG) | 50 papers | Generated: 2026-08-05 07:33 UTC
 
 ---
 
 
 
-# ArXiv AI Research Digest — August 5, 2026
+# ArXiv AI Research Digest — 2026-08-05
 
 ---
 
 ## 1. Today's Highlights
 
-Today's submissions reveal a clear convergence around **test-time scaling** and **evaluation integrity** in frontier LLMs. Three papers tackle the question of how to properly measure what models can do: WorldCup Arena introduces leakage-free prospective evaluation on a live tournament, SocietyBench reframes social forecasting as a benchmarking paradigm, and Test-Time Scaling provides a unified taxonomy of inference-time compute strategies. A second major thread addresses **scaling efficiency**, with ParVL proposing parallel compute allocation for multimodal models, Cross-Model KV Cache Transfer enabling prefill reuse across model sizes, and AGOGIC isolating the impact of music tokenization. Meanwhile, several papers push the frontier of **agent self-improvement** — PAST-Bench, ContinualSkillBench, and ReflectRL collectively probe whether agents can genuinely evolve capabilities rather than merely retrieve them.
+Today's ArXiv submissions are dominated by two converging themes: **test-time compute scaling** and **prospective, leakage-free evaluation**. Multiple papers propose new algorithms and benchmarks for stretching inference-time resources more efficiently, while a live-tournament evaluation framework (WorldCup Arena) and counterfactual forecasting benchmarks push the community toward evaluations that avoid contamination entirely. A secondary wave of work addresses **recursive self-improvement in personal agents**, **cross-model efficiency**, and **domain-specific reasoning** — from radiology to power grids — signaling a maturation phase where LLMs are being stress-tested beyond static benchmarks and into dynamic, real-world settings.
 
 ---
 
 ## 2. Key Papers
 
-### 🧠 Large Language Models
+### 🧠 Large Language Models (architecture, training, alignment, evaluation)
 
-**1. Test-Time Scaling in Reasoning LLMs: Inference Regimes, Evaluation, and Reproducibility**
-http://arxiv.org/abs/2608.04001v1
-*Hariri, Chen, Shahini et al.* | cs.LG, cs.AI
-Introduces a unified taxonomy of test-time scaling methods — trajectory extension, candidate sampling, and aggregation — and exposes reproducibility gaps across existing approaches.
+1. **Test-Time Scaling in Reasoning LLMs: Inference Regimes, Evaluation, and Reproducibility**
+   [arxiv.org/abs/2608.04001](http://arxiv.org/abs/2608.04001) | Hariri, Chen, Shahini et al.
+   Provides a unified taxonomy of test-time scaling methods — from trajectory extension to candidate aggregation — and calls out critical reproducibility gaps, establishing a shared vocabulary the community needs.
 
-**2. When Attention Goes Blind: Numerical Failure in ALiBi Positional Encodings**
-http://arxiv.org/abs/2608.03994v1
-*Schröder, Gienapp, Schlatt et al.* | cs.CL
-Identifies a previously unknown underflow failure mode in ALiBi positional encodings that zeros out a large fraction of attention weights, affecting long-context reliability in widely-used architectures.
+2. **Interpretable Adaptive Sampling for LLM Test-Time Scaling**
+   [arxiv.org/abs/2608.03961](http://arxiv.org/abs/2608.03961) | Kashaniyan, Jannesari
+   Replaces fixed per-query compute budgets with an interpretable adaptive sampler that allocates more tokens to hard prompts, directly addressing the inefficiency of one-size-fits-all test-time scaling.
 
-**3. Logic Before Language: Pre-pretraining on Formal Derivations Fosters Skill Acquisition and Compressibility**
-http://arxiv.org/abs/2608.03930v1
-*Cheng, Aletras, Valentino* | cs.CL, cs.AI, cs.LG
-Demonstrates that pre-pretraining on symbolic formal derivations — going beyond narrow Dyck-language tasks — accelerates and improves subsequent natural language acquisition and representation compressibility.
+3. **Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse**
+   [arxiv.org/abs/2608.03893](http://arxiv.org/abs/2608.03893) | Heo, Shafipour, Zhao et al.
+   Enables a smaller model in a family to reuse the prefill KV cache from a larger sibling via a closed-form linear map, dramatically cutting re-computation during model cascading and mid-conversation switching.
 
-**4. Intertemporal Preference Steering in Qwen3 via Contrastive Activation Addition**
-http://arxiv.org/abs/2608.03989v1
-*Mráz, Shenk* | cs.AI
-Discovers a linear representation of temporal horizon in Qwen3-32B and uses contrastive activation addition to steer the model's time-related preferences between short-term and long-term orientations.
+4. **When Attention Goes Blind: Numerical Failure in ALiBi Positional Encodings**
+   [arxiv.org/abs/2608.03994](http://arxiv.org/abs/2608.03994) | Schröder, Gienapp, Schlatt et al.
+   Identifies a previously unknown floating-point underflow in ALiBi that silently zeroes attention weights, affecting a large fraction of heads — a critical diagnostic for any model using this common positional encoding.
 
-**5. The Transformer Revolution, Part 1: Dynamic Processing through Output-Weight Interconnections**
-http://arxiv.org/abs/2608.03921v1
-*Giunti, Garavaglia* | cs.AI, cs.NE
-Proposes a new interpretation of Transformer inference as constructing and applying prompt-dependent transformations, challenging the "stochastic parrot" framing and suggesting deeper algorithmic structure.
+5. **Intertemporal Preference Steering in Qwen3 via Contrastive Activation Addition**
+   [arxiv.org/abs/2608.03892](http://arxiv.org/abs/2608.03892) | Mráz, Shenk
+   Learns a linear representation of temporal horizon inside Qwen3-32B and steers the model toward short- or long-term preferences via activation addition, demonstrating a controllable intervention on time-sensitive behavior.
 
----
+6. **Omega-S: A Functional Resilience Index for LLM Fine-Tuning**
+   [arxiv.org/abs/2608.03887](http://arxiv.org/abs/2608.03887) | Acedo
+   Introduces a drop-in regularization penalty computed from the weight matrix alone that measures and mitigates fine-tuning collapse, requiring no task data, Fisher matrix, or stored old weights.
 
-### 🤖 Agents & Reasoning
+7. **Logic Before Language: Pre-pretraining on Formal Derivations Fosters Skill Acquisition and Compressibility**
+   [arxiv.org/abs/2608.03930](http://arxiv.org/abs/2608.03930) | Cheng, Aletras, Valentino
+   Shows that pre-pretraining on symbolic formal derivations — going beyond Dyck-language tasks — improves both natural language acquisition speed and representation compressibility.
 
-**6. TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning**
-http://arxiv.org/abs/2608.04007v1
-*Qu, Dai, Cai et al.* | cs.CL, cs.AI
-Replaces trajectory-level RL supervision with turn-level hindsight self-distillation, enabling fine-grained credit assignment in long-horizon tool-use reasoning — a critical bottleneck for practical agents.
-
-**7. PAST-Bench: Benchmarking the Foundations of Recursive Self-Improvement in Personal Agents**
-http://arxiv.org/abs/2608.04003v1
-*Xue, Ding, Shen et al.* | cs.CL
-Introduces the first benchmark to test whether personal AI agents can convert accumulated experience (preferences, routines, skills) into measurably better future behavior across sessions.
-
-**8. ContinualSkillBench: Can LLM Agents Truly Evolve Their Capabilities?**
-http://arxiv.org/abs/2608.03874v1
-*Guan, Wang, Yang et al.* | cs.AI, cs.CL, cs.LG
-Challenges the assumption that skill libraries in agent frameworks lead to genuine capability evolution, introducing a benchmark that distinguishes skill retrieval from skill improvement.
-
-**9. ReflectRL: Learning from Golden Negative Trajectories via Reflective-to-Direct Reasoning**
-http://arxiv.org/abs/2608.03972v1
-*Bi, Zhou, Jin et al.* | cs.AI
-Shows that when expert trajectories fail on hard problems, reflective learning from those failures can still improve reasoning — addressing a key limitation of on-policy golden-trajectory distillation.
-
-**10. WorldCup Arena: Prospective, Leakage-Free Evaluation of Frontier LLMs on a Live Tournament**
-http://arxiv.org/abs/2608.04008v1
-*Wang, Bian, Li et al.* | cs.CL
-Evaluates LLM forecasting over the 39-day 2026 FIFA World Cup in real time, eliminating memorization and web-leakage concerns that plague retrospective benchmarks.
+8. **WorldCup Arena: Prospective, Leakage-Free Evaluation of Frontier LLMs on a Live Tournament**
+   [arxiv.org/abs/2608.04008](http://arxiv.org/abs/2608.04008) | Wang, Bian, Li et al.
+   Proposes evaluating LLM forecasting ability live over the 39-day 2026 FIFA World Cup, eliminating benchmark contamination entirely and measuring real-time predictive calibration.
 
 ---
 
-### 🔧 Methods & Frameworks
+### 🤖 Agents & Reasoning (planning, tool use, multi-agent, chain-of-thought)
 
-**11. ParVL: Parallel Scaling and Expandable Compute Allocation for Multimodal LLMs**
-http://arxiv.org/abs/2608.04010v1
-*Yang, Zhao, Chen et al.* | cs.CV, cs.CL
-Proposes parallel scaling with expandable compute allocation that breaks the rigid, fixed computation budget between modalities, reducing both memory and latency overhead in MLLMs.
+9. **PAST-Bench: Benchmarking the Foundations of Recursive Self-Improvement in Personal Agents**
+   [arxiv.org/abs/2608.04003](http://arxiv.org/abs/2608.04003) | Xue, Ding, Shen et al.
+   Introduces the first benchmark for whether personal AI agents can convert accumulated cross-session experience into improved future behavior — a foundational capability for recursive self-improvement.
 
-**12. Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse**
-http://arxiv.org/abs/2608.03893v1
-*Heo, Shafipour, Zhao et al.* | cs.LG
-Enables KV cache reuse across different-sized models in a family via a closed-form linear mapping, eliminating costly prefill recomputation during model swapping in production.
+10. **TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning**
+    [arxiv.org/abs/2608.04007](http://arxiv.org/abs/2608.04007) | Qu, Dai, Cai et al.
+    Replaces trajectory-level RL supervision with turn-level hindsight self-distillation, enabling fine-grained credit assignment in long-horizon tool-use chains.
 
-**13. Agogic: Performance-Timed Music Tokens for LLM-Native Text-to-Symbolic-Music Generation**
-http://arxiv.org/abs/2608.03999v1
-*Chen, Chen, Mao et al.* | cs.SD, cs.CL
-Isolates and measures the effect of music tokenization by swapping representations on fixed pretrained Qwen3.5 backbones, revealing that performance-timed tokens significantly improve symbolic music generation.
+11. **Video-DeepResearch: Towards the Next-Generation Multimodal Deep Research Agent**
+    [arxiv.org/abs/2608.03979](http://arxiv.org/abs/2608.03979) | Fang, Zeng, Huang et al.
+    Extends multimodal research agents from static images to continuous video streams, identifying two key bottlenecks — modality bias and sparse grounding — that must be solved for video-native agents.
 
-**14. Muon Meets Mamba: Spectral Optimization for State Space Models**
-http://arxiv.org/abs/2608.03941v1
-*Battalov, Kramin, Markotenko et al.* | cs.LG
-Extends Muon optimizer — previously validated on Transformers — to State Space Models, showing that spectral-norm optimization generalizes beyond attention-based architectures.
+12. **ContinualSkillBench: Can LLM Agents Truly Evolve Their Capabilities?**
+    [arxiv.org/abs/2608.03874](http://arxiv.org/abs/2608.03874) | Guan, Wang, Yang et al.
+    Tests whether agent frameworks with external skill libraries actually accumulate and improve skills over time, exposing a gap between current designs and genuine capability evolution.
 
-**15. Omega-S: A Functional Resilience Index for LLM Fine-Tuning**
-http://arxiv.org/abs/2608.03887v1
-*Acedo* | cs.LG, cs.NE
-Introduces a lightweight, drop-in penalty computed solely from weight matrices to measure and mitigate catastrophic forgetting during fine-tuning — no old weights, Fisher matrices, or task data required.
+13. **SocietyBench: Forecasting Counterfactual Social-World Evolution**
+    [arxiv.org/abs/2608.04009](http://arxiv.org/abs/2608.04009) | Wang, Bian, Li et al.
+    Benchmarks LLMs on forecasting how real social events would unfold under counterfactual conditions — a complementary social-reasoning dimension missing from task-completion-centric evaluations.
 
----
+14. **ReflectRL: Learning from Golden Negative Trajectories via Reflective-to-Direct Reasoning**
+    [arxiv.org/abs/2608.03972](http://arxiv.org/abs/2608.03972) | Bi, Zhou, Jin et al.
+    Proposes leveraging expert trajectories even when the expert fails on hard problems, by converting reflective reasoning into direct learning signals — broadening the utility of trajectory distillation.
 
-### 📊 Applications
-
-**16. Video-DeepResearch: Towards the Next-Generation Multimodal Deepresearch Agent**
-http://arxiv.org/abs/2608.03979v1
-*Fang, Zeng, Huang et al.* | cs.CV, cs.AI
-Extends multimodal deep-research agents from static images to continuous video streams, identifying modality bias and dense spatiotemporal grounding as critical bottlenecks.
-
-**17. CARE-X: Towards Clinically Useful Radiology VLMs with Auxiliary Supervision, Reward-Aligned Learning, and Tool-Augmented Measurement**
-http://arxiv.org/abs/2608.03890v1
-*Ranjit, Porya, Joel et al.* | cs.CV, cs.AI
-Integrates classification, localization, and anatomical measurement into a single chest X-ray VLM with tunable decision thresholds, moving beyond fluent report generation toward clinical utility.
-
-**18. PRISM: Powerful Time Series to Image (TS2I) Representations for Multivariate Anomaly Detection**
-http://arxiv.org/abs/2608.03926v1
-*Smendowski, Faber, Nawrocki et al.* | cs.LG, cs.AI, cs.CV
-Shows that well-designed time-series-to-image transformations significantly improve multivariate anomaly detection in predictive maintenance, finance, and cloud computing contexts.
-
-**19. TACT: Taxonomy-Aligned Post-Training for Pedagogically Adaptive English Tutoring**
-http://arxiv.org/abs/2608.03952v1
-*Yang, Lin, Shen et al.* | cs.AI
-Post-trains LLMs to select pedagogically appropriate actions for ESL tutoring based on learner behavior, moving beyond fluent response generation toward adaptive teaching.
-
-**20. CRS-Triage: Confidence- and Reliability-Aware Selective Triage under Incomplete Clinical Evidence**
-http://arxiv.org/abs/2608.03862v1
-*Qiang, Chen, Liu et al.* | cs.LG
-Introduces selective triage for emergency decisions that explicitly models EHR incompleteness and unreliability, deferring predictions when evidence quality is insufficient.
+15. **A Game Theory for Foundation Models Shows New Paths to Rational Cooperation through Similarity Inference**
+    [arxiv.org/abs/2608.03958](http://arxiv.org/abs/2608.03958) | Meulemans, Wołczyk, Weis et al.
+    Extends classical game theory for foundation-model agents by showing that similarity inference between agents can enable rational cooperation in ways classical frameworks miss.
 
 ---
 
-## 3. Research Trend Signal
+### 🔧 Methods & Frameworks (new techniques, benchmarks, efficiency improvements)
 
-Today's submissions reveal three converging research frontiers. First, **the measurement crisis in LLM evaluation** has sharpened: prospective, leakage-free benchmarks (WorldCup Arena), social forecasting (SocietyBench), and recursive self-improvement testing (PAST-Bench, ContinualSkillBench) all share a skepticism toward static benchmarks that models can memorize or game. The community is moving toward live, dynamic, and capability-evolution assessments. Second, **test-time compute is being treated as a first-class resource** — not just for reasoning LLMs but across modalities (ParVL's parallel scaling, KV cache transfer, interpretable sampling). The question is shifting from "how much compute to train" to "how to allocate inference compute optimally." Third, **alignment and control are moving downstream of training** — intertemporal preference steering, reflective RL from failures, and the Omega-S forgetting index all suggest a growing emphasis on post-hoc, lightweight interventions rather than expensive retraining. Together, these signals point toward a field maturing past raw capability gains toward controllability, evaluation rigor, and efficient deployment.
+16. **ParVL: Parallel Scaling and Expandable Compute Allocation for Multimodal LLMs**
+    [arxiv.org/abs/2608.04010](http://arxiv.org/abs/2608.04010) | Yang, Zhao, Chen et al.
+    Proposes parallel scaling that breaks the rigid parameter-vs-compute tradeoff in MLLMs by allocatable compute across modalities, reducing both memory and latency overhead.
+
+17. **Enhancing VLM Reward Models Through Structure-Aware Fine-Tuning**
+    [arxiv.org/abs/2608.03875](http://arxiv.org/abs/2608.03875) | Koussios, Li, Chen et al.
+    Improves VLM-based reward models for RL by fine-tuning with structural awareness, reducing reward noise that has plagued similarity-based reward signals.
+
+18. **Latent Reward Registers for Diffusion Preference Alignment**
+    [arxiv.org/abs/2608.03929](http://arxiv.org/abs/2608.03929) | Guan, Feng, Xiong et al.
+    Addresses temporal credit assignment in diffusion preference alignment by estimating terminal rewards at each denoising step via latent registers, instead of waiting for the final sample.
+
+19. **Sparse Weight Decomposition for Efficient Circuit Extraction**
+    [arxiv.org/abs/2608.03913](http://arxiv.org/abs/2608.03913) | Yan, Huang, Duan et al.
+    Extracts interpretable circuits from dense pretrained transformers without auxiliary sparse training, closing the fidelity gap that plagues existing circuit-extraction pipelines.
+
+20. **Muon Meets Mamba: Spectral Optimization for State Space Models**
+    [arxiv.org/abs/2608.03941](http://arxiv.org/abs/2608.03941) | Battalov, Kramin, Markotenko et al.
+    Extends the Muon optimizer — previously validated only on Transformers — to state space models, showing spectral-norm optimization transfers effectively beyond attention architectures.
+
+21. **Beyond Representational Similarity: Source-Conditioned Description-Length Gain for Generative Plagiarism Detection**
+    [arxiv.org/abs/2608.03859](http://arxiv.org/abs/2608.03859) | Guo, Xie, Li
+    Proposes a description-length-based method for detecting source reuse in LLM-generated text, shifting the focus from "AI-generated" detection to the underexplored problem of plagiarism detection.
 
 ---
 
-## 4. Worth Deep Reading
+### 📊 Applications (domain-specific, multimodal, code generation)
 
-**1. TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning**
-Tool use is arguably the most important capability for practical LLM deployment, yet credit assignment in multi-step tool trajectories remains poorly understood. TurnSight's shift from trajectory-level to turn-level supervision is a methodologically significant refinement that could generalize to any sequential decision-making setting. Its approach to on-policy self-distillation addresses a real pain point in agent training.
+22. **Can Large Language Models Recover Semantic Optimization Opportunities That Compilers Miss?**
+    [arxiv.org/abs/2608.03983](http://arxiv.org/abs/2608.03983) | Jiang, Yu, Hossain et al.
+    Tests whether LLMs can infer missing semantic information from heterogeneous C/C++ context and recover compiler-missed optimization opportunities as verified, contract-preserving transformations.
 
-**2. PAST-Bench: Benchmarking the Foundations of Recursive Self-Improvement in Personal Agents**
-If autonomous agents are to improve over time, we need rigorous benchmarks that test whether improvement is genuine or illusory. PAST-Bench directly addresses the question that separates speculative agent promises from demonstrated capability. The framing of "recursive self-improvement" in the personal agent setting — with retention of preferences, routines, and skills across sessions — is both tractable and consequential.
+23. **CARE-X: Towards Clinically Useful Radiology VLMs with Auxiliary Supervision, Reward-Aligned Learning, and Tool-Augmented Measurement**
+    [arxiv.org/abs/2608.03890](http://arxiv.org/abs/2608.03890) | Ranjit, Porya, Joel et al.
+    Builds a clinically useful chest X-ray VLM that unifies classification, spatial localization, and anatomical measurement — addressing the fragmentation that limits today's medical VLMs.
 
-**3. ParVL: Parallel Scaling and Expandable Compute Allocation for Multimodal LLMs**
-As multimodal LLMs grow, compute allocation between vision and language pathways is a critical but underexplored design choice. ParVL's proposal to replace rigid fixed allocation with expandable parallel compute is both practically motivated and theoretically clean. Its evaluation across model scales makes the findings broadly relevant to anyone building or deploying MLLMs.
+24. **When and Where to Look: Adaptive Visual Evidence Scheduling for Efficient Long Video Understanding**
+    [arxiv.org/abs/2608.03918](http://arxiv.org/abs/2608.03918) | Li, Chen, Li et al.
+    Replaces static frame selection in long-video VLMs with an adaptive scheduler that dynamically decides which frames to inspect, improving efficiency without sacrificing reasoning quality.
+
+25. **MultiGlobeQA: A Multilingual and Globally Diverse Benchmark for Geospatial Reasoning**
+    [arxiv.org/abs/2608.03882](http://arxiv.org/abs/2608.03882) | Böckling, Nosova, Paulheim et al.
+    Exposes LLMs' persistent struggles with geometric and topological spatial computation across multilingual, globally diverse地理 data — a critical gap for navigation and logistics applications.
+
+26. **ADMITBench: A Safety-Governed Reference Framework for Evaluating the Admissibility of Industrial LLM Advisories**
+    [arxiv.org/abs/2608.03866](http://arxiv.org/abs/2608.03866) | Misra, Vyas, Gutta et al.
+    Provides a safety-governed evaluation contract for industrial LLM recommendations, checking whether proposed actions are evidence-supported and permitted — moving evaluation from output quality to action admissibility.
+
+27. **Operational Feasibility in Synthetic Power-Grid Scenarios via Learning the AC-Operable Joint Distribution**
+    [arxiv.org/abs/2608.03878](http://arxiv.org/abs/2608.03878) | Xiao, He, Li et al.
+    Generates synthetic power-grid scenarios that satisfy AC power-flow constraints natively, enabling realistic planning and resilience assessment without costly post-hoc filtering.
+
+28. **HalluTruthQA-4K: A Fine-Grained Corpus and Annotation Process for Arabic Hallucination Detection and Truth Verification**
+    [arxiv.org/abs/2608.03966](http://arxiv.org/abs/2608.03966) | Bekhouche, Bouchekif, Telli et al.
+    Introduces fine-grained, span-level hallucination annotations for Arabic — a critical step beyond binary labels for low-resource languages where
 
 ---
 *This digest is auto-generated by [agents-radar](https://github.com/Chestnuts-0/os-feed).*
