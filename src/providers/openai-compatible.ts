@@ -24,7 +24,7 @@ export abstract class OpenAICompatibleProvider implements LlmProvider {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const params: any = {
       model: this.model,
-      max_tokens: maxTokens,
+      max_completion_tokens: maxTokens,
       messages: [{ role: "user", content: prompt }],
     };
     const response = await this.client.chat.completions.create(params);
