@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import type { FeedCard, Collection } from "./types.ts";
 import { FeedCardMemo, CardDetail } from "./FeedCard.tsx";
 import "./styles.css";
@@ -34,6 +35,11 @@ interface InteractionRecord {
   ts: number;
 }
 
+// 虚拟列表配置
+const OVERSCAN = 150; // 视口外上下各提前渲染 150px（多虚拟列表共存时减小缓冲，避免滚动深处测量冲突）
+const CARD_ESTIMATED_HEIGHT = 240; // 首卡实测前的估算值（不高不低，避免跳动）
+const ROW_GAP = 16; // feed-list 网格 gap
+
 const SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
   { key: "hot", icon: "🔥", title: "热门", desc: "高星项目" },
   { key: "ai", icon: "🤖", title: "AI前沿", desc: "AI核心技术" },
@@ -45,9 +51,6 @@ const SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
   { key: "learning", icon: "📚", title: "学习", desc: "教程与资源" },
 ];
 
-const INITIAL_VISIBLE = 30;
-const LOAD_MORE_COUNT = 20;
-
 // ---------------------------------------------------------------------------
 // localStorage
 // ---------------------------------------------------------------------------
@@ -56,60 +59,90 @@ function loadFeedback(): Feedback {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw) as Feedback;
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return { likes: [], dislikes: [] };
 }
 
 function saveFeedback(fb: Feedback): void {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(fb)); } catch { /* ignore */ }
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(fb));
+  } catch {
+    /* ignore */
+  }
 }
 
 function loadPreferences(): Preferences {
   try {
     const raw = localStorage.getItem(PREF_KEY);
     if (raw) return JSON.parse(raw) as Preferences;
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return { tagWeights: {}, lastUpdateTs: "" };
 }
 
 function savePreferences(prefs: Preferences): void {
-  try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch { /* ignore */ }
+  try {
+    localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
+  } catch {
+    /* ignore */
+  }
 }
 
 function loadCollections(): Collection[] {
   try {
     const raw = localStorage.getItem(COLLECTIONS_KEY);
     if (raw) return JSON.parse(raw) as Collection[];
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return [];
 }
 
 function saveCollections(cols: Collection[]): void {
-  try { localStorage.setItem(COLLECTIONS_KEY, JSON.stringify(cols)); } catch { /* ignore */ }
+  try {
+    localStorage.setItem(COLLECTIONS_KEY, JSON.stringify(cols));
+  } catch {
+    /* ignore */
+  }
 }
 
 function loadSeen(): Record<string, number> {
   try {
     const raw = localStorage.getItem(SEEN_KEY);
     if (raw) return JSON.parse(raw) as Record<string, number>;
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return {};
 }
 
 function saveSeen(s: Record<string, number>): void {
-  try { localStorage.setItem(SEEN_KEY, JSON.stringify(s)); } catch { /* ignore */ }
+  try {
+    localStorage.setItem(SEEN_KEY, JSON.stringify(s));
+  } catch {
+    /* ignore */
+  }
 }
 
 function loadInteractions(): Record<string, InteractionRecord> {
   try {
     const raw = localStorage.getItem(INTERACTIONS_KEY);
     if (raw) return JSON.parse(raw) as Record<string, InteractionRecord>;
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return {};
 }
 
 function saveInteractions(ints: Record<string, InteractionRecord>): void {
-  try { localStorage.setItem(INTERACTIONS_KEY, JSON.stringify(ints)); } catch { /* ignore */ }
+  try {
+    localStorage.setItem(INTERACTIONS_KEY, JSON.stringify(ints));
+  } catch {
+    /* ignore */
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -163,10 +196,26 @@ function applyFilter(
 // ---------------------------------------------------------------------------
 
 const AUTHORITATIVE_ORGS = new Set([
-  "openai", "anthropics", "google", "google-gemini", "google-research",
-  "microsoft", "meta", "facebookresearch", "huggingface", "nvidia",
-  "stabilityai", "pytorch", "tensorflow", "langchain-ai", "ollama",
-  "vllm-project", "ggerganov", "QwenLM", "deepseek-ai", "mistralai",
+  "openai",
+  "anthropics",
+  "google",
+  "google-gemini",
+  "google-research",
+  "microsoft",
+  "meta",
+  "facebookresearch",
+  "huggingface",
+  "nvidia",
+  "stabilityai",
+  "pytorch",
+  "tensorflow",
+  "langchain-ai",
+  "ollama",
+  "vllm-project",
+  "ggerganov",
+  "QwenLM",
+  "deepseek-ai",
+  "mistralai",
 ]);
 
 const LEARNING_RE = /awesome|tutorial|learn|course|guide|roadmap|study|educat/i;
@@ -226,6 +275,175 @@ function getSectionCards(cards: FeedCard[], sectionKey: string): FeedCard[] {
 }
 
 // ---------------------------------------------------------------------------
+// 分区虚拟列表（每区独立虚拟化，window 滚动 + 动态 scrollMargin 适配多分区偏移）
+// ---------------------------------------------------------------------------
+
+interface FeedVirtualListProps {
+  cards: FeedCard[];
+  likedSet: Set<string>;
+  dismissingSet: Set<string>;
+  onOpen: (card: FeedCard) => void;
+  onEndHint?: string;
+}
+
+// 单行组件：IntersectionObserver 精确感知视口（只给真正可见的行开 blur，兼负责首卡测量）
+interface FeedVirtualRowProps {
+  rowIndex: number;
+  rowStart: number;
+  scrollMargin: number;
+  left: FeedCard;
+  right?: FeedCard;
+  likedSet: Set<string>;
+  dismissingSet: Set<string>;
+  onOpen: (card: FeedCard) => void;
+  onMeasure?: (el: HTMLDivElement) => void;
+}
+
+function FeedVirtualRow({
+  rowIndex,
+  rowStart,
+  scrollMargin,
+  left,
+  right,
+  likedSet,
+  dismissingSet,
+  onOpen,
+  onMeasure,
+}: FeedVirtualRowProps) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [inViewport, setInViewport] = useState(false);
+
+  useEffect(() => {
+    const el = rowRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        setInViewport(entries[0]?.isIntersecting ?? false);
+      },
+      { rootMargin: "0px" },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={rowRef}
+      data-row={rowIndex}
+      className={`feed-virtual-row${inViewport ? " vf-in-viewport" : ""}`}
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        transform: `translateY(${rowStart - scrollMargin}px)`,
+      }}
+    >
+      <div className="feed-virtual-grid">
+        {left && (
+          <div className="feed-virtual-cell" ref={rowIndex === 0 ? onMeasure : undefined}>
+            <FeedCardMemo
+              card={left}
+              liked={likedSet.has(left.repo)}
+              dismissing={dismissingSet.has(left.repo)}
+              onOpen={onOpen}
+            />
+          </div>
+        )}
+        {right && (
+          <div className="feed-virtual-cell">
+            <FeedCardMemo
+              card={right}
+              liked={likedSet.has(right.repo)}
+              dismissing={dismissingSet.has(right.repo)}
+              onOpen={onOpen}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function FeedVirtualList({ cards, likedSet, dismissingSet, onOpen, onEndHint }: FeedVirtualListProps) {
+  const listRef = useRef<HTMLDivElement>(null);
+  const [rowHeight, setRowHeight] = useState<number>(CARD_ESTIMATED_HEIGHT);
+  // 列表容器相对文档顶部的偏移（前序分区高度变化时会变，需动态测量）
+  const [scrollMargin, setScrollMargin] = useState(0);
+
+  // 首卡实测高度（首卡渲染后测量一次，作为行高估算；不高不低避免跳动）
+  const handleMeasure = useCallback((el: HTMLDivElement | null) => {
+    if (!el) return;
+    const h = el.getBoundingClientRect().height;
+    if (h > 0)
+      setRowHeight((prev) => {
+        const next = Math.max(140, Math.round(h));
+        return next === prev ? prev : next;
+      });
+  }, []);
+
+  // 动态测量列表容器文档偏移：自身/前序内容尺寸变化、窗口 resize 都会影响
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      setScrollMargin(Math.round(rect.top + window.scrollY));
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(document.body);
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  // 行数 = 每行 2 卡（两列网格）
+  const rowCount = Math.ceil(cards.length / 2);
+  const rowVirtualizer = useWindowVirtualizer({
+    count: rowCount,
+    estimateSize: () => rowHeight + ROW_GAP,
+    overscan: Math.max(1, Math.ceil(OVERSCAN / rowHeight)),
+    scrollMargin,
+    getItemKey: (index) => cards[index * 2]?.repo ?? `row-${index}`,
+  });
+
+  const virtualRows = rowVirtualizer.getVirtualItems();
+
+  return (
+    <div className="feed-virtual" ref={listRef}>
+      <div
+        className="feed-virtual-spacer"
+        style={{ height: `${rowVirtualizer.getTotalSize()}px`, position: "relative" }}
+      >
+        {virtualRows.map((row) => {
+          const left = cards[row.index * 2];
+          const right = cards[row.index * 2 + 1];
+          if (!left && !right) return null;
+          return (
+            <FeedVirtualRow
+              key={row.key}
+              rowIndex={row.index}
+              rowStart={row.start}
+              scrollMargin={rowVirtualizer.options.scrollMargin}
+              left={left}
+              right={right}
+              likedSet={likedSet}
+              dismissingSet={dismissingSet}
+              onOpen={onOpen}
+              onMeasure={row.index === 0 ? handleMeasure : undefined}
+            />
+          );
+        })}
+      </div>
+      {onEndHint && <div className="section-end-hint">{onEndHint}</div>}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // 客户端标签权重微调
 // ---------------------------------------------------------------------------
 
@@ -252,15 +470,23 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback>(loadFeedback);
-  const [preferences, setPreferences] = useState<Preferences>(loadPreferences);
+  // 已点赞集合（供卡片 ❤️ 标记；点赞不重排，仅此集合驱动小图标）
+  const likedSet = useMemo(() => new Set(feedback.likes), [feedback.likes]);
+  // 权重/交互只写 localStorage，不触发重渲染（交互零重排核心：点赞/点踩不重算 sections）
+  const [preferences] = useState<Preferences>(loadPreferences);
+  const prefsRef = useRef(preferences);
+  const [interactions] = useState<Record<string, InteractionRecord>>(loadInteractions);
+  const interactionsRef = useRef(interactions);
   const [collections, setCollections] = useState<Collection[]>(loadCollections);
   const [seen, setSeen] = useState<Record<string, number>>(loadSeen);
-  const [interactions, setInteractions] = useState<Record<string, InteractionRecord>>(loadInteractions);
   const [expandedCols, setExpandedCols] = useState<Record<string, boolean>>({});
   const [searchQuery, setSearchQuery] = useState("");
   const [searchVisible, setSearchVisible] = useState(10);
   const [detailCard, setDetailCard] = useState<FeedCard | null>(null);
-  const [sectionVisible, setSectionVisible] = useState<Record<string, number>>({});
+  // 点踩淡出中的卡片（300ms 动画后移除）
+  const [dismissing, setDismissing] = useState<Set<string>>(new Set());
+  // 本次会话已点踩消失的卡片（不再渲染，避免滚动回来复活）
+  const [dismissed, setDismissed] = useState<Set<string>>(new Set());
   const [feedFilter, setFeedFilter] = useState<string>("");
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -291,10 +517,10 @@ export default function App() {
     return () => window.removeEventListener("keydown", handler);
   }, [detailCard]);
 
-  // 反馈操作 — 更新标签权重
-  const updateTagWeights = useCallback((repos: string[], delta: number) => {
-    setPreferences((prev) => {
-      const tw = { ...prev.tagWeights };
+  // 反馈操作 — 更新标签权重（只写 localStorage + ref，不触发重渲染）
+  const updateTagWeights = useCallback(
+    (repos: string[], delta: number) => {
+      const tw = { ...prefsRef.current.tagWeights };
       for (const repo of repos) {
         const card = cards.find((c) => c.repo === repo);
         if (!card) continue;
@@ -304,58 +530,80 @@ export default function App() {
         }
       }
       const next = { tagWeights: tw, lastUpdateTs: new Date().toISOString() };
+      prefsRef.current = next;
       savePreferences(next);
-      return next;
-    });
-  }, [cards]);
+    },
+    [cards],
+  );
 
-  const handleLike = useCallback((repo: string) => {
-    setFeedback((prev) => {
-      const likes = prev.likes.includes(repo)
-        ? prev.likes.filter((r) => r !== repo)
-        : [...prev.likes, repo];
-      const dislikes = prev.dislikes.filter((r) => r !== repo);
-      const next = { likes, dislikes };
-      saveFeedback(next);
-      return next;
-    });
-    // 记录交互
-    setInteractions((prev) => {
-      const next = { ...prev, [repo]: { type: "like" as InteractionType, ts: Date.now() } };
-      saveInteractions(next);
-      return next;
-    });
-    updateTagWeights([repo], 0.03);
-  }, [updateTagWeights]);
+  const handleLike = useCallback(
+    (repo: string) => {
+      setFeedback((prev) => {
+        const likes = prev.likes.includes(repo)
+          ? prev.likes.filter((r) => r !== repo)
+          : [...prev.likes, repo];
+        const dislikes = prev.dislikes.filter((r) => r !== repo);
+        const next = { likes, dislikes };
+        saveFeedback(next);
+        return next;
+      });
+      // 记录交互（只写 localStorage + ref，不触发重渲染/重排）
+      interactionsRef.current = {
+        ...interactionsRef.current,
+        [repo]: { type: "like" as InteractionType, ts: Date.now() },
+      };
+      saveInteractions(interactionsRef.current);
+      // 权重累加（原逻辑保留），排序在下次页面加载/刷新时生效 —— 不触发 sections 重算
+      updateTagWeights([repo], 0.03);
+    },
+    [updateTagWeights],
+  );
 
-  const handleDislike = useCallback((repo: string) => {
-    setFeedback((prev) => {
-      const dislikes = prev.dislikes.includes(repo)
-        ? prev.dislikes.filter((r) => r !== repo)
-        : [...prev.dislikes, repo];
-      const likes = prev.likes.filter((r) => r !== repo);
-      const next = { likes, dislikes };
-      saveFeedback(next);
-      return next;
-    });
-    // 记录交互
-    setInteractions((prev) => {
-      const next = { ...prev, [repo]: { type: "dislike" as InteractionType, ts: Date.now() } };
-      saveInteractions(next);
-      return next;
-    });
-    updateTagWeights([repo], -0.05);
-  }, [updateTagWeights]);
+  const handleDislike = useCallback(
+    (repo: string) => {
+      setFeedback((prev) => {
+        const dislikes = prev.dislikes.includes(repo)
+          ? prev.dislikes.filter((r) => r !== repo)
+          : [...prev.dislikes, repo];
+        const likes = prev.likes.filter((r) => r !== repo);
+        const next = { likes, dislikes };
+        saveFeedback(next);
+        return next;
+      });
+      // 记录交互（只写 localStorage + ref，不触发重渲染/重排）
+      interactionsRef.current = {
+        ...interactionsRef.current,
+        [repo]: { type: "dislike" as InteractionType, ts: Date.now() },
+      };
+      saveInteractions(interactionsRef.current);
+      // 权重累加（原逻辑保留），排序在下次页面加载/刷新时生效 —— 不触发 sections 重算
+      updateTagWeights([repo], -0.05);
+      // 点踩：卡片淡出动画后消失（不重排列表）
+      setDismissing((prev) => new Set(prev).add(repo));
+      window.setTimeout(() => {
+        setDismissed((prev) => new Set(prev).add(repo));
+        setDismissing((prev) => {
+          const next = new Set(prev);
+          next.delete(repo);
+          return next;
+        });
+      }, 300);
+    },
+    [updateTagWeights],
+  );
 
-  const handleUpdateCollections = useCallback((newCols: Collection[]) => {
-    const prevBookmarked = detailCard ? collections.some((c) => c.repos.includes(detailCard.repo)) : false;
-    const newBookmarked = detailCard ? newCols.some((c) => c.repos.includes(detailCard.repo)) : false;
-    setCollections(newCols);
-    saveCollections(newCols);
-    if (detailCard && newBookmarked !== prevBookmarked) {
-      updateTagWeights([detailCard.repo], newBookmarked ? 0.05 : -0.05);
-    }
-  }, [collections, detailCard, updateTagWeights]);
+  const handleUpdateCollections = useCallback(
+    (newCols: Collection[]) => {
+      const prevBookmarked = detailCard ? collections.some((c) => c.repos.includes(detailCard.repo)) : false;
+      const newBookmarked = detailCard ? newCols.some((c) => c.repos.includes(detailCard.repo)) : false;
+      setCollections(newCols);
+      saveCollections(newCols);
+      if (detailCard && newBookmarked !== prevBookmarked) {
+        updateTagWeights([detailCard.repo], newBookmarked ? 0.05 : -0.05);
+      }
+    },
+    [collections, detailCard, updateTagWeights],
+  );
 
   const handleCreateCollection = useCallback(() => {
     const name = prompt("收藏夹名称：");
@@ -386,9 +634,7 @@ export default function App() {
 
   const handleRemoveFromCollection = useCallback((colId: string, repo: string) => {
     setCollections((prev) => {
-      const next = prev.map((c) =>
-        c.id === colId ? { ...c, repos: c.repos.filter((r) => r !== repo) } : c,
-      );
+      const next = prev.map((c) => (c.id === colId ? { ...c, repos: c.repos.filter((r) => r !== repo) } : c));
       saveCollections(next);
       return next;
     });
@@ -427,11 +673,16 @@ export default function App() {
     }).filter((s) => s.cards.length > 0);
   }, [visibleCards, preferences]);
 
-  // 过滤后的分区（feedFilter 为空显示全部，否则只显示匹配分区）
+  // 过滤后的分区（feedFilter 为空显示全部，否则只显示匹配分区；点踩消失的卡不再进分区）
   const filteredSections = useMemo(() => {
-    if (feedFilter === "") return sections;
-    return sections.filter((s) => s.key === feedFilter);
-  }, [sections, feedFilter]);
+    const base = sections.map((s) => ({
+      ...s,
+      cards: s.cards.filter((c) => !dismissed.has(c.repo)),
+    }));
+    const nonEmpty = base.filter((s) => s.cards.length > 0);
+    if (feedFilter === "") return nonEmpty;
+    return nonEmpty.filter((s) => s.key === feedFilter);
+  }, [sections, feedFilter, dismissed]);
 
   // 活跃分区检测（已移除 IntersectionObserver，改用 feedFilter）
 
@@ -457,7 +708,9 @@ export default function App() {
     );
   }, [visibleCards, searchQuery]);
 
-  useEffect(() => { setSearchVisible(10); }, [searchQuery]);
+  useEffect(() => {
+    setSearchVisible(10);
+  }, [searchQuery]);
 
   // 搜索无限滚动
   useEffect(() => {
@@ -481,15 +734,12 @@ export default function App() {
     setFeedFilter((prev) => (prev === key ? "" : key));
   }, []);
 
-  // 无限滚动 sentinel 回调（分区）
-  const handleSectionSentinel = useCallback((key: string) => {
-    setSectionVisible((prev) => ({
-      ...prev,
-      [key]: Math.min((prev[key] ?? INITIAL_VISIBLE) + LOAD_MORE_COUNT, 9999),
-    }));
+  // 无限滚动 sentinel 回调（分区）—— 已由虚拟列表取代，保留为 no-op 兼容
+  const handleSectionSentinel = useCallback((_key: string) => {
+    // 虚拟列表按需渲染，无需增量加载
   }, []);
 
-  // 为每个分区挂载 sentinel observer
+  // 为每个分区挂载 sentinel observer（虚拟列表已按需渲染，此 observer 仅保留兼容）
   useEffect(() => {
     if (tab !== "feed") return;
     const sentinelMap = new Map<string, IntersectionObserver>();
@@ -513,11 +763,14 @@ export default function App() {
     };
   }, [tab, filteredSections, handleSectionSentinel]);
 
-  const stats = useMemo(() => ({
-    total: cards.length,
-    bigbro: bigbroCards.length,
-    sections: sections.length,
-  }), [cards, bigbroCards, sections]);
+  const stats = useMemo(
+    () => ({
+      total: cards.length,
+      bigbro: bigbroCards.length,
+      sections: sections.length,
+    }),
+    [cards, bigbroCards, sections],
+  );
 
   // -----------------------------------------------------------------------
   // 渲染
@@ -532,7 +785,10 @@ export default function App() {
             <button className={`tab${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
               推荐
             </button>
-            <button className={`tab${tab === "collections" ? " active" : ""}`} onClick={() => setTab("collections")}>
+            <button
+              className={`tab${tab === "collections" ? " active" : ""}`}
+              onClick={() => setTab("collections")}
+            >
               收藏 {collections.length > 0 && <span className="tab-count">{collections.length}</span>}
             </button>
             <button className={`tab${tab === "bigbro" ? " active" : ""}`} onClick={() => setTab("bigbro")}>
@@ -582,50 +838,36 @@ export default function App() {
               </div>
             )}
             {error && (
-              <div className="status error"><p>⚠️ 加载失败: {error}</p></div>
+              <div className="status error">
+                <p>⚠️ 加载失败: {error}</p>
+              </div>
             )}
             {!loading && !error && sections.length === 0 && (
-              <div className="status"><p>📭 暂无内容</p></div>
+              <div className="status">
+                <p>📭 暂无内容</p>
+              </div>
             )}
-            {!loading && !error && filteredSections.map((section) => {
-              const visible = sectionVisible[section.key] ?? INITIAL_VISIBLE;
-              const shown = section.cards.slice(0, visible);
-              const hasMore = section.cards.length > visible;
-              return (
-                <section
-                  key={section.key}
-                  id={`section-${section.key}`}
-                  className="section"
-                >
-                  <div className="section-header">
-                    <span className="section-icon">{section.icon}</span>
-                    <span className="section-title">{section.title}</span>
-                    <span className="section-count">{section.cards.length}</span>
-                    <span className="section-desc">{section.desc}</span>
-                  </div>
-                  <div className="feed-list">
-                    {shown.map((card) => (
-                      <FeedCardMemo
-                        key={card.repo}
-                        card={card}
-                        liked={feedback.likes.includes(card.repo)}
-                        onOpen={handleOpenDetail}
-                      />
-                    ))}
-                  </div>
-                  {hasMore && (
-                    <div id={`sentinel-${section.key}`} className="section-sentinel">
-                      <div className="spinner small" />
+            {!loading &&
+              !error &&
+              filteredSections.map((section) => {
+                return (
+                  <section key={section.key} id={`section-${section.key}`} className="section">
+                    <div className="section-header">
+                      <span className="section-icon">{section.icon}</span>
+                      <span className="section-title">{section.title}</span>
+                      <span className="section-count">{section.cards.length}</span>
+                      <span className="section-desc">{section.desc}</span>
                     </div>
-                  )}
-                  {!hasMore && section.cards.length > 0 && (
-                    <div className="section-end-hint">
-                      已加载全部 {section.cards.length} 个项目
-                    </div>
-                  )}
-                </section>
-              );
-            })}
+                    <FeedVirtualList
+                      cards={section.cards}
+                      likedSet={likedSet}
+                      dismissingSet={dismissing}
+                      onOpen={handleOpenDetail}
+                      onEndHint={`已加载全部 ${section.cards.length} 个项目`}
+                    />
+                  </section>
+                );
+              })}
           </>
         )}
 
@@ -634,7 +876,8 @@ export default function App() {
           <>
             <div className="collections-header">
               <span className="collections-stats">
-                📊 共 {collections.length} 个收藏夹 · {collections.reduce((sum, c) => sum + c.repos.length, 0)} 个项目
+                📊 共 {collections.length} 个收藏夹 ·{" "}
+                {collections.reduce((sum, c) => sum + c.repos.length, 0)} 个项目
               </span>
             </div>
 
@@ -662,7 +905,10 @@ export default function App() {
                     <span className="folder-count">({col.repos.length}个)</span>
                     <button
                       className="folder-delete"
-                      onClick={(e) => { e.stopPropagation(); handleDeleteCollection(col.id); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteCollection(col.id);
+                      }}
                       title="删除收藏夹"
                     >
                       🗑
@@ -714,7 +960,9 @@ export default function App() {
                 alt={BIGBRO_NAME}
                 className="bigbro-avatar"
                 loading="lazy"
-                onError={(e) => { (e.target as HTMLImageElement).style.visibility = "hidden"; }}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.visibility = "hidden";
+                }}
               />
               <div className="bigbro-info">
                 <h2>{BIGBRO_NAME}</h2>
@@ -745,7 +993,8 @@ export default function App() {
               <div className="status">
                 <p>⏳ {BIGBRO_NAME} 的 star 动态将在下次数据更新后出现</p>
                 <p className="hint">
-                  每天自动采集大牛最新 star 的项目。<br />
+                  每天自动采集大牛最新 star 的项目。
+                  <br />
                   请等待下一次 Daily Agents Radar 运行。
                 </p>
               </div>
@@ -766,11 +1015,15 @@ export default function App() {
                 autoFocus
               />
               {searchQuery && (
-                <button className="search-clear" onClick={() => setSearchQuery("")}>✕</button>
+                <button className="search-clear" onClick={() => setSearchQuery("")}>
+                  ✕
+                </button>
               )}
             </div>
             {searchQuery && searchResults.length === 0 && (
-              <div className="status"><p>🔍 没搜到，换个关键词试试？</p></div>
+              <div className="status">
+                <p>🔍 没搜到，换个关键词试试？</p>
+              </div>
             )}
             {searchResults.length > 0 && (
               <div className="feed-list">
@@ -804,7 +1057,8 @@ export default function App() {
               <li>"大牛们最近都在 star 什么？"</li>
             </ul>
             <p className="chat-hint">
-              需要在 Claude Desktop 或其他 MCP 客户端中配置本项目的 MCP Server。<br />
+              需要在 Claude Desktop 或其他 MCP 客户端中配置本项目的 MCP Server。
+              <br />
               运行 <code>pnpm mcp</code> 启动后即可对话搜索。
             </p>
           </div>
@@ -812,8 +1066,12 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <span>{stats.total} 个项目 · {stats.sections} 个分区 · </span>
-        <span>👍 {feedback.likes.length} · 👎 {feedback.dislikes.length}</span>
+        <span>
+          {stats.total} 个项目 · {stats.sections} 个分区 ·{" "}
+        </span>
+        <span>
+          👍 {feedback.likes.length} · 👎 {feedback.dislikes.length}
+        </span>
       </footer>
 
       {/* 详情弹窗 */}

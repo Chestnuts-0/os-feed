@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import type { FeedCard as Card, Collection } from "./types.ts";
 
 // ---------------------------------------------------------------------------
@@ -13,10 +13,14 @@ function formatStars(n: number): string {
 
 function sourceLabel(src: string): string {
   switch (src) {
-    case "trending": return "🔥 热门";
-    case "bigbro": return "👥 大牛";
-    case "search": return "🔍 搜索";
-    default: return src;
+    case "trending":
+      return "🔥 热门";
+    case "bigbro":
+      return "👥 大牛";
+    case "search":
+      return "🔍 搜索";
+    default:
+      return src;
   }
 }
 
@@ -36,14 +40,76 @@ function cleanReason(text: string): string {
 }
 
 const LANG_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6", JavaScript: "#f1e05a", Python: "#3572A5",
-  Go: "#00ADD8", Rust: "#dea584", Java: "#b07219",
-  "C++": "#f34b7d", C: "#555555", "C#": "#178600",
-  Ruby: "#701516", Swift: "#F05138", Kotlin: "#A97BFF",
-  Dart: "#00B4AB", Vue: "#41b883", HTML: "#e34c26",
-  CSS: "#563d7c", Shell: "#89e051", Jupyter: "#DA5B0B",
+  TypeScript: "#3178c6",
+  JavaScript: "#f1e05a",
+  Python: "#3572A5",
+  Go: "#00ADD8",
+  Rust: "#dea584",
+  Java: "#b07219",
+  "C++": "#f34b7d",
+  C: "#555555",
+  "C#": "#178600",
+  Ruby: "#701516",
+  Swift: "#F05138",
+  Kotlin: "#A97BFF",
+  Dart: "#00B4AB",
+  Vue: "#41b883",
+  HTML: "#e34c26",
+  CSS: "#563d7c",
+  Shell: "#89e051",
+  Jupyter: "#DA5B0B",
   PHP: "#4F5D95",
 };
+
+// ---------------------------------------------------------------------------
+// 头像预加载组件（IntersectionObserver rootMargin 500px 提前加载 + 骨架屏占位）
+// ---------------------------------------------------------------------------
+
+const PRELOAD_MARGIN = "500px";
+
+interface AvatarProps {
+  owner: string;
+  size: number;
+  className: string;
+}
+
+function GithubAvatar({ owner, size, className }: AvatarProps) {
+  const ref = useRef<HTMLImageElement | null>(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    // 已加载完成（含失败）无需再观察
+    if (loaded) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          el.src = `https://github.com/${owner}.png?size=${size}`;
+          observer.disconnect();
+        }
+      },
+      { rootMargin: PRELOAD_MARGIN },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [owner, size, loaded]);
+
+  return (
+    <span className={`avatar-wrap ${className}-wrap`}>
+      {!loaded && <span className="avatar-skeleton" aria-hidden="true" />}
+      <img
+        ref={ref}
+        alt=""
+        className={className}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        onError={() => setLoaded(true)}
+      />
+    </span>
+  );
+}
 
 // ---------------------------------------------------------------------------
 // 紧凑卡片组件（两列网格用）
@@ -52,24 +118,23 @@ const LANG_COLORS: Record<string, string> = {
 interface Props {
   card: Card;
   liked: boolean;
+  dismissing?: boolean;
   onOpen: (card: Card) => void;
 }
 
-function FeedCardComponent({ card, liked, onOpen }: Props) {
+function FeedCardComponent({ card, liked, dismissing = false, onOpen }: Props) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
   const reason = cleanReason(card.reasonCn);
 
   return (
-    <article className="card" onClick={() => onOpen(card)}>
-      {liked && <span className="card-liked" title="已点赞">❤️</span>}
+    <article className={`card${dismissing ? " dismissing" : ""}`} onClick={() => onOpen(card)}>
+      {liked && (
+        <span className="card-liked" title="已点赞">
+          ❤️
+        </span>
+      )}
       <div className="card-header">
-        <img
-          src={`https://github.com/${card.owner}.png?size=40`}
-          alt=""
-          className="avatar"
-          loading="lazy"
-          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-        />
+        <GithubAvatar owner={card.owner} size={40} className="avatar" />
         <div className="card-title">
           <span className="repo-link">
             <span className="repo-owner">{card.owner}</span>
@@ -77,9 +142,7 @@ function FeedCardComponent({ card, liked, onOpen }: Props) {
             <span className="repo-name">{card.name}</span>
           </span>
           <div className="card-subtitle">
-            <span className={`source-badge source-${card.source}`}>
-              {sourceLabel(card.source)}
-            </span>
+            <span className={`source-badge source-${card.source}`}>{sourceLabel(card.source)}</span>
             <span>{timeAgo(card.ts)}</span>
           </div>
         </div>
@@ -93,9 +156,7 @@ function FeedCardComponent({ card, liked, onOpen }: Props) {
         <span className="meta-item stars" title={`${card.stars} stars`}>
           ★ {formatStars(card.stars)}
         </span>
-        {card.starGrowth > 0 && (
-          <span className="meta-item growth">+{card.starGrowth}</span>
-        )}
+        {card.starGrowth > 0 && <span className="meta-item growth">+{card.starGrowth}</span>}
         {card.language && (
           <span className="meta-item">
             <span className="lang-dot" style={{ background: langColor }} />
@@ -111,9 +172,7 @@ function FeedCardComponent({ card, liked, onOpen }: Props) {
               {tag.name}
             </span>
           ))}
-          {card.tags.length > 8 && (
-            <span className="tag-chip tag-more">+{card.tags.length - 8}</span>
-          )}
+          {card.tags.length > 8 && <span className="tag-chip tag-more">+{card.tags.length - 8}</span>}
         </div>
       )}
     </article>
@@ -137,7 +196,16 @@ interface DetailProps {
   onClose: () => void;
 }
 
-export function CardDetail({ card, liked, disliked, collections, onLike, onDislike, onUpdateCollections, onClose }: DetailProps) {
+export function CardDetail({
+  card,
+  liked,
+  disliked,
+  collections,
+  onLike,
+  onDislike,
+  onUpdateCollections,
+  onClose,
+}: DetailProps) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
   const reason = cleanReason(card.reasonCn);
 
@@ -172,16 +240,12 @@ export function CardDetail({ card, liked, disliked, collections, onLike, onDisli
   return (
     <div className="detail-overlay" onClick={onClose}>
       <div className="detail-card" onClick={(e) => e.stopPropagation()}>
-        <button className="detail-close" onClick={onClose}>✕</button>
+        <button className="detail-close" onClick={onClose}>
+          ✕
+        </button>
 
         <div className="detail-header">
-          <img
-            src={`https://github.com/${card.owner}.png?size=56`}
-            alt=""
-            className="detail-avatar"
-            loading="lazy"
-            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-          />
+          <GithubAvatar owner={card.owner} size={56} className="detail-avatar" />
           <div>
             <div className="detail-repo">
               <span className="repo-owner">{card.owner}</span>
@@ -189,9 +253,7 @@ export function CardDetail({ card, liked, disliked, collections, onLike, onDisli
               <span className="repo-name">{card.name}</span>
             </div>
             <div className="detail-subtitle">
-              <span className={`source-badge source-${card.source}`}>
-                {sourceLabel(card.source)}
-              </span>
+              <span className={`source-badge source-${card.source}`}>{sourceLabel(card.source)}</span>
               <span>{timeAgo(card.ts)}</span>
             </div>
           </div>
@@ -217,9 +279,7 @@ export function CardDetail({ card, liked, disliked, collections, onLike, onDisli
           <span className="meta-item stars" title={`${card.stars} stars`}>
             ★ {formatStars(card.stars)} stars
           </span>
-          {card.starGrowth > 0 && (
-            <span className="meta-item growth">+{card.starGrowth} 今日增长</span>
-          )}
+          {card.starGrowth > 0 && <span className="meta-item growth">+{card.starGrowth} 今日增长</span>}
           {card.language && (
             <span className="meta-item">
               <span className="lang-dot" style={{ background: langColor }} />
@@ -232,7 +292,9 @@ export function CardDetail({ card, liked, disliked, collections, onLike, onDisli
         {card.topics.length > 0 && (
           <div className="detail-topics">
             {card.topics.map((t) => (
-              <span key={t} className="topic-tag">{t}</span>
+              <span key={t} className="topic-tag">
+                {t}
+              </span>
             ))}
           </div>
         )}
@@ -241,11 +303,8 @@ export function CardDetail({ card, liked, disliked, collections, onLike, onDisli
           <div className="detail-bigbro">
             <span style={{ fontSize: "1.1rem" }}>👥</span>
             <span>
-              <strong style={{ color: "#c4b5fd" }}>
-                {card.bigbros.slice(0, 3).join("、")}
-              </strong>
-              {card.bigbros.length > 3 && ` 等${card.bigbros.length}位`}
-              {" "}关注的大牛 star 了
+              <strong style={{ color: "#c4b5fd" }}>{card.bigbros.slice(0, 3).join("、")}</strong>
+              {card.bigbros.length > 3 && ` 等${card.bigbros.length}位`} 关注的大牛 star 了
             </span>
           </div>
         )}
@@ -266,16 +325,13 @@ export function CardDetail({ card, liked, disliked, collections, onLike, onDisli
           <button
             className={`action-btn bookmark-btn${inCollections.length > 0 ? " active" : ""}`}
             onClick={() => setShowPicker(!showPicker)}
-            title={inCollections.length > 0 ? `已收藏到 ${inCollections.map(c => c.name).join("、")}` : "收藏"}
+            title={
+              inCollections.length > 0 ? `已收藏到 ${inCollections.map((c) => c.name).join("、")}` : "收藏"
+            }
           >
             ⭐
           </button>
-          <a
-            href={card.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="action-btn open-btn"
-          >
+          <a href={card.url} target="_blank" rel="noopener noreferrer" className="action-btn open-btn">
             GitHub 主页 ↗
           </a>
         </div>
@@ -285,21 +341,17 @@ export function CardDetail({ card, liked, disliked, collections, onLike, onDisli
           <div className="collection-picker" onClick={(e) => e.stopPropagation()}>
             <div className="picker-header">
               <span>选择收藏夹</span>
-              <button className="picker-close" onClick={() => setShowPicker(false)}>✕</button>
+              <button className="picker-close" onClick={() => setShowPicker(false)}>
+                ✕
+              </button>
             </div>
             <div className="picker-list">
-              {collections.length === 0 && (
-                <p className="picker-empty">暂无收藏夹，在下方创建</p>
-              )}
+              {collections.length === 0 && <p className="picker-empty">暂无收藏夹，在下方创建</p>}
               {collections.map((col) => {
                 const checked = col.repos.includes(card.repo);
                 return (
                   <label key={col.id} className="picker-item">
-                    <input
-                      type="checkbox"
-                      checked={checked}
-                      onChange={() => toggleCollection(col.id)}
-                    />
+                    <input type="checkbox" checked={checked} onChange={() => toggleCollection(col.id)} />
                     <span className="picker-item-name">{col.name}</span>
                     <span className="picker-item-count">({col.repos.length}个)</span>
                   </label>
@@ -313,7 +365,9 @@ export function CardDetail({ card, liked, disliked, collections, onLike, onDisli
                 placeholder="新建收藏夹…"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                onKeyDown={(e) => { if (e.key === "Enter") createAndAdd(); }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") createAndAdd();
+                }}
               />
               <button className="picker-create-btn" onClick={createAndAdd} disabled={!newName.trim()}>
                 + 创建
