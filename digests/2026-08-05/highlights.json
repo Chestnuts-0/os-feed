@@ -1,122 +1,69 @@
 {
   "zh": {
     "ai-cli": [
-      "Claude Code v2.1.222发布，持续修复稳定性问题",
-      "OpenAI Codex Alpha快速迭代至0.147.0版本",
-      "Gemini CLI社区最活跃，新增Issues达50条",
-      "Copilot CLI热修复至v1.0.79，聚焦企业适配",
-      "MCP工具链稳定性成全行业共同攻坚方向",
-      "跨会话记忆系统成为开发者核心诉求"
+      "Claude Code v2.1.222发布安全修复",
+      "Gemini CLI紧急修补SSRF与变量扩展绕过漏洞",
+      "OpenAI Codex高频alpha迭代转向权限重构",
+      "Qwen Code提出确定性工具执行边界提案",
+      "会话持久化与跨设备续接成行业共识需求",
+      "OpenCode启动v2架构迁移关键期"
     ],
     "ai-agents": [
-      "OpenClaw日均500条Issue与PR保持极高活跃",
-      "P0级Bug修复：防止媒体文件永久删除风险",
-      "会话状态分支一致性修复获重点推进",
-      "子智能体完成丢失问题修复已就绪",
-      "插件质量QA体系升级，防止gateway崩溃",
-      "Diamond Lobster级问题暴露并发深层缺陷"
+      "OpenClaw 24小时处理500条Issue和PR",
+      "Gateway CSRF修复堵住跨站Cookie绕过漏洞",
+      "子代理结果静默丢失列为P0级紧急Bug",
+      "多Agent认证信息隔离方案提上日程",
+      "媒体清理fail-closed修复防文件丢失",
+      "本地tsgo检查可耗尽多核CPU问题已修复"
     ],
     "ai-trending": [
-      "AirLLM单张4GB显存即可运行70B大模型",
-      "RTK工具可削减60-90%的LLM Token消耗",
-      "DeepSeek-Reasonix原生编程Agent获赞3.1万",
-      "腾讯开源团队级Agent记忆中枢，获1.4万星",
-      "Hermes Agent自进化助手社区热度飙升",
-      "Browser-use推出AI编程编辑视频新工具"
+      "腾讯DB Agent Memory单日+1111 stars登顶",
+      "airllm单卡4GB推理70B模型引关注",
+      "逆向技能包+2297 stars支持Claude Code",
+      "Hermes Agent自进化架构获616 stars",
+      "DeepSeek-Reasonix基于prefix-cache优化",
+      "Rust语言在AI基础设施全面渗透"
     ],
     "ai-web": [
-      "Anthropic设立首任首席全球事务官职位",
-      "前卡内基国际和平基金会主席Tino加盟",
-      "Tino拥有司法、学术、国家安全三重背景",
-      "OpenAI发布经济研究交换平台新内容",
-      "OpenAI推出ChatGpt教学与Codex工作指南",
-      "OpenAI发表Apple战略分析评论文章"
-    ],
-    "ai-arxiv": [
-      "ParVL多模态模型并行扩展计算分配方案",
-      "Test-Time Scaling成为推理效率最热话题",
-      "ALiBi位置编码浮点精度下存在数值失效",
-      "跨模型KV Cache复用实现Prefill阶段节省",
-      "DeepSeek-V4 Flash系列成HF下载量标杆",
-      "GLM-5.2获近5000赞领跑国产开源模型"
-    ],
-    "ai-hf": [
-      "DeepSeek-V4 Flash下载量突破273万",
-      "GLM-5.2点赞量近5000全场最高",
-      "Qwen3.6生态持续刷新开源竞争格局",
-      "MiniMax-H3视频模型引发量化适配热潮",
-      "7B-27B区间开源模型质量逼近闭源",
-      "GGUF量化与社区微调活动极为活跃"
-    ],
-    "ai-community": [
-      "Anthropic沙箱逃逸报告敲响安全警钟",
-      "MITRE ATLAS新增Agent攻击技术库",
-      "Agent编排单任务燃烧1-2M Opus Token",
-      "MCP服务器真实瓶颈是上下文窗口",
-      "为7B小模型设计MCP工具的经验分享",
-      "OpenAI发布Lean形式化验证数学证明"
-    ]
-  },
-  "en": {
-    "ai-cli": [
-      "Claude Code v2.1.222 released with stable patch",
-      "OpenAI Codex shipped 4 Rust SDK alpha releases in 24h",
-      "Gemini CLI nightly build is currently broken",
-      "GitHub Copilot CLI v1.0.79-2 released",
-      "DeepSeek TUI joins CLI tools competition",
-      "Claude Code Skills repo expands customization",
-      "Three tools shipped critical security fixes in 24h",
-      "OpenCode v1.18.13 released for stability",
-      "Kimi Code CLI showing low release activity",
-      "OpenClaw fixing session state and migration bugs"
-    ],
-    "ai-agents": [
-      "OpenClaw closed 110 issues and merged 124 PRs in 24h",
-      "Anthropic API key scrubbing bypass fixed in #117956",
-      "~13.7M tokens were being billed despite clear env",
-      "ACP parent session stuck bug resolved in #52249",
-      "image tool now uses AWS SDK credentials for Bedrock",
-      "13 projects tracked in OpenClaw ecosystem digest",
-      "NanoClaw, NullClaw, IronClaw among rising agents",
-      "P0/P1 stability regressions from 2026.7.x being addressed"
-    ],
-    "ai-trending": [
-      "airllm hits 28.5K stars (+1,711) — runs 70B on 4GB GPU",
-      "rtk-ai/rtk at 74.7K stars cuts tokens by 60-90%",
-      "DeepSeek-Reasonix gains 922 stars in a day",
-      "Tencent Agent-Memory gained 1,111 stars in single day",
-      "FalkorDB graph DB for sparse matrices gaining traction",
-      "Rust-based inference engines surging on GitHub",
-      "Agent-harness explosion across Claude and Codex",
-      "Local-first agent experiences trending with screenpipe"
-    ],
-    "ai-web": [
-      "Anthropic hires former CA Supreme Court Justice as first CGAO",
-      "Tino Cuéllar joins for government and policy engagement",
-      "OpenAI publishes 3 new articles including competitive commentary",
-      "'Apple Is Getting This Wrong' sparks strategic discussion",
-      "Anthropic pivoting toward formal government engagement",
-      "No new model releases announced today",
-      "Content leans toward governance over technical research"
+      "Anthropic任命首位首席全球事务官",
+      "OpenAI发布经济研究交换平台",
+      "OpenAI推出ChatGPT Codex教学课程",
+      "OpenAI评论文章质疑苹果AI策略",
+      "Anthropic系统性强化全球监管布局",
+      "OpenAI三篇新内容仅元数据可获取"
     ],
     "ai-hn": [
-      "Apple vs OpenAI legal tensions dominate HN top discussion",
-      "OpenAI faces $3.2M settlement over worker discrimination claims",
-      "SLM trained on $8 ESP32-S3 microcontroller goes viral",
-      "Zero-Mem paper avoids token consumption for agent memory",
-      "Flowise LLM workflow tool shutdown noted by community",
-      "Rust project adopts first formal LLM usage policy",
-      "Hacker News: 30 AI stories tracked today"
+      "Zero-Mem提出LLM Agent零Token记忆方案",
+      "Rust项目正式规范LLM使用边界",
+      "Flowise停止运营引发开源可持续性反思",
+      "Agent skills将团队规范转化为可复用技能",
+      "ESP32-S3低成本硬件训练SLM引热议",
+      "Alcatraz PII检测比Presidio快100倍"
     ],
     "ai-arxiv": [
-      "Test-time scaling taxonomy exposes reproducibility gaps",
-      "ALiBi positional encodings have unknown underflow failure",
-      "WorldCup Arena introduces leakage-free prospective evaluation",
-      "ParVL proposes parallel compute for multimodal models",
-      "Cross-Model KV Cache Transfer enables prefill reuse",
-      "PAST-Bench probes agent self-improvement capabilities",
-      "SocietyBench reframes social forecasting as benchmark",
-      "AGOGIC isolates music tokenization impact on LLMs"
+      "首次揭示ALiBi位置编码数值失效问题",
+      "跨模型KV缓存复用避免重复Prefill",
+      "Test-Time Scaling统一评估框架发布",
+      "回合级后验自蒸馏解决工具信用分配",
+      "Video-DeepResearch揭示视频理解瓶颈",
+      "结构感知微调增强VLM奖励信号信噪比"
+    ],
+    "ai-hf": [
+      "Kimi-K3以超万点赞领跑榜单",
+      "DeepSeek-V4-Flash下载量破273万",
+      "GLM-5.2 MOE架构升级兼顾性能与速度",
+      "百度Unlimited-OCR下载破270万",
+      "MiniMax-H3开创图文生成视频新范式",
+      "K-EXAONE-2.0 750B MoE模型发布"
+    ],
+    "ai-community": [
+      "模型需要解析日志而非通过法考",
+      "Anthropic沙盒逃逸事件成安全警示",
+      "MITRE ATLAS新增代理攻击技术条目",
+      "MCP服务器真实瓶颈是上下文窗口",
+      "7B小模型Agent编排层才是真正瓶颈",
+      "Flowise关停引发开源可持续性反思"
     ]
-  }
+  },
+  "en": {}
 }
