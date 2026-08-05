@@ -1,18 +1,18 @@
 # ArXiv AI 研究日报 2026-08-05
 
-> 数据来源: [ArXiv](https://arxiv.org/) (cs.AI, cs.CL, cs.LG) | 共 50 篇论文 | 生成时间: 2026-08-05 06:19 UTC
+> 数据来源: [ArXiv](https://arxiv.org/) (cs.AI, cs.CL, cs.LG) | 共 50 篇论文 | 生成时间: 2026-08-05 06:51 UTC
 
 ---
 
 
 
-# ArXiv AI 研究日报 — 2026-08-05
+# 📰 ArXiv AI 研究日报 | 2026-08-05
 
 ---
 
 ## 一、今日速览
 
-今日投稿聚焦**测试时推理扩展**与**智能体能力评估**两大主线：多篇论文深入探讨 Test-Time Scaling 的推理范式与可解释性优化，同时围绕递归自改进、工具使用、多模态评估等主题推出系列基准测试。在工程层面，跨模型 KV Cache 复用、注意力数值失效分析、扩散偏好对齐等新技术揭示了大模型规模化过程中的关键瓶颈与解法。
+今日 ArXiv 投稿聚焦三大主线：**测试时缩放（Test-Time Scaling）**与推理效率优化成为最热话题，出现多篇综述与自适应策略论文；**多模态 LLM 的训练与推理效率**（ParVL、KV Cache 跨模型复用）引发关注；**垂直领域落地**持续推进，临床影像（CARE-X）、法律文本（ANNOTARES）、电网场景合成等方向均有新基准/新框架发布。此外，ALiBi 位置编码的数值失效发现揭示了经典组件的潜在脆弱性，值得架构研究者重视。
 
 ---
 
@@ -20,108 +20,120 @@
 
 ### 🧠 大语言模型（架构、训练、对齐、评估）
 
-1. **Test-Time Scaling in Reasoning LLMs: Inference Regimes, Evaluation, and Reproducibility**
-   https://arxiv.org/abs/2608.04001
-   系统梳理 Test-Time Scaling 的多种推理范式，统一界定其评估标准与复现性问题，为该领域建立研究基准。
+**1. ParVL: Parallel Scaling and Expandable Compute Allocation for Multimodal LLMs**
+- 作者：Yang Yang 等
+- 链接：http://arxiv.org/abs/2608.04010v1
+- 核心贡献：提出并行可扩展的计算分配策略，打破多模态 LLM 在参数扩展与序列推理之间的刚性权衡，显著降低显存与延迟开销。值得关注，因 MLLM Scaling Law 仍在探索期，compute allocation 是下一个关键瓶颈。
 
-2. **When Attention Goes Blind: Numerical Failure in ALiBi Positional Encodings**
-   https://arxiv.org/abs/2608.03994
-   发现 ALiBi 位置编码在线性偏置缩放时因浮点精度下溢导致注意力权重大量归零，揭示长序列推理中的潜在数值失效模式。
+**2. Test-Time Scaling in Reasoning LLMs: Inference Regimes, Evaluation, and Reproducibility**
+- 作者：Mohsen Hariri 等
+- 链接：http://arxiv.org/abs/2608.04001v1
+- 核心贡献：系统综述并统一了"测试时缩放"的多种范式（单轨迹延伸、多采样投票、聚合等），指出当前评估与复现性不足。值得阅读，因该方向正从研究热点走向生产部署。
 
-3. **Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse**
-   https://arxiv.org/abs/2608.03893
-   提出跨模型 KV Cache 线性映射复用机制，允许不同规模的同族模型共享 Prefill 计算结果，显著降低多模型部署的推理开销。
+**3. When Attention Goes Blind: Numerical Failure in ALiBi Positional Encodings**
+- 作者：Christopher Schröder 等
+- 链接：http://arxiv.org/abs/2608.03994v1
+- 核心贡献：首次发现 ALiBi 线性偏置在浮点精度下会下溢，导致部分注意力头"失明"。值得重视，ALiBi 是主流长上下文方案之一，该发现对部署选型有直接影响。
 
-4. **Intertemporal Preference Steering in Qwen3 via Contrastive Activation Addition**
-   https://arxiv.org/abs/2608.03892
-   在 Qwen3-32B 中定位时间偏好的线性表征，通过对比激活叠加实现模型短期/长期决策倾向的可控干预。
+**4. Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse**
+- 作者：Taekyung Heo 等
+- 链接：http://arxiv.org/abs/2608.03893v1
+- 核心贡献：提出同家族不同尺寸模型间 KV Cache 的闭式线性映射，实现 Prefill 阶段复用，避免模型切换时的重复计算。生产部署场景极具实用价值。
 
-5. **HalluTruthQA-4K: A Fine-Grained Corpus and Annotation Process for Arabic Hallucination Detection and Truth Verification**
-   https://arxiv.org/abs/2608.03966
-   构建细粒度阿拉伯语幻觉检测数据集，突破传统二进制标注的局限，支持句级幻觉识别与事实验证。
+**5. Logic Before Language: Pre-pretraining on Formal Derivations Fosters Skill Acquisition and Compressibility**
+- 作者：Jo-Ku Cheng 等
+- 链接：http://arxiv.org/abs/2608.03930v1
+- 核心贡献：证明在正式推导（形式逻辑）数据上进行预预训练，可显著提升自然语言习得与可压缩性，优于传统 Dyck 序列等窄任务。对前训练数据策略有启发。
 
 ---
 
 ### 🤖 智能体与推理（规划、工具使用、多智能体、思维链）
 
-6. **TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning**
-   https://arxiv.org/abs/2608.04007
-   提出回合级 hindsight 自蒸馏方法，在工具集成推理（TIR）的长程交互中实现细粒度信用分配，弥补轨迹级监督的不足。
+**6. WorldCup Arena: Prospective, Leakage-Free Evaluation of Frontier LLMs on a Live Tournament**
+- 作者：Zhenran Wang 等
+- 链接：http://arxiv.org/abs/2608.04008v1
+- 核心贡献：利用 2026 世界杯 39 天赛程，构建了首个无泄露、前瞻性、实时对抗记忆化的 LLM 预测基准。为社交通用能力的评估提供了全新范式。
 
-7. **PAST-Bench: Benchmarking the Foundations of Recursive Self-Improvement in Personal Agents**
-   https://arxiv.org/abs/2608.04003
-   建立个人智能体递归自改进能力的基准测试，评估跨会话经验保留与技能演化对任务求解的实际增益。
+**7. TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning**
+- 作者：Changle Qu 等
+- 链接：http://arxiv.org/abs/2608.04007v1
+- 核心贡献：提出回合级回溯自蒸馏，实现工具集成推理（TIR）中长期轨迹的细粒度信用分配，优于现有轨迹级监督方法。对 Agent 训练有直接参考价值。
 
-8. **ContinualSkillBench: Can LLM Agents Truly Evolve Their Capabilities?**
-   https://arxiv.org/abs/2608.03874
-   系统评估智能体是否能真正通过外部技能库持续演化能力，揭示当前框架在技能积累与复用上的根本性局限。
+**8. Video-DeepResearch: Towards the Next-Generation Multimodal Deepresearch Agent**
+- 作者：Zhen Fang 等
+- 链接：http://arxiv.org/abs/2608.03979v1
+- 核心贡献：将多模态 Agent 从静态图像扩展至连续视频流，发现当前模型存在模态偏见与稀疏时空 grounding 两大瓶颈，指明天路方向。
 
-9. **ReflectRL: Learning from Golden Negative Trajectories via Reflective-to-Direct Reasoning**
-   https://arxiv.org/abs/2608.03972
-   利用专家模型的"负面轨迹"进行反思式直接推理学习，使 Agent 从失败经验中提取可泛化的改进信号。
+**9. ContinualSkillBench: Can LLM Agents Truly Evolve Their Capabilities?**
+- 作者：Tianyi Guan 等
+- 链接：http://arxiv.org/abs/2608.03874v1
+- 核心贡献：首个系统评估 Agent 是否能通过外部技能库持续演化能力的基准，揭示当前 Agent 框架在技能进化方面的真实水平。
 
 ---
 
 ### 🔧 方法与框架（新技术、基准测试、效率优化）
 
-10. **Interpretable Adaptive Sampling for LLM Test-Time Scaling**
-    https://arxiv.org/abs/2608.03961
-    提出可解释的自适应采样策略，根据问题难度动态分配推理预算，替代固定 per-query 计算开销。
+**10. Information-Geometric Forward Policy Training in GFlowNets**
+- 作者：Yordan Raykov, Rodrigo Veiga
+- 链接：http://arxiv.org/abs/2608.03967v1
+- 核心贡献：从信息几何视角重新形式化 GFlowNet 的前向策略训练，为离散/混合对象生成提供了新的理论框架与优化路径。
 
-11. **WorldCup Arena: Prospective, Leakage-Free Evaluation of Frontier LLMs on a Live Tournament**
-    https://arxiv.org/abs/2608.04008
-    在 2026 世界杯 39 天赛程中实时评估 LLM 预测能力，开创无前向泄漏的直播事件基准评测范式。
+**11. Interpretable Adaptive Sampling for LLM Test-Time Scaling**
+- 作者：Mobina Kashaniyan, Ali Jannesari
+- 链接：http://arxiv.org/abs/2608.03961v1
+- 核心贡献：提出可解释的自适应采样策略，根据题目难度动态分配推理预算，替代固定 per-query 计算开销，提升测试时缩放效率。
 
-12. **SocietyBench: Forecasting Counterfactual Social-World Evolution**
-    https://arxiv.org/abs/2608.04009
-    面向反事实社会世界演化的预测基准，弥补当前评估仅关注任务执行而忽视社会事件推理的短板。
+**12. Sparse Weight Decomposition for Efficient Circuit Extraction**
+- 作者：Chuanhao Yan 等
+- 链接：http://arxiv.org/abs/2608.03913v1
+- 核心贡献：通过稀疏权重分解在无需额外训练的前提下提取可解释电路单元，避免了辅助稀疏表示学习的计算开销与保真度差距。
 
-13. **ParVL: Parallel Scaling and Expandable Compute Allocation for Multimodal LLMs**
-    https://arxiv.org/abs/2608.04010
-    提出并行扩展与可弹性分配计算的 multimodal LLM 缩放策略，打破传统方法中固定计算分配的刚性限制。
-
-14. **Omegа-S: A Functional Resilience Index for LLM Fine-Tuning**
-    https://arxiv.org/abs/2608.03887
-    仅从权重矩阵计算 Omega-S 指标，无需历史任务数据或旧权重副本，即可量化微调对模型功能韧性（灾难性遗忘）的影响。
+**13. TACT: Taxonomy-Aligned Post-Training for Pedagogically Adaptive English Tutoring**
+- 作者：Dongjie Yang 等
+- 链接：http://arxiv.org/abs/2608.03952v1
+- 核心贡献：面向 ESL 学习者，基于教学分类法对齐后训练，使 LLM 能根据学习者行为动态选择教学动作，超越单纯对话生成。
 
 ---
 
 ### 📊 应用（垂直领域、多模态、代码生成）
 
-15. **Video-DeepResearch: Towards the Next-Generation Multimodal Deepresearch Agent**
-    https://arxiv.org/abs/2608.03979
-    将多模态智能体从静态图像拓展至连续视频流，揭示模态偏差与密集时空定位是当前核心瓶颈。
+**14. CARE-X: Towards Clinically Useful Radiology VLMs**
+- 作者：Mercy Prasanna Ranjit 等
+- 链接：http://arxiv.org/abs/2608.03890v1
+- 核心贡献：将辅助监督、奖励对齐学习与工具增强测量结合，构建具备可调决策阈值、空间定位与解剖测量能力的临床胸部 X 光 VLM，迈向真正可用。
 
-16. **CARE-X: Towards Clinically Useful Radiology VLMs with Auxiliary Supervision, Reward-Aligned Learning, and Tool-Augmented Measurement**
-    https://arxiv.org/abs/2608.03890
-    面向胸部 X 光片的临床可用 VLM，联合辅助监督、奖励对齐与工具增强测量，统一分类、定位与解剖度量三大能力。
+**15. Beyond Representational Similarity: Source-Conditioned Description-Length Gain for Generative Plagiarism Detection**
+- 作者：Peijia Guo 等
+- 链接：http://arxiv.org/abs/2608.03859v1
+- 核心贡献：提出基于源条件描述长度增益的检测方法，专注于生成式抄袭（源文本重用）而非泛化 AI 参与检测，填补学术诚信评估空白。
 
-17. **Can Large Language Models Recover Semantic Optimization Opportunities That Compilers Miss?**
-    https://arxiv.org/abs/2608.03983
-    探索 LLM 能否从 C/C++ 异构上下文中恢复编译器遗漏的语义优化机会，并以契约保持的方式实现。
-
-18. **BanglaWild: An In-the-Wild Bengali Scene Text Recognition Benchmark for OCR and Vision-Language Models**
-    https://arxiv.org/abs/2608.03884
-    首个孟加拉语真实场景文字识别基准，同时评估传统 OCR 与 VLM，报告细粒度编辑距离指标。
+**16. Can Large Language Models Recover Semantic Optimization Opportunities That Compilers Miss?**
+- 作者：Hailong Jiang 等
+- 链接：http://arxiv.org/abs/2608.03983v1
+- 核心贡献：探索 LLM 能否从异构 C/C++ 上下文中恢复编译器遗漏的语义优化机会，并生成经验证的、契约保持的优化产物，连接 LLM 与编译理论。
 
 ---
 
 ## 三、研究趋势信号
 
-今日投稿呈现三大趋势：一是 **Test-Time Scaling 方法论化**，多篇工作从评估、采样、可解释性三个维度统一该领域研究框架；二是 **Agent 能力评估从任务完成转向认知演化**，递归自改进、技能持续学习、社会预测等基准反映社区对 Agent "智能本质" 的关注；三是 **垂直领域 VLM 向临床与工业级可用收敛**，通过多任务联合训练与工具增强弥合研究与落地的差距。
+今日投稿清晰反映出三个趋势：一是**测试时计算（test-time compute）**从技巧性探索走向系统化研究，涌现出综述、自适应分配、可解释采样等多个子方向；二是**多模态效率与部署**成为热点，并行缩放（ParVL）、KV Cache 跨模型复用、长视频时序 grounding 等论文均指向生产落地的实际需求；三是**垂直领域基准与安全性评估**持续升温，临床（CARE-X、CRS-Triage）、法律（ANNOTARES）、学术诚信（生成抄袭检测）等方向显示出 AI 治理正在从通用能力竞争转向可信落地。
 
 ---
 
 ## 四、值得精读
 
-1. **Test-Time Scaling in Reasoning LLMs**（2608.04001）
-   该工作是 Test-Time Scaling 领域的系统性综述与基准界定论文，统一了推理扩展的各种范式定义，对后续研究者建立复现标准具有重要参考价值。
+**① Test-Time Scaling in Reasoning LLMs: Inference Regimes, Evaluation, and Reproducibility**
+> 理由：该领域论文数量激增但缺乏统一视角，此综述首次系统梳理了各推理范式的定义、评估方法与复现问题，是进入该方向的必读起点。
 
-2. **Cross-Model KV Cache Transfer**（2608.03893）
-   针对多模型级联部署中的核心效率瓶颈，提出闭式线性映射实现 Prefill 复用，方案简洁且具有直接工程落地价值，适合实践导向的研究者深入阅读。
+**② When Attention Goes Blind: Numerical Failure in ALiBi Positional Encodings**
+> 理由：ALiBi 被广泛部署于开源 LLM，其数值失效是一个未被充分认识的底层风险。论文不仅发现 bug，还提供了 characterization 与缓解方案，对架构研究者有直接参考价值。
 
-3. **When Attention Goes Blind**（2608.03994）
-   揭示 ALiBi 位置编码的数值失效模式，该问题在高精度要求或超长序列场景下可能被广泛触发，对关注模型架构可靠性的研究者具有警示意义。
+**③ WorldCup Arena: Prospective, Leakage-Free Evaluation of Frontier LLMs on a Live Tournament**
+> 理由：当前 LLM 基准普遍面临"答案已上网"的记忆泄露问题，本文设计的前瞻性实时评估范式具有方法论创新性，为未来社会推理与预测类基准提供了可复制的设计模板。
+
+---
+
+*📅 日报生成时间：2026-08-05 | 数据来源：ArXiv (cs.AI, cs.CL, cs.LG)*
 
 ---
 *本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
