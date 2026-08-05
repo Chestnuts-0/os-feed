@@ -1,18 +1,18 @@
 # Hugging Face Trending Models Digest 2026-08-05
 
-> Source: [Hugging Face Hub](https://huggingface.co/) | 30 models | Generated: 2026-08-05 05:56 UTC
+> Source: [Hugging Face Hub](https://huggingface.co/) | 30 models | Generated: 2026-08-05 06:19 UTC
 
 ---
 
 
 
-# Hugging Face Trending Models Digest — August 5, 2026
+# Hugging Face Trending Models Digest — 2026-08-05
 
 ---
 
 ## 1. Today's Highlights
 
-DeepSeek's V4 Flash lineup continues to dominate, with both the original **DeepSeek-V4-Flash** and the **Flash-0731** variant ranking in the top 3, reflecting sustained community enthusiasm for efficient open-weight reasoning models. Moonshot AI's **Kimi-K3** surged to the #3 spot with over 10,000 likes and 1.1M downloads, signaling strong momentum for its image-text-to-text multimodal capabilities. Meanwhile, DeepSeek and Kimi GGUF conversions by Unsloth are seeing heavy community adoption, and uncensored Qwen3.6 fine-tunes remain a persistent force across multiple spots. Baidu's **Unlimited-OCR** and ZAI's **GLM-5.2** round out the top highlights as notable official releases from major labs.
+ZAI's **GLM-5.2** tops the weekly chart with nearly 5M downloads and 4,800+ likes, signaling strong community appetite for next-generation Chinese open-weight MoE models. **Kimi-K3** from MoonshotAI emerges as the most-downloaded model overall (1.1M), combining image-text understanding with impressive scale. Meanwhile, the **MiniMax-H3** video generation pipeline and the **DeepSeek-V4-Flash** family continue to dominate with sustained momentum, and the GGUF quantization ecosystem around Qwen3.6 and DeepSeek-V4 shows thriving community fine-tuning activity.
 
 ---
 
@@ -20,148 +20,115 @@ DeepSeek's V4 Flash lineup continues to dominate, with both the original **DeepS
 
 ### 🧠 Language Models
 
-**deepseek-ai/DeepSeek-V4-Flash-0731**
-[Link](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731)
-deepseek-ai · 2,350 likes · 433,284 downloads
-The latest checkpoint of DeepSeek's V4 Flash family, offering high-efficiency text generation with conversational alignment — trending as the go-to open-weight reasoning model of the week.
+- **[deepseek-ai/DeepSeek-V4-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash)** — deepseek-ai | 2,015 likes | 2,737,621 downloads
+  The flagship flash variant of DeepSeek's V4 line, delivering strong text-generation performance with conversational tuning and massive adoption.
 
-**deepseek-ai/DeepSeek-V4-Flash**
-[Link](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash)
-deepseek-ai · 2,015 likes · 2,737,621 downloads
-The original V4 Flash release maintains massive download velocity, cementing DeepSeek's V4 architecture as a cornerstone of the open-weight ecosystem.
+- **[deepseek-ai/DeepSeek-V4-Flash-0731](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731)** — deepseek-ai | 2,356 likes | 433,284 downloads
+  A July-2026 checkpoint release of the V4-Flash series, likely featuring updated weights or architecture refinements, quickly gaining traction.
 
-**zai-org/GLM-5.2**
-[Link](https://huggingface.co/zai-org/GLM-5.2)
-zai-org · 4,826 likes · 2,234,662 downloads
-ZAI's latest GLM-5.2 MoE model brings strong conversational and reasoning performance, earning the highest like count among official lab releases this week.
+- **[zai-org/GLM-5.2](https://huggingface.co/zai-org/GLM-5.2)** — zai-org | 4,826 likes | 2,234,662 downloads
+  ZAI's latest GLM-MoE-DSA model, combining a sparse mix-of-experts architecture with conversational fine-tuning; the #1 liked model this week.
 
-**poolside/Laguna-S-2.1**
-[Link](https://huggingface.co/poolside/Laguna-S-2.1)
-poolside · 924 likes · 82,912 downloads
-Poolside's Laguna-S-2.1 continues to attract attention as a capable open-weight text generation model with strong instruction-following behavior.
+- **[moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)** — moonshotai | 10,028 likes | 1,125,935 downloads
+  MoonshotAI's next-generation multimodal language model with feature-extraction and compressed-tensor support — the highest-liked model by far.
 
-**Nanbeige/Nanbeige4.2-3B**
-[Link](https://huggingface.co/Nanbeige/Nanbeige4.2-3B)
-Nanbeige · 669 likes · 37,256 downloads
-A compact 3B parameter model punching above its weight in efficiency, appealing to users seeking lightweight open-weight chat solutions.
+- **[LGAI-EXAONE/K-EXAONE-2.0-750B-A37B](https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B)** — LGAI-EXAONE | 120 likes | 325 downloads
+  LG AI's massive 750B-parameter MoE model (37B active), representing the extreme end of open-weight scale from Korea's leading AI lab.
 
-**LGAI-EXAONE/K-EXAONE-2.0-750B-A37B**
-[Link](https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B)
-LGAI-EXAONE · 120 likes · 325 downloads
-LG AI's massive 750B MoE model (37B active) represents the cutting edge of open-weight scale, though adoption is still early.
+- **[poolside/Laguna-S-2.1](https://huggingface.co/poolside/Laguna-S-2.1)** — poolside | 924 likes | 82,912 downloads
+  Poolside's Laguna-S family iteration, a strong general-purpose text-generation model gaining notable community interest.
 
----
+- **[Nanbeige/Nanbeige4.2-3B](https://huggingface.co/Nanbeige/Nanbeige4.2-3B)** — Nanbeige | 669 likes | 37,256 downloads
+  A compact 3B-parameter LLM from Nanbeige, offering strong efficiency-to-performance ratio for edge and local deployment.
+
+- **[XYZAILab/XYZ-Aquila-pro](https://huggingface.co/XYZAILab/XYZ-Aquila-pro)** — XYZAILab | 361 likes | 1,388 downloads
+  The "pro" variant of XYZAILab's Aquila line, featuring agentic-search capabilities built on the Qwen3.5 MoE architecture.
+
+- **[inclusionAI/Ling-3.0-flash](https://huggingface.co/inclusionAI/Ling-3.0-flash)** — inclusionAI | 113 likes | 25 downloads
+  A newly released flash model using a novel "bailing hybrid" architecture, representing experimental approaches to efficient training.
 
 ### 🎨 Multimodal & Generation
 
-**MiniMaxAI/MiniMax-H3**
-[Link](https://huggingface.co/MiniMaxAI/MiniMax-H3)
-MiniMaxAI · 2,105 likes · 0 downloads
-MiniMax's image-text-to-video model made its debut this week; the zero-download count reflects its brand-new release, but the like volume signals high anticipation for generative video quality.
+- **[MiniMaxAI/MiniMax-H3](https://huggingface.co/MiniMaxAI/MiniMax-H3)** — MiniMaxAI | 2,114 likes | 0 downloads
+  MiniMax's image-text-to-video model supporting both text-to-video and image-to-video generation — a major push into open video synthesis.
 
-**moonshotai/Kimi-K3**
-[Link](https://huggingface.co/moonshotai/Kimi-K3)
-moonshotai · 10,025 likes · 1,125,935 downloads
-Kimi-K3's exceptional growth — over 10K likes and 1.1M downloads — reflects its strong image-text-to-text multimodal understanding and conversational ability, making it one of the most impactful releases this week.
+- **[microsoft/Mage-VL](https://huggingface.co/microsoft/Mage-VL)** — microsoft | 261 likes | 435,784 downloads
+  Microsoft's vision-language model with strong multimodal understanding, widely adopted for image-text reasoning tasks.
 
-**baidu/Unlimited-OCR**
-[Link](https://huggingface.co/baidu/Unlimited-OCR)
-baidu · 3,886 likes · 2,703,366 downloads
-Baidu's highly capable OCR model continues to see massive usage, trending for its robust image-to-text document recognition across diverse layouts and languages.
+- **[baidu/Unlimited-OCR](https://huggingface.co/baidu/Unlimited-OCR)** — baidu | 3,886 likes | 2,703,366 downloads
+  Baidu's high-performance OCR model supporting image-to-text recognition at scale — one of the most-downloaded models on the list.
 
-**microsoft/Mage-VL**
-[Link](https://huggingface.co/microsoft/Mage-VL)
-microsoft · 261 likes · 435,784 downloads
-Microsoft's multimodal vision-language model is gaining traction for its strong image-text understanding and broad applicability in production pipelines.
+- **[Audio8/Audio8-TTS-Preview-0.6b](https://huggingface.co/Audio8/Audio8-TTS-Preview-0.6b)** — Audio8 | 255 likes | 11,276 downloads
+  A compact 0.6B text-to-speech model from the Audio8 team, offering an efficient local TTS solution.
 
-**Audio8/Audio8-TTS-Preview-0.6b**
-[Link](https://huggingface.co/Audio8/Audio8-TTS-Preview-0.6b)
-Audio8 · 255 likes · 11,276 downloads
-A compact 0.6B text-to-speech model offering high-quality voice synthesis at a fraction of the parameter count of competitors.
+- **[owensong/Inflect-Micro-v2](https://huggingface.co/owensong/Inflect-Micro-v2)** — owensong | 413 likes | 2,072 downloads
+  A CPU-optimized, edge-AI-friendly text-to-speech model targeting local and resource-constrained deployments.
 
-**owensong/Inflect-Micro-v2**
-[Link](https://huggingface.co/owensong/Inflect-Micro-v2)
-owensong · 413 likes · 2,072 downloads
-An edge-optimized, CPU-friendly TTS model targeting local and resource-constrained deployment scenarios.
+- **[lodestones/Kroma](https://huggingface.co/lodestones/Kroma)** — lodestones | 182 likes | 0 downloads
+  A new text-to-image LoRA built on Krea2, targeting ComfyUI users looking for high-quality stylized image generation.
 
----
+- **[thinkingmachines/Inkling-Small](https://huggingface.co/thinkingmachines/Inkling-Small)** — thinkingmachines | 291 likes | 15,500 downloads
+  ThinkingMachines' compact vision-language model offering efficient image-text understanding for conversational applications.
 
 ### 🔧 Specialized Models
 
-**Kwaipilot/KAT-Coder-V2.5-Dev**
-[Link](https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev)
-Kwaipilot · 479 likes · 15,381 downloads
-A code-specialized model built on Qwen3.5 MoE architecture, gaining popularity among developers seeking open-weight coding assistance with image-text input support.
+- **[Kwaipilot/KAT-Coder-V2.5-Dev](https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev)** — Kwaipilot | 480 likes | 15,381 downloads
+  A code-specialized model based on the Qwen3.5 MoE architecture, targeting software development and agentic coding workflows.
 
-**LiquidAI/LFM2.5-2.6B**
-[Link](https://huggingface.co/LiquidAI/LFM2.5-2.6B)
-LiquidAI · 179 likes · 47,393 downloads
-Liquid AI's LFM2.5 introduces novel continuous-state architectures for efficient text generation, drawing interest from researchers exploring alternatives to standard transformers.
+- **[LiquidAI/LFM2.5-2.6B](https://huggingface.co/LiquidAI/LFM2.5-2.6B)** — LiquidAI | 179 likes | 47,393 downloads
+  LiquidAI's 2.6B-parameter language model using a novel architecture, gaining adoption for lightweight but capable text generation.
 
-**inclusionAI/Ling-3.0-flash**
-[Link](https://huggingface.co/inclusionAI/Ling-3.0-flash)
-inclusionAI · 111 likes · 25 downloads
-A new bilingual hybrid model from inclusionAI, still early in adoption but notable for its custom architecture approach.
-
----
+- **[EschaLabs/Qwen3.6-35B-A3B-Escha-W2](https://huggingface.co/EschaLabs/Qwen3.6-35B-A3B-Escha-W2)** — EschaLabs | 200 likes | 2,987 downloads
+  An expert-tuned variant of Qwen3.6's MoE architecture with W2 precision targeting specialized performance.
 
 ### 📦 Fine-tunes & Quantizations
 
-**DavidAU/Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF**
-[Link](https://huggingface.co/DavidAU/Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF)
-DavidAU · 1,527 likes · 1,633,405 downloads
-An aggressively fine-tuned, uncensored GGUF variant of Qwen3.6-27B with NeMo-based training and MTP extensions — consistently popular among users seeking unrestricted generation.
+- **[unsloth/DeepSeek-V4-Flash-0731-GGUF](https://huggingface.co/unsloth/DeepSeek-V4-Flash-0731-GGUF)** — unsloth | 477 likes | 111,678 downloads
+  Unsloth's GGUF-quantized release of the DeepSeek-V4-Flash-0731 checkpoint, enabling efficient local inference with minimal quality loss.
 
-**HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive**
-[Link](https://huggingface.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive)
-HauhauCS · 3,301 likes · 1,930,898 downloads
-A high-impact uncensored fine-tune of the Qwen3.6-35B MoE model, ranked #29 with nearly 2M downloads, reflecting sustained demand for unrestricted large-capability models.
+- **[unsloth/Kimi-K3-GGUF](https://huggingface.co/unsloth/Kimi-K3-GGUF)** — unsloth | 308 likes | 170,055 downloads
+  Community-quantized GGUF version of Kimi-K3, making this popular model accessible for local deployment via llama.cpp.
 
-**LuffyTheFox/Qwen3.6-35B-A3B-Uncensored-Genesis-Hermes-V6-GGUF**
-[Link](https://huggingface.co/LuffyTheFox/Qwen3.6-35B-A3B-Uncensored-Genesis-Hermes-V6-GGUF)
-LuffyTheFox · 369 likes · 308,857 downloads
-Another uncensored Qwen3.6 MoE GGUF, this one fused with Hermes-style alignment, appealing to users wanting both capability and fewer restrictions.
+- **[DavidAU/Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF](https://huggingface.co/DavidAU/Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF)** — DavidAU | 1,527 likes | 1,633,405 downloads
+  A heavily customized uncensored Qwen3.6-27B fine-tune with MTP and Neo-Imatrix training — the most-downloaded fine-tune on the list.
 
-**unsloth/DeepSeek-V4-Flash-0731-GGUF**
-[Link](https://huggingface.co/unsloth/DeepSeek-V4-Flash-0731-GGUF)
-unsloth · 477 likes · 111,678 downloads
-Unsloth's quantized GGUF release of DeepSeek-V4-Flash-0731, enabling efficient local inference with minimal quality loss — a key enabler for the V4 Flash ecosystem.
+- **[LuffyTheFox/Qwen3.6-35B-A3B-Uncensored-Genesis-Hermes-V7-GGUF](https://huggingface.co/LuffyTheFox/Qwen3.6-35B-A3B-Uncensored-Genesis-Hermes-V7-GGUF)** — LuffyTheFox | 370 likes | 308,857 downloads
+  An uncensored Hermes-style fine-tune of Qwen3.6's 35B MoE model, targeting unrestricted conversational use cases.
 
-**unsloth/Kimi-K3-GGUF**
-[Link](https://huggingface.co/unsloth/Kimi-K3-GGUF)
-unsloth · 308 likes · 170,055 downloads
-The Unsloth GGUF port of Kimi-K3 brings the popular multimodal model to consumer-grade hardware, driving accessibility for the broader community.
+- **[HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive](https://huggingface.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive)** — HauhauCS | 3,301 likes | 1,930,898 downloads
+  A highly engaged uncensored vision-capable fine-tune of Qwen3.6-35B with an "aggressive" persona style, one of the top community models this week.
 
-**DavidAU/Qwen3.5-9B-The-Defiant-Fable-Uncensored-Heretic-NEO-IMATRIX-MAX-MTP-GGUF**
-[Link](https://huggingface.co/DavidAU/Qwen3.5-9B-The-Defiant-Fable-Uncensored-Heretic-NEO-IMATRIX-MAX-MTP-GGUF)
-DavidAU · 271 likes · 323,116 downloads
-A smaller but potent uncensored Qwen3.5-9B fine-tune with IMatrix optimization, popular among users wanting efficient local deployment without content restrictions.
+- **[DavidAU/Qwen3.5-9B-The-Defiant-Fable-Uncensored-Heretic-NEO-IMATRIX-MAX-MTP-GGUF](https://huggingface.co/DavidAU/Qwen3.5-9B-The-Defiant-Fable-Uncensored-Heretic-NEO-IMATRIX-MAX-MTP-GGUF)** — DavidAU | 271 likes | 323,116 downloads
+  A smaller 9B uncensored Qwen3.5 fine-tune with Heretic and Imatrix processing, balancing capability with local-deployment feasibility.
 
-**realrebelai/MiniMax-H3_GGUFs**
-[Link](https://huggingface.co/realrebelai/MiniMax-H3_GGUFs)
-realrebelai · 111 likes · 40,010 downloads
-Community GGUF quantizations of MiniMax-H3, making the new video generation model more accessible for local ComfyUI workflows.
+- **[realrebelai/MiniMax-H3_GGUFs](https://huggingface.co/realrebelai/MiniMax-H3_GGUFs)** — realrebelai | 112 likes | 40,010 downloads
+  GGUF-quantized variants of the MiniMax-H3 model, enabling local video-generation pipelines with reduced memory footprint.
 
-**Comfy-Org/MiniMax-H3**
-[Link](https://huggingface.co/Comfy-Org/MiniMax-H3)
-Comfy-Org · 647 likes · 2 downloads
-A ComfyUI-optimized wrapper around MiniMax-H3, enabling seamless integration into local video generation pipelines — early days but high interest.
+- **[ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot](https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot)** — ethanfel | 203 likes | 0 downloads
+  A ComfyUI-ready INT8-quantized vision-language model combining Qwen3-VL-32B with H3-style architecture and convolutional rotation optimizations.
+
+- **[Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)** — Comfy-Org | 649 likes | 2 downloads
+  The ComfyUI integration package for MiniMax-H3, providing the pipeline infrastructure for local video generation workflows.
 
 ---
 
 ## 3. Ecosystem Signal
 
-The dominant trend this week is the maturation of **MoE (Mixture-of-Experts) architectures** as the preferred scaling path for open-weight models. Qwen3.6's A3B (35B total / 3B active) variant appears across at least five trending fine-tunes, and GLM-5.2 also leverages MoE — signaling that the community has embraced sparse models for balancing capability and inference cost. **DeepSeek's V4 Flash** lineage continues to set the standard for efficient open reasoning, with Unsloth's GGUF conversions proving critical to its adoption chain. Meanwhile, **Kimi-K3's** explosive growth reflects a shift toward strong multimodal (image-text-to-text) capabilities as a key differentiator beyond pure text. On the fine-tuning side, **uncensored Qwen3.6 variants** maintain a persistent grip on the lower-mid leaderboard, with DavidAU and HauhauCS consistently delivering high-download community models. The **MiniMax-H3** video generation entry is a notable new category player, with early ComfyUI and GGUF ecosystem support already emerging. Quantization activity — particularly GGUF — remains a vital ecosystem layer, with Unsloth's ports directly enabling local deployment of the week's biggest models.
+The Chinese open-weight ecosystem continues to dominate this week's trending charts. **DeepSeek**, **Kimi (MoonshotAI)**, **GLM (ZAI)**, and **Qwen (Alibaba)** are the clear powerhouses, with Qwen3.6 variants appearing across at least five entries — spanning base models, fine-tunes, GGUFs, and uncensored variants. This signals a maturing ecosystem where base releases are rapidly followed by a rich community of specialized derivatives.
+
+Open-weight models are unambiguously winning community engagement. The highest-liked and most-downloaded models are all open-weight, with Kimi-K3 reaching 10,028 likes. The uncensored fine-tune niche remains active, with DavidAU, LuffyTheFox, and HauhauCS each producing community models that accumulate hundreds of thousands of downloads — demonstrating sustained demand for unrestricted local deployment.
+
+GGUF quantization via Unsloth is a key enabler, with quantized versions of both DeepSeek-V4 and Kimi-K3 seeing strong adoption. The emergence of **MiniMax-H3** as a video-generation model marks an important expansion: open-weight video synthesis is becoming viable for local use, complementing the already-mature text and image spaces.
 
 ---
 
 ## 4. Worth Exploring
 
-1. **moonshotai/Kimi-K3** — Its trajectory is the standout signal this week: 10K+ likes and 1.1M downloads in a single week indicate genuine utility, not just hype. Its image-text-to-text pipeline makes it a strong candidate for multimodal agents and RAG workflows.
+1. **[zai-org/GLM-5.2](https://huggingface.co/zai-org/GLM-5.2)** — With 4,826 likes and 2.2M downloads, this is the standout model of the week. Its MoE-DSA architecture represents the cutting edge of efficient open-weight design, and it's worth studying for its blend of scale and performance.
 
-2. **zai-org/GLM-5.2** — The highest-liked official model this week (4,826 likes, 2.2M downloads) from a major lab. As a GLM MoE model, it represents the current frontier of open-weight Chinese-language + multilingual reasoning, and its download velocity suggests production-grade reliability.
+2. **[moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)** — The most-liked model overall (10,028 likes) with a massive download count. Its image-text-to-text pipeline with compressed-tensor support makes it a compelling reference for building efficient multimodal systems.
 
-3. **MiniMaxAI/MiniMax-H3** — Worth watching closely as a brand-new image-text-to-video model. While downloads are still nascent, the rapid emergence of GGUF and ComfyUI conversions signals a ready ecosystem forming around it — early adopters should monitor this space.
+3. **[MiniMaxAI/MiniMax-H3](https://huggingface.co/MiniMaxAI/MiniMax-H3)** — As one of the first major open-weight image-text-to-video models on the trending list, it signals a new frontier. The ComfyUI integration ecosystem around it (Comfy-Org, realrebelai GGUFs) makes it worth exploring for anyone interested in local video generation.
 
 ---
 *This digest is auto-generated by [agents-radar](https://github.com/Chestnuts-0/os-feed).*

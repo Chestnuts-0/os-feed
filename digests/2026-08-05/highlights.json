@@ -1,69 +1,126 @@
 {
   "zh": {
     "ai-cli": [
-      "Claude Code v2.1.222强化worktree隔离与hook安全",
-      "Gemini CLI集中封堵SSRF与变量展开绕过漏洞",
-      "Copilot CLI触发基础安全紧急修复",
-      "DeepSeek TUI v0.9.4列车进行中+77 commits",
-      "OpenCode推进V2协议重构，6层PR栈",
-      "Kimi Code CLI获Remote Control高票需求"
+      "OpenCode v1.18.13迁移至V2 API架构",
+      "Qwen Code v0.21.6预览版优化多模态Daemon",
+      "DeepSeek TUI v0.9.4训练模式启动性能重构",
+      "Codex 4个Alpha预发布持续高频迭代",
+      "Claude Code Skills工具扩展生态成型",
+      "长会话MCP泄漏与上下文压缩失效成核心痛点"
     ],
     "ai-agents": [
-      "OpenClaw 24小时500条Issue更新，高负载修复期",
-      "会话状态稳定性与subagent完成丢失成焦点",
-      "API Key作用域化安全加固推进中",
-      "Agent DB v14→v15迁移阻塞P1问题修复",
-      "memory索引dirty flag修复待审查",
-      "P0/P1级Bug有关联Fix PR等待维护者"
+      "OpenClaw日更500条Issue和PR社区极活跃",
+      "PR修复Codex后端丢失MCP工具16900次扫描优化",
+      "媒体TTL清理误删聊天附件问题已修复",
+      "123条PR合并核心稳定性问题集中推进",
+      "P0/P1级Bug修复进入maintainer review阶段",
+      "会话去重复用SQLite身份绑定降低启动开销"
     ],
     "ai-trending": [
-      "TencentDB-Agent-Memory单日+1111 stars",
-      "DeepSeek-Reasonix单日+922 stars",
-      "Hermes-Agent今日+616 stars",
-      "rtk CLI代理token消耗降低60-90%",
-      "Caveman用洞穴人风格节省65% token",
-      "垂直场景Agent快速落地视频生成、投研"
+      "rtk上下文压缩减少60-90% LLM token消耗获74771星",
+      "DeepSeek-Reasonix原生终端代理今日增922星",
+      "hermes-agent自我进化Agent达225648星",
+      "腾讯Agent记忆中心今日增1111星",
+      "airllm单张4GB GPU运行70B推理增1711星",
+      "Uber ADR可观测性框架已部署生产环境"
     ],
     "ai-web": [
-      "Anthropic任命Tino为首任首席全球事务官",
-      "Tino曾任卡内基国际和平基金会主席",
-      "OpenAI发布经济研究平台Research Exchange",
-      "Anthropic系统性强化全球治理应对能力",
-      "OpenAI批评Apple立场引社区关注",
-      "OpenAI三篇新内容涉及教育、产业评论"
+      "Anthropic首设首席全球事务官应对全球监管",
+      "Tino Cuéllar任此职横跨司法学术国安三领域",
+      "OpenAI发布Apple战略批评文章引关注",
+      "OpenAI推出ChatGPT工作教学指南",
+      "经济研究交换平台强化政策布局",
+      "Anthropic系统性推进国际政策与政府关系"
     ],
     "ai-hn": [
-      "Apple指控前员工向OpenAI泄露机密数据",
-      "Flowise关闭引发开源工具可持续性讨论",
-      "8美元ESP32-S3微控制器运行SLM",
-      "Zero-Mem实现零token记忆操作新方法",
-      "Agent Skills将团队规范注入Claude Code",
-      "Blender for AI Agents尝试工作流可视化"
+      "8美元ESP32-S3微控制器可训练SLM模型",
+      "Flowise开源AI工作流平台宣布关停",
+      "Agent团队编码规范适配Claude Code与Codex",
+      "Zero-Mem实现零Token记忆降低推理成本",
+      "Blender-like工具支持AI Agent视频编辑",
+      "Apple指控前员工向OpenAI泄密引354分热议"
     ],
     "ai-arxiv": [
-      "WorldCup Arena首次无泄露动态推理评测",
-      "Test-Time Scaling提供统一评估框架",
-      "Video-DeepResearch扩展至连续视频流agent",
-      "ParVL打破多模态LLM固定计算分配局限",
-      "ALiBi位置编码揭示浮点下溢失效问题",
-      "ReflectRL提出从失败轨迹学习方法"
+      "Test-Time Scaling推理范式研究建立评估基准",
+      "ALiBi位置编码浮点下溢致注意力权重归零",
+      "跨模型KV Cache复用共享Prefill计算结果",
+      "Qwen3通过激活叠加实现时间偏好可控干预",
+      "阿拉伯语细粒度幻觉检测突破二进制标注",
+      "回合级 hindsight 自蒸馏优化工具集成推理"
     ],
     "ai-hf": [
-      "Kimi-K3以万级点赞登顶今日榜单",
-      "DeepSeek-V4-Flash累计下载突破270万",
-      "GLM-5.2支持对话与文本生成MoE模型",
-      "Unlimited-OCR凭超高下载量领跑图像理解",
-      "Qwen3.6/MiniMax-H3量化微调活动活跃",
-      "Laguna-S-2.1面向RAG场景优化"
+      "Kimi-K3万级点赞登顶领跑今日榜单",
+      "DeepSeek V4 Flash累计下载超270万",
+      "GLM-5.2 MoE模型下载量超220万",
+      "LG AI 750B MoE模型激活参数37B高吞吐",
+      "Laguna-S.1面向RAG长上下文场景优化",
+      "Nanbeige4.2-3B追求端侧极致推理效率"
     ],
     "ai-community": [
-      "Anthropic沙箱逃逸报告揭示Agent安全风险",
-      "MITRE ATLAS新增Agent工具攻击技术",
-      "MCP服务器核心挑战是上下文窗口而非API",
-      "为7B而非70B模型设计MCP工具",
-      "模型应评估实际任务而非学术基准",
-      "Inference Efficiency Ratio追踪模型成本"
+      "Anthropic沙箱逃逸报告敲响AI安全警钟",
+      "MCP实际瓶颈是上下文窗口非API",
+      "4GB开源模型德语PII脱敏达94%效果",
+      "Agent审计日志调用后才写缺乏证据效力",
+      "小模型工具设计应适配能力而非盲目追新",
+      "推理效率比框架帮识别高成本工作流"
     ]
   },
-  "en": {}
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.222 shipped with reliability fixes",
+      "OpenAI Codex shipped 4 Rust alpha releases in 24h",
+      "Gemini CLI nightly v0.55.0 failed; no stable release",
+      "ACP protocol adoption converging across all tools",
+      "Security hardening: SSRF and auth bypasses top priority",
+      "9 CLI tools tracked including Kimi Code and DeepSeek TUI"
+    ],
+    "ai-agents": [
+      "OpenClaw hit 500 issues and 500 PRs in 24 hours",
+      "123 PRs merged in last 24 hours alone",
+      "390 open issues vs 110 closures — growing backlog",
+      "Session-state reliability is top engineering focus",
+      "Channel adapter bugs hit Telegram, Feishu, MS Teams",
+      "Latest release: 2026.7.2-beta.7; no new version today"
+    ],
+    "ai-trending": [
+      "rtk-ai/rtk at 74,771 stars cuts LLM tokens 60-90%",
+      "headroomlabs-ai/headroom at 64,842 stars compresses tool output",
+      "code-review-graph at 28,524 stars cuts context by 61%",
+      "\"Loop engineering\" emerging as new agent workflow discipline",
+      "Rust is default for AI-native infrastructure",
+      "1,000+ curated agent skills across security and science"
+    ],
+    "ai-web": [
+      "Anthropic hires first Chief Global Affairs Officer Tino Cuellar",
+      "Cuellar formerly led Carnegie Endowment, served 3 presidents",
+      "OpenAI publishes 3 new articles including Apple commentary",
+      "Article titled \"Apple Is Getting This Wrong\" flagged",
+      "Focus shifts to governance over model releases",
+      "Anthropic sitemap now contains 430 total articles"
+    ],
+    "ai-hn": [
+      "Apple vs OpenAI espionage tensions escalate on HN",
+      "OpenAI settles $3.2M over foreign hire discrimination claims",
+      "Flowise open-source agent builder is shutting down",
+      "SLM trained on $8 ESP32-S3 microcontroller goes viral",
+      "OpenAI publishes third-party cyber red-team results",
+      "Rust project introduces new LLM integration policy"
+    ],
+    "ai-arxiv": [
+      "ParVL enables parallel compute for multimodal LLMs",
+      "ALiBi positional encoding has critical numerical underflow bug",
+      "Cross-model KV cache transfer uses closed-form linear mapping",
+      "WorldCup Arena benchmarks LLMs in forward-looking settings",
+      "SocietyBench argues intelligence requires forecasting ability",
+      "Three papers converge on test-time compute scaling"
+    ],
+    "ai-hf": [
+      "GLM-5.2 leads HF with 4,800+ likes and nearly 5M downloads",
+      "Kimi-K3 tops downloads at 1.1M with 10,028 likes",
+      "DeepSeek-V4-Flash hits 2.7M downloads",
+      "DeepSeek-V4-Flash-0731 July checkpoint gaining traction",
+      "MiniMax-H3 video generation pipeline stays hot",
+      "GGUF quantization ecosystem thriving for Qwen3.6 and V4"
+    ]
+  }
 }

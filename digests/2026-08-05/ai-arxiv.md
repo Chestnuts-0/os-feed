@@ -1,6 +1,6 @@
 # ArXiv AI 研究日报 2026-08-05
 
-> 数据来源: [ArXiv](https://arxiv.org/) (cs.AI, cs.CL, cs.LG) | 共 50 篇论文 | 生成时间: 2026-08-05 05:56 UTC
+> 数据来源: [ArXiv](https://arxiv.org/) (cs.AI, cs.CL, cs.LG) | 共 50 篇论文 | 生成时间: 2026-08-05 06:19 UTC
 
 ---
 
@@ -10,149 +10,118 @@
 
 ---
 
-## 📰 今日速览
+## 一、今日速览
 
-今日论文最显著的趋势是**真实世界动态评估**的兴起：从基于世界杯赛况的实时推理测试（WorldCup Arena）到跨模型交互的社会演化预测（SocietyBench），学界正从"静态问答"转向"过程跟踪"。同时，**推理时计算扩展**（Test-Time Scaling）和**从失败轨迹中学习**（ReflectRL、TurnSight）成为提升LLM能力的新热点。医学与工业场景的**安全性与可信评估**（ADMITBench、CARE-X）也涌现多篇重要工作，反映出AI落地对可靠性的迫切需求。
+今日投稿聚焦**测试时推理扩展**与**智能体能力评估**两大主线：多篇论文深入探讨 Test-Time Scaling 的推理范式与可解释性优化，同时围绕递归自改进、工具使用、多模态评估等主题推出系列基准测试。在工程层面，跨模型 KV Cache 复用、注意力数值失效分析、扩散偏好对齐等新技术揭示了大模型规模化过程中的关键瓶颈与解法。
 
 ---
 
-## 📑 重点论文
+## 二、重点论文
 
 ### 🧠 大语言模型（架构、训练、对齐、评估）
 
-**1. ParVL: Parallel Scaling and Expandable Compute Allocation for Multimodal LLMs**
-- 链接: http://arxiv.org/abs/2608.04010v1
-- 作者: Yang Yang et al.
-- 一句话：打破多模态LLM固定计算分配的局限，提出并行扩展与可扩计算调度机制，显著降低内存与延迟开销。
+1. **Test-Time Scaling in Reasoning LLMs: Inference Regimes, Evaluation, and Reproducibility**
+   https://arxiv.org/abs/2608.04001
+   系统梳理 Test-Time Scaling 的多种推理范式，统一界定其评估标准与复现性问题，为该领域建立研究基准。
 
-**2. When Attention Goes Blind: Numerical Failure in ALiBi Positional Encodings**
-- 链接: http://arxiv.org/abs/2608.03994v1
-- 作者: Christopher Schröder et al.
-- 一句话：揭示ALiBi位置编码在线性偏差缩放下的浮点下溢失效，大面积注意力权重被清零导致attention head"失明"。
+2. **When Attention Goes Blind: Numerical Failure in ALiBi Positional Encodings**
+   https://arxiv.org/abs/2608.03994
+   发现 ALiBi 位置编码在线性偏置缩放时因浮点精度下溢导致注意力权重大量归零，揭示长序列推理中的潜在数值失效模式。
 
-**3. Test-Time Scaling in Reasoning LLMs: Inference Regimes, Evaluation, and Reproducibility**
-- 链接: http://arxiv.org/abs/2608.04001v1
-- 作者: Mohsen Hariri et al.
-- 一句话：系统梳理测试时计算扩展的各类推理算法（单轨迹延展、多候选投票等），提供统一评估框架与复现基准。
+3. **Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse**
+   https://arxiv.org/abs/2608.03893
+   提出跨模型 KV Cache 线性映射复用机制，允许不同规模的同族模型共享 Prefill 计算结果，显著降低多模型部署的推理开销。
 
-**4. Intertemporal Preference Steering in Qwen3 via Contrastive Activation Addition**
-- 链接: http://arxiv.org/abs/2608.03892v1
-- 作者: Michal Mráz, Justin Shenk
-- 一句话：在Qwen3-32B中发现线性时间偏好表示，通过对比激活添加技术可定向引导模型在短期/长期决策间的倾向。
+4. **Intertemporal Preference Steering in Qwen3 via Contrastive Activation Addition**
+   https://arxiv.org/abs/2608.03892
+   在 Qwen3-32B 中定位时间偏好的线性表征，通过对比激活叠加实现模型短期/长期决策倾向的可控干预。
 
-**5. Omega-S: A Functional Resilience Index for LLM Fine-Tuning**
-- 链接: http://arxiv.org/abs/2608.03887v1
-- 作者: Alberto Acedo
-- 一句话：提出仅需权重矩阵的轻量韧性惩罚项Omega-S，无需旧任务数据或Fisher矩阵即可缓解微调遗忘。
+5. **HalluTruthQA-4K: A Fine-Grained Corpus and Annotation Process for Arabic Hallucination Detection and Truth Verification**
+   https://arxiv.org/abs/2608.03966
+   构建细粒度阿拉伯语幻觉检测数据集，突破传统二进制标注的局限，支持句级幻觉识别与事实验证。
 
 ---
 
 ### 🤖 智能体与推理（规划、工具使用、多智能体、思维链）
 
-**6. WorldCup Arena: Prospective, Leakage-Free Evaluation of Frontier LLMs on a Live Tournament**
-- 链接: http://arxiv.org/abs/2608.04008v1
-- 作者: Zhenran Wang et al.
-- 一句话：在2026年世界杯39天赛程中实时评估LLM预测能力，首次实现无泄露、面向真实事件的动态推理评测。
+6. **TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning**
+   https://arxiv.org/abs/2608.04007
+   提出回合级 hindsight 自蒸馏方法，在工具集成推理（TIR）的长程交互中实现细粒度信用分配，弥补轨迹级监督的不足。
 
-**7. Video-DeepResearch: Towards the Next-Generation Multimodal Deepresearch Agent**
-- 链接: http://arxiv.org/abs/2608.03979v1
-- 作者: Zhen Fang et al.
-- 一句话：将多模态agent从静态图像扩展至连续视频流，揭示当前模型在模态偏差与密集时空 grounding 上的关键瓶颈。
+7. **PAST-Bench: Benchmarking the Foundations of Recursive Self-Improvement in Personal Agents**
+   https://arxiv.org/abs/2608.04003
+   建立个人智能体递归自改进能力的基准测试，评估跨会话经验保留与技能演化对任务求解的实际增益。
 
-**8. TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning**
-- 链接: http://arxiv.org/abs/2608.04007v1
-- 作者: Changle Qu et al.
-- 一句话：提出回合级回溯自蒸馏方法，实现长程工具交互推理中的细粒度信用分配，突破轨迹级监督的局限。
+8. **ContinualSkillBench: Can LLM Agents Truly Evolve Their Capabilities?**
+   https://arxiv.org/abs/2608.03874
+   系统评估智能体是否能真正通过外部技能库持续演化能力，揭示当前框架在技能积累与复用上的根本性局限。
 
-**9. PAST-Bench: Benchmarking the Foundations of Recursive Self-Improvement in Personal Agents**
-- 链接: http://arxiv.org/abs/2608.04003v1
-- 作者: Shuhan Xue et al.
-- 一句话：针对个人AI agent跨会话保持偏好与技能的能力，系统评估递归自我改进的基础前提与退化风险。
-
-**10. ReflectRL: Learning from Golden Negative Trajectories via Reflective-to-Direct Reasoning**
-- 链接: http://arxiv.org/abs/2608.03972v1
-- 作者: Jinhe Bi et al.
-- 一句话：当专家模型在难题上失败时，通过反思-直接推理双路径从"金标准负样本"中学习，增强RL训练鲁棒性。
+9. **ReflectRL: Learning from Golden Negative Trajectories via Reflective-to-Direct Reasoning**
+   https://arxiv.org/abs/2608.03972
+   利用专家模型的"负面轨迹"进行反思式直接推理学习，使 Agent 从失败经验中提取可泛化的改进信号。
 
 ---
 
 ### 🔧 方法与框架（新技术、基准测试、效率优化）
 
-**11. SocietyBench: Forecasting Counterfactual Social-World Evolution**
-- 链接: http://arxiv.org/abs/2608.04009v1
-- 作者: Zhenran Wang et al.
-- 一句话：构建反事实社会演化预测基准，填补LLM社会理解与预测能力的评测空白。
+10. **Interpretable Adaptive Sampling for LLM Test-Time Scaling**
+    https://arxiv.org/abs/2608.03961
+    提出可解释的自适应采样策略，根据问题难度动态分配推理预算，替代固定 per-query 计算开销。
 
-**12. Information-Geometric Forward Policy Training in GFlowNets**
-- 链接: http://arxiv.org/abs/2608.03967v1
-- 作者: Yordan Raykov, Rodrigo Veiga
-- 一句话：从信息几何角度形式化GFlowNet前向策略训练，为离散与混合对象生成提供统一优化视角。
+11. **WorldCup Arena: Prospective, Leakage-Free Evaluation of Frontier LLMs on a Live Tournament**
+    https://arxiv.org/abs/2608.04008
+    在 2026 世界杯 39 天赛程中实时评估 LLM 预测能力，开创无前向泄漏的直播事件基准评测范式。
 
-**13. Agogic: Performance-Timed Music Tokens for LLM-Native Text-to-Symbolic-Music Generation**
-- 链接: http://arxiv.org/abs/2608.03999v1
-- 作者: Junhao Chen et al.
-- 一句话：在固定模型与数据下隔离评估音乐token化方案，证明节拍时间编码对LLM原生音乐生成的关键作用。
+12. **SocietyBench: Forecasting Counterfactual Social-World Evolution**
+    https://arxiv.org/abs/2608.04009
+    面向反事实社会世界演化的预测基准，弥补当前评估仅关注任务执行而忽视社会事件推理的短板。
 
-**14. Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse**
-- 链接: http://arxiv.org/abs/2608.03893v1
-- 作者: Taekyung Heo et al.
-- 一句话：提出跨模型KV缓存复用机制，通过闭式线性映射实现同族模型间prefill计算重用，降低切换成本。
+13. **ParVL: Parallel Scaling and Expandable Compute Allocation for Multimodal LLMs**
+    https://arxiv.org/abs/2608.04010
+    提出并行扩展与可弹性分配计算的 multimodal LLM 缩放策略，打破传统方法中固定计算分配的刚性限制。
 
-**15. Muon Meets Mamba: Spectral Optimization for State Space Models**
-- 链接: http://arxiv.org/abs/2608.03941v1
-- 作者: Arslan Battalov et al.
-- 一句话：将Muon正交更新优化器拓展至状态空间模型（Mamba），在谱范数下实现更高效训练。
+14. **Omegа-S: A Functional Resilience Index for LLM Fine-Tuning**
+    https://arxiv.org/abs/2608.03887
+    仅从权重矩阵计算 Omega-S 指标，无需历史任务数据或旧权重副本，即可量化微调对模型功能韧性（灾难性遗忘）的影响。
 
 ---
 
 ### 📊 应用（垂直领域、多模态、代码生成）
 
-**16. CARE-X: Towards Clinically Useful Radiology VLMs with Auxiliary Supervision, Reward-Aligned Learning, and Tool-Augmented Measurement**
-- 链接: http://arxiv.org/abs/2608.03890v1
-- 作者: Mercy Prasanna Ranjit et al.
-- 一句话：构建可临床部署的胸部X光VLM，融合辅助监督、奖励对齐与工具增强测量，实现病灶分类、定位与解剖测量一体化。
+15. **Video-DeepResearch: Towards the Next-Generation Multimodal Deepresearch Agent**
+    https://arxiv.org/abs/2608.03979
+    将多模态智能体从静态图像拓展至连续视频流，揭示模态偏差与密集时空定位是当前核心瓶颈。
 
-**17. ADMITBench: A Safety-Governed Reference Framework for Evaluating the Admissibility of Industrial LLM Advisories**
-- 链接: http://arxiv.org/abs/2608.03866v1
-- 作者: Yash Misra et al.
-- 一句话：提出工业场景LLM建议的安全治理评估框架，从证据支持度、操作许可性与风险等级三维度审查推荐可信度。
+16. **CARE-X: Towards Clinically Useful Radiology VLMs with Auxiliary Supervision, Reward-Aligned Learning, and Tool-Augmented Measurement**
+    https://arxiv.org/abs/2608.03890
+    面向胸部 X 光片的临床可用 VLM，联合辅助监督、奖励对齐与工具增强测量，统一分类、定位与解剖度量三大能力。
 
-**18. BanglaWild: An In-the-Wild Bengali Scene Text Recognition Benchmark for OCR and Vision-Language Models**
-- 链接: http://arxiv.org/abs/2608.03884v1
-- 作者: Sadab Shiper et al.
-- 一句话：填补孟加拉语实景文本识别评测空白，统一评估OCR与VLM在真实场景下的多语言感知能力。
+17. **Can Large Language Models Recover Semantic Optimization Opportunities That Compilers Miss?**
+    https://arxiv.org/abs/2608.03983
+    探索 LLM 能否从 C/C++ 异构上下文中恢复编译器遗漏的语义优化机会，并以契约保持的方式实现。
 
-**19. MultiGlobeQA: A Multilingual and Globally Diverse Benchmark for Geospatial Reasoning**
-- 链接: http://arxiv.org/abs/2608.03882v1
-- 作者: Martin Böckling et al.
-- 一句话：构建多语言地理空间推理基准，揭示LLM在距离计算、空间包含关系等几何拓扑任务上的系统性不足。
-
-**20. ContinualSkillBench: Can LLM Agents Truly Evolve Their Capabilities?**
-- 链接: http://arxiv.org/abs/2608.03874v1
-- 作者: Tianyi Guan et al.
-- 一句话：首次系统评估具备外部技能库的LLM agent能否真正持续演化技能，并提出衡量技能积累与迁移能力的基准。
+18. **BanglaWild: An In-the-Wild Bengali Scene Text Recognition Benchmark for OCR and Vision-Language Models**
+    https://arxiv.org/abs/2608.03884
+    首个孟加拉语真实场景文字识别基准，同时评估传统 OCR 与 VLM，报告细粒度编辑距离指标。
 
 ---
 
-## 📡 研究趋势信号
+## 三、研究趋势信号
 
-今日投稿呈现三条清晰趋势：①**评估范式从静态回归转向动态预测**——WorldCup Arena和SocietyBench均面向实时开放世界，反映学界对LLM"过程推理"而非"结果匹配"能力的重视；②**推理效率与鲁棒性并重**——Test-Time Scaling、Cross-Model KV Cache、TurnSight等论文共同指向"如何在有限计算预算下可靠推理"这一工程核心；③**垂直领域的可信落地加速**——CARE-X、ADMITBench、CRS-Triage等医学与工业场景论文密集出现，表明AI从"能做"向"敢用"阶段过渡，安全评估与人类对齐成为硬约束。
+今日投稿呈现三大趋势：一是 **Test-Time Scaling 方法论化**，多篇工作从评估、采样、可解释性三个维度统一该领域研究框架；二是 **Agent 能力评估从任务完成转向认知演化**，递归自改进、技能持续学习、社会预测等基准反映社区对 Agent "智能本质" 的关注；三是 **垂直领域 VLM 向临床与工业级可用收敛**，通过多任务联合训练与工具增强弥合研究与落地的差距。
 
 ---
 
-## 📖 值得精读
+## 四、值得精读
 
-**1. Test-Time Scaling in Reasoning LLMs: Inference Regimes, Evaluation, and Reproducibility**
-- 链接: http://arxiv.org/abs/2608.04001v1
-- 理由：该领域近年论文爆炸但标准混乱，本文首次系统梳理单轨迹延展、多候选投票等主流范式，并提供统一评估协议，是该方向入门口径的必参考。
+1. **Test-Time Scaling in Reasoning LLMs**（2608.04001）
+   该工作是 Test-Time Scaling 领域的系统性综述与基准界定论文，统一了推理扩展的各种范式定义，对后续研究者建立复现标准具有重要参考价值。
 
-**2. TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning**
-- 链接: http://arxiv.org/abs/2608.04007v1
-- 理由：工具使用推理（TIR）是agent落地关键，但长程信用分配仍是难题。本文的回合级回溯自蒸馏思路简洁有效，对Agent训练有直接启发。
+2. **Cross-Model KV Cache Transfer**（2608.03893）
+   针对多模型级联部署中的核心效率瓶颈，提出闭式线性映射实现 Prefill 复用，方案简洁且具有直接工程落地价值，适合实践导向的研究者深入阅读。
 
-**3. CARE-X: Towards Clinically Useful Radiology VLMs**
-- 链接: http://arxiv.org/abs/2608.03890v1
-- 理由：医学VLM是近期最热门的应用赛道之一，但多数工作停留在报告生成。本文同时解决分类、定位、测量三个临床核心需求，并引入奖励对齐与工具增强，代表"可用"而非"好看"的落地路径。
+3. **When Attention Goes Blind**（2608.03994）
+   揭示 ALiBi 位置编码的数值失效模式，该问题在高精度要求或超长序列场景下可能被广泛触发，对关注模型架构可靠性的研究者具有警示意义。
 
 ---
 *本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
