@@ -426,19 +426,27 @@ button {
   align-items: baseline;
   gap: 2px;
   font-size: 0.92rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .repo-owner {
   color: var(--text-secondary);
+  white-space: nowrap;
 }
 .repo-sep {
   color: var(--text-muted);
   margin: 0 1px;
+  flex-shrink: 0;
 }
 .repo-name {
   font-weight: 700;
   color: var(--accent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 .repo-link:hover .repo-name {
   text-decoration: underline;
@@ -472,7 +480,7 @@ button {
   color: #93c5fd;
 }
 
-/* 通俗概括 */
+/* 通俗概括（统一 2 行高：clamp 截长 + min-height 兜底短/空，保证卡片高度恒定） */
 .summary {
   font-size: 0.98rem;
   font-weight: 700;
@@ -483,9 +491,14 @@ button {
   background: linear-gradient(135deg, var(--accent-light), transparent);
   border-left: 3px solid var(--accent);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(2 * 1.5 * 0.98rem + 16px);
 }
 
-/* 专业描述（卡片内截断） */
+/* 专业描述（卡片内截断，统一 3 行高：clamp 截长 + min-height 兜底短/空） */
 .reason-clamped {
   font-size: 0.82rem;
   line-height: 1.7;
@@ -495,6 +508,7 @@ button {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-height: calc(3 * 1.7 * 0.82rem);
 }
 
 /* 元信息条 */
