@@ -1,18 +1,18 @@
 # AI 开源趋势日报 2026-08-05
 
-> 数据来源: GitHub Trending + GitHub Search API | 生成时间: 2026-08-05 01:41 UTC
+> 数据来源: GitHub Trending + GitHub Search API | 生成时间: 2026-08-05 05:56 UTC
 
 ---
 
 
 
-# 🤖 AI 开源趋势日报 | 2026-08-05
+# 🤖 AI 开源趋势日报 — 2026-08-05
 
 ---
 
 ## 一、今日速览
 
-今日 AI 开源社区呈现三大主线：① **Agent 基础设施加速成熟**，TencentDB 推出团队级 Agent Memory 框架，Uber 发布企业级 Agent 安全观测平台；② **AI 编码助手生态爆发**，DeepSeek Reasonix、多智能体管理平台 Multica 单日新增千星；③ **推理成本优化持续深化**，AirLLM 单卡跑 70B 模型方案与 RTK 代理降 Token 消耗方案同步走红。Rust 工具链在 AI 基础设施层地位进一步巩固。
+今日 AI 开源生态呈现三大核心趋势：**Agent 技能化与记忆基建爆发**（TencentDB-Agent-Memory 单日 +1111 stars，mem0、headroom、Mempalace 等内存/压缩方案密集上榜）；**Token 成本优化成为刚需**（rtk 降价 60–90% 的 CLI 代理、caveman 用"洞穴人"风格节省 65% token）；**垂直场景 Agent 快速落地**，涵盖视频生成、A 股投研、安全渗透、小说创作等细分领域，显示 AI 应用正从通用框架向行业专用 Agent 快速演进。
 
 ---
 
@@ -20,87 +20,95 @@
 
 ### 🔧 AI 基础工具
 
-| 项目 | Stars | 今日新增 | 说明 |
-|------|-------|----------|------|
-| [esengine/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix) | 30,809+ | +922 | DeepSeek 原生终端 AI 编码 Agent，基于前缀缓存稳定性设计，适合长期运行的自动化开发场景 |
-| [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | 74,736 | +181 | Rust CLI 代理，可将常见开发命令的 LLM Token 消耗降低 60-90%，零依赖单二进制 |
-| [lyogavin/airllm](https://github.com/lyogavin/airllm) | 28,408 | +1,711 | 单卡 4GB GPU 运行 LLaMA 70B 推理的极致优化方案，持续引发低资源部署关注 |
-| [firecrawl/pdf-inspector](https://github.com/firecrawl/pdf-inspector) | — | +2,540 | Rust 实现的 PDF 智能分类与文本提取库，支持扫描/文本 PDF 自动路由，是 Firecrawl 生态的底层支撑 |
-| [zellij-org/zellij](https://github.com/zellij-org/zellij) | 34,710 | +19 | Rust 编写的带电池包的终端工作区，正在成为 AI Agent 开发者的标配开发环境 |
+| 项目 | Stars | 今日新增 | 简介 |
+|------|-------|---------|------|
+| [ollama/ollama](https://github.com/ollama/ollama) | ⭐177,814 | — | 本地运行 Kimi-K2.6、GLM-5.2、DeepSeek、Qwen 等 40+ 大模型的推理框架，支持一键部署 |
+| [vllm-project/vllm](https://github.com/vllm-project/vllm) | ⭐88,213 | — | 高吞吐 LLM 推理引擎，支持 PagedAttention，是当前开源推理服务的事实标准 |
+| [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | ⭐74,768 | +181 today | Rust 编写的 CLI 代理，可将常见开发命令的 LLM token 消耗降低 60–90%，零依赖单二进制 |
+| [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) | ⭐106,368 | — | Google 官方开源终端 AI Agent，将 Gemini 能力直接带入命令行 |
+| [continue/continue](https://github.com/continuedev/continue) | ⭐35,324 | — | 开源 coding agent，支持多模型、多 IDE，专注本地优先的 AI 编程体验 |
+| [esengine/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix) | ⭐30,970 | +922 today | DeepSeek 原生 AI 编程 Agent，围绕 prefix-cache 稳定性设计，可长时间运行 |
+| [QwenLM/qwen-code](https://github.com/QwenLM/qwen-code) | ⭐26,707 | — | 通义千问开源终端 AI 编程 Agent，支持多模型切换 |
 
 ---
 
-### 🤖 AI 智能体/工作流
+### 🤖 AI 智能体 / 工作流
 
-| 项目 | Stars | 今日新增 | 说明 |
-|------|-------|----------|------|
-| [TencentCloud/TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory) | 13,680+ | +1,111 | 腾讯 DB 团队推出的团队级 Agent 记忆中枢，将对话/文档/代码转化为可复用的四类记忆资产（Chat Memory、Skill、LLM-Wiki、Code-Graph），支持跨 Agent 治理与共享 |
-| [uber/ADR](https://github.com/uber/ADR) | — | +148 | Uber 企业级部署的 AI Agent 安全观测框架，提供可观测性、安全基准测试与威胁检测能力 |
-| [livekit/agents](https://github.com/livekit/agents) | — | +432 | 实时语音 AI Agent 框架，支持多模态对话场景，填补了语音 Agent 开源基础设施的空白 |
-| [multica-ai/multica](https://github.com/multica-ai/multica) | — | +406 | 开源托管多 Agent 平台，支持任务分配、进度追踪与技能组合，定位"让编码 Agent 成为真正队友" |
-| [obra/superpowers](https://github.com/obra/superpowers) | — | +653 | Agentic 技能框架与软件开发方法论，强调可工作的 AI 辅助开发流程 |
-| [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | 225,519 | +616 | NousResearch 开源的自进化 Agent，核心理念是"与你共同成长"，在主题搜索中保持 Top 级热度 |
-| [browser-use/video-use](https://github.com/browser-use/video-use) | — | +320 | 用代码 Agent 编辑视频，将浏览器自动化能力延伸至视频制作场景 |
+| 项目 | Stars | 今日新增 | 简介 |
+|------|-------|---------|------|
+| [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | ⭐225,639 | +616 today | "与你共同成长"的自进化 Agent 框架，社区活跃度极高 |
+| [langchain-ai/langgraph](https://github.com/langchain-ai/langgraph) | ⭐38,910 | — | 构建容错 Agent 的图结构框架，支持复杂多步工作流与人工审核节点 |
+| [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | ⭐79,317 | — | 字节开源长周期 SuperAgent，支持沙箱、记忆、技能、子 Agent 编排，可处理数小时级任务 |
+| [openai/openai-agents-python](https://github.com/openai/openai-agents-python) | ⭐28,388 | — | OpenAI 官方轻量多 Agent 工作流框架，结构化 Agent 定义与工具调用 |
+| [livekit/agents](https://github.com/livekit/agents) | ⭐0 | +432 today | 实时语音 AI Agent 框架，支持通话、会议等低延迟语音交互场景 |
+| [browser-use/browser-use](https://github.com/browser-use/browser-use) | ⭐107,904 | +320 today | 让 AI Agent 具备浏览器操作能力，自动化网页任务 |
+| [multica-ai/multica](https://github.com/multica-ai/multica) | ⭐0 | +406 today | 开源托管 Agent 平台，支持任务分配、进度追踪、技能累积，将 Coding Agent 变真正"队友" |
+| [uber/ADR](https://github.com/uber/ADR) | ⭐0 | +148 today | Uber 企业级 AI Agent 安全框架，提供可观测性、安全基准测试与威胁检测 |
 
 ---
 
 ### 📦 AI 应用
 
-| 项目 | Stars | 今日新增 | 说明 |
-|------|-------|----------|------|
-| [jamiepine/voicebox](https://github.com/jamiepine/voicebox) | — | +575 | 开源 AI 语音工作室，支持声音克隆、语音.Dictation 与内容创作，面向创作者市场 |
-| [Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach) | 66,502 | +956 | 让 AI Agent 获得"全网之眼"，CLI 方式访问 Twitter/Reddit/YouTube/GitHub/B站/小红书，零 API 费用 |
-| [usestrix/strix](https://github.com/usestrix/strix) | 48,356 | +984 | 开源 AI 渗透测试工具，帮助开发者和安全团队自动发现并修复应用漏洞 |
-| [zhaoxuya520/reverse-skill](https://github.com/zhaoxuya520/reverse-skill) | — | +2,297 | 逆向工程/渗透测试技能路由包，AI 自动路由 + 按需自举工具链，支持 Claude Code/Cursor 等主流编码 Agent |
-| [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | — | +811 | "给你的 AI 好品味"技能包，解决 Agent 生成内容同质化、AI 味过重的问题 |
-| [Alishahryar1/free-claude-code](https://github.com/Alishahryar1/free-claude-code) | — | +451 | 免费使用 Claude Code/Codex/Pi 的方案，支持终端、应用、IDE 及手机端 |
+| 项目 | Stars | 今日新增 | 简介 |
+|------|-------|---------|------|
+| [lyogavin/airllm](https://github.com/lyogavin/airllm) | ⭐28,568 | +1711 today | 单块 4GB GPU 即可推理 AirLLM 70B 模型，大幅降低大模型本地部署门槛 |
+| [firecrawl/pdf-inspector](https://github.com/firecrawl/pdf-inspector) | ⭐0 | +2540 today | Rust 编写的 PDF 智能解析库，自动区分扫描版/文本版 PDF 并路由处理 |
+| [zhaoxuya520/reverse-skill](https://github.com/zhaoxuya520/reverse-skill) | ⭐0 | +2297 today | AI 逆向/渗透安全技能路由包，支持 Claude Code/Cursor/Cline 等，按需自举工具链 |
+| [usestrix/strix](https://github.com/usestrix/strix) | ⭐48,479 | +984 today | 开源 AI 渗透测试工具，帮助发现和修复应用漏洞 |
+| [Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach) | ⭐66,598 | +956 today | 赋予 AI Agent "眼睛"，CLI 一键读取 Twitter、Reddit、YouTube、GitHub、B站等全网内容，零 API 费用 |
+| [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | ⭐0 | +811 today | 让 AI 拥有"好品味"的技能包，阻止 AI 生成平庸、千篇一律的代码/文本 |
+| [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | ⭐0 | +126 today | 158 个科学 Agent 技能 + 100+ 科学数据库，将任何 AI Agent 转化为 AI 科学家 |
+| [harry0303/MoneyPrinterTurbo](https://github.com/harry0303/MoneyPrinterTurbo) | ⭐101,649 | — | 基于 AI 大模型+自动化工作流，根据主题/关键词一键生成高清短视频 |
 
 ---
 
-### 🧠 大模型/训练
+### 🧠 大模型 / 训练
 
-| 项目 | Stars | 今日新增 | 说明 |
-|------|-------|----------|------|
-| [microsoft/generative-ai-for-beginners](https://github.com/microsoft/generative-ai-for-beginners) | 116,285+ | +783 | 微软官方生成式 AI 入门课程（21 节课），长期占据教育类项目榜首，今日再度涨星 |
-| [harry0703/MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo) | 101,618 | — | 一键 AI 短视频生成工具，基于自动化工作流将主题转为高清视频，创作者经济利器 |
-| [rasbt/LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch) | 100,565 | — | 从零用 PyTorch 实现 ChatGPT 级别 LLM 的教程仓库，是 AI 学习者必读经典 |
+| 项目 | Stars | 今日新增 | 简介 |
+|------|-------|---------|------|
+| [huggingface/transformers](https://github.com/huggingface/transformers) | ⭐163,347 | — | Hugging Face 主流 LLM/VLM 框架，支持推理与微调，社区生态最丰富 |
+| [hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) | ⭐73,764 | — | 统一高效微调 100+ LLM/VLM 工具，ACL 2024，支持全参数/LoRA |
+| [unslothai/unsloth](https://github.com/unslothai/unsloth) | ⭐69,583 | — | 本地训练与推理 Kimi K3、Gemma 4、Qwen3.6、DeepSeek-V4 等模型的 UI 工具 |
+| [rasbt/LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch) | ⭐100,579 | — | 从零用 PyTorch 实现类 ChatGPT 大模型的分步教程，教育类标杆项目 |
+| [sgl-project/sglang](https://github.com/sgl-project/sglang) | ⭐31,312 | — | 高性能 LLM 和多模态模型 serving 框架，推理速度业界领先 |
+| [vllm-project/vllm-omni](https://github.com/vllm-project/vllm-omni) | ⭐5,857 | — | vLLM 多模态推理框架，支持视觉+文本联合推理 |
 
 ---
 
-### 🔍 RAG/知识库
+### 🔍 RAG / 知识库 / 向量数据库
 
-| 项目 | Stars | 今日新增 | 说明 |
-|------|-------|----------|------|
-| [FalkorDB/FalkorDB](https://github.com/FalkorDB/FalkorDB) | 5,269+ | +182 | 基于 GraphBLAS 的超高速图数据库，专为 LLM GraphRAG 设计，用稀疏邻接矩阵实现图推理加速 |
-| [qdrant/qdrant](https://github.com/qdrant/qdrant) | 33,780 | +20 | 高性能向量数据库，云原生架构，支持大规模 ANN 搜索，RAG 基础设施的核心组件 |
-| [mem0ai/mem0](https://github.com/mem0ai/mem0) | 62,529 | — | AI Agent 通用记忆层，跨会话持久化 Agent 记忆，已集成至主流 Agent 框架 |
-| [upstash/context7](https://github.com/upstash/context7) | 60,265 | — | 为 LLM 和 AI 代码编辑器提供实时代码文档上下文，降低 RAG 构建成本 |
+| 项目 | Stars | 今日新增 | 简介 |
+|------|-------|---------|------|
+| [mem0ai/mem0](https://github.com/mem0ai/mem0) | ⭐62,552 | — | AI Agent 通用记忆层，跨会话持久化存储与检索，已集成主流 Agent 框架 |
+| [TencentCloud/TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory) | ⭐14,099 | +1111 today | 团队级 Agent 记忆中枢，将对话/文档/代码转化为 Chat Memory、Skill、LLM-Wiki、Code-Graph 四类资产 |
+| [headroomlabs-ai/headroom](https://github.com/headroomlabs-ai/headroom) | ⭐64,835 | — | 在工具输出/日志/文件到达 LLM 前进行智能压缩，编码 Agent 节省 20% token，JSON 节省 60–95% |
+| [MemPalace/mempalace](https://github.com/MemPalace/mempalace) | ⭐58,073 | — | 基准测试最优的开源 AI 记忆系统，免费自托管 |
+| [qdrant/qdrant](https://github.com/qdrant/qdrant) | ⭐33,784 | +20 today | 高性能向量数据库，支持大规模 ANN 搜索，AGI 基础设施核心组件 |
+| [FalkorDB/FalkorDB](https://github.com/FalkorDB/FalkorDB) | ⭐5,288 | +182 today | 基于 GraphBLAS 的超快图数据库，专为 LLM GraphRAG 知识图谱设计 |
+| [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | ⭐102,643 | — | 将任意代码库、文档、SQL schema 转化为可查询知识图谱，确定性 AST 解析，无需向量库 |
+| [microsoft/graphrag](https://github.com/microsoft/graphrag) | ⭐35,253 | — | 微软开源图增强检索（GraphRAG）系统，多跳推理场景下 RAG 效果显著优于传统方案 |
 
 ---
 
 ## 三、趋势信号分析
 
-**1. Agent 记忆与可观测性成为新基建焦点。** 今日腾讯 DB-Agent-Memory（+1111）和 Uber ADR（+148）同时上榜，说明社区对 Agent 系统的"持久记忆治理"和"运行时安全观测"需求已从概念阶段进入工程落地期。Agent 正在从"单次对话工具"演变为"长期运行的智能体团队"，这一转变需要配套的记忆管理和安全基础设施。
+**Agent 技能化（Skills）成为今日最大热点。** 从 `taste-skill`（+811）、`reverse-skill`（+2297）、`claude-skills`（+83，总量 23k+）、`scientific-agent-skills`（+126）到 `awesome-agent-skills`（29k stars），社区正围绕"Agent 技能注册表"构建标准化生态，类似 VS Code 扩展市场的 Agent 技能经济正在形成。
 
-**2. 推理成本优化持续发酵。** AirLLM（+1711）和 RTK（+181）的同步走红，反映出开发者对"低成本跑大模型"的强烈诉求。随着 DeepSeek、Qwen 等开源模型的普及，如何在消费级硬件上高效推理，成为影响 AI 应用能否落地的关键瓶颈。
+**Token 成本优化从辅助工具升级为核心刚需。** `rtk`（-60~90% token）、`headroom`（压缩工具输出）、`caveman`（"洞穴人"风格省 65% token）同日登榜，说明在 Agent 高频调用 LLM 的场景下，**上下文工程（Context Engineering）** 已从高级技巧变为基础设施级需求。
 
-**3. Rust 在 AI 工具链中加速渗透。** Trending 榜中 Firecrawl/pdf-inspector、FalkorDB、RTK 等 AI 基础设施项目均使用 Rust，与社区搜索中 Burn（Rust DL 框架）、ZeroMQ-LLM 等项目的增长形成呼应。Rust 的性能+内存安全特质正被重新评估为 AI 基础设施层的首选语言。
+**Rust 在 AI 基础设施层快速渗透。** `pdf-inspector`、`rtk`、`FalkorDB`、`xberg` 等高性能 AI 组件均选用 Rust，反映社区对低延迟、低内存占用的 AI 原生日益重视。
 
-**4. 垂直场景 Skill 生态爆发。** Reverse-skill（+2297）、Taste-skill（+811）、oh-story-claudecode（+62）等"让 AI 有专业品味/领域知识"的技能包项目集体上榜，表明 Agent 生态正在从通用能力向垂直深耕演进。
+**与近期事件的关联：** 今日 `airllm`（+1711）的热度与 70B 级模型本地单卡推理需求直接相关，`DeepSeek-Reasonix`（+922）呼应 DeepSeek 模型生态的持续热度，`hermes-agent`（NousResearch 出品）则得益于开源 Agent 框架的新一轮社区扩散。
 
 ---
 
 ## 四、社区关注热点
 
-- **🔥 [TencentCloud/TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory)** — 大厂首次开源"团队级 Agent 记忆"框架，四类记忆资产（Chat/Skill/LLM-Wiki/Code-Graph）的设计思路值得深入调研，可能成为 Agent Memory 的标准参考实现。
-
-- **🔥 [esengine/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix)** — DeepSeek 原生编码 Agent，前缀缓存稳定性是其核心差异化，适合需要 Agent 长时间运行的场景（如自动化测试、持续集成）。
-
-- **🔥 [zhaoxuya520/reverse-skill](https://github.com/zhaoxuya520/reverse-skill)** — 逆向/安全领域的 Skill 路由包单日 +2297 stars，验证了"AI + 垂直专业领域"的 Skill 模式具有强大传播力，值得关注 Skill 生态的标准化趋势。
-
-- **💡 [livekit/agents](https://github.com/livekit/agents)** — 实时语音 Agent 框架填补了开源生态空白，随着 Apple/Google 在设备端语音 AI 的投入，语音 Agent 基础设施有望成为下一个爆发点。
-
-- **💡 [usestrix/strix](https://github.com/usestrix/strix)** — AI 渗透测试工具热度攀升（+984），反映安全圈对"AI 自动化安全"的迫切需求，与 CVE 披露节奏加速和行业合规要求升级密切相关。
+- **TencentCloud/TencentDB-Agent-Memory** — 今日 +1111 stars 榜首，腾讯开源的团队级 Agent 记忆中枢，将对话/文档/代码转化为可治理、可共享的四类记忆资产，是 Agent 记忆基础设施的代表作。
+- **zhaoxuya520/reverse-skill** — 今日 +2297 stars，国内首个 AI 安全技能路由包，支持 Claude Code/Cursor/Cline 等主流编码 Agent，将安全渗透能力以 Skill 形式标准化。
+- **lyogavin/airllm** — 今日 +1711 stars，单 4GB GPU 跑 70B 模型的推理方案，大幅降低大模型本地部署门槛，对消费级硬件用户极具吸引力。
+- **Panniantong/Agent-Reach** — 今日 +956 stars，零 API 费用的全网内容读取 Agent，支持 Twitter/Reddit/YouTube/B站/小红书，对需要实时外部信息接入的 Agent 应用极具价值。
+- **headroomlabs-ai/headroom** — 65k stars，LLM 上下文压缩代理/库/MCP Server 三合一方案，解决 Agent 工具输出过长导致 token 爆炸的核心痛点，已被多家生产环境采用。
 
 ---
 *本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*

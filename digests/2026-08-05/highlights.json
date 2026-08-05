@@ -1,110 +1,69 @@
 {
   "zh": {
     "ai-cli": [
-      "Claude Code发布v2.1.222安全修复版",
-      "OpenAI Codex推出4个alpha版本",
-      "Gemini CLI集中修复子代理安全问题",
-      "Kimi Code CLI完善ACP协议支持",
-      "OpenCode修复DeepSeek V4 Flash稳定性",
-      "Pi解决企业用户Compaction故障"
+      "Claude Code v2.1.222强化worktree隔离与hook安全",
+      "Gemini CLI集中封堵SSRF与变量展开绕过漏洞",
+      "Copilot CLI触发基础安全紧急修复",
+      "DeepSeek TUI v0.9.4列车进行中+77 commits",
+      "OpenCode推进V2协议重构，6层PR栈",
+      "Kimi Code CLI获Remote Control高票需求"
     ],
     "ai-agents": [
-      "OpenClaw修复Synology Chat webhook误报",
-      "Slack通道消息投递问题已修复",
-      "子代理交付机制优化完成",
-      "压缩回收功能得到修复",
-      "测试性能提升通过优化实现",
-      "Linux插件发现测试已隔离"
+      "OpenClaw 24小时500条Issue更新，高负载修复期",
+      "会话状态稳定性与subagent完成丢失成焦点",
+      "API Key作用域化安全加固推进中",
+      "Agent DB v14→v15迁移阻塞P1问题修复",
+      "memory索引dirty flag修复待审查",
+      "P0/P1级Bug有关联Fix PR等待维护者"
     ],
     "ai-trending": [
-      "DeepSeek-Reasonix单日新增922 stars",
-      "RTK代理降低Token消耗60-90%",
-      "AirLLM实现单卡4GB运行70B模型",
-      "腾讯DB团队推出Agent记忆中枢",
-      "Uber发布企业级Agent安全观测平台",
-      "LiveKit填补语音Agent基础设施空白"
+      "TencentDB-Agent-Memory单日+1111 stars",
+      "DeepSeek-Reasonix单日+922 stars",
+      "Hermes-Agent今日+616 stars",
+      "rtk CLI代理token消耗降低60-90%",
+      "Caveman用洞穴人风格节省65% token",
+      "垂直场景Agent快速落地视频生成、投研"
     ],
     "ai-web": [
-      "Anthropic任命首任首席全球事务官",
-      "OpenAI发布经济研究平台公告",
-      "Anthropic强化全球政策布局",
-      "OpenAI推出ChatGPT教学工作坊",
-      "Anthropic高管具备政府背景",
-      "OpenAI经济研究Exchange上线"
+      "Anthropic任命Tino为首任首席全球事务官",
+      "Tino曾任卡内基国际和平基金会主席",
+      "OpenAI发布经济研究平台Research Exchange",
+      "Anthropic系统性强化全球治理应对能力",
+      "OpenAI批评Apple立场引社区关注",
+      "OpenAI三篇新内容涉及教育、产业评论"
     ],
     "ai-hn": [
-      "AI基准测试工具支持OpenRouter多模型",
-      "斯坦福推出自改进AI Agent课程",
-      "团队级Coding Agent标准化方案开源",
-      "新编码代理宣称性能超越Codex",
-      "纯Go PII检测工具速度提升百倍",
-      "Capshelf引入Lockfile解决Skill碎片化"
-    ],
-    "ai-hf": [
-      "Kimi-K3获超万点赞领跑开源模型",
-      "GLM-5.2 MoE模型下载量突破223万",
-      "DeepSeek V4-Flash优化对话场景",
-      "MiniMax开源首款视频生成模型",
-      "百度OCR模型下载量达270万",
-      "Qwen3.6-35B微调版持续涌现"
-    ]
-  },
-  "en": {
-    "ai-cli": [
-      "Claude Code ships v2.1.222 focused on security hardening",
-      "OpenAI Codex drops four alpha releases in rapid iteration",
-      "Gemini CLI holds 14 open PRs in active bug-fix cycle",
-      "GitHub Copilot CLI hits v1.0.79 with breaking changes",
-      "Nine AI CLI tools battle for enterprise reliability",
-      "Ecosystem shifts from feature race to quality race"
-    ],
-    "ai-agents": [
-      "OpenClaw processes 500 issues and 500 PRs in 24 hours",
-      "Synology Chat fix surfaces rejected webhook messages",
-      "Slack integration resolves active question control bug",
-      "UI split-pane now clears after answers and cancellations",
-      "OpenClaw covers 13 projects including NanoBot and Hermes",
-      "Dense maintenance phase targets subagent orchestration"
-    ],
-    "ai-web": [
-      "Anthropic hires Tino Cuellar as first Chief Global Affairs Officer",
-      "OpenAI publishes three new blog articles today",
-      "OpenAI drops commentary titled Apple Is Getting This Wrong",
-      "Cuellar is former California Supreme Court Justice",
-      "Anthropic sitemap now holds 430 total articles",
-      "OpenAI sitemap reaches 897 total articles"
-    ],
-    "ai-hn": [
-      "Apple vs OpenAI legal conflict tops HN with 800+ comments",
-      "OpenAI settles $3.2M U.S. worker discrimination claim",
-      "White House excludes open models from AI safety framework",
-      "Flowise AI tool shuts down citing unsustainable costs",
-      "Bending Spoons acquires Airtable for $1.28 billion",
-      "Michael Burry places bearish bet on AI chip stocks"
+      "Apple指控前员工向OpenAI泄露机密数据",
+      "Flowise关闭引发开源工具可持续性讨论",
+      "8美元ESP32-S3微控制器运行SLM",
+      "Zero-Mem实现零token记忆操作新方法",
+      "Agent Skills将团队规范注入Claude Code",
+      "Blender for AI Agents尝试工作流可视化"
     ],
     "ai-arxiv": [
-      "AURORA-LM applies continuous latent diffusion to text",
-      "Structured Memory injects context via O(1) SSM state",
-      "GradCuit replaces token decoding with optimized latents",
-      "Real-time agent failure detection paper released",
-      "oneopot-Bench 0 pushes domain-specific AI evaluation",
-      "MedPRESS benchmark advances medical AI assessment"
+      "WorldCup Arena首次无泄露动态推理评测",
+      "Test-Time Scaling提供统一评估框架",
+      "Video-DeepResearch扩展至连续视频流agent",
+      "ParVL打破多模态LLM固定计算分配局限",
+      "ALiBi位置编码揭示浮点下溢失效问题",
+      "ReflectRL提出从失败轨迹学习方法"
     ],
     "ai-hf": [
-      "Kimi-K3 tops HF with 10,001 likes and 1.1M downloads",
-      "GLM-5.2 reaches 2.2M downloads on Z.ai MoE architecture",
-      "DeepSeek V4 Flash hits 2.7M downloads total",
-      "V4 Flash 0731 refined checkpoint shows better reasoning",
-      "Uncensored Qwen3.6 MoE fine-tunes see 1.6M+ downloads",
-      "Moonshot and DeepSeek models dominate this week"
+      "Kimi-K3以万级点赞登顶今日榜单",
+      "DeepSeek-V4-Flash累计下载突破270万",
+      "GLM-5.2支持对话与文本生成MoE模型",
+      "Unlimited-OCR凭超高下载量领跑图像理解",
+      "Qwen3.6/MiniMax-H3量化微调活动活跃",
+      "Laguna-S-2.1面向RAG场景优化"
     ],
     "ai-community": [
-      "MCP ecosystem tackles context limits and slow tool latency",
-      "Frontier benchmarks miss real production AI workloads",
-      "Claude Code MCP setup produces usable HTML layouts",
-      "Understanding behavior matters more than tracing origins",
-      "OpenAI Lean-certified formal proofs spark discussion",
-      "Smaller models on real tasks beat frontier model hype"
+      "Anthropic沙箱逃逸报告揭示Agent安全风险",
+      "MITRE ATLAS新增Agent工具攻击技术",
+      "MCP服务器核心挑战是上下文窗口而非API",
+      "为7B而非70B模型设计MCP工具",
+      "模型应评估实际任务而非学术基准",
+      "Inference Efficiency Ratio追踪模型成本"
     ]
-  }
+  },
+  "en": {}
 }
