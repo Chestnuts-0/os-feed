@@ -22,14 +22,23 @@ const FEEDBACK_PATH = path.join(DATA_DIR, "feedback.json");
 const DEFAULT_TAG_WEIGHT = 0.15;
 
 // 兴趣关键词 → 对应标签权重映射
+// 注意：initTagWeights 对兴趣文案做 toLowerCase 后做 includes 匹配，
+// 英文 keyword 匹配不上中文文案，因此补充中文关键词（"AI" 由小写 "ai" 实际命中）。
 const INTEREST_KEYWORD_MAP: Record<string, { tags: string[]; weight: number }> = {
   ai: {
     tags: ["AI基础设施", "AI Agent", "AI应用", "模型与训练", "RAG与知识", "推理引擎", "大语言模型"],
     weight: 0.5,
   },
+  AI: {
+    tags: ["AI基础设施", "AI Agent", "AI应用", "模型与训练", "RAG与知识", "推理引擎", "大语言模型"],
+    weight: 0.5,
+  },
   fun: { tags: ["非AI-好玩", "游戏", "创意工具", "可视化"], weight: 0.4 },
+  好玩: { tags: ["非AI-好玩", "游戏", "创意工具", "可视化"], weight: 0.4 },
   practical: { tags: ["非AI-实用", "开发者工具", "效率工具", "安全工具"], weight: 0.4 },
+  实用: { tags: ["非AI-实用", "开发者工具", "效率工具", "安全工具"], weight: 0.4 },
   learn: { tags: ["学习资源", "教程", "论文"], weight: 0.3 },
+  学习: { tags: ["学习资源", "教程", "论文"], weight: 0.3 },
 };
 
 // ---------------------------------------------------------------------------

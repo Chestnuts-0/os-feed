@@ -25,7 +25,7 @@ interface RawConfig {
   openclaw?: RawRepoEntry;
   openclaw_peers?: RawRepoEntry[];
   bigbros?: string[];
-  trending_topics?: { q: string; label: string }[];
+  trending_topics?: { q: string; label: string; quota?: number }[];
   star_threshold?: number;
   interests?: { ai?: number; fun?: number; practical?: number; ai_interests_text?: string };
 }
@@ -33,6 +33,7 @@ interface RawConfig {
 export interface TrendingTopic {
   q: string;
   label: string;
+  quota?: number;
 }
 
 export interface InterestProfile {
@@ -97,12 +98,29 @@ const DEFAULT_OPENCLAW_PEERS: RepoConfig[] = [
 // ---------------------------------------------------------------------------
 
 const DEFAULT_TRENDING_TOPICS: TrendingTopic[] = [
-  { q: "topic:llm", label: "llm" },
-  { q: "topic:ai-agent", label: "ai-agent" },
-  { q: "topic:rag", label: "rag" },
-  { q: "topic:vector-database", label: "vector-db" },
-  { q: "topic:large-language-model", label: "llm-model" },
-  { q: "topic:machine-learning", label: "ml" },
+  // AI 核心（保留）
+  { q: "topic:llm", label: "llm", quota: 50 },
+  { q: "topic:ai-agent", label: "ai-agent", quota: 50 },
+  { q: "topic:rag", label: "rag", quota: 50 },
+  { q: "topic:vector-database", label: "vector-db", quota: 50 },
+  { q: "topic:large-language-model", label: "llm-model", quota: 50 },
+  { q: "topic:machine-learning", label: "ml", quota: 50 },
+  // 非 AI 领域（内容多样性扩容）
+  { q: "topic:game", label: "game", quota: 50 },
+  { q: "topic:database", label: "database", quota: 50 },
+  { q: "topic:security", label: "security", quota: 50 },
+  { q: "topic:devops", label: "devops", quota: 50 },
+  { q: "topic:frontend", label: "frontend", quota: 50 },
+  { q: "topic:backend", label: "backend", quota: 50 },
+  { q: "topic:self-hosted", label: "self-hosted", quota: 50 },
+  { q: "topic:developer-tools", label: "developer-tools", quota: 50 },
+  { q: "topic:command-line", label: "command-line", quota: 50 },
+  { q: "topic:automation", label: "automation", quota: 50 },
+  { q: "topic:design", label: "design", quota: 50 },
+  { q: "topic:mobile", label: "mobile", quota: 50 },
+  { q: "topic:desktop", label: "desktop", quota: 50 },
+  { q: "topic:data-visualization", label: "data-visualization", quota: 50 },
+  { q: "topic:web-framework", label: "web-framework", quota: 50 },
 ];
 
 const DEFAULT_BIGBROS: string[] = [];
@@ -110,10 +128,10 @@ const DEFAULT_BIGBROS: string[] = [];
 const DEFAULT_STAR_THRESHOLD = 100;
 
 const DEFAULT_INTERESTS: InterestProfile = {
-  ai: 0.5,
+  ai: 0.4,
   fun: 0.3,
-  practical: 0.2,
-  aiInterestsText: "我想看 AI 相关、好玩的、能直接拿来用的开源工具和软件",
+  practical: 0.3,
+  aiInterestsText: "AI、好玩的、实用的、各行各业的开源项目都想看",
 };
 
 // ---------------------------------------------------------------------------
@@ -162,7 +180,11 @@ export function loadConfig(configPath = "config.yml"): RadarConfig {
 
   const trendingTopics =
     Array.isArray(raw?.trending_topics) && raw.trending_topics.length > 0
-      ? raw.trending_topics.map((t) => ({ q: t.q, label: t.label }))
+      ? raw.trending_topics.map((t) => ({
+          q: t.q,
+          label: t.label,
+          ...(t.quota !== undefined ? { quota: t.quota } : {}),
+        }))
       : DEFAULT_TRENDING_TOPICS;
 
   const configBigbros = Array.isArray(raw?.bigbros)

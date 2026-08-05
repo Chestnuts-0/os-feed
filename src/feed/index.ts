@@ -143,6 +143,47 @@ function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
 }
 
 // ---------------------------------------------------------------------------
+// 多样性交错（AI:非AI = 2:3 轮播）
+// ---------------------------------------------------------------------------
+
+/** AI 判定前缀（与 classifyCard 的 ai 分区前缀一致；仅用于交错分池，不改任何 score） */
+const AI_DIM_PREFIXES = [
+  "AI基础设施",
+  "AI Agent",
+  "AI应用",
+  "AI搜索",
+  "AI写作",
+  "RAG",
+  "推理引擎",
+  "大语言模型",
+  "多模态",
+  "代码助手",
+  "Agent",
+  "微调",
+  "提示工程",
+  "向量数据库",
+];
+
+function isAiCard(card: FeedCard): boolean {
+  const dims = card.aiDims && card.aiDims.length > 0 ? card.aiDims : [card.aiDim];
+  return dims.some((d) => AI_DIM_PREFIXES.some((p) => d.startsWith(p))) || card.aiScore >= 0.6;
+}
+
+/** 交错排序：只改输出顺序，不改任何 score 值。AI:非AI = 2:3 轮播，某池耗尽则余下全用另一池。 */
+function diversifyCards(cards: FeedCard[]): FeedCard[] {
+  const aiPool = cards.filter(isAiCard).sort((a, b) => b.score - a.score);
+  const nonAiPool = cards.filter((c) => !isAiCard(c)).sort((a, b) => b.score - a.score);
+  const out: FeedCard[] = [];
+  let i = 0;
+  let j = 0;
+  while (i < aiPool.length || j < nonAiPool.length) {
+    for (let k = 0; k < 2 && i < aiPool.length; k++) out.push(aiPool[i++]!);
+    for (let k = 0; k < 3 && j < nonAiPool.length; k++) out.push(nonAiPool[j++]!);
+  }
+  return out;
+}
+
+// ---------------------------------------------------------------------------
 // 综合标签构建
 // ---------------------------------------------------------------------------
 
@@ -423,16 +464,35 @@ export async function generateFeed(
 
   // 3. LLM 批量评分（增量模式：跳过已有缓存的仓库，只给新仓库评分）
   const existingScores = loadExistingScores();
-  const sortedRepos = [...repoMap.values()].sort((a, b) => b.stars - a.stars);
-  const reposNeedingScore: RepoForScoring[] = sortedRepos
-    .filter((m) => !existingScores.has(m.repo))
-    .sort((a, b) => {
-      // trending/bigbro 来源优先评分（保证今日热门/大牛推荐进 feed，不被 search 淹没）
-      const aPri = a.source === "search" ? 1 : 0;
-      const bPri = b.source === "search" ? 1 : 0;
-      if (aPri !== bPri) return aPri - bPri;
-      return b.stars - a.stars;
-    })
+  // 评分队列均衡：trending/bigbro 来源优先（保证今日热门/大牛推荐不被 search 淹没）；
+  // search 组内按领域（searchQuery label = topics[0]）分桶、桶内按 star 降序、桶间轮询合并，
+  // 保证每个领域都有代表进入评分队列（否则高星 AI 会挤掉低星非 AI，非 AI 拿不到评分就进不了 feed）
+  const notScored = [...repoMap.values()].filter((m) => !existingScores.has(m.repo));
+  const nonSearch = notScored.filter((m) => m.source !== "search").sort((a, b) => b.stars - a.stars);
+  const searchBuckets = new Map<string, MergedRepo[]>();
+  for (const m of notScored) {
+    if (m.source !== "search") continue;
+    const key = m.topics[0] ?? "unknown";
+    if (!searchBuckets.has(key)) searchBuckets.set(key, []);
+    searchBuckets.get(key)!.push(m);
+  }
+  for (const arr of searchBuckets.values()) arr.sort((a, b) => b.stars - a.stars);
+  const bucketKeys = [...searchBuckets.keys()].sort();
+  const roundRobin: MergedRepo[] = [];
+  let depth = 0;
+  let hasMore = true;
+  while (hasMore) {
+    hasMore = false;
+    for (const k of bucketKeys) {
+      const arr = searchBuckets.get(k)!;
+      if (depth < arr.length) {
+        roundRobin.push(arr[depth]!);
+        hasMore = true;
+      }
+    }
+    depth++;
+  }
+  const reposNeedingScore: RepoForScoring[] = [...nonSearch, ...roundRobin]
     .slice(0, MAX_LLM_SCORE_REPOS)
     .map((m) => ({
       repo: m.repo,
@@ -522,9 +582,12 @@ export async function generateFeed(
 
   const ranked = rankCards(filtered, profile);
 
+  // 6.5 多样性交错：AI:非AI = 2:3 轮播（只改输出顺序，不改 score 值）
+  const diversified = diversifyCards(ranked);
+
   // 7. 内容淘汰：时间硬截止 + Top N 裁剪
   const nowMs = Date.now();
-  const pruned = ranked.filter((c) => {
+  const pruned = diversified.filter((c) => {
     const ageDays = (nowMs - new Date(c.ts).getTime()) / (24 * 3600 * 1000);
     if (ageDays > MAX_CARD_AGE_DAYS) return false;
     if (c.score < 0.01) return false;

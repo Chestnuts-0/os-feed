@@ -105,37 +105,31 @@ bigbros:
 
 # ── Trending/Search 主题 ───────────────────────────────────────
 # GitHub Search API 查询主题。覆盖 AI/工具/学习/好玩等多个领域。
+# quota = 每主题最多拉取仓库数（Search API 限流 30/min，10 个一批 + 2 秒间隔）
 trending_topics:
   # AI 核心
-  - { q: "topic:llm", label: "llm" }
-  - { q: "topic:ai-agent", label: "ai-agent" }
-  - { q: "topic:rag", label: "rag" }
-  - { q: "topic:vector-database", label: "vector-db" }
-  - { q: "topic:machine-learning", label: "ml" }
-  - { q: "topic:deep-learning", label: "deep-learning" }
-  - { q: "topic:generative-ai", label: "gen-ai" }
-  - { q: "topic:stable-diffusion", label: "stable-diffusion" }
-  - { q: "topic:chatbot", label: "chatbot" }
-  - { q: "topic:transformer", label: "transformer" }
-  # 工具与开发
-  - { q: "topic:cli", label: "cli" }
-  - { q: "topic:developer-tools", label: "dev-tools" }
-  - { q: "topic:self-hosted", label: "self-hosted" }
-  - { q: "topic:automation", label: "automation" }
-  - { q: "topic:productivity", label: "productivity" }
-  # 学习资源
-  - { q: "topic:awesome", label: "awesome" }
-  - { q: "topic:tutorial", label: "tutorial" }
-  - { q: "topic:interview", label: "interview" }
-  # 好玩有趣
-  - { q: "topic:game", label: "game" }
-  - { q: "topic:emulator", label: "emulator" }
-  # 更多领域
-  - { q: "topic:docker", label: "docker" }
-  - { q: "topic:terminal", label: "terminal" }
-  - { q: "topic:database", label: "database" }
-  - { q: "topic:security", label: "security" }
-  - { q: "topic:open-source", label: "open-source" }
+  - { q: "topic:llm", label: "llm", quota: 50 }
+  - { q: "topic:ai-agent", label: "ai-agent", quota: 50 }
+  - { q: "topic:rag", label: "rag", quota: 50 }
+  - { q: "topic:vector-database", label: "vector-db", quota: 50 }
+  - { q: "topic:large-language-model", label: "llm-model", quota: 50 }
+  - { q: "topic:machine-learning", label: "ml", quota: 50 }
+  # 非 AI 领域（内容多样性扩容）
+  - { q: "topic:game", label: "game", quota: 50 }
+  - { q: "topic:database", label: "database", quota: 50 }
+  - { q: "topic:security", label: "security", quota: 50 }
+  - { q: "topic:devops", label: "devops", quota: 50 }
+  - { q: "topic:frontend", label: "frontend", quota: 50 }
+  - { q: "topic:backend", label: "backend", quota: 50 }
+  - { q: "topic:self-hosted", label: "self-hosted", quota: 50 }
+  - { q: "topic:developer-tools", label: "developer-tools", quota: 50 }
+  - { q: "topic:command-line", label: "command-line", quota: 50 }
+  - { q: "topic:automation", label: "automation", quota: 50 }
+  - { q: "topic:design", label: "design", quota: 50 }
+  - { q: "topic:mobile", label: "mobile", quota: 50 }
+  - { q: "topic:desktop", label: "desktop", quota: 50 }
+  - { q: "topic:data-visualization", label: "data-visualization", quota: 50 }
+  - { q: "topic:web-framework", label: "web-framework", quota: 50 }
 
 # ── star 门槛 ──────────────────────────────────────────────────
 # 总 star 数低于此值的项目不进信息流
@@ -145,7 +139,7 @@ star_threshold: 10
 # ai_interests_text 是给 AI 的自然语言兴趣描述（TrendRadar 式），
 # AI 据此给每条项目打分。三个权重用于推荐排序。
 interests:
-  ai: 0.5
+  ai: 0.4
   fun: 0.3
-  practical: 0.2
-  ai_interests_text: "我想看 AI 相关、好玩的、能直接拿来用的开源工具和软件"
+  practical: 0.3
+  ai_interests_text: "AI、好玩的、实用的、各行各业的开源项目都想看"

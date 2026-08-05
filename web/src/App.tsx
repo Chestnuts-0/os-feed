@@ -444,23 +444,6 @@ function FeedVirtualList({ cards, likedSet, dismissingSet, onOpen, onEndHint }: 
 }
 
 // ---------------------------------------------------------------------------
-// 客户端标签权重微调
-// ---------------------------------------------------------------------------
-
-function clientAdjustScore(card: FeedCard, tagWeights: Record<string, number>): number {
-  if (!card.tags || card.tags.length === 0) return 1.0;
-  let matched = 0;
-  let total = 0;
-  for (const tag of card.tags) {
-    const uw = tagWeights[tag.name] ?? 0.15;
-    matched += tag.weight * uw;
-    total += tag.weight;
-  }
-  if (total === 0) return 1.0;
-  return 0.5 + 0.5 * (matched / total);
-}
-
-// ---------------------------------------------------------------------------
 // 主组件
 // ---------------------------------------------------------------------------
 
@@ -657,21 +640,13 @@ export default function App() {
     return applyFilter(withContent, seen, interactions, collections);
   }, [cards, tab, seen, interactions, collections]);
 
-  // 分区数据（修复：不按 liked 重排，纯按 score）
+  // 分区数据（不重排：展示顺序 = feed.json 后端交错后的顺序；点赞只影响下次加载）
   const sections = useMemo(() => {
-    const tw = preferences.tagWeights;
-    const hasPrefs = Object.keys(tw).length > 0;
-    return SECTIONS.map((s) => {
-      let list = getSectionCards(visibleCards, s.key);
-      // 客户端标签微调 + 纯 score 排序
-      list = [...list].sort((a, b) => {
-        const aScore = hasPrefs ? a.score * clientAdjustScore(a, tw) : a.score;
-        const bScore = hasPrefs ? b.score * clientAdjustScore(b, tw) : b.score;
-        return bScore - aScore;
-      });
-      return { ...s, cards: list };
-    }).filter((s) => s.cards.length > 0);
-  }, [visibleCards, preferences]);
+    return SECTIONS.map((s) => ({
+      ...s,
+      cards: getSectionCards(visibleCards, s.key),
+    })).filter((s) => s.cards.length > 0);
+  }, [visibleCards]);
 
   // 过滤后的分区（feedFilter 为空显示全部，否则只显示匹配分区；点踩消失的卡不再进分区）
   const filteredSections = useMemo(() => {

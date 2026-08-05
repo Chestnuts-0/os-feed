@@ -170,7 +170,7 @@ interface SearchApiResponse {
 
 async function searchAiRepos(
   sinceDate: string,
-  topics: { q: string; label: string }[] = SEARCH_QUERIES,
+  topics: { q: string; label: string; quota?: number }[] = SEARCH_QUERIES,
 ): Promise<SearchRepo[]> {
   const token = process.env["GITHUB_TOKEN"] ?? "";
   const headers: Record<string, string> = {
@@ -187,10 +187,11 @@ async function searchAiRepos(
   for (let i = 0; i < topics.length; i += SEARCH_BATCH) {
     const batch = topics.slice(i, i + SEARCH_BATCH);
     await Promise.all(
-      batch.map(async ({ q, label }) => {
+      batch.map(async ({ q, label, quota }) => {
         try {
           const query = `${q}+pushed:>${sinceDate}&sort=stars&order=desc`;
-          const url = `https://api.github.com/search/repositories?q=${query}&per_page=100`;
+          const perPage = quota ?? 30;
+          const url = `https://api.github.com/search/repositories?q=${query}&per_page=${perPage}`;
           const resp = await fetch(url, { headers });
           if (!resp.ok) {
             console.error(`  [trending/search] "${label}": HTTP ${resp.status}`);
@@ -289,7 +290,9 @@ async function fetchTrendingFallback(): Promise<TrendingRepo[]> {
   return all;
 }
 
-export async function fetchTrendingData(topics?: { q: string; label: string }[]): Promise<TrendingData> {
+export async function fetchTrendingData(
+  topics?: { q: string; label: string; quota?: number }[],
+): Promise<TrendingData> {
   // 30-day window for broader coverage
   const sinceDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
