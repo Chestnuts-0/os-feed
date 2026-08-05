@@ -289,6 +289,15 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
           const prompt = buildFeedScoringPrompt(batch, aiInterestsText);
           const raw = await callLlm(prompt, 8192);
           const parsed = parseScoringResult(raw);
+          // 失败重试：如果解析结果太少，拆分批次逐个重试（LLM 长输出易截断）
+          if (parsed.length < batch.length) {
+            const missing = batch.filter((r) => !parsed.some((p) => p.repo === r.repo));
+            console.log(
+              `  [feed/scoring] batch ${batchNum}/${batches.length}: ${parsed.length}/${batch.length} scored, retrying ${missing.length} missing...`,
+            );
+            const retried = await retryScoring(missing, aiInterestsText);
+            return [...parsed, ...retried];
+          }
           console.log(
             `  [feed/scoring] batch ${batchNum}/${batches.length}: ${parsed.length}/${batch.length} scored`,
           );
@@ -300,6 +309,22 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
       }),
     );
     for (const r of chunkResults) results.push(...r);
+  }
+  return results;
+}
+
+/** 对缺失的 repo 逐个重试 LLM 评分（单 repo prompt，输出短，成功率更高） */
+async function retryScoring(repos: RepoForScoring[], aiInterestsText: string): Promise<ScoringResult[]> {
+  const results: ScoringResult[] = [];
+  for (const repo of repos) {
+    try {
+      const prompt = buildFeedScoringPrompt([repo], aiInterestsText);
+      const raw = await callLlm(prompt, 4096);
+      const parsed = parseScoringResult(raw);
+      if (parsed[0]) results.push(parsed[0]);
+    } catch (err) {
+      console.error(`  [feed/scoring] retry ${repo.repo} failed: ${err}`);
+    }
   }
   return results;
 }
