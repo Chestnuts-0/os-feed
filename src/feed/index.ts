@@ -96,28 +96,34 @@ function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
     return "fun";
   }
 
-  // 4. AI 分区：任一标签命中 AI 相关
-  const aiPrefixes = ["AI", "模型", "RAG", "推理", "Agent", "大语言", "微调", "提示", "代码助手", "向量"];
-  if (dims.some((d) => aiPrefixes.some((p) => d.startsWith(p) || d.includes(p)))) {
-    return "ai";
-  }
-
-  // 5. 权威分区：官方组织 + 有一定热度
+  // 4. 权威分区：官方组织 + 有一定热度（提前，避免被 ai 吞掉）
   if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500) {
     return "authoritative";
   }
 
-  // 6. 每日分区：当天 star 增长高
+  // 5. 每日分区：当天 star 增长高（提前，避免被 ai 吞掉）
   if (card.starGrowth >= 5) {
     return "daily";
   }
 
-  // 7. 新锐分区：star 不高但 AI 相关度高
+  // 6. 新锐分区：star 不高但 AI 相关度高（提前，避免被 ai 吞掉）
   if (card.stars < 1000 && card.aiScore >= 0.6) {
     return "rising";
   }
 
-  // 8. 默认热门
+  // 7. 热门分区：高星项目（≥ 2000 star）优先进热门，保证热门板块有内容
+  if (card.stars >= 2000) {
+    return "hot";
+  }
+
+  // 8. AI 分区：AI 相关标签（收窄前缀，避免泛 AI 项目全进 ai）
+  //    仅命中强 AI 特征才进 ai；弱 AI（如只含"模型"）留给 hot
+  const aiPrefixes = ["AI基础设施", "AI Agent", "AI应用", "AI搜索", "AI写作", "RAG", "推理引擎", "大语言模型", "多模态", "代码助手", "Agent", "微调", "提示工程", "向量数据库"];
+  if (dims.some((d) => aiPrefixes.some((p) => d.startsWith(p) || d.includes(p)))) {
+    return "ai";
+  }
+
+  // 9. 默认热门
   return "hot";
 }
 

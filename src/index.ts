@@ -11,6 +11,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import "dotenv/config";
 import {
   type GitHubItem,
   type RepoFetch,

@@ -232,6 +232,63 @@ async function searchAiRepos(
 // Export
 // ---------------------------------------------------------------------------
 
+/**
+ * 当 GitHub Trending HTML 抓取失败时的备用通道：
+ * 用 GitHub Search API 按 stars 排序拉高星仓库，模拟 trending 数据。
+ * 保证 trending 数据源不会因为 HTML 结构变化/反爬而完全为空。
+ */
+async function fetchTrendingFallback(): Promise<TrendingRepo[]> {
+  const token = process.env["GITHUB_TOKEN"] ?? "";
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+
+  const queries = [
+      { q: "topic:ai pushed:>2026-06-01", sort: "stars" },
+      { q: "topic:llm pushed:>2026-06-01", sort: "stars" },
+      { q: "stars:>1000 pushed:>2026-01-01", sort: "stars" },
+    ];
+    const seen = new Set<string>();
+    const all: TrendingRepo[] = [];
+
+    for (const { q, sort } of queries) {
+      try {
+        const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(q)}&sort=${sort}&order=desc&per_page=30`;
+        const resp = await fetch(url, { headers });
+        if (!resp.ok) {
+          console.error(`  [trending/fallback] HTTP ${resp.status}`);
+          continue;
+        }
+        const data = (await resp.json()) as SearchApiResponse;
+        let added = 0;
+        for (const item of data.items ?? []) {
+          if (!seen.has(item.full_name)) {
+            seen.add(item.full_name);
+            all.push({
+              fullName: item.full_name,
+              description: item.description ?? "",
+              language: item.language ?? "",
+              todayStars: 0,
+              totalStars: item.stargazers_count,
+              forks: 0,
+              url: item.html_url,
+            });
+            added++;
+          }
+        }
+        console.log(`  [trending/fallback] "${q}": ${added} new repos`);
+      } catch (err) {
+        console.error(`  [trending/fallback] "${q}": ${err}`);
+      }
+      // 避免频率限制
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+    }
+
+  return all;
+}
+
 export async function fetchTrendingData(topics?: { q: string; label: string }[]): Promise<TrendingData> {
   // 30-day window for broader coverage
   const sinceDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
@@ -240,6 +297,16 @@ export async function fetchTrendingData(topics?: { q: string; label: string }[])
     fetchGitHubTrending(),
     searchAiRepos(sinceDate, topics),
   ]);
+
+  // 🔧 备用通道：HTML trending 失败时用 Search API 补热门仓库
+  if (trendingRepos.length === 0) {
+    console.log("  [trending] HTML fetch failed/empty, using Search API fallback...");
+    const fallback = await fetchTrendingFallback();
+    if (fallback.length > 0) {
+      console.log(`  [trending] fallback produced ${fallback.length} trending repos`);
+      return { trendingRepos: fallback, searchRepos, trendingFetchSuccess: success };
+    }
+  }
 
   return { trendingRepos, searchRepos, trendingFetchSuccess: success };
 }
