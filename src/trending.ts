@@ -246,45 +246,45 @@ async function fetchTrendingFallback(): Promise<TrendingRepo[]> {
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
   const queries = [
-      { q: "topic:ai pushed:>2026-06-01", sort: "stars" },
-      { q: "topic:llm pushed:>2026-06-01", sort: "stars" },
-      { q: "stars:>1000 pushed:>2026-01-01", sort: "stars" },
-    ];
-    const seen = new Set<string>();
-    const all: TrendingRepo[] = [];
+    { q: "topic:ai pushed:>2026-06-01", sort: "stars" },
+    { q: "topic:llm pushed:>2026-06-01", sort: "stars" },
+    { q: "stars:>1000 pushed:>2026-01-01", sort: "stars" },
+  ];
+  const seen = new Set<string>();
+  const all: TrendingRepo[] = [];
 
-    for (const { q, sort } of queries) {
-      try {
-        const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(q)}&sort=${sort}&order=desc&per_page=30`;
-        const resp = await fetch(url, { headers });
-        if (!resp.ok) {
-          console.error(`  [trending/fallback] HTTP ${resp.status}`);
-          continue;
-        }
-        const data = (await resp.json()) as SearchApiResponse;
-        let added = 0;
-        for (const item of data.items ?? []) {
-          if (!seen.has(item.full_name)) {
-            seen.add(item.full_name);
-            all.push({
-              fullName: item.full_name,
-              description: item.description ?? "",
-              language: item.language ?? "",
-              todayStars: 0,
-              totalStars: item.stargazers_count,
-              forks: 0,
-              url: item.html_url,
-            });
-            added++;
-          }
-        }
-        console.log(`  [trending/fallback] "${q}": ${added} new repos`);
-      } catch (err) {
-        console.error(`  [trending/fallback] "${q}": ${err}`);
+  for (const { q, sort } of queries) {
+    try {
+      const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(q)}&sort=${sort}&order=desc&per_page=30`;
+      const resp = await fetch(url, { headers });
+      if (!resp.ok) {
+        console.error(`  [trending/fallback] HTTP ${resp.status}`);
+        continue;
       }
-      // 避免频率限制
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const data = (await resp.json()) as SearchApiResponse;
+      let added = 0;
+      for (const item of data.items ?? []) {
+        if (!seen.has(item.full_name)) {
+          seen.add(item.full_name);
+          all.push({
+            fullName: item.full_name,
+            description: item.description ?? "",
+            language: item.language ?? "",
+            todayStars: 0,
+            totalStars: item.stargazers_count,
+            forks: 0,
+            url: item.html_url,
+          });
+          added++;
+        }
+      }
+      console.log(`  [trending/fallback] "${q}": ${added} new repos`);
+    } catch (err) {
+      console.error(`  [trending/fallback] "${q}": ${err}`);
     }
+    // 避免频率限制
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+  }
 
   return all;
 }

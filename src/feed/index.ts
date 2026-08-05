@@ -118,7 +118,22 @@ function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
 
   // 8. AI 分区：AI 相关标签（收窄前缀，避免泛 AI 项目全进 ai）
   //    仅命中强 AI 特征才进 ai；弱 AI（如只含"模型"）留给 hot
-  const aiPrefixes = ["AI基础设施", "AI Agent", "AI应用", "AI搜索", "AI写作", "RAG", "推理引擎", "大语言模型", "多模态", "代码助手", "Agent", "微调", "提示工程", "向量数据库"];
+  const aiPrefixes = [
+    "AI基础设施",
+    "AI Agent",
+    "AI应用",
+    "AI搜索",
+    "AI写作",
+    "RAG",
+    "推理引擎",
+    "大语言模型",
+    "多模态",
+    "代码助手",
+    "Agent",
+    "微调",
+    "提示工程",
+    "向量数据库",
+  ];
   if (dims.some((d) => aiPrefixes.some((p) => d.startsWith(p) || d.includes(p)))) {
     return "ai";
   }
