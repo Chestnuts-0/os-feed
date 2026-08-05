@@ -401,6 +401,13 @@ export async function generateFeed(
   const sortedRepos = [...repoMap.values()].sort((a, b) => b.stars - a.stars);
   const reposNeedingScore: RepoForScoring[] = sortedRepos
     .filter((m) => !existingScores.has(m.repo))
+    .sort((a, b) => {
+      // trending/bigbro 来源优先评分（保证今日热门/大牛推荐进 feed，不被 search 淹没）
+      const aPri = a.source === "search" ? 1 : 0;
+      const bPri = b.source === "search" ? 1 : 0;
+      if (aPri !== bPri) return aPri - bPri;
+      return b.stars - a.stars;
+    })
     .slice(0, MAX_LLM_SCORE_REPOS)
     .map((m) => ({
       repo: m.repo,
