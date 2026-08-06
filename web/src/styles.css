@@ -298,6 +298,8 @@ button {
   top: 0;
   left: 0;
   width: 100%;
+  /* 行间距由 padding-bottom 承载（含 padding 计入行测量高度，行距精确） */
+  padding-bottom: 16px;
 }
 .feed-virtual-grid {
   display: grid;
@@ -480,7 +482,7 @@ button {
   color: #93c5fd;
 }
 
-/* 通俗概括（统一 2 行高：clamp 截长 + min-height 兜底短/空，保证卡片高度恒定） */
+/* 通俗概括（最多 2 行截断；高度自适应——行高由虚拟列表真实测量，不撑高不裁剪） */
 .summary {
   font-size: 0.98rem;
   font-weight: 700;
@@ -495,10 +497,9 @@ button {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: calc(2 * 1.5 * 0.98rem + 16px);
 }
 
-/* 专业描述（卡片内截断，统一 3 行高：clamp 截长 + min-height 兜底短/空） */
+/* 专业描述（最多 3 行截断；高度自适应——行高由虚拟列表真实测量，不撑高不裁剪） */
 .reason-clamped {
   font-size: 0.82rem;
   line-height: 1.7;
@@ -508,7 +509,6 @@ button {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: calc(3 * 1.7 * 0.82rem);
 }
 
 /* 元信息条 */

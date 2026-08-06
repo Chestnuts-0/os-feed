@@ -286,7 +286,7 @@ interface FeedVirtualListProps {
   onEndHint?: string;
 }
 
-// 单行组件：IntersectionObserver 精确感知视口（只给真正可见的行开 blur，兼负责首卡测量）
+// 单行组件：IntersectionObserver 精确感知视口（只给真正可见的行开 blur）+ 行高真实测量
 interface FeedVirtualRowProps {
   rowIndex: number;
   rowStart: number;
@@ -296,7 +296,7 @@ interface FeedVirtualRowProps {
   likedSet: Set<string>;
   dismissingSet: Set<string>;
   onOpen: (card: FeedCard) => void;
-  onMeasure?: (el: HTMLDivElement) => void;
+  measureRef?: (node: HTMLDivElement | null) => void;
 }
 
 function FeedVirtualRow({
@@ -308,9 +308,9 @@ function FeedVirtualRow({
   likedSet,
   dismissingSet,
   onOpen,
-  onMeasure,
+  measureRef,
 }: FeedVirtualRowProps) {
-  const rowRef = useRef<HTMLDivElement>(null);
+  const rowRef = useRef<HTMLDivElement | null>(null);
   const [inViewport, setInViewport] = useState(false);
 
   useEffect(() => {
@@ -328,8 +328,12 @@ function FeedVirtualRow({
 
   return (
     <div
-      ref={rowRef}
+      ref={(node) => {
+        rowRef.current = node;
+        measureRef?.(node);
+      }}
       data-row={rowIndex}
+      data-index={rowIndex}
       className={`feed-virtual-row${inViewport ? " vf-in-viewport" : ""}`}
       style={{
         position: "absolute",
@@ -341,7 +345,7 @@ function FeedVirtualRow({
     >
       <div className="feed-virtual-grid">
         {left && (
-          <div className="feed-virtual-cell" ref={rowIndex === 0 ? onMeasure : undefined}>
+          <div className="feed-virtual-cell">
             <FeedCardMemo
               card={left}
               liked={likedSet.has(left.repo)}
@@ -367,20 +371,8 @@ function FeedVirtualRow({
 
 function FeedVirtualList({ cards, likedSet, dismissingSet, onOpen, onEndHint }: FeedVirtualListProps) {
   const listRef = useRef<HTMLDivElement>(null);
-  const [rowHeight, setRowHeight] = useState<number>(CARD_ESTIMATED_HEIGHT);
   // 列表容器相对文档顶部的偏移（前序分区高度变化时会变，需动态测量）
   const [scrollMargin, setScrollMargin] = useState(0);
-
-  // 首卡实测高度（首卡渲染后测量一次，作为行高估算；不高不低避免跳动）
-  const handleMeasure = useCallback((el: HTMLDivElement | null) => {
-    if (!el) return;
-    const h = el.getBoundingClientRect().height;
-    if (h > 0)
-      setRowHeight((prev) => {
-        const next = Math.max(140, Math.round(h));
-        return next === prev ? prev : next;
-      });
-  }, []);
 
   // 动态测量列表容器文档偏移：自身/前序内容尺寸变化、窗口 resize 都会影响
   useEffect(() => {
@@ -404,8 +396,13 @@ function FeedVirtualList({ cards, likedSet, dismissingSet, onOpen, onEndHint }: 
   const rowCount = Math.ceil(cards.length / 2);
   const rowVirtualizer = useWindowVirtualizer({
     count: rowCount,
-    estimateSize: () => rowHeight + ROW_GAP,
-    overscan: Math.max(1, Math.ceil(OVERSCAN / rowHeight)),
+    // 初始估算（测量前）；measureElement 生效后每行按真实高度排布，卡高自适应零撑高
+    estimateSize: () => CARD_ESTIMATED_HEIGHT + ROW_GAP,
+    measureElement: (el) => {
+      const h = el?.getBoundingClientRect().height;
+      return h > 0 ? h : CARD_ESTIMATED_HEIGHT + ROW_GAP;
+    },
+    overscan: Math.max(1, Math.ceil(OVERSCAN / CARD_ESTIMATED_HEIGHT)),
     scrollMargin,
     getItemKey: (index) => cards[index * 2]?.repo ?? `row-${index}`,
   });
@@ -433,7 +430,7 @@ function FeedVirtualList({ cards, likedSet, dismissingSet, onOpen, onEndHint }: 
               likedSet={likedSet}
               dismissingSet={dismissingSet}
               onOpen={onOpen}
-              onMeasure={row.index === 0 ? handleMeasure : undefined}
+              measureRef={rowVirtualizer.measureElement}
             />
           );
         })}
