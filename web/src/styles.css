@@ -223,6 +223,9 @@ button {
   /* align-self: flex-start 覆盖父容器 align-items: stretch——stretch 会把侧栏拉伸到与虚拟列表等高，
      sticky 元素高度=父容器高度时无滚动空间，吸不住（实测 top=-5086 滚走） */
   align-self: flex-start;
+  /* 全高玻璃：height = 视口高 - 顶栏 60px，整条玻璃覆盖视口（修复 F 版高度=内容高约 300px
+     时下方露出 body 死黑背景的「半截贴图」）；sticky 吸顶后整条固定，与顶栏视觉连续 */
+  height: calc(100vh - 60px);
   padding: 20px 10px 32px;
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(28, 25, 41, 0.55);
@@ -561,7 +564,8 @@ button {
   gap: 3px;
 }
 
-/* 通俗概括（最多 2 行截断；min-height 固定 2 行高（2×1.5em + padding 16px，border-box 含 padding），保证全站卡片等高） */
+/* 通俗概括（固定 1 行截断；min-height = 1×1.5em + padding 16px，一行容量约 36 字，
+   20-35 字内容恰好撑满零空行；超长截断。保持全站卡片等高） */
 .summary {
   font-size: 0.98rem;
   font-weight: 700;
@@ -569,12 +573,12 @@ button {
   color: var(--text);
   margin-bottom: 8px;
   padding: 8px 12px;
-  min-height: calc(2 * 1.5em + 16px);
+  min-height: calc(1 * 1.5em + 16px);
   background: linear-gradient(135deg, var(--accent-light), transparent);
   border-left: 3px solid var(--accent);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -711,8 +715,6 @@ button {
   align-items: flex-start;
   gap: 14px;
   margin-bottom: 20px;
-  /* 避让右上角两个按钮（关闭 absolute 16+36，创作者按钮 right 60 宽约 110px → 190px 内不重叠） */
-  padding-right: 190px;
 }
 
 .detail-avatar {
@@ -856,15 +858,34 @@ button {
   border-color: var(--warning);
   color: var(--warning);
 }
+/* 文字按钮组（查看创作者 / GitHub 主页）：同尺寸描边按钮（对标 GitHub 主页按钮，38px/14px/10px 描边），
+   右对齐 —— creator-btn margin-left: auto 推到最右，open-btn 紧随其后（gap 10px） */
+.creator-btn,
 .open-btn {
-  margin-left: auto;
   width: auto;
-  padding: 0 20px;
-  border-radius: 24px;
-  color: var(--accent);
-  border-color: var(--accent);
-  font-size: 0.9rem;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+.creator-btn {
+  margin-left: auto;
+}
+.creator-btn:hover,
+.open-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* Topic 标签 */
@@ -1554,33 +1575,6 @@ button {
 .repo-owner-btn:hover {
   color: var(--accent);
   text-decoration: underline;
-}
-
-.detail-creator-btn {
-  /* 不定位在 .detail-header（其顶部在 detail-card padding 32px 之下），
-     absolute 参照最近的 positioned 祖先 .detail-card —— 与 .detail-close 同参照系（top 16 / right 16），
-     同水平线且间距 = 60 - (16+36) = 8px */
-  position: absolute;
-  top: 16px;
-  right: 60px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--card-border);
-  background: transparent;
-  color: var(--text-secondary);
-  font-family: inherit;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.detail-creator-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: scale(1.05);
 }
 
 .creator-page {

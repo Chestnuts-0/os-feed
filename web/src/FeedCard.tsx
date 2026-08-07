@@ -335,16 +335,6 @@ export function CardDetail({
               <span>{timeAgo(card.ts)}</span>
             </div>
           </div>
-          {onOpenCreator && (
-            <button
-              className="detail-creator-btn"
-              title={`查看 ${card.owner} 的创作者页`}
-              onClick={() => onOpenCreator(card.owner)}
-            >
-              <UserRound size={14} />
-              查看创作者
-            </button>
-          )}
         </div>
 
         {card.summaryCn && <p className="detail-summary">{card.summaryCn}</p>}
@@ -424,6 +414,16 @@ export function CardDetail({
           >
             <Star size={20} />
           </button>
+          {onOpenCreator && (
+            <button
+              className="action-btn creator-btn"
+              onClick={() => onOpenCreator(card.owner)}
+              title={`查看 ${card.owner} 的创作者页`}
+            >
+              <UserRound size={16} />
+              查看创作者
+            </button>
+          )}
           <a href={card.url} target="_blank" rel="noopener noreferrer" className="action-btn open-btn">
             <ExternalLink size={18} />
             GitHub 主页

@@ -123,9 +123,9 @@ export function GitTokLogo({ size = 28 }: { size?: number }) {
             <stop offset="100%" stopColor="#7A5CC0" />
           </linearGradient>
         </defs>
-        {/* 透明背景渐变闪电：主体包围盒约 21×24（占 viewBox ≥60%），视觉中心居中；同色描边增粗保证 28px 辨识度 */}
+        {/* 透明背景渐变闪电（经典细版）：上下尖锐、腰身收窄的修长闪电；同色描边增粗保证 28px 辨识度 */}
         <path
-          d="M14 2 L4 15 H11.5 L10 26 L25 11 H17 Z"
+          d="M13 2.5 L4.5 13.5 H10.5 L8.8 21.5 L19 10.5 H12.8 Z"
           fill="url(#gittok-logo-grad)"
           stroke="url(#gittok-logo-grad)"
           strokeWidth="0.8"
