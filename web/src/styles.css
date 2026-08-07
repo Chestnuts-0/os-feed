@@ -190,12 +190,51 @@ button {
   backdrop-filter: var(--header-blur);
   -webkit-backdrop-filter: var(--header-blur);
   border-bottom: 1px solid var(--border);
+  padding: 10px 0 0;
+}
+
+/* 视图切换分段控制器（发现/分类） */
+.view-switch {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 6px;
+}
+
+.view-switch-btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.view-switch-btn:hover {
+  color: var(--text);
+  background: var(--card-bg);
+}
+
+.view-switch-btn.active {
+  background: var(--accent-gradient);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
 }
 
 .sub-nav-inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 8px 24px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -243,22 +282,6 @@ button {
 /* --- 分区 --- */
 .section {
   margin-bottom: 36px;
-}
-
-/* 分区组标题（动态/分类两组之间的分隔） */
-.section-group-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--text-muted);
-  margin: 28px 0 14px;
-  padding: 8px 14px;
-  border-left: 3px solid var(--accent);
-  border-radius: 4px;
-  background: var(--bg-secondary);
-}
-.section-group-title:first-child {
-  margin-top: 0;
 }
 
 .section-header {

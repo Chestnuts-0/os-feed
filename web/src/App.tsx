@@ -603,6 +603,8 @@ export default function App() {
   // 本次会话已点踩消失的卡片（不再渲染，避免滚动回来复活）
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
   const [feedFilter, setFeedFilter] = useState<string>("");
+  // 推荐页视图：发现（推荐/热门/每日/权威）vs 分类（AI/兴趣/工具/学习）
+  const [feedView, setFeedView] = useState<"discover" | "category">("discover");
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   // 加载 feed.json
@@ -934,6 +936,12 @@ export default function App() {
     setFeedFilter((prev) => (prev === key ? "" : key));
   }, []);
 
+  // 视图切换（发现/分类）：切换时重置分区过滤，避免残留另一视图的分区
+  const switchFeedView = useCallback((view: "discover" | "category") => {
+    setFeedView(view);
+    setFeedFilter("");
+  }, []);
+
   // 无限滚动 sentinel 回调（分区）—— 已由虚拟列表取代，保留为 no-op 兼容
   const handleSectionSentinel = useCallback((_key: string) => {
     // 虚拟列表按需渲染，无需增量加载
@@ -1011,25 +1019,35 @@ export default function App() {
         </div>
       </header>
 
-      {/* 二级导航：分区过滤（仅推荐 tab） */}
+      {/* 二级导航：视图切换（发现/分类）+ 分区过滤（仅推荐 tab） */}
       {tab === "feed" && !loading && !error && sections.length > 0 && (
         <nav className="sub-nav">
-          <div className="sub-nav-inner">
+          <div className="view-switch">
             <button
-              className={`sub-nav-pill${feedFilter === "" ? " active" : ""}`}
-              onClick={() => setFeedFilter("")}
+              className={`view-switch-btn${feedView === "discover" ? " active" : ""}`}
+              onClick={() => switchFeedView("discover")}
             >
-              🔥 全部
+              ✨ 发现
             </button>
-            {sections.map((s) => (
-              <button
-                key={s.key}
-                className={`sub-nav-pill${feedFilter === s.key ? " active" : ""}`}
-                onClick={() => switchFeedFilter(s.key)}
-              >
-                {s.icon} {s.title}
-              </button>
-            ))}
+            <button
+              className={`view-switch-btn${feedView === "category" ? " active" : ""}`}
+              onClick={() => switchFeedView("category")}
+            >
+              🎯 分类
+            </button>
+          </div>
+          <div className="sub-nav-inner">
+            {(feedView === "discover" ? DYNAMIC_SECTIONS : CATEGORY_SECTIONS)
+              .filter((s) => sections.some((x) => x.key === s.key))
+              .map((s) => (
+                <button
+                  key={s.key}
+                  className={`sub-nav-pill${feedFilter === s.key ? " active" : ""}`}
+                  onClick={() => switchFeedFilter(s.key)}
+                >
+                  {s.icon} {s.title}
+                </button>
+              ))}
           </div>
         </nav>
       )}
@@ -1074,22 +1092,9 @@ export default function App() {
                     />
                   </section>
                 );
-                return (
-                  <>
-                    {dynamicGroup.length > 0 && (
-                      <>
-                        <div className="section-group-title">⚡ 动态</div>
-                        {dynamicGroup.map(renderSection)}
-                      </>
-                    )}
-                    {categoryGroup.length > 0 && (
-                      <>
-                        <div className="section-group-title">🎯 分类</div>
-                        {categoryGroup.map(renderSection)}
-                      </>
-                    )}
-                  </>
-                );
+                // 只渲染当前视图的分区（发现=动态组，分类=固有组）
+                const viewSections = feedView === "discover" ? dynamicGroup : categoryGroup;
+                return <>{viewSections.map(renderSection)}</>;
               })()}
           </>
         )}
