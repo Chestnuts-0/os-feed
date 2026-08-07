@@ -1423,3 +1423,236 @@ button {
     font-size: 0.76rem;
   }
 }
+
+/* --- 创作者页（任务书 B：创作者入口/关注体系） --- */
+.repo-owner-btn {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.repo-owner-btn:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.detail-creator-btn {
+  margin-left: 2px;
+  padding: 3px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--accent-light);
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.detail-creator-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: scale(1.05);
+}
+
+.creator-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8px 24px 48px;
+}
+
+.creator-back {
+  padding: 6px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 20px;
+}
+.creator-back:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.creator-header {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 18px;
+  margin-bottom: 20px;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+.creator-avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 18px;
+  flex-shrink: 0;
+  border: 1px solid var(--card-border);
+}
+
+.creator-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.creator-name-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.creator-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text);
+}
+
+.creator-github {
+  padding: 6px 16px;
+  border-radius: 16px;
+  background: var(--accent-light);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.creator-github:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.creator-follow-btn {
+  padding: 8px 22px;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: fit-content;
+}
+.creator-follow-btn.following {
+  background: var(--accent-gradient);
+  border: none;
+  color: #fff;
+}
+.creator-follow-btn.following:hover {
+  opacity: 0.85;
+}
+.creator-follow-btn.followed {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.creator-follow-btn.followed:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.creator-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.creator-projects .feed-list {
+  margin-top: 0;
+}
+
+/* --- 我的-关注：创作者卡片列表（任务书 B） --- */
+.creator-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 900px;
+}
+
+.creator-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.creator-item:hover {
+  border-color: var(--card-border-hover);
+  box-shadow: var(--shadow-card);
+}
+
+.creator-item-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  border: 1px solid var(--card-border);
+}
+
+.creator-item-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.creator-item-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.creator-item-github {
+  margin-left: auto;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: var(--accent-light);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.creator-item-github:hover {
+  border-color: var(--accent);
+}
+
+.creator-item-unfollow {
+  padding: 6px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.creator-item-unfollow:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}

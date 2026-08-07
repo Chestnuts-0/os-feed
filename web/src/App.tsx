@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import type { FeedCard, Collection } from "./types.ts";
-import { FeedCardMemo, CardDetail } from "./FeedCard.tsx";
+import { FeedCardMemo, CardDetail, GithubAvatar } from "./FeedCard.tsx";
 import "./styles.css";
 
 // ---------------------------------------------------------------------------
@@ -14,6 +14,7 @@ const PREF_KEY = "os-feed-preferences";
 const COLLECTIONS_KEY = "os-feed-collections";
 const SEEN_KEY = "os-feed-seen";
 const INTERACTIONS_KEY = "os-feed-interactions";
+const FOLLOWING_KEY = "os-feed-following";
 
 type Tab = "feed" | "search" | "me";
 
@@ -47,7 +48,7 @@ const DYNAMIC_SECTIONS: { key: string; icon: string; title: string; desc: string
   { key: "recommended", icon: "⭐", title: "推荐", desc: "为你挑选" },
   { key: "hot", icon: "🔥", title: "热门", desc: "高星项目" },
   { key: "daily", icon: "📈", title: "每日", desc: "今日star增长" },
-  { key: "authoritative", icon: "🏛️", title: "权威", desc: "官方出品" },
+  { key: "following", icon: "❤️", title: "关注", desc: "关注创作者的项目" },
 ];
 
 // 固有分区（互斥，每个项目必有其一）
@@ -145,6 +146,27 @@ function loadCollections(): Collection[] {
 function saveCollections(cols: Collection[]): void {
   try {
     localStorage.setItem(COLLECTIONS_KEY, JSON.stringify(cols));
+  } catch {
+    /* ignore */
+  }
+}
+
+function loadFollowing(): string[] {
+  try {
+    const raw = localStorage.getItem(FOLLOWING_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed.filter((o): o is string => typeof o === "string");
+    }
+  } catch {
+    /* ignore */
+  }
+  return [];
+}
+
+function saveFollowing(list: string[]): void {
+  try {
+    localStorage.setItem(FOLLOWING_KEY, JSON.stringify(list));
   } catch {
     /* ignore */
   }
@@ -320,14 +342,18 @@ function normalizeCard(card: FeedCard): FeedCard {
 // 分区卡片选取
 // ---------------------------------------------------------------------------
 
-function getSectionCards(cards: FeedCard[], sectionKey: string): FeedCard[] {
+function getSectionCards(
+  cards: FeedCard[],
+  sectionKey: string,
+  followingSet: Set<string> = new Set(),
+): FeedCard[] {
   switch (sectionKey) {
     case "hot":
       return cards.filter((c) => c.momentum?.includes("hot"));
     case "daily":
       return cards.filter((c) => c.momentum?.includes("daily"));
-    case "authoritative":
-      return cards.filter((c) => c.fromOfficial);
+    case "following":
+      return cards.filter((c) => followingSet.has(c.owner));
     default:
       return cards.filter((c) => c.category === sectionKey);
   }
@@ -392,6 +418,7 @@ interface FeedVirtualListProps {
   onOpen: (card: FeedCard) => void;
   onEndHint?: string;
   channel?: string;
+  onOpenCreator?: (owner: string) => void;
 }
 
 // 单行组件：IntersectionObserver 精确感知视口（只给真正可见的行开 blur）+ 行高真实测量
@@ -406,6 +433,7 @@ interface FeedVirtualRowProps {
   onOpen: (card: FeedCard) => void;
   measureRef?: (node: HTMLDivElement | null) => void;
   channel?: string;
+  onOpenCreator?: (owner: string) => void;
 }
 
 function FeedVirtualRow({
@@ -419,6 +447,7 @@ function FeedVirtualRow({
   onOpen,
   measureRef,
   channel,
+  onOpenCreator,
 }: FeedVirtualRowProps) {
   const rowRef = useRef<HTMLDivElement | null>(null);
   const [inViewport, setInViewport] = useState(false);
@@ -462,6 +491,7 @@ function FeedVirtualRow({
               dismissing={dismissingSet.has(left.repo)}
               onOpen={onOpen}
               channel={channel}
+              onOpenCreator={onOpenCreator}
             />
           </div>
         )}
@@ -473,6 +503,7 @@ function FeedVirtualRow({
               dismissing={dismissingSet.has(right.repo)}
               onOpen={onOpen}
               channel={channel}
+              onOpenCreator={onOpenCreator}
             />
           </div>
         )}
@@ -488,6 +519,7 @@ function FeedVirtualList({
   onOpen,
   onEndHint,
   channel,
+  onOpenCreator,
 }: FeedVirtualListProps) {
   const listRef = useRef<HTMLDivElement>(null);
   // 列表容器相对文档顶部的偏移（前序分区高度变化时会变，需动态测量）
@@ -550,6 +582,7 @@ function FeedVirtualList({
               dismissingSet={dismissingSet}
               onOpen={onOpen}
               channel={channel}
+              onOpenCreator={onOpenCreator}
               measureRef={rowVirtualizer.measureElement}
             />
           );
@@ -580,6 +613,10 @@ export default function App() {
   const [interactions] = useState<Record<string, InteractionRecord>>(loadInteractions);
   const interactionsRef = useRef(interactions);
   const [collections, setCollections] = useState<Collection[]>(loadCollections);
+  // 关注列表（纯前端，localStorage 持久化；只影响关注频道/我的-关注）
+  const [following, setFollowing] = useState<string[]>(loadFollowing);
+  const followingSet = useMemo(() => new Set(following), [following]);
+  const [creatorOwner, setCreatorOwner] = useState<string | null>(null);
   const [seen, setSeen] = useState<Record<string, number>>(loadSeen);
   const [expandedCols, setExpandedCols] = useState<Record<string, boolean>>({});
   const [searchQuery, setSearchQuery] = useState("");
@@ -777,6 +814,20 @@ export default function App() {
     });
   }, []);
 
+  // 关注/取关（只影响关注频道与我的-关注，不触发 feed 重排）
+  const toggleFollow = useCallback((owner: string) => {
+    setFollowing((prev) => {
+      const next = prev.includes(owner) ? prev.filter((o) => o !== owner) : [...prev, owner];
+      saveFollowing(next);
+      return next;
+    });
+  }, []);
+
+  const openCreator = useCallback((owner: string) => {
+    setDetailCard(null);
+    setCreatorOwner(owner);
+  }, []);
+
   // 历史数据迁移：feed 加载完成后——
   // 1) 为旧的 likes/收藏（只有 repo 名）补快照：repo 还在当天数据里的自动补上
   // 2) 清理无数据记录：无快照且不在当天数据的（历史遗留无法找回），从列表中移除，避免「N 个喜欢 0 个可展示」
@@ -839,16 +890,17 @@ export default function App() {
 
   // 分区数据（不重排：展示顺序 = feed.json 后端交错后的顺序；点赞只影响下次加载/推荐分区）
   // 推荐分区 = 前端个性化生成（初始权重快照，与交互零重排原则一致）
+  // 关注频道豁免空分区过滤：未关注任何人时侧栏仍保留「关注」项，内容区显示引导
   const sections = useMemo(() => {
     const all = ALL_SECTIONS.map((s) => ({
       ...s,
       cards:
         s.key === "recommended"
           ? buildRecommended(visibleCards, preferences.tagWeights, seen, interactions)
-          : getSectionCards(visibleCards, s.key),
-    })).filter((s) => s.cards.length > 0);
+          : getSectionCards(visibleCards, s.key, followingSet),
+    })).filter((s) => s.key === "following" || s.cards.length > 0);
     return all;
-  }, [visibleCards, preferences, seen, interactions]);
+  }, [visibleCards, preferences, seen, interactions, followingSet]);
 
   // 当前频道内容（单频道独立渲染；点踩消失的卡不再渲染）
   const activeSection = useMemo(() => {
@@ -880,6 +932,19 @@ export default function App() {
         c.topics.some((t) => t.toLowerCase().includes(q)),
     );
   }, [visibleCards, searchQuery]);
+
+  // 创作者页项目列表（feed.json 按 owner 过滤，score 降序）
+  const creatorCards = useMemo(() => {
+    if (!creatorOwner) return [];
+    return cards.filter((c) => c.owner === creatorOwner).sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+  }, [cards, creatorOwner]);
+
+  // 我的-关注：关注的创作者（含 feed.json 项目数，按项目数降序）
+  const followedCreators = useMemo(() => {
+    return following
+      .map((owner) => ({ owner, count: cards.filter((c) => c.owner === owner).length }))
+      .sort((a, b) => b.count - a.count);
+  }, [following, cards]);
 
   useEffect(() => {
     setSearchVisible(10);
@@ -939,6 +1004,57 @@ export default function App() {
       </header>
 
       <main className={`main${tab === "feed" ? " main-feed" : ""}`}>
+        {/* === 创作者页（覆盖当前视图；返回后回到原 tab/频道） === */}
+        {creatorOwner && (
+          <div className="creator-page">
+            <button className="creator-back" onClick={() => setCreatorOwner(null)}>
+              ← 返回
+            </button>
+            <div className="creator-header">
+              <GithubAvatar owner={creatorOwner} size={128} className="creator-avatar" />
+              <div className="creator-info">
+                <div className="creator-name-row">
+                  <h2 className="creator-name">{creatorOwner}</h2>
+                  <a
+                    className="creator-github"
+                    href={`https://github.com/${creatorOwner}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    GitHub ↗
+                  </a>
+                </div>
+                <button
+                  className={`creator-follow-btn${followingSet.has(creatorOwner) ? " followed" : " following"}`}
+                  onClick={() => toggleFollow(creatorOwner)}
+                >
+                  {followingSet.has(creatorOwner) ? "已关注" : "+ 关注"}
+                </button>
+                <div className="creator-count">{creatorCards.length} 个项目</div>
+              </div>
+            </div>
+            <div className="creator-projects">
+              {creatorCards.length === 0 ? (
+                <div className="status">
+                  <p>该创作者暂无入库项目</p>
+                </div>
+              ) : (
+                <div className="feed-list">
+                  {creatorCards.map((card) => (
+                    <FeedCardMemo
+                      key={card.repo}
+                      card={card}
+                      liked={feedback.likes.includes(card.repo)}
+                      onOpen={handleOpenDetail}
+                      onOpenCreator={openCreator}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* === 首页 tab === */}
         {tab === "feed" && loading && (
           <div className="status">
@@ -962,7 +1078,9 @@ export default function App() {
             <aside className="sidebar">
               <div className="side-group-box">
                 <div className="side-group">发 现</div>
-                {DYNAMIC_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
+                {DYNAMIC_SECTIONS.filter(
+                  (s) => s.key === "following" || sections.some((x) => x.key === s.key),
+                ).map((s) => (
                   <button
                     key={s.key}
                     className={`side-item${feedChannel === s.key ? " active" : ""}`}
@@ -988,6 +1106,12 @@ export default function App() {
               </div>
             </aside>
             <div className="feed-content">
+              {feedChannel === "following" && !activeSection && (
+                <div className="status">
+                  <p>❤️ 关注创作者后，他们的项目会出现在这里</p>
+                  <p className="hint">去项目卡片上点创作者名即可关注</p>
+                </div>
+              )}
               {activeSection && (
                 <>
                   {feedChannel !== "recommended" && (
@@ -1005,6 +1129,7 @@ export default function App() {
                     dismissingSet={dismissing}
                     onOpen={handleOpenDetail}
                     channel={feedChannel}
+                    onOpenCreator={openCreator}
                     onEndHint={`已加载全部 ${activeSection.cards.length} 个项目`}
                   />
                 </>
@@ -1050,7 +1175,13 @@ export default function App() {
                 ) : (
                   <div className="feed-list">
                     {likedCards.map((card) => (
-                      <FeedCardMemo key={card.repo} card={card} liked={true} onOpen={handleOpenDetail} />
+                      <FeedCardMemo
+                        key={card.repo}
+                        card={card}
+                        liked={true}
+                        onOpen={handleOpenDetail}
+                        onOpenCreator={openCreator}
+                      />
                     ))}
                   </div>
                 )}
@@ -1113,6 +1244,7 @@ export default function App() {
                                     card={card}
                                     liked={feedback.likes.includes(card.repo)}
                                     onOpen={handleOpenDetail}
+                                    onOpenCreator={openCreator}
                                   />
                                   <button
                                     className="folder-card-remove"
@@ -1138,10 +1270,51 @@ export default function App() {
             )}
 
             {meView === "following" && (
-              <div className="status">
-                <p>关注功能开发中</p>
-                <p className="hint">任务书 B 上线后可关注创作者</p>
-              </div>
+              <>
+                <div className="collections-header">
+                  <span className="collections-stats">❤️ 共 {following.length} 位关注的创作者</span>
+                </div>
+                {following.length === 0 ? (
+                  <div className="status">
+                    <p>还没有关注任何人</p>
+                    <p className="hint">去项目卡片上点创作者名即可关注</p>
+                  </div>
+                ) : (
+                  <div className="creator-list">
+                    {followedCreators.map(({ owner, count }) => (
+                      <div
+                        key={owner}
+                        className="creator-item"
+                        title={`查看 ${owner} 的创作者页`}
+                        onClick={() => openCreator(owner)}
+                      >
+                        <GithubAvatar owner={owner} size={56} className="creator-item-avatar" />
+                        <span className="creator-item-name">{owner}</span>
+                        <span className="creator-item-count">{count} 个项目</span>
+                        <a
+                          className="creator-item-github"
+                          href={`https://github.com/${owner}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="GitHub 主页"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          ↗
+                        </a>
+                        <button
+                          className="creator-item-unfollow"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleFollow(owner);
+                          }}
+                        >
+                          取关
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </>
         )}
@@ -1177,6 +1350,7 @@ export default function App() {
                     card={card}
                     liked={feedback.likes.includes(card.repo)}
                     onOpen={handleOpenDetail}
+                    onOpenCreator={openCreator}
                   />
                 ))}
               </div>
@@ -1210,6 +1384,7 @@ export default function App() {
           onDislike={handleDislike}
           onUpdateCollections={handleUpdateCollections}
           onClose={() => setDetailCard(null)}
+          onOpenCreator={openCreator}
         />
       )}
     </div>

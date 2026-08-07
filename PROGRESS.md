@@ -1,5 +1,29 @@
 # GitTok 内容多样性修复 — PROGRESS.md
 
+## 🔄 GitTok 关注体系（任务书 B v1.0，2026-08-07）
+
+### 开工回执（任务 0）
+- 基线：HEAD=838bfa5 工作区干净 ✅；npm run build PASS ✅；feed.json 990 张
+- 已读 App.tsx/FeedCard.tsx/types.ts/styles.css/参考验收 gittok_nav_check.py；任务书存档版一致
+- 理解：纯前端关注体系——following localStorage(仿 loadCollections) + 创作者页(creatorOwner state) + 关注频道替权威 + 我的-关注；backend/feed.json 零改动
+- 关键位置：DYNAMIC_SECTIONS L46-51 / getSectionCards L323-334 / sections 空过滤 L849 / 侧栏 filter L965 / meView following 占位 L1140 / CardDetail 调用 L1204；FeedCard badges L129-149 / owner 文字 L179 / DetailProps L232
+- 最大风险：①空关注频道豁免（sections.filter + activeSection null 两处）②FeedCardMemo memo 需透传 onOpenCreator ③点击 owner stopPropagation ④权威徽章/分支/常量零残留
+
+### 进度
+- [x] 任务 1 关注数据层：FOLLOWING_KEY/loadFollowing/saveFollowing/following state + toggleFollow/followingSet ✅
+- [x] 任务 2 创作者页+入口：creatorOwner state + 创作者页 JSX（返回/头像/名字/GitHub链接/关注按钮/项目列表 score 降序/空项目提示）+ 卡片 owner 可点击（stopPropagation）+ 详情弹窗「查看创作者」✅
+- [x] 任务 3 关注频道：DYNAMIC_SECTIONS authoritative→following（❤️ 关注）+ getSectionCards following 分支 + 空频道豁免（sections filter + 侧栏 filter + 内容区引导）+ 徽章删 🏛️ 权威 ✅
+- [x] 任务 4 我的-关注：followedCreators useMemo + 个人卡片列表（头像56px/名字/项目数/GitHub链接/取关/点卡开创作者页）+ 空状态 ✅
+- [x] 样式：repo-owner-btn / detail-creator-btn / creator-page 全系 / creator-list 全系（只用现有 CSS 变量）✅
+- [x] prettier --write 全过 + npm run build PASS + dist cp 真实 feed.json（990 张）
+- [x] headless 验收 37/37 PASS（D:/tmp/gittok_follow_check.py：A 侧栏结构 3 / B 空状态 2 / I 徽章 2 / C 创作者页 6 / D GitHub 链接 1 / E 关注闭环 6 / F 关注频道 3 / G 我的-关注 6 / H 详情入口 3 / J 回归 5）
+- [x] 截图 3 张：D:/tmp/gittok_follow_creator.png / gittok_follow_channel.png / gittok_follow_me.png
+- [ ] commit + push + CI/Deploy 验证
+
+---
+
+# GitTok 内容多样性修复 — PROGRESS.md
+
 ## 🔄 GitTok 导航扁平化重构（任务书 v2.0 侧边栏方案，2026-08-07）
 
 ### 开工回执（任务 0）

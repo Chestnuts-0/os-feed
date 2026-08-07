@@ -73,7 +73,7 @@ interface AvatarProps {
   className: string;
 }
 
-function GithubAvatar({ owner, size, className }: AvatarProps) {
+export function GithubAvatar({ owner, size, className }: AvatarProps) {
   const ref = useRef<HTMLImageElement | null>(null);
   const [loaded, setLoaded] = useState(false);
   const src = `https://avatars.githubusercontent.com/${owner}?s=${size}&v=4`;
@@ -126,7 +126,7 @@ const CATEGORY_BADGES: Record<string, string> = {
   learning: "📚 学习",
 };
 
-const DYNAMIC_CHANNEL_KEYS = new Set(["hot", "daily", "authoritative"]);
+const DYNAMIC_CHANNEL_KEYS = new Set(["hot", "daily", "following"]);
 
 /** 徽章 = 当前频道之外的归属。channel 为空（喜欢/收藏等场景）不显示徽章。 */
 function channelBadges(card: Card, channel?: string): string[] {
@@ -135,7 +135,6 @@ function channelBadges(card: Card, channel?: string): string[] {
   const pushDynamic = () => {
     if (card.momentum?.includes("hot")) badges.push("🔥 热门");
     if (card.momentum?.includes("daily")) badges.push("📈 每日");
-    if (card.fromOfficial) badges.push("🏛️ 权威");
   };
   if (channel === "recommended" || !DYNAMIC_CHANNEL_KEYS.has(channel)) {
     // 推荐流：全部动态徽章；分类频道：显示动态徽章（分类本身就是当前频道，不重复显示）
@@ -158,9 +157,10 @@ interface Props {
   dismissing?: boolean;
   onOpen: (card: Card) => void;
   channel?: string;
+  onOpenCreator?: (owner: string) => void;
 }
 
-function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel }: Props) {
+function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel, onOpenCreator }: Props) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
   const reason = cleanReason(card.reasonCn);
   const badges = channelBadges(card, channel);
@@ -176,7 +176,20 @@ function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel }:
         <GithubAvatar owner={card.owner} size={40} className="avatar" />
         <div className="card-title">
           <span className="repo-link">
-            <span className="repo-owner">{card.owner}</span>
+            {onOpenCreator ? (
+              <button
+                className="repo-owner repo-owner-btn"
+                title={`查看 ${card.owner} 的创作者页`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenCreator(card.owner);
+                }}
+              >
+                {card.owner}
+              </button>
+            ) : (
+              <span className="repo-owner">{card.owner}</span>
+            )}
             <span className="repo-sep">/</span>
             <span className="repo-name">{card.name}</span>
           </span>
@@ -238,6 +251,7 @@ interface DetailProps {
   onDislike: (repo: string) => void;
   onUpdateCollections: (collections: Collection[]) => void;
   onClose: () => void;
+  onOpenCreator?: (owner: string) => void;
 }
 
 export function CardDetail({
@@ -249,6 +263,7 @@ export function CardDetail({
   onDislike,
   onUpdateCollections,
   onClose,
+  onOpenCreator,
 }: DetailProps) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
   const reason = cleanReason(card.reasonCn);
@@ -299,6 +314,15 @@ export function CardDetail({
             <div className="detail-subtitle">
               <span className={`source-badge source-${card.source}`}>{sourceLabel(card.source)}</span>
               <span>{timeAgo(card.ts)}</span>
+              {onOpenCreator && (
+                <button
+                  className="detail-creator-btn"
+                  title={`查看 ${card.owner} 的创作者页`}
+                  onClick={() => onOpenCreator(card.owner)}
+                >
+                  👤 查看创作者
+                </button>
+              )}
             </div>
           </div>
         </div>
