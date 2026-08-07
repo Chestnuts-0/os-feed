@@ -151,3 +151,20 @@ icons.tsx（封装）→ App.tsx 替换 → FeedCard.tsx 替换 → styles.css �
 - [x] CI + Deploy Web 全绿（head_sha a248b6e 双 workflow success）
 - [x] 线上验证：os-feed/favicon.svg 200；index.html 含 rel=icon 相对路径；bundle index-abOIH2Dz.js 与本地一致
 - [x] 完成条件达成：headless 31/31 + Deploy/CI 全绿 + 线上 favicon 200 + emoji 图标用途零残留（仅注释/正则 emoji 保留）
+
+## GitTok 导航视觉深化（任务书 D v1.0）—— 2026-08-07
+
+### 开工回执（≤10 行）
+- [x] 目标：5 项视觉反馈——logo 玻璃感/排版、组标题层级、侧栏顶栏玻璃统一、tabs 正中、查看创作者按钮
+- [x] 顺序：T1 logo(favicon 同步) → T2 组标题 → T3 玻璃统一 → T4 tabs 居中+按钮 → T5 prettier/build/headless 验收/push/CI
+- [x] 基线：HEAD=aaf859d 工作区干净；build PASS；--header-bg dark=rgba(10,11,15,0.72)/light=rgba(255,255,255,0.72)、--header-blur=blur(20px) saturate(180%)，仅 .header 引用（可改变量值）
+- [x] 基线发现：.sidebar 已达标(0.55+blur18 saturate1.3+border 0.08)；.side-group-box 0.45→0.55；.logo-mark CSS 无定义需新增；body 已有左上紫光需补右下
+- [x] 最大风险：tabs absolute 居中窄屏回退（<768px）；header 玻璃化后模糊可见性靠 body 微光支撑
+
+### 任务 1-5 执行记录（2026-08-07）
+- [x] 任务1：GitTokLogo 重设计（纵向渐变 #A78BFA→#7A5CC0 + 半透明白外描边 0.35/1.5px + 左上玻璃高光弧 0.35 + 波纹 1.6px 微调）；.logo-mark inline-flex gap 10px（基线错位修复，禁负 margin）；.logo gap 12px；logo-text 1.35rem；favicon.svg 同款同步（viewBox 64 等比 4x）
+- [x] 任务2：.side-group 0.72rem/text-muted → 0.95rem/700/text-secondary/letter-spacing 1px + accent 竖条 ::before + margin-bottom 6px；.side-group-box padding 12px 12px 6px
+- [x] 任务3：--header-bg dark rgba(10,11,15,0.72)→rgba(28,25,41,0.55)；--header-blur → blur(18px) saturate(1.3)（变量仅 .header 引用，改变量值安全）；.side-group-box 0.45→0.55；body 加右下第二处微光 rgba(139,108,199,0.06)；header 底部边框 var(--border)=0.08 与 sidebar 右侧 0.08 已达标未动
+- [x] 任务4：.header-inner flex→grid 1fr auto 1fr（tabs 绝对正中 0.008px）；768px 回退 flex + tabs flex:1 防窄屏重叠；.detail-creator-btn 0.8rem/6px 12px/radius 8px/次级描边 card-border+text-secondary hover accent；.detail-subtitle gap 8→10px
+- [x] 任务5：prettier --write 全过；build PASS（gzip 66.81KB）；cp 真实 feed.json（990 卡）；headless 验收 D:/tmp/gittok_nav_deep_check.py **36/36 PASS**（logo 居中 0.008px/渐变/玻璃高光/favicon 200 同款/组标题 16.15px≥item 15.64px weight 700/玻璃统一 0.55+blur18/边框 0.08/tabs 正中 0.008px/按钮 0.8rem 6px 12px r8/回归 8 项）；截图 3 张 D:/tmp/gittok_d_{home,detail,hot,me}.png（4 张含热门）
+- [ ] commit → push → CI 轮询（待执行）

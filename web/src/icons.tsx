@@ -118,21 +118,31 @@ export function GitTokLogo({ size = 28 }: { size?: number }) {
     <span className="logo-mark">
       <svg width={size} height={size} viewBox="0 0 28 28" fill="none" aria-hidden="true">
         <defs>
-          <linearGradient id="gittok-logo-grad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#8B6CC7" />
-            <stop offset="100%" stopColor="#A78BFA" />
+          <linearGradient id="gittok-logo-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#A78BFA" />
+            <stop offset="100%" stopColor="#7A5CC0" />
           </linearGradient>
         </defs>
+        {/* 玻璃内芯：纵向渐变（上浅下深）+ 半透明白外描边 */}
         <rect x="1" y="1" width="26" height="26" rx="9" fill="url(#gittok-logo-grad)" />
+        <rect x="1" y="1" width="26" height="26" rx="9" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" />
+        {/* 左上角玻璃高光：贴合圆角的内弧（模拟玻璃反光） */}
+        <path
+          d="M5.2 7.8a6.5 6.5 0 0 1 2.3 -2.3"
+          stroke="rgba(255,255,255,0.4)"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          opacity="0.35"
+        />
         {/* 信号波纹：左侧发射点 + 两段同心弧（简洁线条，小尺寸清晰） */}
-        <circle cx="10.5" cy="14" r="2.4" fill="#fff" />
-        <path d="M14 9.8a6 6 0 0 1 0 8.4" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="10.5" cy="14" r="2.2" fill="#fff" />
+        <path d="M14 9.8a6 6 0 0 1 0 8.4" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
         <path
           d="M17.2 6.8a10.4 10.4 0 0 1 0 14.4"
           stroke="#fff"
-          strokeWidth="2"
+          strokeWidth="1.6"
           strokeLinecap="round"
-          opacity="0.65"
+          opacity="0.6"
         />
       </svg>
       <span className="logo-text">GitTok</span>
