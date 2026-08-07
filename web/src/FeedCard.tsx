@@ -116,6 +116,39 @@ function GithubAvatar({ owner, size, className }: AvatarProps) {
 }
 
 // ---------------------------------------------------------------------------
+// 频道徽章：显示「当前频道之外它还属于谁」（一个项目有多个标签显性化）
+// ---------------------------------------------------------------------------
+
+const CATEGORY_BADGES: Record<string, string> = {
+  ai: "🤖 AI",
+  fun: "🎮 兴趣",
+  tool: "🛠️ 工具",
+  learning: "📚 学习",
+};
+
+const DYNAMIC_CHANNEL_KEYS = new Set(["hot", "daily", "authoritative"]);
+
+/** 徽章 = 当前频道之外的归属。channel 为空（喜欢/收藏等场景）不显示徽章。 */
+function channelBadges(card: Card, channel?: string): string[] {
+  if (!channel) return [];
+  const badges: string[] = [];
+  const pushDynamic = () => {
+    if (card.momentum?.includes("hot")) badges.push("🔥 热门");
+    if (card.momentum?.includes("daily")) badges.push("📈 每日");
+    if (card.fromOfficial) badges.push("🏛️ 权威");
+  };
+  if (channel === "recommended" || !DYNAMIC_CHANNEL_KEYS.has(channel)) {
+    // 推荐流：全部动态徽章；分类频道：显示动态徽章（分类本身就是当前频道，不重复显示）
+    pushDynamic();
+  } else {
+    // 动态频道：显示固有分类徽章
+    const cat = CATEGORY_BADGES[card.category];
+    if (cat) badges.push(cat);
+  }
+  return badges;
+}
+
+// ---------------------------------------------------------------------------
 // 紧凑卡片组件（两列网格用）
 // ---------------------------------------------------------------------------
 
@@ -124,11 +157,13 @@ interface Props {
   liked: boolean;
   dismissing?: boolean;
   onOpen: (card: Card) => void;
+  channel?: string;
 }
 
-function FeedCardComponent({ card, liked, dismissing = false, onOpen }: Props) {
+function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel }: Props) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
   const reason = cleanReason(card.reasonCn);
+  const badges = channelBadges(card, channel);
 
   return (
     <article className={`card${dismissing ? " dismissing" : ""}`} onClick={() => onOpen(card)}>
@@ -148,6 +183,11 @@ function FeedCardComponent({ card, liked, dismissing = false, onOpen }: Props) {
           <div className="card-subtitle">
             <span className={`source-badge source-${card.source}`}>{sourceLabel(card.source)}</span>
             <span>{timeAgo(card.ts)}</span>
+            {badges.map((b) => (
+              <span key={b} className="card-badge">
+                {b}
+              </span>
+            ))}
           </div>
         </div>
       </div>

@@ -17,6 +17,7 @@
 :root {
   --bg: #0a0b0f;
   --bg-gradient: radial-gradient(ellipse at top, #131520 0%, #0a0b0f 60%);
+  --bg-secondary: rgba(13, 14, 21, 0.55);
   --card-bg: rgba(22, 24, 35, 0.8);
   --card-border: rgba(255, 255, 255, 0.06);
   --card-border-hover: rgba(255, 255, 255, 0.14);
@@ -47,6 +48,7 @@
   :root {
     --bg: #f7f7fa;
     --bg-gradient: radial-gradient(ellipse at top, #eef0f6 0%, #f7f7fa 60%);
+    --bg-secondary: rgba(240, 241, 247, 0.7);
     --card-bg: rgba(255, 255, 255, 0.85);
     --card-border: rgba(0, 0, 0, 0.06);
     --card-border-hover: rgba(0, 0, 0, 0.14);
@@ -181,141 +183,110 @@ button {
   padding: 20px 24px 32px;
 }
 
-/* --- 二级导航（sticky sub-nav） --- */
-.sub-nav {
-  position: sticky;
-  top: 60px;
-  z-index: 99;
-  background: var(--header-bg);
-  backdrop-filter: var(--header-blur);
-  -webkit-backdrop-filter: var(--header-blur);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 0 0;
+/* --- 首页主区布局（左侧边栏 + 内容区） --- */
+.main-feed {
+  padding: 0;
 }
 
-/* 视图切换分段控制器（发现/分类） */
-.view-switch {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 24px;
+.feed-layout {
   display: flex;
-  gap: 6px;
+  align-items: stretch;
+  min-height: calc(100vh - 60px);
 }
 
-.view-switch-btn {
-  flex: 1;
-  padding: 10px 0;
-  border-radius: 10px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: transparent;
-  border: 1px solid transparent;
-  transition: all 0.25s ease;
+/* 左侧边栏：目的地导航（YouTube/B站桌面端模式，非过滤器） */
+.sidebar {
+  width: 192px;
+  flex-shrink: 0;
+  padding: 20px 14px 32px;
+  border-right: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.side-group {
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  padding: 0 12px 8px;
+  margin-top: 18px;
+}
+.side-group:first-child {
+  margin-top: 0;
+}
+
+.side-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  font-family: inherit;
   cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
 }
-
-.view-switch-btn:hover {
+.side-item:hover {
+  background: var(--accent-light);
   color: var(--text);
-  background: var(--card-bg);
 }
-
-.view-switch-btn.active {
+.side-item.active {
   background: var(--accent-gradient);
   color: #fff;
-  border-color: transparent;
+  font-weight: 700;
   box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
 }
 
-.sub-nav-inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 8px 24px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 56px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.sub-nav-inner::-webkit-scrollbar {
-  display: none;
-}
-
-.sub-nav-pill {
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  transition: all 0.25s ease;
-  font-weight: 500;
-  white-space: nowrap;
+.side-icon {
+  font-size: 1rem;
+  line-height: 1;
   flex-shrink: 0;
+}
+.side-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.side-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 14px 12px;
+}
+
+/* 内容区（padding 与主区一致） */
+.feed-content {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 24px 32px;
+}
+
+/* 频道头（非推荐频道） */
+.channel-head {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  box-shadow: var(--shadow-card);
+  align-items: baseline;
+  gap: 12px;
+  padding: 2px 2px 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
 }
-
-.sub-nav-pill:hover {
-  border-color: var(--accent);
-  color: var(--text);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
-}
-.sub-nav-pill.active {
-  background: var(--accent-gradient);
-  color: #fff;
-  font-weight: 700;
-  border-color: transparent;
-  box-shadow: 0 4px 16px var(--accent-glow);
-}
-
-/* --- 分区 --- */
-.section {
-  margin-bottom: 36px;
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-  padding: 10px 16px;
-  background: linear-gradient(135deg, var(--accent-light), transparent);
-  border-radius: 12px;
-  border: 1px solid var(--card-border);
-}
-
-.section-icon {
-  font-size: 1.3rem;
+.ch-icon {
+  font-size: 1.2rem;
   line-height: 1;
 }
-.section-title {
-  font-size: 1.1rem;
+.ch-title {
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--text);
 }
-.section-desc {
-  font-size: 0.78rem;
+.ch-count {
+  font-size: 0.8rem;
   color: var(--text-muted);
-  margin-left: auto;
-}
-.section-count {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  background: var(--accent-light);
-  padding: 2px 10px;
-  border-radius: 12px;
-  font-weight: 600;
 }
 
 /* --- 两列卡片网格 --- */
@@ -519,6 +490,17 @@ button {
 .source-search {
   background: rgba(59, 130, 246, 0.12);
   color: #93c5fd;
+}
+
+/* 频道徽章（当前频道之外的归属；与 source-badge 同级视觉语言：低饱和紫底 + 亮紫文字） */
+.card-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.7rem;
+  background: var(--accent-light);
+  color: var(--accent);
+  white-space: nowrap;
 }
 
 /* 通俗概括（最多 2 行截断；高度自适应——行高由虚拟列表真实测量，不撑高不裁剪） */
@@ -1363,13 +1345,26 @@ button {
     height: 56px;
     border-radius: 16px;
   }
-  .sub-nav-inner {
-    padding: 0 12px;
-    height: 44px;
+}
+
+/* 侧边栏移动端折叠：icon-only（<900px），其余布局不变 */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 64px;
+    padding: 16px 6px;
   }
-  .sub-nav-pill {
-    padding: 5px 14px;
-    font-size: 0.8rem;
+  .side-item {
+    justify-content: center;
+    padding: 10px 0;
+  }
+  .side-text {
+    display: none;
+  }
+  .side-group {
+    display: none;
+  }
+  .side-divider {
+    margin: 12px 4px;
   }
 }
 
@@ -1381,8 +1376,5 @@ button {
   .card-meta {
     gap: 10px;
     font-size: 0.76rem;
-  }
-  .section {
-    scroll-margin-top: 98px;
   }
 }

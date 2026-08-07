@@ -382,33 +382,6 @@ function buildRecommended(
   return picked.sort((a, b) => weightOf(b) - weightOf(a)).slice(0, total);
 }
 
-/**
- * 动态分区防重复：项目若「已在更靠前的动态分区展示过」且「最近 7 天内被浏览过（seen）且未互动」，
- * 则从本分区剔除（互动过的豁免——用户明确感兴趣，重复展示无妨）。
- */
-function dedupeDynamicSections<T extends { key: string; cards: FeedCard[] }>(
-  sections: T[],
-  seen: Record<string, number>,
-  interactions: Record<string, InteractionRecord>,
-): T[] {
-  const now = Date.now();
-  const DAY_MS = 86_400_000;
-  const dynamicKeys = new Set(DYNAMIC_SECTIONS.map((s) => s.key));
-  const shown = new Set<string>();
-  return sections.map((s) => {
-    if (!dynamicKeys.has(s.key)) return s;
-    const kept = s.cards.filter((c) => {
-      const inter = interactions[c.repo];
-      if (inter) return true; // 互动过豁免
-      const seenTs = seen[c.repo];
-      if (seenTs && now - seenTs < 7 * DAY_MS && shown.has(c.repo)) return false;
-      return true;
-    });
-    for (const c of kept) shown.add(c.repo);
-    return { ...s, cards: kept };
-  });
-}
-
 // ---------------------------------------------------------------------------
 // 分区虚拟列表（每区独立虚拟化，window 滚动 + 动态 scrollMargin 适配多分区偏移）
 // ---------------------------------------------------------------------------
@@ -419,6 +392,7 @@ interface FeedVirtualListProps {
   dismissingSet: Set<string>;
   onOpen: (card: FeedCard) => void;
   onEndHint?: string;
+  channel?: string;
 }
 
 // 单行组件：IntersectionObserver 精确感知视口（只给真正可见的行开 blur）+ 行高真实测量
@@ -432,6 +406,7 @@ interface FeedVirtualRowProps {
   dismissingSet: Set<string>;
   onOpen: (card: FeedCard) => void;
   measureRef?: (node: HTMLDivElement | null) => void;
+  channel?: string;
 }
 
 function FeedVirtualRow({
@@ -444,6 +419,7 @@ function FeedVirtualRow({
   dismissingSet,
   onOpen,
   measureRef,
+  channel,
 }: FeedVirtualRowProps) {
   const rowRef = useRef<HTMLDivElement | null>(null);
   const [inViewport, setInViewport] = useState(false);
@@ -486,6 +462,7 @@ function FeedVirtualRow({
               liked={likedSet.has(left.repo)}
               dismissing={dismissingSet.has(left.repo)}
               onOpen={onOpen}
+              channel={channel}
             />
           </div>
         )}
@@ -496,6 +473,7 @@ function FeedVirtualRow({
               liked={likedSet.has(right.repo)}
               dismissing={dismissingSet.has(right.repo)}
               onOpen={onOpen}
+              channel={channel}
             />
           </div>
         )}
@@ -504,7 +482,14 @@ function FeedVirtualRow({
   );
 }
 
-function FeedVirtualList({ cards, likedSet, dismissingSet, onOpen, onEndHint }: FeedVirtualListProps) {
+function FeedVirtualList({
+  cards,
+  likedSet,
+  dismissingSet,
+  onOpen,
+  onEndHint,
+  channel,
+}: FeedVirtualListProps) {
   const listRef = useRef<HTMLDivElement>(null);
   // 列表容器相对文档顶部的偏移（前序分区高度变化时会变，需动态测量）
   const [scrollMargin, setScrollMargin] = useState(0);
@@ -565,6 +550,7 @@ function FeedVirtualList({ cards, likedSet, dismissingSet, onOpen, onEndHint }: 
               likedSet={likedSet}
               dismissingSet={dismissingSet}
               onOpen={onOpen}
+              channel={channel}
               measureRef={rowVirtualizer.measureElement}
             />
           );
@@ -602,9 +588,7 @@ export default function App() {
   const [dismissing, setDismissing] = useState<Set<string>>(new Set());
   // 本次会话已点踩消失的卡片（不再渲染，避免滚动回来复活）
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
-  const [feedFilter, setFeedFilter] = useState<string>("");
-  // 推荐页视图：发现（推荐/热门/每日/权威）vs 分类（AI/兴趣/工具/学习）
-  const [feedView, setFeedView] = useState<"discover" | "category">("discover");
+  const [feedChannel, setFeedChannel] = useState<string>("recommended");
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   // 加载 feed.json
@@ -865,18 +849,13 @@ export default function App() {
     return all;
   }, [visibleCards, preferences, seen, interactions]);
 
-  // 过滤后的分区（feedFilter 为空显示全部，否则只显示匹配分区；点踩消失的卡不再进分区）
-  // 动态分区防重复：同一项目不在多个动态分区重复出现（7 天 seen + 互动豁免）
-  const filteredSections = useMemo(() => {
-    const base = sections.map((s) => ({
-      ...s,
-      cards: s.cards.filter((c) => !dismissed.has(c.repo)),
-    }));
-    const nonEmpty = base.filter((s) => s.cards.length > 0);
-    const deduped = dedupeDynamicSections(nonEmpty, seen, interactions);
-    if (feedFilter === "") return deduped;
-    return deduped.filter((s) => s.key === feedFilter);
-  }, [sections, feedFilter, dismissed, seen, interactions]);
+  // 当前频道内容（单频道独立渲染；点踩消失的卡不再渲染）
+  const activeSection = useMemo(() => {
+    const sec = sections.find((s) => s.key === feedChannel);
+    if (!sec) return null;
+    const cards = sec.cards.filter((c) => !dismissed.has(c.repo));
+    return cards.length > 0 ? { ...sec, cards } : null;
+  }, [sections, feedChannel, dismissed]);
 
   // 喜欢的卡片（快照优先，其次匹配当天数据；快照缺失且当天数据也没有的——旧记录无法找回）
   const likedCards = useMemo(() => {
@@ -885,8 +864,6 @@ export default function App() {
       .map((repo) => snapshots[repo] ?? visibleCards.find((c) => c.repo === repo))
       .filter((c): c is FeedCard => !!c);
   }, [feedback.likes, feedback.likedSnapshots, visibleCards]);
-
-  // 活跃分区检测（已移除 IntersectionObserver，改用 feedFilter）
 
   // 大牛卡片
   const bigbroCards = useMemo(() => {
@@ -931,45 +908,10 @@ export default function App() {
     return () => observer.disconnect();
   }, [tab, searchResults]);
 
-  // 分区过滤切换
-  const switchFeedFilter = useCallback((key: string) => {
-    setFeedFilter((prev) => (prev === key ? "" : key));
+  // 频道切换（侧边栏目的地导航，无取消态）
+  const switchFeedChannel = useCallback((key: string) => {
+    setFeedChannel(key);
   }, []);
-
-  // 视图切换（发现/分类）：切换时重置分区过滤，避免残留另一视图的分区
-  const switchFeedView = useCallback((view: "discover" | "category") => {
-    setFeedView(view);
-    setFeedFilter("");
-  }, []);
-
-  // 无限滚动 sentinel 回调（分区）—— 已由虚拟列表取代，保留为 no-op 兼容
-  const handleSectionSentinel = useCallback((_key: string) => {
-    // 虚拟列表按需渲染，无需增量加载
-  }, []);
-
-  // 为每个分区挂载 sentinel observer（虚拟列表已按需渲染，此 observer 仅保留兼容）
-  useEffect(() => {
-    if (tab !== "feed") return;
-    const sentinelMap = new Map<string, IntersectionObserver>();
-
-    for (const section of filteredSections) {
-      const sentinelEl = document.getElementById(`sentinel-${section.key}`);
-      if (!sentinelEl) continue;
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0]?.isIntersecting) {
-            handleSectionSentinel(section.key);
-          }
-        },
-        { rootMargin: "400px" },
-      );
-      observer.observe(sentinelEl);
-      sentinelMap.set(section.key, observer);
-    }
-    return () => {
-      sentinelMap.forEach((obs) => obs.disconnect());
-    };
-  }, [tab, filteredSections, handleSectionSentinel]);
 
   const stats = useMemo(
     () => ({
@@ -979,10 +921,6 @@ export default function App() {
     }),
     [cards, bigbroCards, sections],
   );
-
-  // 分区分组（动态组 + 分类组，分组渲染）
-  const dynamicGroup = filteredSections.filter((s) => DYNAMIC_SECTIONS.some((d) => d.key === s.key));
-  const categoryGroup = filteredSections.filter((s) => CATEGORY_SECTIONS.some((d) => d.key === s.key));
 
   // -----------------------------------------------------------------------
   // 渲染
@@ -995,7 +933,7 @@ export default function App() {
           <h1 className="logo">📡 GitTok</h1>
           <nav className="tabs">
             <button className={`tab${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
-              推荐
+              首页
             </button>
             <button className={`tab${tab === "liked" ? " active" : ""}`} onClick={() => setTab("liked")}>
               喜欢 {feedback.likes.length > 0 && <span className="tab-count">{feedback.likes.length}</span>}
@@ -1019,84 +957,76 @@ export default function App() {
         </div>
       </header>
 
-      {/* 二级导航：视图切换（发现/分类）+ 分区过滤（仅推荐 tab） */}
-      {tab === "feed" && !loading && !error && sections.length > 0 && (
-        <nav className="sub-nav">
-          <div className="view-switch">
-            <button
-              className={`view-switch-btn${feedView === "discover" ? " active" : ""}`}
-              onClick={() => switchFeedView("discover")}
-            >
-              ✨ 发现
-            </button>
-            <button
-              className={`view-switch-btn${feedView === "category" ? " active" : ""}`}
-              onClick={() => switchFeedView("category")}
-            >
-              🎯 分类
-            </button>
+      <main className={`main${tab === "feed" ? " main-feed" : ""}`}>
+        {/* === 首页 tab === */}
+        {tab === "feed" && loading && (
+          <div className="status">
+            <div className="spinner" />
+            <p>正在加载好项目…</p>
           </div>
-          <div className="sub-nav-inner">
-            {(feedView === "discover" ? DYNAMIC_SECTIONS : CATEGORY_SECTIONS)
-              .filter((s) => sections.some((x) => x.key === s.key))
-              .map((s) => (
+        )}
+        {tab === "feed" && error && (
+          <div className="status error">
+            <p>⚠️ 加载失败: {error}</p>
+          </div>
+        )}
+        {tab === "feed" && !loading && !error && sections.length === 0 && (
+          <div className="status">
+            <p>📭 暂无内容</p>
+          </div>
+        )}
+        {tab === "feed" && !loading && !error && sections.length > 0 && (
+          <div className="feed-layout">
+            {/* 左侧边栏：目的地导航（发现组 + 分类组） */}
+            <aside className="sidebar">
+              <div className="side-group">发 现</div>
+              {DYNAMIC_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
                 <button
                   key={s.key}
-                  className={`sub-nav-pill${feedFilter === s.key ? " active" : ""}`}
-                  onClick={() => switchFeedFilter(s.key)}
+                  className={`side-item${feedChannel === s.key ? " active" : ""}`}
+                  onClick={() => switchFeedChannel(s.key)}
                 >
-                  {s.icon} {s.title}
+                  <span className="side-icon">{s.icon}</span>
+                  <span className="side-text">{s.title}</span>
                 </button>
               ))}
-          </div>
-        </nav>
-      )}
-
-      <main className="main">
-        {/* === 推荐 tab === */}
-        {tab === "feed" && (
-          <>
-            {loading && (
-              <div className="status">
-                <div className="spinner" />
-                <p>正在加载好项目…</p>
-              </div>
-            )}
-            {error && (
-              <div className="status error">
-                <p>⚠️ 加载失败: {error}</p>
-              </div>
-            )}
-            {!loading && !error && sections.length === 0 && (
-              <div className="status">
-                <p>📭 暂无内容</p>
-              </div>
-            )}
-            {!loading &&
-              !error &&
-              (() => {
-                const renderSection = (section: (typeof filteredSections)[number]) => (
-                  <section key={section.key} id={`section-${section.key}`} className="section">
-                    <div className="section-header">
-                      <span className="section-icon">{section.icon}</span>
-                      <span className="section-title">{section.title}</span>
-                      <span className="section-count">{section.cards.length}</span>
-                      <span className="section-desc">{section.desc}</span>
+              <div className="side-divider" />
+              <div className="side-group">分 类</div>
+              {CATEGORY_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
+                <button
+                  key={s.key}
+                  className={`side-item${feedChannel === s.key ? " active" : ""}`}
+                  onClick={() => switchFeedChannel(s.key)}
+                >
+                  <span className="side-icon">{s.icon}</span>
+                  <span className="side-text">{s.title}</span>
+                </button>
+              ))}
+            </aside>
+            <div className="feed-content">
+              {activeSection && (
+                <>
+                  {feedChannel !== "recommended" && (
+                    <div className="channel-head">
+                      <span className="ch-icon">{activeSection.icon}</span>
+                      <span className="ch-title">{activeSection.title}</span>
+                      <span className="ch-count">
+                        {activeSection.cards.length} 个项目 · {activeSection.desc}
+                      </span>
                     </div>
-                    <FeedVirtualList
-                      cards={section.cards}
-                      likedSet={likedSet}
-                      dismissingSet={dismissing}
-                      onOpen={handleOpenDetail}
-                      onEndHint={`已加载全部 ${section.cards.length} 个项目`}
-                    />
-                  </section>
-                );
-                // 只渲染当前视图的分区（发现=动态组，分类=固有组）
-                const viewSections = feedView === "discover" ? dynamicGroup : categoryGroup;
-                return <>{viewSections.map(renderSection)}</>;
-              })()}
-          </>
+                  )}
+                  <FeedVirtualList
+                    cards={activeSection.cards}
+                    likedSet={likedSet}
+                    dismissingSet={dismissing}
+                    onOpen={handleOpenDetail}
+                    channel={feedChannel}
+                    onEndHint={`已加载全部 ${activeSection.cards.length} 个项目`}
+                  />
+                </>
+              )}
+            </div>
+          </div>
         )}
 
         {/* === 喜欢 tab === */}
