@@ -1,5 +1,36 @@
 # GitTok 内容多样性修复 — PROGRESS.md
 
+## 🔄 GitTok 导航扁平化重构（任务书 v2.0 侧边栏方案，2026-08-07）
+
+### 开工回执（任务 0）
+- 基线：HEAD=054083c；工作区有 styles.css 未提交样式微调（上次会话遗留）→ 备份 D:/tmp/gittok_styles_uncommitted.patch 后 checkout 恢复干净
+- npm run build ✅；已读 App.tsx/FeedCard.tsx/styles.css/原型 gittok_nav_mockup.html/参考验收 gittok_view_check.py
+- 理解：删 feedView+feedFilter+dedupeDynamicSections+sub-nav → feedChannel+侧边栏+频道头+徽章；顶部 Tab 首项改「首页」
+- 最大风险：虚拟列表 data-index/scrollMargin 与布局改动冲突；徽章与 source-badge 视觉同源
+
+### 进度
+- [x] 任务 1 改造完成：App.tsx（删视图切换/分组/dedupe，加 feedChannel/activeSection/侧边栏 JSX/频道头）、FeedCard.tsx（channel prop + channelBadges 徽章）、styles.css（删 sub-nav/view-switch/section 样式，加 feed-layout/sidebar/channel-head/card-badge，:root 新增 --bg-secondary，900px 折叠）
+- [x] prettier --check web/src 全过（main.tsx CRLF→LF 格式化，内容无变化不进 commit）
+- [x] npm run build ✅ + cp 真实 feed.json（990 张）
+- [x] headless 验收 32/32 PASS（D:/tmp/gittok_sidebar_check.py：A 侧边栏结构 10 项 / B 频道切换+徽章 11 项 / C 跨层可见性 5 项 / D 回归 6 项）
+- [x] 截图：D:/tmp/gittok_sidebar_recommended.png + gittok_sidebar_hot.png（1440px dark）
+- [x] 提交 a87155d → push 确认（ls-remote 验证）→ CI ✅ + Deploy Web ✅ → 线上 bundle 已验证新版（feed-layout/channel-head 在，view-switch 无）
+- [x] grep "feedView|view-switch|section-group-title" web/src/ 零残留
+
+### 验收记录
+- headless 32/32 PASS：默认推荐流（无频道头纯卡片）、侧边栏 8 频道+2 组+分隔线、无「发现/分类」视图按钮、无「全部」、点热门→频道头「热门 · 892 个项目」、点 AI→AI 内容、点回推荐→恢复、徽章规则（热门显🤖AI/分类显🔥热门/推荐显动态徽章/当前频道不显示）、跨层可见性（anything-llm 热门+AI 双频道 DOM 可见）、喜欢/收藏 tab、点踩淡出（热门频道 dismissing 动画+消失）、首页 tab
+- 审美 DOM 自检（dark）：sidebar 192px + var(--bg-secondary) 低饱和底 + border-right、激活项 accent-gradient 白字 700 + 阴影 0 4px 14px rgba(99,102,241,.25)、徽章 accent-light 底 0.7rem、频道头 1.15rem、字体 Lora 衬线全局一致；移动端 800px 折叠 64px icon-only ✅
+
+### 偏差说明
+1. 工作区 styles.css 未提交改动（非任务书预期）：备份后恢复干净基线，未纳入本次提交
+2. 推荐流点踩「无 dismissing 动画」为既有设计：handleOpenDetail setSeen → buildRecommended 排除 7 天内 seen 未互动（开详情即退出推荐流），非本次引入；验收改为推荐流验证消失 + 热门频道验证完整淡出动画
+3. :root 新增 --bg-secondary 变量（任务书点名可用，现有变量缺失，属设计系统扩展非硬编码色值）
+4. main.tsx 仅行尾符格式化（CRLF→LF），无内容变化
+
+---
+
+# GitTok 内容多样性修复 — PROGRESS.md
+
 ## 开工回执（2026-08-06）
 - 理解目标：数据源扩容(21 topic×quota 30)→评分队列领域均衡→2:3 AI/非AI交错→画像均衡→前端去重排，实现 feed 多样性，硬指标全过
 - 执行顺序：任务0核验 → 改动1-5 → 验收A-F → 提交推送G → 线上digest验证H → 收尾I
