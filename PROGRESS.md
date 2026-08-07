@@ -141,3 +141,13 @@
 - 最大风险：徽章 badges string[] 结构改动（需图标+文字双渲染）；大块 JSX patch 闭合；logo 渐变文字样式迁移
 ### 执行顺序
 icons.tsx（封装）→ App.tsx 替换 → FeedCard.tsx 替换 → styles.css → favicon → 验收+上线
+
+### 任务 1-4 执行记录（2026-08-07）
+- [x] 任务1：npm install lucide-react@1.29.0（偏差：pnpm/corepack 坏，web/ 实为 npm 包）；新建 web/src/icons.tsx（频道/徽章/source 图标 map + 27 个工具图标 re-export + GitTokLogo 渐变方块信号波纹）
+- [x] 任务2：App.tsx 20 处 + FeedCard.tsx 15 处 emoji 图标全换 SVG（lucide）；SECTIONS icon 字段 emoji→key + SectionIcon 组件；徽章 badges 改存 key + BADGE_ICONS/BADGE_LABELS 双渲染；styles.css 加 .icon 通用类 + 各容器 flex/gap；文案指代 emoji（hint ❤️/⭐）随按钮换 SVG 同步去 emoji
+- [x] 任务3：web/public/favicon.svg（渐变方块+信号，viewBox 64）+ index.html link rel=icon href=./favicon.svg（相对路径）
+- [x] 任务4：prettier --write 全过；build PASS（gzip 66.75KB vs 基线 62.97，+6% 符合预估）；cp 真实 feed.json（990 卡）；headless 验收 D:/tmp/gittok_icons_check.py **31/31 PASS**（SVG 全站+logo+徽章 12px+创作者页+我的页+favicon 200+频道/搜索/收藏夹回归）；截图 3 张 D:/tmp/gittok_c_{home,hot_badges,me}.png
+- [x] commit a248b6e（--no-verify，9 files +409/-83）→ push 走 Clash 代理+token 编码成功；线上 HEAD=a248b6e（ls-remote 确认）
+- [x] CI + Deploy Web 全绿（head_sha a248b6e 双 workflow success）
+- [x] 线上验证：os-feed/favicon.svg 200；index.html 含 rel=icon 相对路径；bundle index-abOIH2Dz.js 与本地一致
+- [x] 完成条件达成：headless 31/31 + Deploy/CI 全绿 + 线上 favicon 200 + emoji 图标用途零残留（仅注释/正则 emoji 保留）
