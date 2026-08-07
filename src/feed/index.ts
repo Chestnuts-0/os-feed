@@ -130,9 +130,10 @@ export function classifyCategory(card: Pick<FeedCard, "repo" | "desc" | "topics"
 }
 
 /** 动态标签判定（不互斥，独立命中） */
-export function classifyMomentum(
-  card: Pick<FeedCard, "owner" | "stars" | "starGrowth">,
-): { momentum: FeedMomentum[]; fromOfficial: boolean } {
+export function classifyMomentum(card: Pick<FeedCard, "owner" | "stars" | "starGrowth">): {
+  momentum: FeedMomentum[];
+  fromOfficial: boolean;
+} {
   const momentum: FeedMomentum[] = [];
   if (card.stars >= HOT_STAR_THRESHOLD) momentum.push("hot");
   if (card.starGrowth >= DAILY_GROWTH_THRESHOLD) momentum.push("daily");
@@ -304,7 +305,6 @@ async function refreshStarsRoundRobin(
   let refreshed = 0;
   let scanned = 0;
   const total = repos.length;
-  const promises: Promise<void>[] = [];
   const queue: { repo: string; idx: number }[] = [];
 
   // 收集本轮要刷新的 repo（跳过今天已被抓取数据更新过的——已有新鲜 stars 的不重复查）
