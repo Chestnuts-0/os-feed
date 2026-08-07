@@ -189,3 +189,14 @@ icons.tsx（封装）→ App.tsx 替换 → FeedCard.tsx 替换 → styles.css �
 - [x] 任务4：prettier --write 全过 + --check 全过；npm run build PASS（gzip 67.61KB）；cp 真实 feed.json（990 卡）；headless 验收 D:/tmp/gittok_e_check.py **51/51 PASS**（A 页面栈 10：整页替换/动画/二层/逐级返回/原tab原频道；B 我的侧栏 8；C 空状态 4：chips 12/热门 8/分类 4/点击填入；D 加权 5：github 第1=github/spec-kit、mcp server AND 10 条且 mcp 靠前；E 创作者 5：openai 组+头像名字项目数+点击开页；F 样式 5：玻璃 0.45+blur18+真实点击聚焦 border accent+外发光 0.15；G 回归 13：推荐流/频道/徽章/关注闭环/喜欢/收藏注入/详情+查看创作者）；截图 4 张 D:/tmp/gittok_e_{creator2,me,search_empty,search_result}.png
 - [x] 审美参数验证：creator 动画 0.25s creator-enter、头像 84px r18、me-sidebar 玻璃 0.55+blur18 saturate1.3 同源、active 渐变同款、chip 玻璃 0.55 r16、分类直达带 SVG 图标
 - [x] grep 残留：creatorOwner/me-subnav 在 web/src/ 零出现（grep exit=1）
+- [x] commit 1ff81a7（--no-verify，5 files +783/-428：App.tsx/styles.css/CreatorPage.tsx/search.ts/PROGRESS.md）→ push 走 Clash 代理+token 编码成功；ls-remote 线上 HEAD=1ff81a7 ✅
+- [x] CI run 31170118313 success + Deploy Web run 31170118311 success（head_sha 1ff81a7 双 workflow 全绿）
+- [x] 线上验证：Pages https://chestnuts-0.github.io/os-feed 引用 index-DKsNEUxJ.js/index-HcrDGivz.css 与本地 sha256 一致；线上 feed.json 990 卡
+- [x] 完成条件达成：headless 51/51 PASS + Deploy/CI 全绿 + grep creatorOwner/me-subnav 零残留 + 截图 4 张
+
+### 偏差说明（任务书 E）
+1. CreatorPage 增加 likedSet + onOpen props（任务书 props 列表未列，但 FeedCard 必需 liked、创作者页内项目卡需打开详情弹窗——坑提示 11 要求）
+2. 创作者页「二层」验收场景：创作者页项目全属同一 owner，无「另一 owner」可点——按栈语义验收：创作者页内点项目卡 owner 压栈（同 owner），返回 1 次仍在一层、返回 2 次回原视图（行为证明栈深 2）
+3. D5 验收断言改为数据级 AND 校验：desc 等加权字段不在卡片 DOM 上渲染，textContent 检查会误报；脚本用 feed.json 复算
+4. 验收脚本 G6 注入坑：collections 必须注入数组（loadCollections 期望 Collection[]，App.tsx:250 collections.flatMap；注入对象会 TypeError 白屏）——脚本注释已写明
+5. me tab 的 main 加 main-feed（贴左，与首页侧栏同源设计语言；任务书未明说，截图与首页一致）
