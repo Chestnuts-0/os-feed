@@ -11,12 +11,11 @@ import "./styles.css";
 const FEED_URL = "./data/feed.json";
 const STORAGE_KEY = "os-feed-feedback";
 const PREF_KEY = "os-feed-preferences";
-const BIGBRO_NAME = "KKKKhazix";
 const COLLECTIONS_KEY = "os-feed-collections";
 const SEEN_KEY = "os-feed-seen";
 const INTERACTIONS_KEY = "os-feed-interactions";
 
-type Tab = "feed" | "liked" | "collections" | "bigbro" | "search" | "chat";
+type Tab = "feed" | "search" | "me";
 
 interface Feedback {
   likes: string[];
@@ -567,6 +566,8 @@ function FeedVirtualList({
 
 export default function App() {
   const [tab, setTab] = useState<Tab>("feed");
+  // 我的页子视图（喜欢/收藏/关注；关注体系在任务书 B）
+  const [meView, setMeView] = useState<"liked" | "collections" | "following">("liked");
   const [cards, setCards] = useState<FeedCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -865,13 +866,6 @@ export default function App() {
       .filter((c): c is FeedCard => !!c);
   }, [feedback.likes, feedback.likedSnapshots, visibleCards]);
 
-  // 大牛卡片
-  const bigbroCards = useMemo(() => {
-    return visibleCards
-      .filter((c) => c.bigbros.length > 0 || c.source === "bigbro")
-      .sort((a, b) => b.score - a.score);
-  }, [visibleCards]);
-
   // 搜索结果
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return [];
@@ -916,10 +910,9 @@ export default function App() {
   const stats = useMemo(
     () => ({
       total: cards.length,
-      bigbro: bigbroCards.length,
       sections: sections.length,
     }),
-    [cards, bigbroCards, sections],
+    [cards, sections],
   );
 
   // -----------------------------------------------------------------------
@@ -935,23 +928,11 @@ export default function App() {
             <button className={`tab${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
               首页
             </button>
-            <button className={`tab${tab === "liked" ? " active" : ""}`} onClick={() => setTab("liked")}>
-              喜欢 {feedback.likes.length > 0 && <span className="tab-count">{feedback.likes.length}</span>}
-            </button>
-            <button
-              className={`tab${tab === "collections" ? " active" : ""}`}
-              onClick={() => setTab("collections")}
-            >
-              收藏 {collections.length > 0 && <span className="tab-count">{collections.length}</span>}
-            </button>
-            <button className={`tab${tab === "bigbro" ? " active" : ""}`} onClick={() => setTab("bigbro")}>
-              大牛 {stats.bigbro > 0 && <span className="tab-count">{stats.bigbro}</span>}
-            </button>
             <button className={`tab${tab === "search" ? " active" : ""}`} onClick={() => setTab("search")}>
               搜索
             </button>
-            <button className={`tab${tab === "chat" ? " active" : ""}`} onClick={() => setTab("chat")}>
-              AI 对话
+            <button className={`tab${tab === "me" ? " active" : ""}`} onClick={() => setTab("me")}>
+              我的 {feedback.likes.length > 0 && <span className="tab-count">{feedback.likes.length}</span>}
             </button>
           </nav>
         </div>
@@ -979,29 +960,32 @@ export default function App() {
           <div className="feed-layout">
             {/* 左侧边栏：目的地导航（发现组 + 分类组） */}
             <aside className="sidebar">
-              <div className="side-group">发 现</div>
-              {DYNAMIC_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
-                <button
-                  key={s.key}
-                  className={`side-item${feedChannel === s.key ? " active" : ""}`}
-                  onClick={() => switchFeedChannel(s.key)}
-                >
-                  <span className="side-icon">{s.icon}</span>
-                  <span className="side-text">{s.title}</span>
-                </button>
-              ))}
-              <div className="side-divider" />
-              <div className="side-group">分 类</div>
-              {CATEGORY_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
-                <button
-                  key={s.key}
-                  className={`side-item${feedChannel === s.key ? " active" : ""}`}
-                  onClick={() => switchFeedChannel(s.key)}
-                >
-                  <span className="side-icon">{s.icon}</span>
-                  <span className="side-text">{s.title}</span>
-                </button>
-              ))}
+              <div className="side-group-box">
+                <div className="side-group">发 现</div>
+                {DYNAMIC_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
+                  <button
+                    key={s.key}
+                    className={`side-item${feedChannel === s.key ? " active" : ""}`}
+                    onClick={() => switchFeedChannel(s.key)}
+                  >
+                    <span className="side-icon">{s.icon}</span>
+                    <span className="side-text">{s.title}</span>
+                  </button>
+                ))}
+              </div>
+              <div className="side-group-box">
+                <div className="side-group">分 类</div>
+                {CATEGORY_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
+                  <button
+                    key={s.key}
+                    className={`side-item${feedChannel === s.key ? " active" : ""}`}
+                    onClick={() => switchFeedChannel(s.key)}
+                  >
+                    <span className="side-icon">{s.icon}</span>
+                    <span className="side-text">{s.title}</span>
+                  </button>
+                ))}
+              </div>
             </aside>
             <div className="feed-content">
               {activeSection && (
@@ -1029,154 +1013,134 @@ export default function App() {
           </div>
         )}
 
-        {/* === 喜欢 tab === */}
-        {tab === "liked" && (
+        {/* === 我的 tab（喜欢/收藏/关注 子视图） === */}
+        {tab === "me" && (
           <>
-            <div className="collections-header">
-              <span className="collections-stats">👍 共 {feedback.likes.length} 个喜欢的项目</span>
-            </div>
-            {likedCards.length === 0 ? (
-              <div className="status">
-                <p>📭 还没有喜欢的项目</p>
-                <p className="hint">在项目详情中点 ❤️ 开始喜欢</p>
-              </div>
-            ) : (
-              <div className="feed-list">
-                {likedCards.map((card) => (
-                  <FeedCardMemo key={card.repo} card={card} liked={true} onOpen={handleOpenDetail} />
-                ))}
-              </div>
-            )}
-          </>
-        )}
-
-        {/* === 收藏 tab === */}
-        {tab === "collections" && (
-          <>
-            <div className="collections-header">
-              <span className="collections-stats">
-                📊 共 {collections.length} 个收藏夹 ·{" "}
-                {collections.reduce((sum, c) => sum + c.repos.length, 0)} 个项目
-              </span>
+            <div className="me-subnav">
+              <button
+                className={`me-subnav-btn${meView === "liked" ? " active" : ""}`}
+                onClick={() => setMeView("liked")}
+              >
+                喜欢
+              </button>
+              <button
+                className={`me-subnav-btn${meView === "collections" ? " active" : ""}`}
+                onClick={() => setMeView("collections")}
+              >
+                收藏
+              </button>
+              <button
+                className={`me-subnav-btn${meView === "following" ? " active" : ""}`}
+                onClick={() => setMeView("following")}
+              >
+                关注
+              </button>
             </div>
 
-            {collections.length === 0 && (
-              <div className="status">
-                <p>📭 还没有收藏夹</p>
-                <p className="hint">点击项目详情中的 ⭐ 按钮开始收藏</p>
-              </div>
-            )}
-
-            {collections.map((col) => {
-              const expanded = expandedCols[col.id] ?? false;
-              // 快照优先（数据更新后仍完整展示），其次匹配当天数据
-              const colCards = col.repos
-                .map((repo) => col.snapshots?.[repo] ?? visibleCards.find((c) => c.repo === repo))
-                .filter((c): c is FeedCard => !!c);
-              return (
-                <div key={col.id} className="collection-folder">
-                  <div
-                    className="folder-header"
-                    onClick={() => setExpandedCols((prev) => ({ ...prev, [col.id]: !prev[col.id] }))}
-                  >
-                    <span className={`folder-chevron${expanded ? " open" : ""}`}>▶</span>
-                    <span className="folder-icon">📁</span>
-                    <span className="folder-name">{col.name}</span>
-                    <span className="folder-count">({col.repos.length}个)</span>
-                    <button
-                      className="folder-delete"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteCollection(col.id);
-                      }}
-                      title="删除收藏夹"
-                    >
-                      🗑
-                    </button>
+            {meView === "liked" && (
+              <>
+                <div className="collections-header">
+                  <span className="collections-stats">👍 共 {feedback.likes.length} 个喜欢的项目</span>
+                </div>
+                {likedCards.length === 0 ? (
+                  <div className="status">
+                    <p>📭 还没有喜欢的项目</p>
+                    <p className="hint">在项目详情中点 ❤️ 开始喜欢</p>
                   </div>
-                  {expanded && (
-                    <div className="folder-cards">
-                      {colCards.length === 0 && (
-                        <p className="folder-empty">暂未匹配到项目卡片（数据可能已更新）</p>
-                      )}
-                      {colCards.length > 0 && (
-                        <div className="feed-list">
-                          {colCards.map((card) => (
-                            <div key={card.repo} className="folder-card-wrapper">
-                              <FeedCardMemo
-                                card={card}
-                                liked={feedback.likes.includes(card.repo)}
-                                onOpen={handleOpenDetail}
-                              />
-                              <button
-                                className="folder-card-remove"
-                                onClick={() => handleRemoveFromCollection(col.id, card.repo)}
-                                title="移出收藏夹"
-                              >
-                                ✕
-                              </button>
+                ) : (
+                  <div className="feed-list">
+                    {likedCards.map((card) => (
+                      <FeedCardMemo key={card.repo} card={card} liked={true} onOpen={handleOpenDetail} />
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+
+            {meView === "collections" && (
+              <>
+                <div className="collections-header">
+                  <span className="collections-stats">
+                    📊 共 {collections.length} 个收藏夹 ·{" "}
+                    {collections.reduce((sum, c) => sum + c.repos.length, 0)} 个项目
+                  </span>
+                </div>
+
+                {collections.length === 0 && (
+                  <div className="status">
+                    <p>📭 还没有收藏夹</p>
+                    <p className="hint">点击项目详情中的 ⭐ 按钮开始收藏</p>
+                  </div>
+                )}
+
+                {collections.map((col) => {
+                  const expanded = expandedCols[col.id] ?? false;
+                  // 快照优先（数据更新后仍完整展示），其次匹配当天数据
+                  const colCards = col.repos
+                    .map((repo) => col.snapshots?.[repo] ?? visibleCards.find((c) => c.repo === repo))
+                    .filter((c): c is FeedCard => !!c);
+                  return (
+                    <div key={col.id} className="collection-folder">
+                      <div
+                        className="folder-header"
+                        onClick={() => setExpandedCols((prev) => ({ ...prev, [col.id]: !prev[col.id] }))}
+                      >
+                        <span className={`folder-chevron${expanded ? " open" : ""}`}>▶</span>
+                        <span className="folder-icon">📁</span>
+                        <span className="folder-name">{col.name}</span>
+                        <span className="folder-count">({col.repos.length}个)</span>
+                        <button
+                          className="folder-delete"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteCollection(col.id);
+                          }}
+                          title="删除收藏夹"
+                        >
+                          🗑
+                        </button>
+                      </div>
+                      {expanded && (
+                        <div className="folder-cards">
+                          {colCards.length === 0 && (
+                            <p className="folder-empty">暂未匹配到项目卡片（数据可能已更新）</p>
+                          )}
+                          {colCards.length > 0 && (
+                            <div className="feed-list">
+                              {colCards.map((card) => (
+                                <div key={card.repo} className="folder-card-wrapper">
+                                  <FeedCardMemo
+                                    card={card}
+                                    liked={feedback.likes.includes(card.repo)}
+                                    onOpen={handleOpenDetail}
+                                  />
+                                  <button
+                                    className="folder-card-remove"
+                                    onClick={() => handleRemoveFromCollection(col.id, card.repo)}
+                                    title="移出收藏夹"
+                                  >
+                                    ✕
+                                  </button>
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          )}
                         </div>
                       )}
                     </div>
-                  )}
-                </div>
-              );
-            })}
+                  );
+                })}
 
-            <button className="collection-create-btn" onClick={handleCreateCollection}>
-              + 新建收藏夹
-            </button>
-          </>
-        )}
+                <button className="collection-create-btn" onClick={handleCreateCollection}>
+                  + 新建收藏夹
+                </button>
+              </>
+            )}
 
-        {/* === 大牛 tab === */}
-        {tab === "bigbro" && (
-          <>
-            <div className="bigbro-profile">
-              <img
-                src={`https://avatars.githubusercontent.com/${BIGBRO_NAME}?s=72&v=4`}
-                alt={BIGBRO_NAME}
-                className="bigbro-avatar"
-                loading="lazy"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.visibility = "hidden";
-                }}
-              />
-              <div className="bigbro-info">
-                <h2>{BIGBRO_NAME}</h2>
-                <p>关注的 GitHub 用户 · {bigbroCards.length} 个 star 项目</p>
-              </div>
-              <a
-                href={`https://github.com/${BIGBRO_NAME}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bigbro-link"
-              >
-                GitHub 主页 ↗
-              </a>
-            </div>
-
-            {bigbroCards.length > 0 ? (
-              <div className="feed-list">
-                {bigbroCards.map((card) => (
-                  <FeedCardMemo
-                    key={card.repo}
-                    card={card}
-                    liked={feedback.likes.includes(card.repo)}
-                    onOpen={handleOpenDetail}
-                  />
-                ))}
-              </div>
-            ) : (
+            {meView === "following" && (
               <div className="status">
-                <p>⏳ {BIGBRO_NAME} 的 star 动态将在下次数据更新后出现</p>
-                <p className="hint">
-                  每天自动采集大牛最新 star 的项目。
-                  <br />
-                  请等待下一次 Daily Agents Radar 运行。
-                </p>
+                <p>关注功能开发中</p>
+                <p className="hint">任务书 B 上线后可关注创作者</p>
               </div>
             )}
           </>
@@ -1223,25 +1187,6 @@ export default function App() {
               </div>
             )}
           </>
-        )}
-
-        {/* === AI 对话 tab === */}
-        {tab === "chat" && (
-          <div className="chat-placeholder">
-            <div className="chat-icon">🤖</div>
-            <h2>AI 对话</h2>
-            <p>通过 MCP Server 连接 AI 助手，直接问：</p>
-            <ul className="chat-examples">
-              <li>"最近有啥好玩的 AI 项目？"</li>
-              <li>"给我推荐几个 RAG 相关的工具"</li>
-              <li>"大牛们最近都在 star 什么？"</li>
-            </ul>
-            <p className="chat-hint">
-              需要在 Claude Desktop 或其他 MCP 客户端中配置本项目的 MCP Server。
-              <br />
-              运行 <code>pnpm mcp</code> 启动后即可对话搜索。
-            </p>
-          </div>
         )}
       </main>
 

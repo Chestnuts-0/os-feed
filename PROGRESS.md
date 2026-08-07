@@ -71,3 +71,14 @@
 - 最终验收（942 张版）：[1]前100 AI=40% [2]非AI领域=15 [3]前80%违规=0 [4]fun前10非AI=10/10 [5]ai分类=2.3% [6]trending=90 → PASS ✅
 - 暗卷：前25张多样交错抽查 ✅ / DOM顺序=feed.json ✅ / 白名单无越界 ✅
 - 遗留待议：ai 专区仅 22 张（分类逻辑自然结果，主 feed AI 占比 40% 正常）
+
+
+## GitTok 导航视觉升级（任务书 A v1.0）—— 2026-08-07
+### 任务 0 基线核验
+- [x] git status 干净；HEAD=6b3e10a；feed.json 990 张；npm run build PASS（vite 499ms 无错误）
+- [x] 结构确认：Tab 类型 19 行；顶栏 6 按钮 935-955；main 960；liked 1033 / collections 1054 / bigbro 1135 / search 1186 / chat 1229；styles.css .main 178（max-width 居中）、.sidebar 198、.side-group 206、.side-item 217
+- 发现：.feed-content（263 行）与 .side-group 升级样式已在 a87155d 存在，任务 1 只需微调；sub-nav-pill 不存在 → 新建 me-subnav 轻量样式
+- 删除面（随 bigbro 块删）：BIGBRO_NAME(14) + bigbroCards useMemo(869) + stats.bigbro(919)；仅前端，不动 src/
+- 最大风险：大块 JSX 搬运破坏结构（patch 后立即 build）；卡片/虚拟列表禁 backdrop-filter
+### 执行顺序
+任务 1 styles.css（贴左+容器+玻璃）→ 任务 2 App.tsx（Tab 重组+我的页）→ 任务 3 验证+上线
