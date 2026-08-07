@@ -43,16 +43,48 @@ const CARD_ESTIMATED_HEIGHT = 240; // 首卡实测前的估算值（不高不低
 const ROW_GAP = 16; // feed-list 网格 gap
 const SNAPSHOT_CAP = 1000; // 喜欢/收藏快照总条数上限（~1KB/张，1MB 内安全；超出后新操作只记 repo 名）
 
-const SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
+// 动态分区（不互斥，可有可无）
+const DYNAMIC_SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
+  { key: "recommended", icon: "⭐", title: "推荐", desc: "为你挑选" },
   { key: "hot", icon: "🔥", title: "热门", desc: "高星项目" },
-  { key: "ai", icon: "🤖", title: "AI前沿", desc: "AI核心技术" },
-  { key: "daily", icon: "📈", title: "每日飙升", desc: "今日star增长" },
-  { key: "authoritative", icon: "🏛️", title: "权威", desc: "官方发布" },
-  { key: "rising", icon: "🚀", title: "新锐发现", desc: "小而美潜力股" },
-  { key: "fun", icon: "🎮", title: "兴趣", desc: "好玩有趣" },
-  { key: "skill", icon: "⚡", title: "技能", desc: "Agent Skill" },
-  { key: "learning", icon: "📚", title: "学习", desc: "教程与资源" },
+  { key: "daily", icon: "📈", title: "每日", desc: "今日star增长" },
+  { key: "authoritative", icon: "🏛️", title: "权威", desc: "官方出品" },
 ];
+
+// 固有分区（互斥，每个项目必有其一）
+const CATEGORY_SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
+  { key: "ai", icon: "🤖", title: "AI", desc: "AI核心技术" },
+  { key: "fun", icon: "🎮", title: "兴趣", desc: "好玩有趣" },
+  { key: "tool", icon: "🛠️", title: "工具", desc: "Agent Skill / 效率工具" },
+  { key: "learning", icon: "📚", title: "学习", desc: "学英语学代码" },
+];
+
+const ALL_SECTIONS = [...DYNAMIC_SECTIONS, ...CATEGORY_SECTIONS];
+
+/** 推荐分区每页条数 */
+const RECOMMEND_SIZE = 60;
+
+/** AI 强特征前缀（与后端 classifyCategory 一致；用于推荐配额与分类兜底） */
+const AI_PREFIXES = [
+  "AI基础设施",
+  "AI Agent",
+  "AI应用",
+  "AI搜索",
+  "AI写作",
+  "RAG",
+  "推理引擎",
+  "大语言模型",
+  "多模态",
+  "代码助手",
+  "Agent",
+  "微调",
+  "提示工程",
+  "向量数据库",
+];
+
+/** 学习资源关键词（学英语/学代码；大模型学习已被 ai 前置判定拿走） */
+const LEARNING_RE =
+  /awesome|tutorial|learn|course|guide|roadmap|interview|study|educat|english|language|leetcode|algorithms|coding|编程|英语|学习/i;
 
 // ---------------------------------------------------------------------------
 // localStorage
@@ -228,8 +260,6 @@ const AUTHORITATIVE_ORGS = new Set([
   "mistralai",
 ]);
 
-const LEARNING_RE = /awesome|tutorial|learn|course|guide|roadmap|study|educat/i;
-
 function normalizeCard(card: FeedCard): FeedCard {
   if (card.reasonCn) {
     card.reasonCn = card.reasonCn.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
@@ -249,29 +279,40 @@ function normalizeCard(card: FeedCard): FeedCard {
     card.aiDims = card.aiDim ? [card.aiDim] : [];
   }
   if (!card.tags) card.tags = [];
+  // 动态标签默认值（老数据没有）：momentum 默认空；fromOfficial 按官方组织兜底
+  if (!card.momentum) card.momentum = [];
+  if (card.fromOfficial === undefined) {
+    card.fromOfficial = AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500;
+  }
+  // 固有标签兜底（与后端 classifyCategory 一致：互斥，tool 最宽兜底，全覆盖）
   if (!card.category) {
     const repoLower = card.repo.toLowerCase();
     const descLower = card.desc.toLowerCase();
     const topicsLower = card.topics.map((t) => t.toLowerCase());
     const allText = `${repoLower} ${descLower} ${topicsLower.join(" ")}`;
-    const dims = card.aiDims || [card.aiDim];
+    const dims = card.aiDims || [];
     if (repoLower.includes("skill") || topicsLower.some((t) => t.includes("skill"))) {
-      card.category = "skill";
-    } else if (LEARNING_RE.test(allText) || topicsLower.includes("awesome")) {
-      card.category = "learning";
+      card.category = "tool";
     } else if (dims.some((d) => d === "非AI-好玩" || d === "游戏" || d === "创意工具")) {
       card.category = "fun";
-    } else if (dims.some((d) => /^(AI|模型|RAG|推理|Agent|大语言|微调|提示|代码助手|向量)/.test(d))) {
+    } else if (dims.some((d) => AI_PREFIXES.some((p) => d.startsWith(p) || d.includes(p)))) {
       card.category = "ai";
-    } else if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500) {
-      card.category = "authoritative";
-    } else if (card.starGrowth >= 5) {
-      card.category = "daily";
-    } else if (card.stars < 1000 && card.aiScore >= 0.6) {
-      card.category = "rising";
+    } else if (LEARNING_RE.test(allText) || topicsLower.includes("awesome")) {
+      card.category = "learning";
     } else {
-      card.category = "hot";
+      card.category = "tool";
     }
+  }
+  // 老数据兼容：旧 category 值映射到新体系（旧 feed.json 的值域与新类型不重叠，需 cast 判断）
+  const legacyCategory = card.category as string;
+  if (legacyCategory === "skill") card.category = "tool";
+  if (
+    legacyCategory === "rising" ||
+    legacyCategory === "hot" ||
+    legacyCategory === "daily" ||
+    legacyCategory === "authoritative"
+  ) {
+    card.category = "tool";
   }
   return card;
 }
@@ -281,7 +322,91 @@ function normalizeCard(card: FeedCard): FeedCard {
 // ---------------------------------------------------------------------------
 
 function getSectionCards(cards: FeedCard[], sectionKey: string): FeedCard[] {
-  return cards.filter((c) => c.category === sectionKey);
+  switch (sectionKey) {
+    case "hot":
+      return cards.filter((c) => c.momentum?.includes("hot"));
+    case "daily":
+      return cards.filter((c) => c.momentum?.includes("daily"));
+    case "authoritative":
+      return cards.filter((c) => c.fromOfficial);
+    default:
+      return cards.filter((c) => c.category === sectionKey);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 推荐分区（前端个性化生成：分区配额抽样 + 权重排序）
+// ---------------------------------------------------------------------------
+
+function buildRecommended(
+  cards: FeedCard[],
+  tagWeights: Record<string, number>,
+  seen: Record<string, number>,
+  interactions: Record<string, InteractionRecord>,
+): FeedCard[] {
+  const now = Date.now();
+  const DAY_MS = 86_400_000;
+  // 排除：点踩过的、7 天内看过未互动的
+  const pool = cards.filter((c) => {
+    const inter = interactions[c.repo];
+    if (inter?.type === "dislike") return false;
+    const seenTs = seen[c.repo];
+    if (seenTs && !inter && now - seenTs < 7 * DAY_MS) return false;
+    return true;
+  });
+  if (pool.length === 0) return [];
+  // 个性化权重分：标签权重匹配 + aiScore 辅助
+  const weightOf = (c: FeedCard): number => {
+    const tagScore = (c.tags || []).reduce((s, t) => s + (tagWeights[t.name] ?? 0.15) * (t.weight ?? 0.5), 0);
+    return tagScore + (c.aiScore ?? 0) * 0.5;
+  };
+  // 按固有分区分组
+  const byCat = new Map<string, FeedCard[]>();
+  for (const c of pool) {
+    const key = c.category || "tool";
+    if (!byCat.has(key)) byCat.set(key, []);
+    byCat.get(key)!.push(c);
+  }
+  // 配额：AI 40%（AI:非AI = 2:3），其余三区各 20%
+  const total = Math.min(RECOMMEND_SIZE, pool.length);
+  const aiK = Math.round(total * 0.4);
+  const otherK = Math.round(total * 0.2);
+  const picked: FeedCard[] = [];
+  const cats = ["ai", "fun", "tool", "learning"];
+  for (const cat of cats) {
+    const list = (byCat.get(cat) ?? []).sort((a, b) => weightOf(b) - weightOf(a));
+    const k = cat === "ai" ? aiK : otherK;
+    picked.push(...list.slice(0, k));
+  }
+  // 合并后按权重分排序（推荐流开头最相关）
+  return picked.sort((a, b) => weightOf(b) - weightOf(a)).slice(0, total);
+}
+
+/**
+ * 动态分区防重复：项目若「已在更靠前的动态分区展示过」且「最近 7 天内被浏览过（seen）且未互动」，
+ * 则从本分区剔除（互动过的豁免——用户明确感兴趣，重复展示无妨）。
+ */
+function dedupeDynamicSections<T extends { key: string; cards: FeedCard[] }>(
+  sections: T[],
+  seen: Record<string, number>,
+  interactions: Record<string, InteractionRecord>,
+): T[] {
+  const now = Date.now();
+  const DAY_MS = 86_400_000;
+  const dynamicKeys = new Set(DYNAMIC_SECTIONS.map((s) => s.key));
+  const shown = new Set<string>();
+  return sections.map((s) => {
+    if (!dynamicKeys.has(s.key)) return s;
+    const kept = s.cards.filter((c) => {
+      const inter = interactions[c.repo];
+      if (inter) return true; // 互动过豁免
+      const seenTs = seen[c.repo];
+      if (seenTs && now - seenTs < 7 * DAY_MS && shown.has(c.repo)) return false;
+      return true;
+    });
+    for (const c of kept) shown.add(c.repo);
+    return { ...s, cards: kept };
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -725,24 +850,31 @@ export default function App() {
     return applyFilter(withContent, seen, interactions, collections);
   }, [cards, tab, seen, interactions, collections]);
 
-  // 分区数据（不重排：展示顺序 = feed.json 后端交错后的顺序；点赞只影响下次加载）
+  // 分区数据（不重排：展示顺序 = feed.json 后端交错后的顺序；点赞只影响下次加载/推荐分区）
+  // 推荐分区 = 前端个性化生成（初始权重快照，与交互零重排原则一致）
   const sections = useMemo(() => {
-    return SECTIONS.map((s) => ({
+    const all = ALL_SECTIONS.map((s) => ({
       ...s,
-      cards: getSectionCards(visibleCards, s.key),
+      cards:
+        s.key === "recommended"
+          ? buildRecommended(visibleCards, preferences.tagWeights, seen, interactions)
+          : getSectionCards(visibleCards, s.key),
     })).filter((s) => s.cards.length > 0);
-  }, [visibleCards]);
+    return all;
+  }, [visibleCards, preferences, seen, interactions]);
 
   // 过滤后的分区（feedFilter 为空显示全部，否则只显示匹配分区；点踩消失的卡不再进分区）
+  // 动态分区防重复：同一项目不在多个动态分区重复出现（7 天 seen + 互动豁免）
   const filteredSections = useMemo(() => {
     const base = sections.map((s) => ({
       ...s,
       cards: s.cards.filter((c) => !dismissed.has(c.repo)),
     }));
     const nonEmpty = base.filter((s) => s.cards.length > 0);
-    if (feedFilter === "") return nonEmpty;
-    return nonEmpty.filter((s) => s.key === feedFilter);
-  }, [sections, feedFilter, dismissed]);
+    const deduped = dedupeDynamicSections(nonEmpty, seen, interactions);
+    if (feedFilter === "") return deduped;
+    return deduped.filter((s) => s.key === feedFilter);
+  }, [sections, feedFilter, dismissed, seen, interactions]);
 
   // 喜欢的卡片（快照优先，其次匹配当天数据；快照缺失且当天数据也没有的——旧记录无法找回）
   const likedCards = useMemo(() => {
@@ -840,6 +972,10 @@ export default function App() {
     [cards, bigbroCards, sections],
   );
 
+  // 分区分组（动态组 + 分类组，分组渲染）
+  const dynamicGroup = filteredSections.filter((s) => DYNAMIC_SECTIONS.some((d) => d.key === s.key));
+  const categoryGroup = filteredSections.filter((s) => CATEGORY_SECTIONS.some((d) => d.key === s.key));
+
   // -----------------------------------------------------------------------
   // 渲染
   // -----------------------------------------------------------------------
@@ -920,8 +1056,8 @@ export default function App() {
             )}
             {!loading &&
               !error &&
-              filteredSections.map((section) => {
-                return (
+              (() => {
+                const renderSection = (section: (typeof filteredSections)[number]) => (
                   <section key={section.key} id={`section-${section.key}`} className="section">
                     <div className="section-header">
                       <span className="section-icon">{section.icon}</span>
@@ -938,7 +1074,23 @@ export default function App() {
                     />
                   </section>
                 );
-              })}
+                return (
+                  <>
+                    {dynamicGroup.length > 0 && (
+                      <>
+                        <div className="section-group-title">⚡ 动态</div>
+                        {dynamicGroup.map(renderSection)}
+                      </>
+                    )}
+                    {categoryGroup.length > 0 && (
+                      <>
+                        <div className="section-group-title">🎯 分类</div>
+                        {categoryGroup.map(renderSection)}
+                      </>
+                    )}
+                  </>
+                );
+              })()}
           </>
         )}
 

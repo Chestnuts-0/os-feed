@@ -48,8 +48,11 @@ export interface ScoringResult {
   detailCn: string;
 }
 
-/** 信息流分区类型 */
-export type FeedCategory = "hot" | "authoritative" | "daily" | "fun" | "skill" | "learning" | "ai" | "rising";
+/** 固有分区标签（互斥，每个项目必有其一；tool 为最宽兜底） */
+export type FeedCategory = "ai" | "fun" | "tool" | "learning";
+
+/** 动态热度标签（不互斥，可有可无；可同时命中 hot+daily） */
+export type FeedMomentum = "hot" | "daily";
 
 /** 信息流卡片 —— 前端消费的最终格式 */
 export interface FeedCard {
@@ -85,8 +88,12 @@ export interface FeedCard {
   ts: string;
   /** 推荐排序分（个性化层计算） */
   score: number;
-  /** 分区分类（前端用于层次化展示） */
+  /** 固有分区标签（ai/fun/tool/learning 之一） */
   category: FeedCategory;
+  /** 动态热度标签（hot/daily，不互斥，可为空数组） */
+  momentum: FeedMomentum[];
+  /** 动态权威标记（官方组织出品） */
+  fromOfficial: boolean;
 }
 
 /** 用户画像（个性化层） */

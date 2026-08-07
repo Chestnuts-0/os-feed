@@ -3,7 +3,10 @@
  * 前端独立定义避免引入 Node 依赖。
  */
 
-export type FeedCategory = "hot" | "authoritative" | "daily" | "fun" | "skill" | "learning" | "ai" | "rising";
+export type FeedCategory = "ai" | "fun" | "tool" | "learning";
+
+/** 动态热度标签（不互斥，可同时命中 hot+daily） */
+export type FeedMomentum = "hot" | "daily";
 
 /** 标签来源 */
 export type TagSource = "llm" | "github" | "language";
@@ -55,4 +58,8 @@ export interface FeedCard {
   ts: string;
   score: number;
   category: FeedCategory;
+  /** 动态热度标签（hot/daily，不互斥，可为空） */
+  momentum?: FeedMomentum[];
+  /** 动态权威标记（官方出品） */
+  fromOfficial?: boolean;
 }

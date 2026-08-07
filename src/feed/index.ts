@@ -8,6 +8,7 @@
  *   const cards = await generateFeed(config, trendingData, bigbroStars);
  */
 
+import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
 import type { TrendingData } from "../trending.ts";
@@ -26,6 +27,7 @@ import {
 import type {
   FeedCard,
   FeedCategory,
+  FeedMomentum,
   FeedSource,
   RepoForScoring,
   ScoringResult,
@@ -40,10 +42,18 @@ const BATCH_SIZE = 5;
 const MAX_LLM_SCORE_REPOS = 1000;
 /** LLM 并发批次数 */
 const SCORE_CONCURRENCY = 5;
-/** feed.json 最大保留条目数 */
-const MAX_FEED_SIZE = 2000;
-/** 卡片硬截止天数（超过此天数直接移除） */
-const MAX_CARD_AGE_DAYS = 90;
+/** feed.json 最大保留条目数（超出淘汰最老 + 未收藏；前端互动过的靠本地快照兜底） */
+const MAX_FEED_SIZE = 12000;
+/** 热门标签阈值（最近已知 stars） */
+const HOT_STAR_THRESHOLD = 2000;
+/** 每日标签阈值（今日 star 增长） */
+const DAILY_GROWTH_THRESHOLD = 5;
+/** stars 轮转刷新：每天最多刷新的库内 repo 数（rate limit 预算：search ~1050 + 轮转 2000 < 5000/h） */
+const REFRESH_BATCH = 2000;
+/** stars 刷新并发 */
+const REFRESH_CONCURRENCY = 8;
+/** 轮转游标文件（记录下次从哪开始刷新） */
+const REFRESH_CURSOR_PATH = path.join(DATA_DIR, ".refresh_cursor");
 
 // 权威组织/官方仓库 owner 前缀
 const AUTHORITATIVE_ORGS = new Set([
@@ -69,77 +79,67 @@ const AUTHORITATIVE_ORGS = new Set([
   "mistralai",
 ]);
 
-// 学习资源关键词
-const LEARNING_KEYWORDS = /awesome|tutorial|learn|course|guide|roadmap|面试|interview|study|educat/i;
+// 学习资源关键词（学英语/学代码等「我自己学习能用」的资源；大模型学习已被 ai 前置判定拿走）
+const LEARNING_KEYWORDS =
+  /awesome|tutorial|learn|course|guide|roadmap|面试|interview|study|educat|english|language|leetcode|algorithms|coding|编程|英语|学习/i;
 
-/** 根据项目属性判定分区（每个项目只属于一个分区，零重复） */
-function classifyCard(card: Omit<FeedCard, "category">): FeedCategory {
+/** AI 强特征前缀（命中即归 ai 分区） */
+const AI_PREFIXES = [
+  "AI基础设施",
+  "AI Agent",
+  "AI应用",
+  "AI搜索",
+  "AI写作",
+  "RAG",
+  "推理引擎",
+  "大语言模型",
+  "多模态",
+  "代码助手",
+  "Agent",
+  "微调",
+  "提示工程",
+  "向量数据库",
+];
+
+/** 固有标签判定（互斥，每个项目必有其一；tool 为最宽兜底，全覆盖无死角） */
+export function classifyCategory(card: Pick<FeedCard, "repo" | "desc" | "topics" | "aiDims">): FeedCategory {
   const repoLower = card.repo.toLowerCase();
   const descLower = card.desc.toLowerCase();
   const topicsLower = card.topics.map((t) => t.toLowerCase());
   const allText = `${repoLower} ${descLower} ${topicsLower.join(" ")}`;
-  // 检查 aiDims 数组中是否命中某类别
-  const dims = card.aiDims || [card.aiDim];
+  const dims = card.aiDims || [];
 
-  // 1. SKILL 分区：名字或 topics 含 skill
+  // 1. 工具：Agent Skill 集合类（repo/topics 含 skill）
   if (repoLower.includes("skill") || topicsLower.some((t) => t.includes("skill"))) {
-    return "skill";
+    return "tool";
   }
-
-  // 2. 学习分区：教程/awesome/指南类
-  if (LEARNING_KEYWORDS.test(allText) || topicsLower.includes("awesome")) {
-    return "learning";
-  }
-
-  // 3. 兴趣分区：好玩但非 AI（检查所有标签）
+  // 2. 兴趣：非AI-好玩 / 游戏 / 创意工具
   if (dims.some((d) => d === "非AI-好玩" || d === "游戏" || d === "创意工具")) {
     return "fun";
   }
-
-  // 4. 权威分区：官方组织 + 有一定热度（提前，避免被 ai 吞掉）
-  if (AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500) {
-    return "authoritative";
-  }
-
-  // 5. 每日分区：当天 star 增长高（提前，避免被 ai 吞掉）
-  if (card.starGrowth >= 5) {
-    return "daily";
-  }
-
-  // 6. 新锐分区：star 不高但 AI 相关度高（提前，避免被 ai 吞掉）
-  if (card.stars < 1000 && card.aiScore >= 0.6) {
-    return "rising";
-  }
-
-  // 7. 热门分区：高星项目（≥ 2000 star）优先进热门，保证热门板块有内容
-  if (card.stars >= 2000) {
-    return "hot";
-  }
-
-  // 8. AI 分区：AI 相关标签（收窄前缀，避免泛 AI 项目全进 ai）
-  //    仅命中强 AI 特征才进 ai；弱 AI（如只含"模型"）留给 hot
-  const aiPrefixes = [
-    "AI基础设施",
-    "AI Agent",
-    "AI应用",
-    "AI搜索",
-    "AI写作",
-    "RAG",
-    "推理引擎",
-    "大语言模型",
-    "多模态",
-    "代码助手",
-    "Agent",
-    "微调",
-    "提示工程",
-    "向量数据库",
-  ];
-  if (dims.some((d) => aiPrefixes.some((p) => d.startsWith(p) || d.includes(p)))) {
+  // 3. AI：强特征前缀（收窄，避免泛 AI 全进 ai）
+  if (dims.some((d) => AI_PREFIXES.some((p) => d.startsWith(p) || d.includes(p)))) {
     return "ai";
   }
+  // 4. 学习：学英语/学代码资源（排在 AI 后，大模型学习已进 ai）
+  if (LEARNING_KEYWORDS.test(allText) || topicsLower.includes("awesome")) {
+    return "learning";
+  }
+  // 5. 兜底：工具（最宽泛类别，覆盖一切）
+  return "tool";
+}
 
-  // 9. 默认热门
-  return "hot";
+/** 动态标签判定（不互斥，独立命中） */
+export function classifyMomentum(
+  card: Pick<FeedCard, "owner" | "stars" | "starGrowth">,
+): { momentum: FeedMomentum[]; fromOfficial: boolean } {
+  const momentum: FeedMomentum[] = [];
+  if (card.stars >= HOT_STAR_THRESHOLD) momentum.push("hot");
+  if (card.starGrowth >= DAILY_GROWTH_THRESHOLD) momentum.push("daily");
+  return {
+    momentum,
+    fromOfficial: AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -274,6 +274,103 @@ async function fetchRepoDetail(repo: string): Promise<RepoDetail | null> {
   }
 }
 
+/**
+ * stars 轮转刷新：每天对库内 repo 分批查 GitHub API（游标续跑，4-6 天全覆盖）。
+ * starGrowth = 今日 stars - baseline stars；只对「今天刷新到」的 repo 计算每日标签。
+ * 返回刷新成功的 repo → 新 stars 映射。
+ */
+async function refreshStarsRoundRobin(
+  repoMap: Map<string, MergedRepo>,
+  baselineStars: Map<string, number>,
+): Promise<Map<string, number>> {
+  const repos = [...repoMap.values()];
+  if (repos.length === 0) return new Map();
+  let cursor = 0;
+  try {
+    if (fs.existsSync(REFRESH_CURSOR_PATH)) {
+      cursor = parseInt(fs.readFileSync(REFRESH_CURSOR_PATH, "utf-8").trim(), 10) || 0;
+    }
+  } catch {
+    cursor = 0;
+  }
+  const token = process.env["GITHUB_TOKEN"] ?? "";
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+
+  const results = new Map<string, number>();
+  let refreshed = 0;
+  let scanned = 0;
+  const total = repos.length;
+  const promises: Promise<void>[] = [];
+  const queue: { repo: string; idx: number }[] = [];
+
+  // 收集本轮要刷新的 repo（跳过今天已被抓取数据更新过的——已有新鲜 stars 的不重复查）
+  const todayUpdated = new Set<string>();
+  // 无法精确知道「今天抓过谁」，用 ts 近似：baseline 里的 ts 是历史值，merge 更新会改 ts。
+  // 保守做法：全部按游标顺序查（反正有日预算限制）。
+  for (let i = 0; i < total && refreshed < REFRESH_BATCH; i++) {
+    const idx = (cursor + i) % total;
+    const r = repos[idx]!;
+    if (todayUpdated.has(r.repo)) continue;
+    queue.push({ repo: r.repo, idx });
+    refreshed++;
+  }
+  if (queue.length === 0) {
+    console.log("  [feed/refresh] nothing to refresh today");
+    return results;
+  }
+
+  let qi = 0;
+  const worker = async () => {
+    while (qi < queue.length) {
+      const item = queue[qi++]!;
+      scanned++;
+      try {
+        const resp = await fetch(`https://api.github.com/repos/${item.repo}`, { headers });
+        if (!resp.ok) {
+          if (resp.status === 403 || resp.status === 429) {
+            console.error(`  [feed/refresh] rate limited at ${item.repo}, stop for today`);
+            break;
+          }
+          continue;
+        }
+        const d = (await resp.json()) as { stargazers_count?: number };
+        const newStars = d.stargazers_count ?? 0;
+        const oldStars = baselineStars.get(item.repo) ?? 0;
+        const m = repoMap.get(item.repo);
+        if (m) {
+          m.stars = newStars;
+          // 只对今天刷新到的 repo 计算增长（真实今日信号）
+          m.starGrowth = Math.max(m.starGrowth, newStars - oldStars);
+        }
+        results.set(item.repo, newStars);
+      } catch (err) {
+        console.error(`  [feed/refresh] ${item.repo}: ${err}`);
+      }
+    }
+  };
+
+  // 用 REPRESH_CONCURRENCY 个并发 worker
+  const workers = Array.from({ length: REFRESH_CONCURRENCY }, () => worker());
+  await Promise.all(workers);
+
+  // 保存游标（本轮最后扫描的位置），下轮从下一个开始
+  const lastIdx = queue.length > 0 ? queue[queue.length - 1]!.idx : cursor;
+  const nextCursor = (lastIdx + 1) % total;
+  try {
+    fs.writeFileSync(REFRESH_CURSOR_PATH, String(nextCursor), "utf-8");
+  } catch {
+    /* ignore */
+  }
+  console.log(
+    `  [feed/refresh] refreshed ${results.size} repos (scan ${scanned}, cursor ${nextCursor}/${total})`,
+  );
+  return results;
+}
+
 // ---------------------------------------------------------------------------
 // 加载已有评分缓存（避免重复 LLM 调用）
 // ---------------------------------------------------------------------------
@@ -380,10 +477,35 @@ export async function generateFeed(
   bigbroStars: BigbroStar[],
 ): Promise<FeedCard[]> {
   const now = new Date().toISOString();
-  console.log("[feed] merging trending + search + bigbro...");
+  console.log("[feed] merging trending + search + bigbro (incremental)...");
 
-  // 1. 合并三路数据
+  // 1. 合并三路数据（增量模式：baseline = 上次 feed.json，只增不减）
   const repoMap = new Map<string, MergedRepo>();
+  const baselineStars = new Map<string, number>();
+  if (fs.existsSync(FEED_PATH)) {
+    try {
+      const raw = fs.readFileSync(FEED_PATH, "utf-8");
+      const cards = JSON.parse(raw) as FeedCard[];
+      for (const c of cards) {
+        if (!c.repo) continue;
+        baselineStars.set(c.repo, c.stars);
+        repoMap.set(c.repo, {
+          repo: c.repo,
+          desc: c.desc,
+          stars: c.stars,
+          language: c.language,
+          topics: c.topics,
+          source: c.source,
+          starGrowth: c.starGrowth || 0,
+          bigbros: c.bigbros,
+          ts: c.ts,
+        });
+      }
+      console.log(`  [feed] baseline loaded ${cards.length} existing cards`);
+    } catch (err) {
+      console.error(`  [feed] baseline load failed: ${err}, starting fresh`);
+    }
+  }
 
   for (const t of trendingData.trendingRepos) {
     repoMap.set(t.fullName, {
@@ -443,6 +565,10 @@ export async function generateFeed(
     }
   }
   console.log(`  [feed] merged ${repoMap.size} unique repos (${needDetail.length} bigbro-only need detail)`);
+
+  // 2.5 stars 轮转刷新：库内 repo 分批查最新 stars（游标续跑），只增不减数据的每日标签依赖它
+  await refreshStarsRoundRobin(repoMap, baselineStars);
+  console.log(`  [feed] after refresh: ${repoMap.size} unique repos`);
 
   // 2. 拉 bigbro-only repo 详情
   if (needDetail.length > 0) {
@@ -547,7 +673,8 @@ export async function generateFeed(
     };
     cards.push({
       ...partialCard,
-      category: classifyCard(partialCard),
+      category: classifyCategory(partialCard),
+      ...classifyMomentum(partialCard),
     });
   }
   console.log(`  [feed] ${llmCount}/${repoMap.size} repos have LLM content (rest skipped)`);
@@ -585,22 +712,26 @@ export async function generateFeed(
   // 6.5 多样性交错：AI:非AI = 2:3 轮播（只改输出顺序，不改 score 值）
   const diversified = diversifyCards(ranked);
 
-  // 7. 内容淘汰：时间硬截止 + Top N 裁剪
-  const nowMs = Date.now();
+  // 7. 内容淘汰：只增不减（不做年龄硬淘汰——历史项目永久保留）；
+  //    容量上限 MAX_FEED_SIZE：超出后淘汰最老 + 未收藏（profile.bookmarks 豁免，互动过的靠前端快照兜底）
   const pruned = diversified.filter((c) => {
-    const ageDays = (nowMs - new Date(c.ts).getTime()) / (24 * 3600 * 1000);
-    if (ageDays > MAX_CARD_AGE_DAYS) return false;
     if (c.score < 0.01) return false;
     return true;
   });
   if (pruned.length < ranked.length) {
-    console.log(
-      `  [feed] pruned ${ranked.length - pruned.length} stale cards (age > ${MAX_CARD_AGE_DAYS}d or score < 0.01)`,
-    );
+    console.log(`  [feed] pruned ${ranked.length - pruned.length} cards (score < 0.01)`);
   }
-  const final = pruned.length > MAX_FEED_SIZE ? pruned.slice(0, MAX_FEED_SIZE) : pruned;
+  let final = pruned;
   if (pruned.length > MAX_FEED_SIZE) {
-    console.log(`  [feed] trimmed top ${MAX_FEED_SIZE} from ${pruned.length} cards`);
+    const bookmarked = new Set(profile.bookmarks);
+    const keepBookmarked = pruned.filter((c) => bookmarked.has(c.repo));
+    const rest = pruned
+      .filter((c) => !bookmarked.has(c.repo))
+      .sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime());
+    final = [...keepBookmarked, ...rest].slice(0, MAX_FEED_SIZE);
+    console.log(
+      `  [feed] trimmed to ${MAX_FEED_SIZE} from ${pruned.length} (${keepBookmarked.length} bookmarked kept)`,
+    );
   }
 
   // 8. 写 data/feed.json
