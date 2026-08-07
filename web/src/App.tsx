@@ -2,9 +2,10 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import type { FeedCard, Collection } from "./types.ts";
 import { FeedCardMemo, CardDetail, GithubAvatar } from "./FeedCard.tsx";
+import { CreatorPage } from "./CreatorPage.tsx";
+import { weightedSearch } from "./search.ts";
 import {
   AlertTriangle,
-  ArrowLeft,
   ChevronRight,
   ExternalLink,
   Folder,
@@ -642,7 +643,10 @@ export default function App() {
   // 关注列表（纯前端，localStorage 持久化；只影响关注频道/我的-关注）
   const [following, setFollowing] = useState<string[]>(loadFollowing);
   const followingSet = useMemo(() => new Set(following), [following]);
-  const [creatorOwner, setCreatorOwner] = useState<string | null>(null);
+  // 创作者页栈（整页替换式子页面：push 进入更深层级，pop 逐级返回；
+  // 栈顶即当前创作者页；pop 到空数组回原 tab 原频道——tab/feedChannel 状态不动）
+  const [viewStack, setViewStack] = useState<{ owner: string }[]>([]);
+  const currentCreator = viewStack.length > 0 ? viewStack[viewStack.length - 1].owner : null;
   const [seen, setSeen] = useState<Record<string, number>>(loadSeen);
   const [expandedCols, setExpandedCols] = useState<Record<string, boolean>>({});
   const [searchQuery, setSearchQuery] = useState("");
@@ -850,8 +854,14 @@ export default function App() {
   }, []);
 
   const openCreator = useCallback((owner: string) => {
+    // 关详情弹窗（overlay 与页面栈独立；从弹窗进入创作者页时先收起弹窗）
     setDetailCard(null);
-    setCreatorOwner(owner);
+    // push：创作者页内点其他 owner 会叠第二层，返回逐级回退
+    setViewStack((prev) => [...prev, { owner }]);
+  }, []);
+
+  const closeCreator = useCallback(() => {
+    setViewStack((prev) => prev.slice(0, -1));
   }, []);
 
   // 历史数据迁移：feed 加载完成后——
@@ -944,26 +954,43 @@ export default function App() {
       .filter((c): c is FeedCard => !!c);
   }, [feedback.likes, feedback.likedSnapshots, visibleCards]);
 
-  // 搜索结果
-  const searchResults = useMemo(() => {
-    if (!searchQuery.trim()) return [];
-    const q = searchQuery.toLowerCase();
-    return visibleCards.filter(
-      (c) =>
-        c.repo.toLowerCase().includes(q) ||
-        c.desc.toLowerCase().includes(q) ||
-        c.summaryCn.toLowerCase().includes(q) ||
-        c.reasonCn.toLowerCase().includes(q) ||
-        c.aiDim.toLowerCase().includes(q) ||
-        c.topics.some((t) => t.toLowerCase().includes(q)),
-    );
-  }, [visibleCards, searchQuery]);
+  // 搜索结果（加权 AND：多词必须全命中，repo/name/owner 权重优先；owner 命中进创作者组）
+  const { results: searchResults, creators: searchCreators } = useMemo(
+    () => weightedSearch(visibleCards, searchQuery),
+    [visibleCards, searchQuery],
+  );
 
-  // 创作者页项目列表（feed.json 按 owner 过滤，score 降序）
+  // 搜索空状态：推荐搜索词 chips（cards 统计 topics 频率 top 12，去重过滤空）
+  const topicChips = useMemo(() => {
+    const freq = new Map<string, number>();
+    for (const c of cards) {
+      for (const t of c.topics ?? []) {
+        const k = t.trim();
+        if (!k) continue;
+        freq.set(k, (freq.get(k) ?? 0) + 1);
+      }
+    }
+    return [...freq.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12)
+      .map(([t]) => t);
+  }, [cards]);
+
+  // 搜索空状态：热门项目预览（momentum 含 hot，score 降序前 8）
+  const hotPreview = useMemo(
+    () =>
+      cards
+        .filter((c) => c.momentum?.includes("hot"))
+        .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
+        .slice(0, 8),
+    [cards],
+  );
+
+  // 创作者页项目列表（栈顶 owner 过滤，score 降序）
   const creatorCards = useMemo(() => {
-    if (!creatorOwner) return [];
-    return cards.filter((c) => c.owner === creatorOwner).sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
-  }, [cards, creatorOwner]);
+    if (!currentCreator) return [];
+    return cards.filter((c) => c.owner === currentCreator).sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+  }, [cards, currentCreator]);
 
   // 我的-关注：关注的创作者（含 feed.json 项目数，按项目数降序）
   const followedCreators = useMemo(() => {
@@ -1034,400 +1061,453 @@ export default function App() {
         </div>
       </header>
 
-      <main className={`main${tab === "feed" ? " main-feed" : ""}`}>
-        {/* === 创作者页（覆盖当前视图；返回后回到原 tab/频道） === */}
-        {creatorOwner && (
-          <div className="creator-page">
-            <button className="creator-back" onClick={() => setCreatorOwner(null)}>
-              <ArrowLeft size={16} />
-              返回
-            </button>
-            <div className="creator-header">
-              <GithubAvatar owner={creatorOwner} size={128} className="creator-avatar" />
-              <div className="creator-info">
-                <div className="creator-name-row">
-                  <h2 className="creator-name">{creatorOwner}</h2>
-                  <a
-                    className="creator-github"
-                    href={`https://github.com/${creatorOwner}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <ExternalLink size={14} />
-                    GitHub
-                  </a>
-                </div>
-                <button
-                  className={`creator-follow-btn${followingSet.has(creatorOwner) ? " followed" : " following"}`}
-                  onClick={() => toggleFollow(creatorOwner)}
-                >
-                  {followingSet.has(creatorOwner) ? "已关注" : "+ 关注"}
-                </button>
-                <div className="creator-count">{creatorCards.length} 个项目</div>
-              </div>
-            </div>
-            <div className="creator-projects">
-              {creatorCards.length === 0 ? (
-                <div className="status">
-                  <p>该创作者暂无入库项目</p>
-                </div>
-              ) : (
-                <div className="feed-list">
-                  {creatorCards.map((card) => (
-                    <FeedCardMemo
-                      key={card.repo}
-                      card={card}
-                      liked={feedback.likes.includes(card.repo)}
-                      onOpen={handleOpenDetail}
-                      onOpenCreator={openCreator}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* === 首页 tab === */}
-        {tab === "feed" && loading && (
-          <div className="status">
-            <div className="spinner" />
-            <p>正在加载好项目…</p>
-          </div>
-        )}
-        {tab === "feed" && error && (
-          <div className="status error">
-            <p>
-              <AlertTriangle size={16} className="icon" />
-              加载失败: {error}
-            </p>
-          </div>
-        )}
-        {tab === "feed" && !loading && !error && sections.length === 0 && (
-          <div className="status">
-            <p>
-              <Inbox size={16} className="icon" />
-              暂无内容
-            </p>
-          </div>
-        )}
-        {tab === "feed" && !loading && !error && sections.length > 0 && (
-          <div className="feed-layout">
-            {/* 左侧边栏：目的地导航（发现组 + 分类组） */}
-            <aside className="sidebar">
-              <div className="side-group-box">
-                <div className="side-group">发 现</div>
-                {DYNAMIC_SECTIONS.filter(
-                  (s) => s.key === "following" || sections.some((x) => x.key === s.key),
-                ).map((s) => (
-                  <button
-                    key={s.key}
-                    className={`side-item${feedChannel === s.key ? " active" : ""}`}
-                    onClick={() => switchFeedChannel(s.key)}
-                  >
-                    <span className="side-icon">
-                      <SectionIcon icon={s.icon} size={18} />
-                    </span>
-                    <span className="side-text">{s.title}</span>
-                  </button>
-                ))}
-              </div>
-              <div className="side-group-box">
-                <div className="side-group">分 类</div>
-                {CATEGORY_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
-                  <button
-                    key={s.key}
-                    className={`side-item${feedChannel === s.key ? " active" : ""}`}
-                    onClick={() => switchFeedChannel(s.key)}
-                  >
-                    <span className="side-icon">
-                      <SectionIcon icon={s.icon} size={18} />
-                    </span>
-                    <span className="side-text">{s.title}</span>
-                  </button>
-                ))}
-              </div>
-            </aside>
-            <div className="feed-content">
-              {feedChannel === "following" && !activeSection && (
-                <div className="status">
-                  <p>
-                    <Heart size={16} className="icon" />
-                    关注创作者后，他们的项目会出现在这里
-                  </p>
-                  <p className="hint">去项目卡片上点创作者名即可关注</p>
-                </div>
-              )}
-              {activeSection && (
-                <>
-                  {feedChannel !== "recommended" && (
-                    <div className="channel-head">
-                      <span className="ch-icon">
-                        <SectionIcon icon={activeSection.icon} size={18} />
-                      </span>
-                      <span className="ch-title">{activeSection.title}</span>
-                      <span className="ch-count">
-                        {activeSection.cards.length} 个项目 · {activeSection.desc}
-                      </span>
-                    </div>
-                  )}
-                  <FeedVirtualList
-                    cards={activeSection.cards}
-                    likedSet={likedSet}
-                    dismissingSet={dismissing}
-                    onOpen={handleOpenDetail}
-                    channel={feedChannel}
-                    onOpenCreator={openCreator}
-                    onEndHint={`已加载全部 ${activeSection.cards.length} 个项目`}
-                  />
-                </>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* === 我的 tab（喜欢/收藏/关注 子视图） === */}
-        {tab === "me" && (
+      <main className={`main${tab === "feed" || tab === "me" ? " main-feed" : ""}`}>
+        {/* === 创作者页栈：整页替换（feed/我的/搜索全部让位）；返回逐级 pop 后恢复原 tab 原频道 === */}
+        {viewStack.length > 0 && currentCreator ? (
+          <CreatorPage
+            owner={currentCreator}
+            projects={creatorCards}
+            likedSet={likedSet}
+            isFollowing={followingSet.has(currentCreator)}
+            onToggleFollow={toggleFollow}
+            onOpen={handleOpenDetail}
+            onOpenCreator={openCreator}
+            onBack={closeCreator}
+          />
+        ) : (
           <>
-            <div className="me-subnav">
-              <button
-                className={`me-subnav-btn${meView === "liked" ? " active" : ""}`}
-                onClick={() => setMeView("liked")}
-              >
-                <ThumbsUp size={16} />
-                喜欢
-              </button>
-              <button
-                className={`me-subnav-btn${meView === "collections" ? " active" : ""}`}
-                onClick={() => setMeView("collections")}
-              >
-                <Star size={16} />
-                收藏
-              </button>
-              <button
-                className={`me-subnav-btn${meView === "following" ? " active" : ""}`}
-                onClick={() => setMeView("following")}
-              >
-                <Heart size={16} />
-                关注
-              </button>
-            </div>
-
-            {meView === "liked" && (
-              <>
-                <div className="collections-header">
-                  <span className="collections-stats">
-                    <ThumbsUp size={14} className="icon" />共 {feedback.likes.length} 个喜欢的项目
-                  </span>
-                </div>
-                {likedCards.length === 0 ? (
-                  <div className="status">
-                    <p>
-                      <Inbox size={16} className="icon" />
-                      还没有喜欢的项目
-                    </p>
-                    <p className="hint">在项目详情中点赞即可开始喜欢</p>
-                  </div>
-                ) : (
-                  <div className="feed-list">
-                    {likedCards.map((card) => (
-                      <FeedCardMemo
-                        key={card.repo}
-                        card={card}
-                        liked={true}
-                        onOpen={handleOpenDetail}
-                        onOpenCreator={openCreator}
-                      />
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-
-            {meView === "collections" && (
-              <>
-                <div className="collections-header">
-                  <span className="collections-stats">
-                    <Folder size={14} className="icon" />共 {collections.length} 个收藏夹 ·{" "}
-                    {collections.reduce((sum, c) => sum + c.repos.length, 0)} 个项目
-                  </span>
-                </div>
-
-                {collections.length === 0 && (
-                  <div className="status">
-                    <p>
-                      <Inbox size={16} className="icon" />
-                      还没有收藏夹
-                    </p>
-                    <p className="hint">在项目详情中点击收藏按钮即可收藏</p>
-                  </div>
-                )}
-
-                {collections.map((col) => {
-                  const expanded = expandedCols[col.id] ?? false;
-                  // 快照优先（数据更新后仍完整展示），其次匹配当天数据
-                  const colCards = col.repos
-                    .map((repo) => col.snapshots?.[repo] ?? visibleCards.find((c) => c.repo === repo))
-                    .filter((c): c is FeedCard => !!c);
-                  return (
-                    <div key={col.id} className="collection-folder">
-                      <div
-                        className="folder-header"
-                        onClick={() => setExpandedCols((prev) => ({ ...prev, [col.id]: !prev[col.id] }))}
-                      >
-                        <span className={`folder-chevron${expanded ? " open" : ""}`}>
-                          <ChevronRight size={14} />
-                        </span>
-                        <span className="folder-icon">
-                          <Folder size={18} />
-                        </span>
-                        <span className="folder-name">{col.name}</span>
-                        <span className="folder-count">({col.repos.length}个)</span>
-                        <button
-                          className="folder-delete"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDeleteCollection(col.id);
-                          }}
-                          title="删除收藏夹"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                      {expanded && (
-                        <div className="folder-cards">
-                          {colCards.length === 0 && (
-                            <p className="folder-empty">暂未匹配到项目卡片（数据可能已更新）</p>
-                          )}
-                          {colCards.length > 0 && (
-                            <div className="feed-list">
-                              {colCards.map((card) => (
-                                <div key={card.repo} className="folder-card-wrapper">
-                                  <FeedCardMemo
-                                    card={card}
-                                    liked={feedback.likes.includes(card.repo)}
-                                    onOpen={handleOpenDetail}
-                                    onOpenCreator={openCreator}
-                                  />
-                                  <button
-                                    className="folder-card-remove"
-                                    onClick={() => handleRemoveFromCollection(col.id, card.repo)}
-                                    title="移出收藏夹"
-                                  >
-                                    <X size={16} />
-                                  </button>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-
-                <button className="collection-create-btn" onClick={handleCreateCollection}>
-                  + 新建收藏夹
-                </button>
-              </>
-            )}
-
-            {meView === "following" && (
-              <>
-                <div className="collections-header">
-                  <span className="collections-stats">
-                    <Heart size={14} className="icon" />共 {following.length} 位关注的创作者
-                  </span>
-                </div>
-                {following.length === 0 ? (
-                  <div className="status">
-                    <p>还没有关注任何人</p>
-                    <p className="hint">去项目卡片上点创作者名即可关注</p>
-                  </div>
-                ) : (
-                  <div className="creator-list">
-                    {followedCreators.map(({ owner, count }) => (
-                      <div
-                        key={owner}
-                        className="creator-item"
-                        title={`查看 ${owner} 的创作者页`}
-                        onClick={() => openCreator(owner)}
-                      >
-                        <GithubAvatar owner={owner} size={56} className="creator-item-avatar" />
-                        <span className="creator-item-name">{owner}</span>
-                        <span className="creator-item-count">{count} 个项目</span>
-                        <a
-                          className="creator-item-github"
-                          href={`https://github.com/${owner}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          title="GitHub 主页"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <ExternalLink size={16} />
-                        </a>
-                        <button
-                          className="creator-item-unfollow"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleFollow(owner);
-                          }}
-                        >
-                          <UserMinus size={14} />
-                          取关
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-          </>
-        )}
-
-        {/* === 搜索 tab === */}
-        {tab === "search" && (
-          <>
-            <div className="search-bar">
-              <input
-                type="text"
-                className="search-input"
-                placeholder="搜项目名、描述、标签…"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                autoFocus
-              />
-              {searchQuery && (
-                <button className="search-clear" onClick={() => setSearchQuery("")}>
-                  <X size={16} />
-                </button>
-              )}
-            </div>
-            {searchQuery && searchResults.length === 0 && (
+            {/* === 首页 tab === */}
+            {tab === "feed" && loading && (
               <div className="status">
+                <div className="spinner" />
+                <p>正在加载好项目…</p>
+              </div>
+            )}
+            {tab === "feed" && error && (
+              <div className="status error">
                 <p>
-                  <Search size={16} className="icon" />
-                  没搜到，换个关键词试试？
+                  <AlertTriangle size={16} className="icon" />
+                  加载失败: {error}
                 </p>
               </div>
             )}
-            {searchResults.length > 0 && (
-              <div className="feed-list">
-                {searchResults.slice(0, searchVisible).map((card) => (
-                  <FeedCardMemo
-                    key={card.repo}
-                    card={card}
-                    liked={feedback.likes.includes(card.repo)}
-                    onOpen={handleOpenDetail}
-                    onOpenCreator={openCreator}
-                  />
-                ))}
+            {tab === "feed" && !loading && !error && sections.length === 0 && (
+              <div className="status">
+                <p>
+                  <Inbox size={16} className="icon" />
+                  暂无内容
+                </p>
               </div>
             )}
-            {searchResults.length > searchVisible && (
-              <div ref={sentinelRef} className="section-sentinel">
-                <div className="spinner small" />
+            {tab === "feed" && !loading && !error && sections.length > 0 && (
+              <div className="feed-layout">
+                {/* 左侧边栏：目的地导航（发现组 + 分类组） */}
+                <aside className="sidebar">
+                  <div className="side-group-box">
+                    <div className="side-group">发 现</div>
+                    {DYNAMIC_SECTIONS.filter(
+                      (s) => s.key === "following" || sections.some((x) => x.key === s.key),
+                    ).map((s) => (
+                      <button
+                        key={s.key}
+                        className={`side-item${feedChannel === s.key ? " active" : ""}`}
+                        onClick={() => switchFeedChannel(s.key)}
+                      >
+                        <span className="side-icon">
+                          <SectionIcon icon={s.icon} size={18} />
+                        </span>
+                        <span className="side-text">{s.title}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="side-group-box">
+                    <div className="side-group">分 类</div>
+                    {CATEGORY_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
+                      <button
+                        key={s.key}
+                        className={`side-item${feedChannel === s.key ? " active" : ""}`}
+                        onClick={() => switchFeedChannel(s.key)}
+                      >
+                        <span className="side-icon">
+                          <SectionIcon icon={s.icon} size={18} />
+                        </span>
+                        <span className="side-text">{s.title}</span>
+                      </button>
+                    ))}
+                  </div>
+                </aside>
+                <div className="feed-content">
+                  {feedChannel === "following" && !activeSection && (
+                    <div className="status">
+                      <p>
+                        <Heart size={16} className="icon" />
+                        关注创作者后，他们的项目会出现在这里
+                      </p>
+                      <p className="hint">去项目卡片上点创作者名即可关注</p>
+                    </div>
+                  )}
+                  {activeSection && (
+                    <>
+                      {feedChannel !== "recommended" && (
+                        <div className="channel-head">
+                          <span className="ch-icon">
+                            <SectionIcon icon={activeSection.icon} size={18} />
+                          </span>
+                          <span className="ch-title">{activeSection.title}</span>
+                          <span className="ch-count">
+                            {activeSection.cards.length} 个项目 · {activeSection.desc}
+                          </span>
+                        </div>
+                      )}
+                      <FeedVirtualList
+                        cards={activeSection.cards}
+                        likedSet={likedSet}
+                        dismissingSet={dismissing}
+                        onOpen={handleOpenDetail}
+                        channel={feedChannel}
+                        onOpenCreator={openCreator}
+                        onEndHint={`已加载全部 ${activeSection.cards.length} 个项目`}
+                      />
+                    </>
+                  )}
+                </div>
               </div>
+            )}
+
+            {/* === 我的 tab（侧栏式：左侧 喜欢/收藏/关注，右侧内容） === */}
+            {tab === "me" && (
+              <div className="me-layout">
+                <aside className="sidebar me-sidebar">
+                  <div className="side-group-box">
+                    <button
+                      className={`side-item${meView === "liked" ? " active" : ""}`}
+                      onClick={() => setMeView("liked")}
+                    >
+                      <span className="side-icon">
+                        <ThumbsUp size={18} />
+                      </span>
+                      <span className="side-text">喜欢</span>
+                    </button>
+                    <button
+                      className={`side-item${meView === "collections" ? " active" : ""}`}
+                      onClick={() => setMeView("collections")}
+                    >
+                      <span className="side-icon">
+                        <Star size={18} />
+                      </span>
+                      <span className="side-text">收藏</span>
+                    </button>
+                    <button
+                      className={`side-item${meView === "following" ? " active" : ""}`}
+                      onClick={() => setMeView("following")}
+                    >
+                      <span className="side-icon">
+                        <Heart size={18} />
+                      </span>
+                      <span className="side-text">关注</span>
+                    </button>
+                  </div>
+                </aside>
+                <div className="me-content feed-content">
+                  {meView === "liked" && (
+                    <>
+                      <div className="collections-header">
+                        <span className="collections-stats">
+                          <ThumbsUp size={14} className="icon" />共 {feedback.likes.length} 个喜欢的项目
+                        </span>
+                      </div>
+                      {likedCards.length === 0 ? (
+                        <div className="status">
+                          <p>
+                            <Inbox size={16} className="icon" />
+                            还没有喜欢的项目
+                          </p>
+                          <p className="hint">在项目详情中点赞即可开始喜欢</p>
+                        </div>
+                      ) : (
+                        <div className="feed-list">
+                          {likedCards.map((card) => (
+                            <FeedCardMemo
+                              key={card.repo}
+                              card={card}
+                              liked={true}
+                              onOpen={handleOpenDetail}
+                              onOpenCreator={openCreator}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  {meView === "collections" && (
+                    <>
+                      <div className="collections-header">
+                        <span className="collections-stats">
+                          <Folder size={14} className="icon" />共 {collections.length} 个收藏夹 ·{" "}
+                          {collections.reduce((sum, c) => sum + c.repos.length, 0)} 个项目
+                        </span>
+                      </div>
+
+                      {collections.length === 0 && (
+                        <div className="status">
+                          <p>
+                            <Inbox size={16} className="icon" />
+                            还没有收藏夹
+                          </p>
+                          <p className="hint">在项目详情中点击收藏按钮即可收藏</p>
+                        </div>
+                      )}
+
+                      {collections.map((col) => {
+                        const expanded = expandedCols[col.id] ?? false;
+                        // 快照优先（数据更新后仍完整展示），其次匹配当天数据
+                        const colCards = col.repos
+                          .map((repo) => col.snapshots?.[repo] ?? visibleCards.find((c) => c.repo === repo))
+                          .filter((c): c is FeedCard => !!c);
+                        return (
+                          <div key={col.id} className="collection-folder">
+                            <div
+                              className="folder-header"
+                              onClick={() =>
+                                setExpandedCols((prev) => ({ ...prev, [col.id]: !prev[col.id] }))
+                              }
+                            >
+                              <span className={`folder-chevron${expanded ? " open" : ""}`}>
+                                <ChevronRight size={14} />
+                              </span>
+                              <span className="folder-icon">
+                                <Folder size={18} />
+                              </span>
+                              <span className="folder-name">{col.name}</span>
+                              <span className="folder-count">({col.repos.length}个)</span>
+                              <button
+                                className="folder-delete"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteCollection(col.id);
+                                }}
+                                title="删除收藏夹"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                            {expanded && (
+                              <div className="folder-cards">
+                                {colCards.length === 0 && (
+                                  <p className="folder-empty">暂未匹配到项目卡片（数据可能已更新）</p>
+                                )}
+                                {colCards.length > 0 && (
+                                  <div className="feed-list">
+                                    {colCards.map((card) => (
+                                      <div key={card.repo} className="folder-card-wrapper">
+                                        <FeedCardMemo
+                                          card={card}
+                                          liked={feedback.likes.includes(card.repo)}
+                                          onOpen={handleOpenDetail}
+                                          onOpenCreator={openCreator}
+                                        />
+                                        <button
+                                          className="folder-card-remove"
+                                          onClick={() => handleRemoveFromCollection(col.id, card.repo)}
+                                          title="移出收藏夹"
+                                        >
+                                          <X size={16} />
+                                        </button>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+
+                      <button className="collection-create-btn" onClick={handleCreateCollection}>
+                        + 新建收藏夹
+                      </button>
+                    </>
+                  )}
+
+                  {meView === "following" && (
+                    <>
+                      <div className="collections-header">
+                        <span className="collections-stats">
+                          <Heart size={14} className="icon" />共 {following.length} 位关注的创作者
+                        </span>
+                      </div>
+                      {following.length === 0 ? (
+                        <div className="status">
+                          <p>还没有关注任何人</p>
+                          <p className="hint">去项目卡片上点创作者名即可关注</p>
+                        </div>
+                      ) : (
+                        <div className="creator-list">
+                          {followedCreators.map(({ owner, count }) => (
+                            <div
+                              key={owner}
+                              className="creator-item"
+                              title={`查看 ${owner} 的创作者页`}
+                              onClick={() => openCreator(owner)}
+                            >
+                              <GithubAvatar owner={owner} size={56} className="creator-item-avatar" />
+                              <span className="creator-item-name">{owner}</span>
+                              <span className="creator-item-count">{count} 个项目</span>
+                              <a
+                                className="creator-item-github"
+                                href={`https://github.com/${owner}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="GitHub 主页"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <ExternalLink size={16} />
+                              </a>
+                              <button
+                                className="creator-item-unfollow"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleFollow(owner);
+                                }}
+                              >
+                                <UserMinus size={14} />
+                                取关
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* === 搜索 tab === */}
+            {tab === "search" && (
+              <>
+                <div className="search-bar">
+                  <input
+                    type="text"
+                    className="search-input"
+                    placeholder="搜项目名、描述、标签…"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    autoFocus
+                  />
+                  {searchQuery && (
+                    <button className="search-clear" onClick={() => setSearchQuery("")}>
+                      <X size={16} />
+                    </button>
+                  )}
+                </div>
+
+                {/* 空状态：推荐搜索词 + 分类直达 + 热门项目预览 */}
+                {!searchQuery && (
+                  <div className="search-empty">
+                    <div className="search-chips">
+                      <div className="search-empty-title">试试搜索</div>
+                      <div className="chip-row">
+                        {topicChips.map((t) => (
+                          <button key={t} className="search-chip" onClick={() => setSearchQuery(t)}>
+                            {t}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="search-cats">
+                      <div className="search-empty-title">分类直达</div>
+                      <div className="cat-row">
+                        {CATEGORY_SECTIONS.map((s) => (
+                          <button
+                            key={s.key}
+                            className="search-cat"
+                            onClick={() => {
+                              setTab("feed");
+                              setFeedChannel(s.key);
+                            }}
+                          >
+                            <span className="cat-icon">
+                              <SectionIcon icon={s.icon} size={18} />
+                            </span>
+                            <span className="cat-text">{s.title}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="search-hot">
+                      <div className="search-empty-title">热门项目</div>
+                      <div className="feed-list">
+                        {hotPreview.map((card) => (
+                          <FeedCardMemo
+                            key={card.repo}
+                            card={card}
+                            liked={feedback.likes.includes(card.repo)}
+                            onOpen={handleOpenDetail}
+                            onOpenCreator={openCreator}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* 创作者分组（结果顶部；点卡片打开创作者页） */}
+                {searchQuery && searchCreators.length > 0 && (
+                  <div className="search-creators">
+                    <div className="search-group-title">创作者</div>
+                    <div className="creator-list">
+                      {searchCreators.map(({ owner, count }) => (
+                        <div
+                          key={owner}
+                          className="creator-item"
+                          title={`查看 ${owner} 的创作者页`}
+                          onClick={() => openCreator(owner)}
+                        >
+                          <GithubAvatar owner={owner} size={56} className="creator-item-avatar" />
+                          <span className="creator-item-name">{owner}</span>
+                          <span className="creator-item-count">{count} 个项目</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 项目分组 */}
+                {searchQuery && searchResults.length > 0 && (
+                  <>
+                    <div className="search-group-title">项目</div>
+                    <div className="feed-list">
+                      {searchResults.slice(0, searchVisible).map((card) => (
+                        <FeedCardMemo
+                          key={card.repo}
+                          card={card}
+                          liked={feedback.likes.includes(card.repo)}
+                          onOpen={handleOpenDetail}
+                          onOpenCreator={openCreator}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {searchQuery && searchResults.length === 0 && searchCreators.length === 0 && (
+                  <div className="status">
+                    <p>
+                      <Search size={16} className="icon" />
+                      没搜到，换个关键词试试？
+                    </p>
+                  </div>
+                )}
+                {searchResults.length > searchVisible && (
+                  <div ref={sentinelRef} className="section-sentinel">
+                    <div className="spinner small" />
+                  </div>
+                )}
+              </>
             )}
           </>
         )}

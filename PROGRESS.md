@@ -171,3 +171,21 @@ icons.tsx（封装）→ App.tsx 替换 → FeedCard.tsx 替换 → styles.css �
 - [x] CI + Deploy Web 全绿（head_sha b3663ac 双 workflow success）
 - [x] 线上验证：favicon.svg 200 + 渐变/玻璃高光一致；bundle index-B2bsw31D.js/index-Br17uDBQ.css 与本地一致
 - [x] 完成条件达成：headless 36/36 + Deploy/CI 全绿 + 线上 favicon 同款 + .logo-mark 单一实现（styles.css 1 处定义 + icons.tsx 1 处使用）
+
+## GitTok 页面层级与搜索改造（任务书 E v1.0）—— 2026-08-07
+
+### 开工回执（任务 0）
+- [x] 基线：HEAD=eb4e7f2 工作区干净；npm run build PASS（gzip 66.81KB）；feed.json 990 卡；prettier 基线待任务4
+- [x] 已读 App.tsx 全量（1462 行）+ FeedCard.tsx/styles.css/types.ts + 任务书存档版一致；参考验收 gittok_nav_deep_check.py 是任务书 D 的（36 项）→ E 需新写验收脚本
+- [x] 理解：①创作者页→页面栈（viewStack + CreatorPage.tsx 拆组件，整页让位）②我的页→侧栏式（me-layout 复用 .sidebar/.side-item）③搜索→加权 AND + 创作者组 + 空状态推荐 + 玻璃化
+- [x] 关键位置：creatorOwner L645 / openCreator L852-855 / CreatorPage 块 L1039-1089（叠加式，feed 同时渲染→需改让位）/ me-subnav L1192-1214 / searchResults L948-960（includes OR）/ 搜索 tab L1389-1433 / search-input L1276（blur10 需改玻璃）
+- [x] 最大风险：①viewStack.length>0 让位后 loading/error 分支联动 ②creator 内 FeedCard onOpenCreator 压栈 ③me-sidebar active 判断 ④虚拟列表性能铁律（搜索空状态热门预览禁 backdrop-filter 卡片）
+- [x] 偏差预判：CreatorPage 需额外 likedSet prop（FeedCard 必需 liked）；验收脚本新建 gittok_e_check.py
+
+### 任务 1-4 执行记录（2026-08-07）
+- [x] 任务1 页面栈：creatorOwner → viewStack[{owner}] + currentCreator（栈顶）；openCreator push（关详情）/ closeCreator pop；CreatorPage.tsx 新组件（返回/头像128/名字/GitHub链接/关注按钮/N个项目/FeedCard列表，props=owner+projects+likedSet+isFollowing+onToggleFollow+onOpen+onOpenCreator+onBack）；viewStack.length>0 整页让位（feed/me/search 全部不渲染）；.creator-page 入场动画 creator-enter 0.25s ease（fadeIn+translateY 6px）；删除旧叠加式渲染块
+- [x] 任务2 我的页侧栏：me-layout（flex 同 feed-layout）+ aside.sidebar.me-sidebar（3 side-item 复用 .side-item/.side-icon/.side-text，active 同款渐变，meView===key）+ div.me-content.feed-content 搬入三视图；main 加 main-feed（me tab 贴左与首页同源）；删除 me-subnav 全部渲染+样式；<900px 自动继承 .sidebar 折叠
+- [x] 任务3 搜索：新建 search.ts weightedSearch（split(/\s+/) 分词+AND+字段权重 repo5/name4/owner4/desc3/summaryCn3/reasonCn2/aiDim2/topics2+repo 额外+2+降序截断60）；创作者分组（owner 命中去重，count=入库总数，渲染结果顶部「创作者」组，复用 .creator-item 卡片，点击 openCreator）；空状态（topics 频率 top12 chips「试试搜索」+ 分类直达 4 个（setTab("feed")+setFeedChannel）+ momentum 含 hot 按 score 前 8 热门预览）；.search-bar/.search-input 玻璃化（rgba(28,25,41,0.45)+card-border+blur18 saturate1.3，聚焦 border accent+外发光 0.15 克制）；searchVisible 无限滚动保留
+- [x] 任务4：prettier --write 全过 + --check 全过；npm run build PASS（gzip 67.61KB）；cp 真实 feed.json（990 卡）；headless 验收 D:/tmp/gittok_e_check.py **51/51 PASS**（A 页面栈 10：整页替换/动画/二层/逐级返回/原tab原频道；B 我的侧栏 8；C 空状态 4：chips 12/热门 8/分类 4/点击填入；D 加权 5：github 第1=github/spec-kit、mcp server AND 10 条且 mcp 靠前；E 创作者 5：openai 组+头像名字项目数+点击开页；F 样式 5：玻璃 0.45+blur18+真实点击聚焦 border accent+外发光 0.15；G 回归 13：推荐流/频道/徽章/关注闭环/喜欢/收藏注入/详情+查看创作者）；截图 4 张 D:/tmp/gittok_e_{creator2,me,search_empty,search_result}.png
+- [x] 审美参数验证：creator 动画 0.25s creator-enter、头像 84px r18、me-sidebar 玻璃 0.55+blur18 saturate1.3 同源、active 渐变同款、chip 玻璃 0.55 r16、分类直达带 SVG 图标
+- [x] grep 残留：creatorOwner/me-subnav 在 web/src/ 零出现（grep exit=1）
