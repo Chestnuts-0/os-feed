@@ -21,7 +21,6 @@ import {
 // ---------------------------------------------------------------------------
 
 function formatStars(n: number): string {
-  if (n >= 10000) return (n / 10000).toFixed(1) + "w";
   if (n >= 1000) return (n / 1000).toFixed(1) + "k";
   return String(n);
 }
@@ -219,7 +218,8 @@ function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel, o
         </div>
       </div>
 
-      {card.summaryCn && <p className="summary">{card.summaryCn}</p>}
+      {/* 始终渲染：空内容靠 min-height 占位 2 行，保证全站卡片高度一致 */}
+      <p className="summary">{card.summaryCn}</p>
 
       {reason && <p className="reason-clamped">{reason}</p>}
 
@@ -333,18 +333,18 @@ export function CardDetail({
             <div className="detail-subtitle">
               <SourceBadge src={card.source} />
               <span>{timeAgo(card.ts)}</span>
-              {onOpenCreator && (
-                <button
-                  className="detail-creator-btn"
-                  title={`查看 ${card.owner} 的创作者页`}
-                  onClick={() => onOpenCreator(card.owner)}
-                >
-                  <UserRound size={14} />
-                  查看创作者
-                </button>
-              )}
             </div>
           </div>
+          {onOpenCreator && (
+            <button
+              className="detail-creator-btn"
+              title={`查看 ${card.owner} 的创作者页`}
+              onClick={() => onOpenCreator(card.owner)}
+            >
+              <UserRound size={14} />
+              查看创作者
+            </button>
+          )}
         </div>
 
         {card.summaryCn && <p className="detail-summary">{card.summaryCn}</p>}

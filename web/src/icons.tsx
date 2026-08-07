@@ -123,26 +123,13 @@ export function GitTokLogo({ size = 28 }: { size?: number }) {
             <stop offset="100%" stopColor="#7A5CC0" />
           </linearGradient>
         </defs>
-        {/* 玻璃内芯：纵向渐变（上浅下深）+ 半透明白外描边 */}
-        <rect x="1" y="1" width="26" height="26" rx="9" fill="url(#gittok-logo-grad)" />
-        <rect x="1" y="1" width="26" height="26" rx="9" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" />
-        {/* 左上角玻璃高光：贴合圆角的内弧（模拟玻璃反光） */}
+        {/* 透明背景渐变闪电：主体包围盒约 21×24（占 viewBox ≥60%），视觉中心居中；同色描边增粗保证 28px 辨识度 */}
         <path
-          d="M5.2 7.8a6.5 6.5 0 0 1 2.3 -2.3"
-          stroke="rgba(255,255,255,0.4)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          opacity="0.35"
-        />
-        {/* 信号波纹：左侧发射点 + 两段同心弧（简洁线条，小尺寸清晰） */}
-        <circle cx="10.5" cy="14" r="2.2" fill="#fff" />
-        <path d="M14 9.8a6 6 0 0 1 0 8.4" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
-        <path
-          d="M17.2 6.8a10.4 10.4 0 0 1 0 14.4"
-          stroke="#fff"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          opacity="0.6"
+          d="M14 2 L4 15 H11.5 L10 26 L25 11 H17 Z"
+          fill="url(#gittok-logo-grad)"
+          stroke="url(#gittok-logo-grad)"
+          strokeWidth="0.8"
+          strokeLinejoin="round"
         />
       </svg>
       <span className="logo-text">GitTok</span>

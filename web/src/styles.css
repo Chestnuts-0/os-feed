@@ -185,18 +185,6 @@ button {
   box-shadow: 0 2px 12px var(--accent-glow);
 }
 
-.tab-count {
-  font-size: 0.72rem;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 1px 7px;
-  border-radius: 10px;
-  font-weight: 600;
-}
-.tab:not(.active) .tab-count {
-  background: var(--accent-light);
-  color: var(--accent);
-}
-
 /* --- 主内容区 --- */
 .main {
   flex: 1;
@@ -227,15 +215,22 @@ button {
   min-height: calc(100vh - 60px);
 }
 
-/* 左侧边栏：目的地导航（YouTube/B站桌面端模式，非过滤器）；苹果毛玻璃同风格 */
+/* 左侧边栏：目的地导航（YouTube/B站桌面端模式，非过滤器）；苹果毛玻璃同风格；
+   sticky 吸在顶栏（60px）下方，滚动时保持可见；z-index 低于 header(100) 高于内容 */
 .sidebar {
   width: 192px;
   flex-shrink: 0;
+  /* align-self: flex-start 覆盖父容器 align-items: stretch——stretch 会把侧栏拉伸到与虚拟列表等高，
+     sticky 元素高度=父容器高度时无滚动空间，吸不住（实测 top=-5086 滚走） */
+  align-self: flex-start;
   padding: 20px 10px 32px;
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(28, 25, 41, 0.55);
   backdrop-filter: blur(18px) saturate(1.3);
   -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  position: sticky;
+  top: 60px;
+  z-index: 5;
 }
 
 /* 分组容器（玻璃圆角卡片，间距由容器 margin 分隔） */
@@ -257,7 +252,6 @@ button {
   gap: 7px;
   font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 1px;
   color: var(--text-secondary);
   padding: 0 4px 8px;
   margin-bottom: 6px;
@@ -567,7 +561,7 @@ button {
   gap: 3px;
 }
 
-/* 通俗概括（最多 2 行截断；高度自适应——行高由虚拟列表真实测量，不撑高不裁剪） */
+/* 通俗概括（最多 2 行截断；min-height 固定 2 行高（2×1.5em + padding 16px，border-box 含 padding），保证全站卡片等高） */
 .summary {
   font-size: 0.98rem;
   font-weight: 700;
@@ -575,6 +569,7 @@ button {
   color: var(--text);
   margin-bottom: 8px;
   padding: 8px 12px;
+  min-height: calc(2 * 1.5em + 16px);
   background: linear-gradient(135deg, var(--accent-light), transparent);
   border-left: 3px solid var(--accent);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -584,10 +579,11 @@ button {
   overflow: hidden;
 }
 
-/* 专业描述（最多 3 行截断；高度自适应——行高由虚拟列表真实测量，不撑高不裁剪） */
+/* 专业描述（最多 3 行截断；min-height 固定 3 行高（3×1.7em），保证全站卡片等高） */
 .reason-clamped {
   font-size: 0.82rem;
   line-height: 1.7;
+  min-height: calc(3 * 1.7em);
   color: var(--text-secondary);
   margin-bottom: 10px;
   display: -webkit-box;
@@ -715,7 +711,8 @@ button {
   align-items: flex-start;
   gap: 14px;
   margin-bottom: 20px;
-  padding-right: 44px;
+  /* 避让右上角两个按钮（关闭 absolute 16+36，创作者按钮 right 60 宽约 110px → 190px 内不重叠） */
+  padding-right: 190px;
 }
 
 .detail-avatar {
@@ -893,12 +890,14 @@ button {
   color: var(--accent);
 }
 
-/* --- 卡片标签 --- */
+/* --- 卡片标签：固定单行高度（chip 实测 25.08px，含 border；26px 保险不裁切），保证全站卡片等高 --- */
 .card-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
   margin-top: 4px;
+  height: 26px;
+  overflow: hidden;
 }
 
 .tag-chip {
@@ -1287,7 +1286,6 @@ button {
   gap: 8px;
   font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 1px;
   color: var(--text-secondary);
   margin-bottom: 12px;
 }
@@ -1559,7 +1557,12 @@ button {
 }
 
 .detail-creator-btn {
-  margin-left: 2px;
+  /* 不定位在 .detail-header（其顶部在 detail-card padding 32px 之下），
+     absolute 参照最近的 positioned 祖先 .detail-card —— 与 .detail-close 同参照系（top 16 / right 16），
+     同水平线且间距 = 60 - (16+36) = 8px */
+  position: absolute;
+  top: 16px;
+  right: 60px;
   padding: 6px 12px;
   border-radius: 8px;
   border: 1px solid var(--card-border);
@@ -1715,19 +1718,18 @@ button {
   margin-top: 0;
 }
 
-/* --- 我的-关注：创作者卡片列表（任务书 B） --- */
+/* --- 我的-关注：创作者卡片列表（任务书 B；任务书 F 改两列网格，与 .feed-list 同语言） --- */
 .creator-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 900px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
 }
 
 .creator-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px 18px;
+  gap: 12px;
+  padding: 14px 16px;
   border-radius: 14px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
@@ -1783,7 +1785,7 @@ button {
 }
 
 .creator-item-unfollow {
-  padding: 6px 16px;
+  padding: 6px 12px;
   border-radius: 14px;
   border: 1px solid var(--border);
   background: transparent;

@@ -1055,7 +1055,7 @@ export default function App() {
             </button>
             <button className={`tab${tab === "me" ? " active" : ""}`} onClick={() => setTab("me")}>
               <User size={16} />
-              我的 {feedback.likes.length > 0 && <span className="tab-count">{feedback.likes.length}</span>}
+              我的
             </button>
           </nav>
         </div>
@@ -1104,7 +1104,7 @@ export default function App() {
                 {/* 左侧边栏：目的地导航（发现组 + 分类组） */}
                 <aside className="sidebar">
                   <div className="side-group-box">
-                    <div className="side-group">发 现</div>
+                    <div className="side-group">发现</div>
                     {DYNAMIC_SECTIONS.filter(
                       (s) => s.key === "following" || sections.some((x) => x.key === s.key),
                     ).map((s) => (
@@ -1121,7 +1121,7 @@ export default function App() {
                     ))}
                   </div>
                   <div className="side-group-box">
-                    <div className="side-group">分 类</div>
+                    <div className="side-group">分类</div>
                     {CATEGORY_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
                       <button
                         key={s.key}

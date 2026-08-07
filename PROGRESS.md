@@ -200,3 +200,12 @@ icons.tsx（封装）→ App.tsx 替换 → FeedCard.tsx 替换 → styles.css �
 3. D5 验收断言改为数据级 AND 校验：desc 等加权字段不在卡片 DOM 上渲染，textContent 检查会误报；脚本用 feed.json 复算
 4. 验收脚本 G6 注入坑：collections 必须注入数组（loadCollections 期望 Collection[]，App.tsx:250 collections.flatMap；注入对象会 TypeError 白屏）——脚本注释已写明
 5. me tab 的 main 加 main-feed（贴左，与首页侧栏同源设计语言；任务书未明说，截图与首页一致）
+
+## GitTok 体验问题修复（任务书 F v1.0）—— 2026-08-07
+
+### 开工回执（任务 0）
+- [x] 基线：HEAD=52e4c62 工作区干净；remote=Chestnuts-0/os-feed；web 依赖 npm；husky 坏 → --no-verify；push 走 Clash 代理 + token URL 编码
+- [x] 理解：T1 渐变闪电 logo（icons.tsx+favicon.svg）→ T2 字间距归 0+去手动空格 → T3 侧栏 sticky → T4 关注两列 grid → T5 卡片三段固定行高+prompt 字数下限 → T6 星数统一 k → T7 删顶栏徽章 → T8 创作者按钮挪 header 右上角
+- [x] 关键位置：GitTokLogo icons.tsx L116-151 / .summary L571-585 / .reason-clamped L588-597 / .card-tags L897-902 / formatStars FeedCard.tsx L23-27 / summary 渲染 L222 / detail-subtitle 按钮 L333-346 / tab-count App.tsx L1058 / 发 现 L1107 分 类 L1124 / .sidebar L231-239 / .creator-list L1719-1724 / .tab-count styles L188-198 / prompts.ts L80-81
+- [x] 基线发现：html font-size 17px（rem 基准）；全局 box-sizing border-box（min-height 含 padding）；.detail-card position: relative（absolute 定位可用）；.card-tags 单行高度需 headless 实测
+- [x] 最大风险：T5 三段 min-height 精度（em 基准/box-sizing 实测校准）；T8 按钮绝对定位与 repo 名重叠（padding-right 避让）；T4 两列卡内元素溢出
