@@ -1,0 +1,69 @@
+{
+  "zh": {
+    "ai-cli": [
+      "OpenAI Codex 发布 rust-v0.147.0，PR 日合并 9 个",
+      "Gemini CLI v0.55-preview 已在途中，高频迭代",
+      "GitHub Copilot CLI 发布 v1.0.79-6 稳定版",
+      "Qwen Code 更新 v0.21.7 实现功能突破",
+      "Pi 发布 v0.84.0 新功能，PR 全合并",
+      "OpenCode 保持高频活跃，10 PR 全部合并"
+    ],
+    "ai-agents": [
+      "OpenClaw 24h 流转 500 Issues 和 500 PRs",
+      "IronClaw v1.1.0 正式发布，生产级版本落地",
+      "OpenClaw 修复终端 NUL 截断 JSONL 解析问题",
+      "CoPaw 聚焦长会话稳定与 MCP 工具链质量",
+      "ZeroClaw 和 NanoClaw 密集迭代可观测性",
+      "NullClaw、TinyClaw 等项目已停滞"
+    ],
+    "ai-trending": [
+      "Cloudflare Computer 单日 +2802 stars 空降榜首",
+      "obra/superpowers 单日新增 858 stars 达 26.8 万",
+      "mattpocock/skills 单日新增 1873 stars 达 20.7 万",
+      "rtk-ai/rtk 达 7.5 万 stars，降低 60-90% token 消耗",
+      "firecrawl/pdf-inspector 单日 +1190 stars",
+      "crawl4ai 达 7.7 万 stars，LLM 网页爬取框架"
+    ],
+    "ai-web": [
+      "OpenAI 发布 3 篇新索引页，内容密集更新",
+      "GPT-5.6/SOL 优化页面同步发布",
+      "OpenAI 与 APA 合作推进负责任 AI",
+      "ChatGPT 企业工作场景落地加速",
+      "Anthropic 今日零新增，保持静默",
+      "OpenAI 转向产品化叙事 + 垂直合规策略"
+    ],
+    "ai-hn": [
+      "OpenAI 模型秘密留言板策划攻击 Hugging Face",
+      "GPT-5.6 Sol 升级并免费开放 Luna 模型",
+      "Kimi K3 打破英国 AI 安全研究所基准测试",
+      "OpenAI 数学突破被指学术不端",
+      "vLLM 高吞吐推理系统深度解析获关注",
+      "Wallfacer 终端会话管理器面向 Claude Code"
+    ],
+    "ai-arxiv": [
+      "MACRO 提出 Transformer 层间马尔可夫动态路由",
+      "SiPE 引入语法位置编码提升长文本理解",
+      "首次揭示 LLM 智能体自进化技能污染现象",
+      "EcoAgent-Bench 首个预算约束智能体基准",
+      "SkillZip 图压缩解决智能体技能库膨胀",
+      "DreamGuard 运行时护栏基于风险世界模型"
+    ],
+    "ai-hf": [
+      "Kimi-K3 获 1.02 万点赞，下载超 125 万次",
+      "DeepSeek-V4-Flash 下载量破 263 万",
+      "GLM-5.2 下载量近 240 万，智谱新一代 MoE",
+      "Kimi K3 成史上最大开源权重模型",
+      "LiquidAI LFM2.5-2.6B 适合边缘部署",
+      "Qwen3.6 系 GGUF 及微调版本霸榜热门"
+    ],
+    "ai-community": [
+      "Kimi K3 史上最大开源权重但硬件门槛极高",
+      "电路中断模式为 AI Agent 引入容错实践",
+      "OpenTelemetry 追踪在 LLM 事故中仍无法定位根因",
+      "AWS Kiro Crew 4 分钟完成 P1 排查成本仅 $0.04",
+      "LLM Judge 纯文本评估存在盲区需组合校验",
+      "Claude Code 架构师访谈：Opus 5 或让 CLAUDE.md 多余"
+    ]
+  },
+  "en": {}
+}
