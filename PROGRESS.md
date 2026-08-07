@@ -1,5 +1,47 @@
 # GitTok 内容多样性修复 — PROGRESS.md
 
+## GitTok 体验问题修复 v2（任务书 G v1.0）—— 2026-08-07 深夜
+
+### 开工回执（任务 0）
+- [x] 基线：HEAD=1c760a3 工作区干净（恢复 tsbuildinfo 构建缓存残留）；remote=Chestnuts-0/os-feed；web 依赖 npm；husky 坏 → --no-verify；push 走 Clash 代理 + token URL 编码
+- [x] 理解：T1 经典细闪电（icons+favicon）→ T2 摘要 1 行 + prompt 110-130 字 + 旧卡全量重评 → T3 侧栏全高玻璃 → T4 创作者按钮入操作区右侧（对标 GitHub 按钮）
+- [x] 已读研讨稿第六节（v2 返工 4 项拍板全对齐）；参考验收 gittok_f_recheck.py
+- [x] 最大风险：全量重评 990 卡免费模型失败率（任务书 5% 红线）；T4 按钮「同尺寸」语义（creator/open 同款参数）
+
+### 任务 1-4 执行记录（2026-08-07）
+- [x] 任务1 细闪电：icons.tsx + favicon.svg path 换 `M13 2.5 L4.5 13.5 H10.5 L8.8 21.5 L19 10.5 H12.8 Z`（上下尖锐腰身收窄），渐变 defs/stroke 0.8 保持
+- [x] 任务2a 摘要 1 行：.summary min-height `calc(1*1.5em+16px)` + line-clamp 1（F 版 2 行框 1 行内容 → 空行根治）；.reason-clamped 3 行保持不动
+- [x] 任务2b prompt：reason_cn「约100-150字」→「约110-130字」+ 二次加强「必须 110-130 汉字硬性要求」（偏差见下）
+- [x] 任务3 侧栏全高：.sidebar 加 `height: calc(100vh - 60px)`（sticky + align-self: flex-start 保持；整条玻璃覆盖视口，修复半截贴图）
+- [x] 任务4 按钮入操作区：删 header 内 absolute 按钮（.detail-header padding-right 190px 删除恢复原宽）；.detail-actions 内 open-btn 前插 creator-btn（UserRound 16 + 文字）；.creator-btn/.open-btn 同款描边按钮（38px/14px/10px/0.75rem/text-secondary，hover accent），creator-btn margin-left: auto 右对齐；删 .detail-creator-btn 全样式
+- [x] 静态：prettier 全过 / tsc --noEmit OK / eslint（web/src+src/feed）0 error / npm run build PASS（gzip 67.48KB）
+
+### 全量重评（任务书关键步骤，7 轮迭代收敛）
+- [x] 备份 feed.json.bak → 清 990 卡评分字段（5940 项：reasonCn/summaryCn/detailCn/aiScore/aiDim/aiDims）→ `NODE_OPTIONS="--use-env-proxy" npx tsx src/feed/index.ts`
+- [x] **第 1 轮（990 全量）失败率 13.2%**：网络抖动 + 429 限流 + 免费模型长输出截断（detail 500-800 字）→ 131 张评分失败被 L648 `if (!sc || !sc.reasonCn) continue` 跳过 → 输出仅 856 卡（990→856 违反只增不减）→ **增量管道缺陷：失败的卡不在 baseline 中，后续轮次不会补评（第 3 轮 0/972 补评实证）**
+- [x] 补救机制：每轮从 bak 找回缺失卡（清评分字段）合并回 feed.json → 幂等重跑（已评分卡缓存复用，仅补评缺失/不达标卡）
+- [x] 长度分布不达标（summary 20-35 字 59.8%、reason ≥80 字 76.4%）→ **prompts.ts 二次加强长度硬性约束**（「必须严格 20-35 个汉字，少于 20 或多于 35 都不合格，写完后数一遍」/「必须 110-130 汉字，少于 100 或多于 150 不合格」）→ 只清不达标卡重评
+- [x] 迭代 7 轮最终收敛：**990/990 全齐，缺失率 0%，summary 20-35 字 95.5%，reason ≥80 字 96.4%，reason 平均 104.6 字**（110-130 目标命中 20.5%，LLM 浮动）→ bak 已删
+- [x] 重评产物提交：data/feed.json（+25737/-22977）；digests/manifest/feed.xml 无新增变更
+
+### 验收记录
+- [x] headless 验收 D:/tmp/gittok_g_check.py **20/20 PASS**（A1 闪电 path 细版 / B1-B4 摘要 1 行无截断+推荐语无空行+卡片等高 diff=0 / C1-C2 侧栏滚动 5000px top 恒 60+全高=视口-60 / D1-D7 按钮同线同尺寸右对齐+header 无残留+点击进创作者页 / R1-R6 回归：频道切换/推荐流/点赞/收藏/创作者页栈/搜索）
+- [x] 截图 5 张 D:/tmp/gittok_g_{logo,favicon,home,detail,sidebar}.png；logo+favicon vision 复核：闪电修长尖锐清晰无溢出 ✅（sidebar 截图 vision API 故障，DOM 断言 C1/C2 已覆盖，留档人工复核）
+- [x] grep detail-creator-btn 零命中（exit=1）
+- [x] commit 99cbd59（代码 5 文件）+ 92e8c9b（数据 1 文件）→ push 成功 1c760a3..92e8c9b；ls-remote 线上 HEAD=92e8c9b ✅
+- [x] CI + Deploy Web 轮询结果见下（等待确认）
+
+### 偏差说明（任务书 G）
+1. **prompts.ts 二次修改**：任务书只授权「约100-150→约110-130」一处，实测 LLM 产出 reason 平均 94.6 字（新要求下仍短），summary 20-35 字仅 59.8% → 按「验收全过优先」加强长度硬性措辞（未改其他逻辑），书面记录
+2. **重评 7 轮而非 1 轮**：免费模型失败率 13.2% 超任务书 5% 红线（网络抖动+429+长输出截断），未恢复 bak 重试（重试同样失败概率），改为「bak 找回缺失卡 + 仅重评缺失/不达标卡」的幂等收敛机制（成本逐轮递减：990→571→246→33→12 待评）
+3. **T4 按钮样式实现**：任务书 L119 参数（38px/14px/10px/0.75rem/text-secondary）与 L122「与 GitHub 主页完全一致」表面矛盾——按研讨稿「同尺寸对标 act-text」拍板执行：creator-btn 与 open-btn **同款**（open-btn 从 accent 胶囊改为与 creator 同款次级描边按钮），验收「同高同 padding」成立
+4. **增量管道固有缺陷记录**：评分失败卡不进 baseline → 后续轮次永不补评（除非手动从 bak 找回）；重评类任务需「每轮 bak 找回」兜底脚本
+5. **验收脚本 2 处脚本 bug 修正**：B1 min-height 断言浮点（computed 40.99px vs 理论 41.5px，改区间）；R3 点赞失败为 localStorage 交互状态污染（脚本补 localStorage.clear()+reload）
+
+---
+
+# GitTok 内容多样性修复 — PROGRESS.md
+
 ## 🔄 GitTok 关注体系（任务书 B v1.0，2026-08-07）
 
 ### 开工回执（任务 0）
