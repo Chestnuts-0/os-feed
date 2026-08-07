@@ -16,11 +16,13 @@ const COLLECTIONS_KEY = "os-feed-collections";
 const SEEN_KEY = "os-feed-seen";
 const INTERACTIONS_KEY = "os-feed-interactions";
 
-type Tab = "feed" | "collections" | "bigbro" | "search" | "chat";
+type Tab = "feed" | "liked" | "collections" | "bigbro" | "search" | "chat";
 
 interface Feedback {
   likes: string[];
   dislikes: string[];
+  /** 喜欢过的卡片快照（repo → 卡片本体）。点赞时留存，列表展示不依赖当天数据 */
+  likedSnapshots?: Record<string, FeedCard>;
 }
 
 interface Preferences {
@@ -39,6 +41,7 @@ interface InteractionRecord {
 const OVERSCAN = 150; // 视口外上下各提前渲染 150px（多虚拟列表共存时减小缓冲，避免滚动深处测量冲突）
 const CARD_ESTIMATED_HEIGHT = 240; // 首卡实测前的估算值（不高不低，避免跳动）
 const ROW_GAP = 16; // feed-list 网格 gap
+const SNAPSHOT_CAP = 1000; // 喜欢/收藏快照总条数上限（~1KB/张，1MB 内安全；超出后新操作只记 repo 名）
 
 const SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
   { key: "hot", icon: "🔥", title: "热门", desc: "高星项目" },
@@ -58,11 +61,18 @@ const SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
 function loadFeedback(): Feedback {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as Feedback;
+    if (raw) {
+      const parsed = JSON.parse(raw) as Feedback;
+      return {
+        likes: parsed.likes ?? [],
+        dislikes: parsed.dislikes ?? [],
+        likedSnapshots: parsed.likedSnapshots ?? {},
+      };
+    }
   } catch {
     /* ignore */
   }
-  return { likes: [], dislikes: [] };
+  return { likes: [], dislikes: [], likedSnapshots: {} };
 }
 
 function saveFeedback(fb: Feedback): void {
@@ -523,7 +533,15 @@ export default function App() {
           ? prev.likes.filter((r) => r !== repo)
           : [...prev.likes, repo];
         const dislikes = prev.dislikes.filter((r) => r !== repo);
-        const next = { likes, dislikes };
+        // 点赞时留存卡片快照（列表展示不依赖当天数据）；超容量上限则只记 repo 名
+        const likedSnapshots = { ...(prev.likedSnapshots ?? {}) };
+        if (likes.includes(repo) && !likedSnapshots[repo]) {
+          const card = cards.find((c) => c.repo === repo);
+          if (card && Object.keys(likedSnapshots).length < SNAPSHOT_CAP) {
+            likedSnapshots[repo] = card;
+          }
+        }
+        const next = { likes, dislikes, likedSnapshots };
         saveFeedback(next);
         return next;
       });
@@ -536,7 +554,7 @@ export default function App() {
       // 权重累加（原逻辑保留），排序在下次页面加载/刷新时生效 —— 不触发 sections 重算
       updateTagWeights([repo], 0.03);
     },
-    [updateTagWeights],
+    [updateTagWeights, cards],
   );
 
   const handleDislike = useCallback(
@@ -576,8 +594,20 @@ export default function App() {
     (newCols: Collection[]) => {
       const prevBookmarked = detailCard ? collections.some((c) => c.repos.includes(detailCard.repo)) : false;
       const newBookmarked = detailCard ? newCols.some((c) => c.repos.includes(detailCard.repo)) : false;
-      setCollections(newCols);
-      saveCollections(newCols);
+      // 收藏时留存卡片快照（收藏夹展示不依赖当天数据；超容量上限则只记 repo 名）
+      let colsWithSnapshots = newCols;
+      if (detailCard && !prevBookmarked && newBookmarked) {
+        colsWithSnapshots = newCols.map((c) => {
+          if (!c.repos.includes(detailCard.repo)) return c;
+          const snapshots = { ...(c.snapshots ?? {}) };
+          if (!snapshots[detailCard.repo] && Object.keys(snapshots).length < SNAPSHOT_CAP) {
+            snapshots[detailCard.repo] = detailCard;
+          }
+          return { ...c, snapshots };
+        });
+      }
+      setCollections(colsWithSnapshots);
+      saveCollections(colsWithSnapshots);
       if (detailCard && newBookmarked !== prevBookmarked) {
         updateTagWeights([detailCard.repo], newBookmarked ? 0.05 : -0.05);
       }
@@ -614,7 +644,12 @@ export default function App() {
 
   const handleRemoveFromCollection = useCallback((colId: string, repo: string) => {
     setCollections((prev) => {
-      const next = prev.map((c) => (c.id === colId ? { ...c, repos: c.repos.filter((r) => r !== repo) } : c));
+      const next = prev.map((c) => {
+        if (c.id !== colId) return c;
+        const snapshots = c.snapshots ? { ...c.snapshots } : undefined;
+        if (snapshots) delete snapshots[repo];
+        return { ...c, repos: c.repos.filter((r) => r !== repo), snapshots };
+      });
       saveCollections(next);
       return next;
     });
@@ -629,6 +664,48 @@ export default function App() {
       return next;
     });
   }, []);
+
+  // 历史数据迁移：feed 加载完成后，为旧的 likes/收藏（只有 repo 名）补快照——
+  // repo 还在当天数据里的自动补上；已消失的无法找回（数据从未存过本地）
+  useEffect(() => {
+    if (cards.length === 0) return;
+    setFeedback((prev) => {
+      let changed = false;
+      const likedSnapshots = { ...(prev.likedSnapshots ?? {}) };
+      for (const repo of prev.likes) {
+        if (!likedSnapshots[repo] && Object.keys(likedSnapshots).length < SNAPSHOT_CAP) {
+          const card = cards.find((c) => c.repo === repo);
+          if (card) {
+            likedSnapshots[repo] = card;
+            changed = true;
+          }
+        }
+      }
+      if (!changed) return prev;
+      const next = { ...prev, likedSnapshots };
+      saveFeedback(next);
+      return next;
+    });
+    setCollections((prev) => {
+      let changed = false;
+      const next = prev.map((col) => {
+        const snapshots = { ...(col.snapshots ?? {}) };
+        for (const repo of col.repos) {
+          if (!snapshots[repo] && Object.keys(snapshots).length < SNAPSHOT_CAP) {
+            const card = cards.find((c) => c.repo === repo);
+            if (card) {
+              snapshots[repo] = card;
+              changed = true;
+            }
+          }
+        }
+        return Object.keys(snapshots).length > 0 ? { ...col, snapshots } : col;
+      });
+      if (!changed) return prev;
+      saveCollections(next);
+      return next;
+    });
+  }, [cards]);
 
   // 过滤不感兴趣 + 过滤无中文描述的卡片 + 内容淘汰
   const visibleCards = useMemo(() => {
@@ -655,6 +732,14 @@ export default function App() {
     if (feedFilter === "") return nonEmpty;
     return nonEmpty.filter((s) => s.key === feedFilter);
   }, [sections, feedFilter, dismissed]);
+
+  // 喜欢的卡片（快照优先，其次匹配当天数据；快照缺失且当天数据也没有的——旧记录无法找回）
+  const likedCards = useMemo(() => {
+    const snapshots = feedback.likedSnapshots ?? {};
+    return feedback.likes
+      .map((repo) => snapshots[repo] ?? visibleCards.find((c) => c.repo === repo))
+      .filter((c): c is FeedCard => !!c);
+  }, [feedback.likes, feedback.likedSnapshots, visibleCards]);
 
   // 活跃分区检测（已移除 IntersectionObserver，改用 feedFilter）
 
@@ -757,6 +842,9 @@ export default function App() {
             <button className={`tab${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
               推荐
             </button>
+            <button className={`tab${tab === "liked" ? " active" : ""}`} onClick={() => setTab("liked")}>
+              喜欢 {feedback.likes.length > 0 && <span className="tab-count">{feedback.likes.length}</span>}
+            </button>
             <button
               className={`tab${tab === "collections" ? " active" : ""}`}
               onClick={() => setTab("collections")}
@@ -843,6 +931,30 @@ export default function App() {
           </>
         )}
 
+        {/* === 喜欢 tab === */}
+        {tab === "liked" && (
+          <>
+            <div className="collections-header">
+              <span className="collections-stats">
+                👍 共 {feedback.likes.length} 个喜欢的项目 · {likedCards.length} 个可展示
+                {likedCards.length < feedback.likes.length && "（其余已不在数据中）"}
+              </span>
+            </div>
+            {likedCards.length === 0 ? (
+              <div className="status">
+                <p>📭 还没有喜欢的项目</p>
+                <p className="hint">在项目详情中点 ❤️ 开始喜欢</p>
+              </div>
+            ) : (
+              <div className="feed-list">
+                {likedCards.map((card) => (
+                  <FeedCardMemo key={card.repo} card={card} liked={true} onOpen={handleOpenDetail} />
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
         {/* === 收藏 tab === */}
         {tab === "collections" && (
           <>
@@ -862,8 +974,9 @@ export default function App() {
 
             {collections.map((col) => {
               const expanded = expandedCols[col.id] ?? false;
+              // 快照优先（数据更新后仍完整展示），其次匹配当天数据
               const colCards = col.repos
-                .map((repo) => visibleCards.find((c) => c.repo === repo))
+                .map((repo) => col.snapshots?.[repo] ?? visibleCards.find((c) => c.repo === repo))
                 .filter((c): c is FeedCard => !!c);
               return (
                 <div key={col.id} className="collection-folder">

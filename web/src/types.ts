@@ -23,6 +23,8 @@ export interface Collection {
   createdAt: string;
   isAuto: boolean;
   sourceTag?: string;
+  /** 卡片快照（repo → 卡片本体）。收藏时留存，避免数据每日更新后匹配不到 */
+  snapshots?: Record<string, FeedCard>;
 }
 
 export interface FeedCard {
