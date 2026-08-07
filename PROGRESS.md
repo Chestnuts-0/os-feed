@@ -130,3 +130,14 @@
 - [x] CI + Deploy Web 全绿（CI run 31154018192 success；Deploy Web run 31154018228 success）
 - [x] grep 零残留：tab === "chat" / tab === "bigbro" 在 web/src/App.tsx 无匹配
 - [x] 完成条件达成：headless 24/24 PASS + Deploy/CI 全绿 → 任务书 A v1.0 交付
+
+
+## GitTok 图标品牌升级（任务书 C v1.0）—— 2026-08-07
+### 任务 0 基线核验（开工回执）
+- [x] git status 干净；HEAD=1ab59bf；npm run build PASS（tsc+vite 609ms，bundle 197.67KB）
+- [x] emoji 全清单：App.tsx 图标用途 20 处（频道 icon×8、logo📡、←/↗/⚠️/📭×3/▶/📁/🗑/✕×2/🔍/👍👎/统计前缀×3）+ FeedCard.tsx 15 处（source 徽章×3、分类徽章、动态徽章×2、❤️标记、★×2、👤、👥、👍👎⭐、✕×2、↗）；styles.css 无 emoji；文案指代 emoji（hint 里 ❤️/⭐）随按钮换 SVG 同步去 emoji
+- [x] index.html 无 favicon link（要加）；web/ 锁文件=package-lock.json（npm），非 pnpm
+- 偏差记录：任务书写 pnpm add + pnpm-lock.yaml，但 web/ 实际用 npm（pnpm/corepack 坏，corepack 路径 D:\d\ 错误）→ 用 npm install lucide-react@1.29.0，提交 package-lock.json
+- 最大风险：徽章 badges string[] 结构改动（需图标+文字双渲染）；大块 JSX patch 闭合；logo 渐变文字样式迁移
+### 执行顺序
+icons.tsx（封装）→ App.tsx 替换 → FeedCard.tsx 替换 → styles.css → favicon → 验收+上线

@@ -1,5 +1,20 @@
 import { memo, useEffect, useRef, useState } from "react";
 import type { FeedCard as Card, Collection } from "./types.ts";
+import {
+  ExternalLink,
+  Heart,
+  Star,
+  ThumbsDown,
+  ThumbsUp,
+  TrendingUp,
+  UserRound,
+  Users,
+  X,
+  BADGE_ICONS,
+  BADGE_LABELS,
+  SOURCE_ICONS,
+  SOURCE_LABELS,
+} from "./icons.tsx";
 
 // ---------------------------------------------------------------------------
 // 工具函数
@@ -12,16 +27,18 @@ function formatStars(n: number): string {
 }
 
 function sourceLabel(src: string): string {
-  switch (src) {
-    case "trending":
-      return "🔥 热门";
-    case "bigbro":
-      return "👥 大牛";
-    case "search":
-      return "🔍 搜索";
-    default:
-      return src;
-  }
+  return SOURCE_LABELS[src] ?? src;
+}
+
+/** 数据来源徽章（图标 + 文字） */
+function SourceBadge({ src }: { src: string }) {
+  const SI = SOURCE_ICONS[src];
+  return (
+    <span className={`source-badge source-${src}`}>
+      {SI && <SI size={12} />}
+      {sourceLabel(src)}
+    </span>
+  );
 }
 
 function timeAgo(ts: string): string {
@@ -119,30 +136,23 @@ export function GithubAvatar({ owner, size, className }: AvatarProps) {
 // 频道徽章：显示「当前频道之外它还属于谁」（一个项目有多个标签显性化）
 // ---------------------------------------------------------------------------
 
-const CATEGORY_BADGES: Record<string, string> = {
-  ai: "🤖 AI",
-  fun: "🎮 兴趣",
-  tool: "🛠️ 工具",
-  learning: "📚 学习",
-};
-
 const DYNAMIC_CHANNEL_KEYS = new Set(["hot", "daily", "following"]);
 
-/** 徽章 = 当前频道之外的归属。channel 为空（喜欢/收藏等场景）不显示徽章。 */
+/** 徽章 = 当前频道之外的归属，badges 存 key（渲染时查 BADGE_ICONS/BADGE_LABELS）。
+ *  channel 为空（喜欢/收藏等场景）不显示徽章。 */
 function channelBadges(card: Card, channel?: string): string[] {
   if (!channel) return [];
   const badges: string[] = [];
   const pushDynamic = () => {
-    if (card.momentum?.includes("hot")) badges.push("🔥 热门");
-    if (card.momentum?.includes("daily")) badges.push("📈 每日");
+    if (card.momentum?.includes("hot")) badges.push("hot");
+    if (card.momentum?.includes("daily")) badges.push("daily");
   };
   if (channel === "recommended" || !DYNAMIC_CHANNEL_KEYS.has(channel)) {
     // 推荐流：全部动态徽章；分类频道：显示动态徽章（分类本身就是当前频道，不重复显示）
     pushDynamic();
   } else {
     // 动态频道：显示固有分类徽章
-    const cat = CATEGORY_BADGES[card.category];
-    if (cat) badges.push(cat);
+    badges.push(card.category);
   }
   return badges;
 }
@@ -169,7 +179,7 @@ function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel, o
     <article className={`card${dismissing ? " dismissing" : ""}`} onClick={() => onOpen(card)}>
       {liked && (
         <span className="card-liked" title="已点赞">
-          ❤️
+          <Heart size={14} fill="currentColor" />
         </span>
       )}
       <div className="card-header">
@@ -194,13 +204,17 @@ function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel, o
             <span className="repo-name">{card.name}</span>
           </span>
           <div className="card-subtitle">
-            <span className={`source-badge source-${card.source}`}>{sourceLabel(card.source)}</span>
+            <SourceBadge src={card.source} />
             <span>{timeAgo(card.ts)}</span>
-            {badges.map((b) => (
-              <span key={b} className="card-badge">
-                {b}
-              </span>
-            ))}
+            {badges.map((b) => {
+              const BI = BADGE_ICONS[b];
+              return (
+                <span key={b} className="card-badge">
+                  {BI && <BI size={12} />}
+                  {BADGE_LABELS[b] ?? b}
+                </span>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -211,9 +225,14 @@ function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel, o
 
       <div className="card-meta">
         <span className="meta-item stars" title={`${card.stars} stars`}>
-          ★ {formatStars(card.stars)}
+          <Star size={14} />
+          {formatStars(card.stars)}
         </span>
-        {card.starGrowth > 0 && <span className="meta-item growth">+{card.starGrowth}</span>}
+        {card.starGrowth > 0 && (
+          <span className="meta-item growth">
+            <TrendingUp size={14} />+{card.starGrowth}
+          </span>
+        )}
         {card.language && (
           <span className="meta-item">
             <span className="lang-dot" style={{ background: langColor }} />
@@ -300,7 +319,7 @@ export function CardDetail({
     <div className="detail-overlay" onClick={onClose}>
       <div className="detail-card" onClick={(e) => e.stopPropagation()}>
         <button className="detail-close" onClick={onClose}>
-          ✕
+          <X size={18} />
         </button>
 
         <div className="detail-header">
@@ -312,7 +331,7 @@ export function CardDetail({
               <span className="repo-name">{card.name}</span>
             </div>
             <div className="detail-subtitle">
-              <span className={`source-badge source-${card.source}`}>{sourceLabel(card.source)}</span>
+              <SourceBadge src={card.source} />
               <span>{timeAgo(card.ts)}</span>
               {onOpenCreator && (
                 <button
@@ -320,7 +339,8 @@ export function CardDetail({
                   title={`查看 ${card.owner} 的创作者页`}
                   onClick={() => onOpenCreator(card.owner)}
                 >
-                  👤 查看创作者
+                  <UserRound size={14} />
+                  查看创作者
                 </button>
               )}
             </div>
@@ -345,9 +365,14 @@ export function CardDetail({
 
         <div className="detail-meta">
           <span className="meta-item stars" title={`${card.stars} stars`}>
-            ★ {formatStars(card.stars)} stars
+            <Star size={14} />
+            {formatStars(card.stars)} stars
           </span>
-          {card.starGrowth > 0 && <span className="meta-item growth">+{card.starGrowth} 今日增长</span>}
+          {card.starGrowth > 0 && (
+            <span className="meta-item growth">
+              <TrendingUp size={14} />+{card.starGrowth} 今日增长
+            </span>
+          )}
           {card.language && (
             <span className="meta-item">
               <span className="lang-dot" style={{ background: langColor }} />
@@ -369,7 +394,7 @@ export function CardDetail({
 
         {card.bigbros.length > 0 && (
           <div className="detail-bigbro">
-            <span style={{ fontSize: "1.1rem" }}>👥</span>
+            <Users size={16} />
             <span>
               <strong style={{ color: "#c4b5fd" }}>{card.bigbros.slice(0, 3).join("、")}</strong>
               {card.bigbros.length > 3 && ` 等${card.bigbros.length}位`} 关注的大牛 star 了
@@ -382,13 +407,13 @@ export function CardDetail({
             className={`action-btn like-btn${liked ? " active" : ""}`}
             onClick={() => onLike(card.repo)}
           >
-            👍
+            <ThumbsUp size={20} />
           </button>
           <button
             className={`action-btn dislike-btn${disliked ? " active" : ""}`}
             onClick={() => onDislike(card.repo)}
           >
-            👎
+            <ThumbsDown size={20} />
           </button>
           <button
             className={`action-btn bookmark-btn${inCollections.length > 0 ? " active" : ""}`}
@@ -397,10 +422,11 @@ export function CardDetail({
               inCollections.length > 0 ? `已收藏到 ${inCollections.map((c) => c.name).join("、")}` : "收藏"
             }
           >
-            ⭐
+            <Star size={20} />
           </button>
           <a href={card.url} target="_blank" rel="noopener noreferrer" className="action-btn open-btn">
-            GitHub 主页 ↗
+            <ExternalLink size={18} />
+            GitHub 主页
           </a>
         </div>
 
@@ -410,7 +436,7 @@ export function CardDetail({
             <div className="picker-header">
               <span>选择收藏夹</span>
               <button className="picker-close" onClick={() => setShowPicker(false)}>
-                ✕
+                <X size={16} />
               </button>
             </div>
             <div className="picker-list">

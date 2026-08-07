@@ -121,7 +121,22 @@ button {
   height: 60px;
 }
 
+/* 行内图标通用类：与文字基线对齐（lucide SVG 行内场景） */
+.icon {
+  display: inline;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}
+
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.logo-text {
   font-size: 1.4rem;
   font-weight: 700;
   background: var(--accent-gradient);
@@ -129,7 +144,6 @@ button {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .tabs {
@@ -257,7 +271,8 @@ button {
 }
 
 .side-icon {
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -289,7 +304,8 @@ button {
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
 }
 .ch-icon {
-  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
   line-height: 1;
 }
 .ch-title {
@@ -491,6 +507,9 @@ button {
   border-radius: 10px;
   font-weight: 500;
   font-size: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 .source-trending {
   background: rgba(245, 158, 11, 0.12);
@@ -514,6 +533,9 @@ button {
   background: var(--accent-light);
   color: var(--accent);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
 /* 通俗概括（最多 2 行截断；高度自适应——行高由虚拟列表真实测量，不撑高不裁剪） */
@@ -913,6 +935,8 @@ button {
   color: var(--text-muted);
   font-size: 0.85rem;
   transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
 }
 .picker-close:hover {
   background: var(--accent-light);
@@ -1021,6 +1045,9 @@ button {
   transition: all 0.25s ease;
   font-weight: 500;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 .me-subnav-btn:hover {
   background: var(--accent-light);
@@ -1044,6 +1071,9 @@ button {
   font-size: 0.95rem;
   color: var(--text-secondary);
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .collection-folder {
@@ -1071,17 +1101,18 @@ button {
 }
 
 .folder-chevron {
-  font-size: 0.7rem;
+  display: inline-flex;
+  align-items: center;
   color: var(--text-muted);
   transition: transform 0.25s ease;
-  display: inline-block;
 }
 .folder-chevron.open {
   transform: rotate(90deg);
 }
 
 .folder-icon {
-  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
 }
 .folder-name {
   font-size: 1rem;
@@ -1097,10 +1128,11 @@ button {
   margin-left: auto;
   padding: 4px 8px;
   border-radius: 6px;
-  font-size: 0.85rem;
   opacity: 0;
   transition: all 0.2s;
   color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
 }
 .folder-header:hover .folder-delete {
   opacity: 1;
@@ -1245,6 +1277,8 @@ button {
   color: var(--text-muted);
   font-size: 1rem;
   transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
 }
 .search-clear:hover {
   color: var(--text);
@@ -1361,6 +1395,9 @@ button {
   .logo {
     font-size: 1.1rem;
   }
+  .logo-text {
+    font-size: 1.1rem;
+  }
   .tab {
     padding: 6px 14px;
     font-size: 0.82rem;
@@ -1452,6 +1489,9 @@ button {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 .detail-creator-btn:hover {
   border-color: var(--accent);
@@ -1476,6 +1516,9 @@ button {
   cursor: pointer;
   transition: all 0.2s;
   margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 .creator-back:hover {
   border-color: var(--accent);
@@ -1532,6 +1575,9 @@ button {
   font-weight: 600;
   text-decoration: none;
   transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 .creator-github:hover {
   border-color: var(--accent);
@@ -1635,6 +1681,8 @@ button {
   text-decoration: none;
   transition: all 0.2s;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
 }
 .creator-item-github:hover {
   border-color: var(--accent);
@@ -1651,6 +1699,9 @@ button {
   cursor: pointer;
   transition: all 0.2s;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 .creator-item-unfollow:hover {
   border-color: var(--danger);

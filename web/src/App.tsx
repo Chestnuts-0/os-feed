@@ -2,6 +2,26 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import type { FeedCard, Collection } from "./types.ts";
 import { FeedCardMemo, CardDetail, GithubAvatar } from "./FeedCard.tsx";
+import {
+  AlertTriangle,
+  ArrowLeft,
+  ChevronRight,
+  ExternalLink,
+  Folder,
+  Heart,
+  Home,
+  Inbox,
+  Search,
+  Star,
+  ThumbsDown,
+  ThumbsUp,
+  Trash2,
+  User,
+  UserMinus,
+  X,
+  CHANNEL_ICONS,
+  GitTokLogo,
+} from "./icons.tsx";
 import "./styles.css";
 
 // ---------------------------------------------------------------------------
@@ -45,21 +65,27 @@ const SNAPSHOT_CAP = 1000; // 喜欢/收藏快照总条数上限（~1KB/张，1M
 
 // 动态分区（不互斥，可有可无）
 const DYNAMIC_SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
-  { key: "recommended", icon: "⭐", title: "推荐", desc: "为你挑选" },
-  { key: "hot", icon: "🔥", title: "热门", desc: "高星项目" },
-  { key: "daily", icon: "📈", title: "每日", desc: "今日star增长" },
-  { key: "following", icon: "❤️", title: "关注", desc: "关注创作者的项目" },
+  { key: "recommended", icon: "sparkles", title: "推荐", desc: "为你挑选" },
+  { key: "hot", icon: "flame", title: "热门", desc: "高星项目" },
+  { key: "daily", icon: "trending-up", title: "每日", desc: "今日star增长" },
+  { key: "following", icon: "heart", title: "关注", desc: "关注创作者的项目" },
 ];
 
 // 固有分区（互斥，每个项目必有其一）
 const CATEGORY_SECTIONS: { key: string; icon: string; title: string; desc: string }[] = [
-  { key: "ai", icon: "🤖", title: "AI", desc: "AI核心技术" },
-  { key: "fun", icon: "🎮", title: "兴趣", desc: "好玩有趣" },
-  { key: "tool", icon: "🛠️", title: "工具", desc: "Agent Skill / 效率工具" },
-  { key: "learning", icon: "📚", title: "学习", desc: "学英语学代码" },
+  { key: "ai", icon: "bot", title: "AI", desc: "AI核心技术" },
+  { key: "fun", icon: "gamepad", title: "兴趣", desc: "好玩有趣" },
+  { key: "tool", icon: "wrench", title: "工具", desc: "Agent Skill / 效率工具" },
+  { key: "learning", icon: "book", title: "学习", desc: "学英语学代码" },
 ];
 
 const ALL_SECTIONS = [...DYNAMIC_SECTIONS, ...CATEGORY_SECTIONS];
+
+/** 频道图标渲染（按 SECTIONS icon 字段查 map，找不到渲染 null） */
+function SectionIcon({ icon, size = 18 }: { icon: string; size?: number }) {
+  const Icon = CHANNEL_ICONS[icon];
+  return Icon ? <Icon size={size} /> : null;
+}
 
 /** 推荐分区每页条数 */
 const RECOMMEND_SIZE = 60;
@@ -988,15 +1014,20 @@ export default function App() {
     <div className="app">
       <header className="header">
         <div className="header-inner">
-          <h1 className="logo">📡 GitTok</h1>
+          <h1 className="logo">
+            <GitTokLogo />
+          </h1>
           <nav className="tabs">
             <button className={`tab${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
+              <Home size={16} />
               首页
             </button>
             <button className={`tab${tab === "search" ? " active" : ""}`} onClick={() => setTab("search")}>
+              <Search size={16} />
               搜索
             </button>
             <button className={`tab${tab === "me" ? " active" : ""}`} onClick={() => setTab("me")}>
+              <User size={16} />
               我的 {feedback.likes.length > 0 && <span className="tab-count">{feedback.likes.length}</span>}
             </button>
           </nav>
@@ -1008,7 +1039,8 @@ export default function App() {
         {creatorOwner && (
           <div className="creator-page">
             <button className="creator-back" onClick={() => setCreatorOwner(null)}>
-              ← 返回
+              <ArrowLeft size={16} />
+              返回
             </button>
             <div className="creator-header">
               <GithubAvatar owner={creatorOwner} size={128} className="creator-avatar" />
@@ -1021,7 +1053,8 @@ export default function App() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    GitHub ↗
+                    <ExternalLink size={14} />
+                    GitHub
                   </a>
                 </div>
                 <button
@@ -1064,12 +1097,18 @@ export default function App() {
         )}
         {tab === "feed" && error && (
           <div className="status error">
-            <p>⚠️ 加载失败: {error}</p>
+            <p>
+              <AlertTriangle size={16} className="icon" />
+              加载失败: {error}
+            </p>
           </div>
         )}
         {tab === "feed" && !loading && !error && sections.length === 0 && (
           <div className="status">
-            <p>📭 暂无内容</p>
+            <p>
+              <Inbox size={16} className="icon" />
+              暂无内容
+            </p>
           </div>
         )}
         {tab === "feed" && !loading && !error && sections.length > 0 && (
@@ -1086,7 +1125,9 @@ export default function App() {
                     className={`side-item${feedChannel === s.key ? " active" : ""}`}
                     onClick={() => switchFeedChannel(s.key)}
                   >
-                    <span className="side-icon">{s.icon}</span>
+                    <span className="side-icon">
+                      <SectionIcon icon={s.icon} size={18} />
+                    </span>
                     <span className="side-text">{s.title}</span>
                   </button>
                 ))}
@@ -1099,7 +1140,9 @@ export default function App() {
                     className={`side-item${feedChannel === s.key ? " active" : ""}`}
                     onClick={() => switchFeedChannel(s.key)}
                   >
-                    <span className="side-icon">{s.icon}</span>
+                    <span className="side-icon">
+                      <SectionIcon icon={s.icon} size={18} />
+                    </span>
                     <span className="side-text">{s.title}</span>
                   </button>
                 ))}
@@ -1108,7 +1151,10 @@ export default function App() {
             <div className="feed-content">
               {feedChannel === "following" && !activeSection && (
                 <div className="status">
-                  <p>❤️ 关注创作者后，他们的项目会出现在这里</p>
+                  <p>
+                    <Heart size={16} className="icon" />
+                    关注创作者后，他们的项目会出现在这里
+                  </p>
                   <p className="hint">去项目卡片上点创作者名即可关注</p>
                 </div>
               )}
@@ -1116,7 +1162,9 @@ export default function App() {
                 <>
                   {feedChannel !== "recommended" && (
                     <div className="channel-head">
-                      <span className="ch-icon">{activeSection.icon}</span>
+                      <span className="ch-icon">
+                        <SectionIcon icon={activeSection.icon} size={18} />
+                      </span>
                       <span className="ch-title">{activeSection.title}</span>
                       <span className="ch-count">
                         {activeSection.cards.length} 个项目 · {activeSection.desc}
@@ -1146,18 +1194,21 @@ export default function App() {
                 className={`me-subnav-btn${meView === "liked" ? " active" : ""}`}
                 onClick={() => setMeView("liked")}
               >
+                <ThumbsUp size={16} />
                 喜欢
               </button>
               <button
                 className={`me-subnav-btn${meView === "collections" ? " active" : ""}`}
                 onClick={() => setMeView("collections")}
               >
+                <Star size={16} />
                 收藏
               </button>
               <button
                 className={`me-subnav-btn${meView === "following" ? " active" : ""}`}
                 onClick={() => setMeView("following")}
               >
+                <Heart size={16} />
                 关注
               </button>
             </div>
@@ -1165,12 +1216,17 @@ export default function App() {
             {meView === "liked" && (
               <>
                 <div className="collections-header">
-                  <span className="collections-stats">👍 共 {feedback.likes.length} 个喜欢的项目</span>
+                  <span className="collections-stats">
+                    <ThumbsUp size={14} className="icon" />共 {feedback.likes.length} 个喜欢的项目
+                  </span>
                 </div>
                 {likedCards.length === 0 ? (
                   <div className="status">
-                    <p>📭 还没有喜欢的项目</p>
-                    <p className="hint">在项目详情中点 ❤️ 开始喜欢</p>
+                    <p>
+                      <Inbox size={16} className="icon" />
+                      还没有喜欢的项目
+                    </p>
+                    <p className="hint">在项目详情中点赞即可开始喜欢</p>
                   </div>
                 ) : (
                   <div className="feed-list">
@@ -1192,15 +1248,18 @@ export default function App() {
               <>
                 <div className="collections-header">
                   <span className="collections-stats">
-                    📊 共 {collections.length} 个收藏夹 ·{" "}
+                    <Folder size={14} className="icon" />共 {collections.length} 个收藏夹 ·{" "}
                     {collections.reduce((sum, c) => sum + c.repos.length, 0)} 个项目
                   </span>
                 </div>
 
                 {collections.length === 0 && (
                   <div className="status">
-                    <p>📭 还没有收藏夹</p>
-                    <p className="hint">点击项目详情中的 ⭐ 按钮开始收藏</p>
+                    <p>
+                      <Inbox size={16} className="icon" />
+                      还没有收藏夹
+                    </p>
+                    <p className="hint">在项目详情中点击收藏按钮即可收藏</p>
                   </div>
                 )}
 
@@ -1216,8 +1275,12 @@ export default function App() {
                         className="folder-header"
                         onClick={() => setExpandedCols((prev) => ({ ...prev, [col.id]: !prev[col.id] }))}
                       >
-                        <span className={`folder-chevron${expanded ? " open" : ""}`}>▶</span>
-                        <span className="folder-icon">📁</span>
+                        <span className={`folder-chevron${expanded ? " open" : ""}`}>
+                          <ChevronRight size={14} />
+                        </span>
+                        <span className="folder-icon">
+                          <Folder size={18} />
+                        </span>
                         <span className="folder-name">{col.name}</span>
                         <span className="folder-count">({col.repos.length}个)</span>
                         <button
@@ -1228,7 +1291,7 @@ export default function App() {
                           }}
                           title="删除收藏夹"
                         >
-                          🗑
+                          <Trash2 size={16} />
                         </button>
                       </div>
                       {expanded && (
@@ -1251,7 +1314,7 @@ export default function App() {
                                     onClick={() => handleRemoveFromCollection(col.id, card.repo)}
                                     title="移出收藏夹"
                                   >
-                                    ✕
+                                    <X size={16} />
                                   </button>
                                 </div>
                               ))}
@@ -1272,7 +1335,9 @@ export default function App() {
             {meView === "following" && (
               <>
                 <div className="collections-header">
-                  <span className="collections-stats">❤️ 共 {following.length} 位关注的创作者</span>
+                  <span className="collections-stats">
+                    <Heart size={14} className="icon" />共 {following.length} 位关注的创作者
+                  </span>
                 </div>
                 {following.length === 0 ? (
                   <div className="status">
@@ -1299,7 +1364,7 @@ export default function App() {
                           title="GitHub 主页"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          ↗
+                          <ExternalLink size={16} />
                         </a>
                         <button
                           className="creator-item-unfollow"
@@ -1308,6 +1373,7 @@ export default function App() {
                             toggleFollow(owner);
                           }}
                         >
+                          <UserMinus size={14} />
                           取关
                         </button>
                       </div>
@@ -1333,13 +1399,16 @@ export default function App() {
               />
               {searchQuery && (
                 <button className="search-clear" onClick={() => setSearchQuery("")}>
-                  ✕
+                  <X size={16} />
                 </button>
               )}
             </div>
             {searchQuery && searchResults.length === 0 && (
               <div className="status">
-                <p>🔍 没搜到，换个关键词试试？</p>
+                <p>
+                  <Search size={16} className="icon" />
+                  没搜到，换个关键词试试？
+                </p>
               </div>
             )}
             {searchResults.length > 0 && (
@@ -1369,7 +1438,8 @@ export default function App() {
           {stats.total} 个项目 · {stats.sections} 个分区 ·{" "}
         </span>
         <span>
-          👍 {feedback.likes.length} · 👎 {feedback.dislikes.length}
+          <ThumbsUp size={14} className="icon" /> {feedback.likes.length} ·{" "}
+          <ThumbsDown size={14} className="icon" /> {feedback.dislikes.length}
         </span>
       </footer>
 
