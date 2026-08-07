@@ -665,13 +665,15 @@ export default function App() {
     });
   }, []);
 
-  // 历史数据迁移：feed 加载完成后，为旧的 likes/收藏（只有 repo 名）补快照——
-  // repo 还在当天数据里的自动补上；已消失的无法找回（数据从未存过本地）
+  // 历史数据迁移：feed 加载完成后——
+  // 1) 为旧的 likes/收藏（只有 repo 名）补快照：repo 还在当天数据里的自动补上
+  // 2) 清理无数据记录：无快照且不在当天数据的（历史遗留无法找回），从列表中移除，避免「N 个喜欢 0 个可展示」
   useEffect(() => {
     if (cards.length === 0) return;
     setFeedback((prev) => {
       let changed = false;
       const likedSnapshots = { ...(prev.likedSnapshots ?? {}) };
+      // 1) 补快照
       for (const repo of prev.likes) {
         if (!likedSnapshots[repo] && Object.keys(likedSnapshots).length < SNAPSHOT_CAP) {
           const card = cards.find((c) => c.repo === repo);
@@ -681,8 +683,13 @@ export default function App() {
           }
         }
       }
+      // 2) 清理无数据记录（有快照的保留——快照是主要数据源，不依赖当天数据）
+      const keptLikes = prev.likes.filter(
+        (repo) => likedSnapshots[repo] || cards.some((c) => c.repo === repo),
+      );
+      if (keptLikes.length !== prev.likes.length) changed = true;
       if (!changed) return prev;
-      const next = { ...prev, likedSnapshots };
+      const next = { ...prev, likes: keptLikes, likedSnapshots };
       saveFeedback(next);
       return next;
     });
@@ -690,6 +697,7 @@ export default function App() {
       let changed = false;
       const next = prev.map((col) => {
         const snapshots = { ...(col.snapshots ?? {}) };
+        // 1) 补快照
         for (const repo of col.repos) {
           if (!snapshots[repo] && Object.keys(snapshots).length < SNAPSHOT_CAP) {
             const card = cards.find((c) => c.repo === repo);
@@ -699,7 +707,10 @@ export default function App() {
             }
           }
         }
-        return Object.keys(snapshots).length > 0 ? { ...col, snapshots } : col;
+        // 2) 清理无数据记录
+        const keptRepos = col.repos.filter((repo) => snapshots[repo] || cards.some((c) => c.repo === repo));
+        if (keptRepos.length !== col.repos.length) changed = true;
+        return { ...col, repos: keptRepos, snapshots };
       });
       if (!changed) return prev;
       saveCollections(next);
@@ -935,10 +946,7 @@ export default function App() {
         {tab === "liked" && (
           <>
             <div className="collections-header">
-              <span className="collections-stats">
-                👍 共 {feedback.likes.length} 个喜欢的项目 · {likedCards.length} 个可展示
-                {likedCards.length < feedback.likes.length && "（其余已不在数据中）"}
-              </span>
+              <span className="collections-stats">👍 共 {feedback.likes.length} 个喜欢的项目</span>
             </div>
             {likedCards.length === 0 ? (
               <div className="status">
