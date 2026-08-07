@@ -6,7 +6,9 @@ import type { FeedCard } from "../feed/types.ts";
 // 固有标签（互斥、全覆盖、tool 兜底）
 // ---------------------------------------------------------------------------
 
-function mkCard(overrides: Partial<FeedCard>): Pick<FeedCard, "repo" | "desc" | "topics" | "aiDims" | "owner" | "stars" | "starGrowth"> {
+function mkCard(
+  overrides: Partial<FeedCard>,
+): Pick<FeedCard, "repo" | "desc" | "topics" | "aiDims" | "owner" | "stars" | "starGrowth"> {
   return {
     repo: "owner/repo",
     desc: "a generic description",
