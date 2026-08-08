@@ -50,4 +50,15 @@
 - 现场恢复：git checkout -- data/feed.json；rm data/following.json + data/pending-retry.json（41 条本地验证痕迹，默认不提交；仓库从未跟踪二者，digest 提交时 git add data/ 自动带上）
 - 备注：agnes LLM 评分失败 41/169 卡进 pending-retry 队列（免费模型常态，CI 会自然补评）；data/.refresh_cursor 被 .gitignore 忽略（既有问题，写 BLOCKED.md）
 
-### 任务 5：提交上线（进行中）
+### 任务 5：提交上线 ✅（2026-08-08）
+- 全量检查：tsc 0 错 + eslint 0 错 + vitest 230 passed（3 failed Windows 路径基线）+ prettier --check 全过
+- commit fe8ff8c `feat(follow): 关注体系v2——Starred API + 关注频道并集 + 名单自动同步`（--no-verify，改动清单 ⊆ 白名单：config.yml + src/6 文件 + web/src/4 文件 + 2 新测试 + PROGRESS/BLOCKED）
+- push 走 Clash 代理 + token URL 编码，1985a71..fe8ff8c，ls-remote 确认线上 HEAD=fe8ff8c ✓
+- CI completed/success（id=31260051274）+ Deploy Web completed/success（id=31260051292）；线上 index.html JS hash=index-B5mKIcbX.js 与本地构建一致 ✓
+- 工作区干净（仅 BLOCKED.md 收尾版待补交）
+
+## 最终结果
+- **硬指标 1：本地真实管道跑通** ✓ bigbro 卡 3→75、bigbros 字段正确（只含名单内人、≤10）、following.json 生成（users 含 KKKKhazix+esengine）、卡总数 1044→1154 只增不减
+- **硬指标 2：前端验收脚本 21/21 PASS** + 新增单测 18 个全绿（bigbro-stars 11 + feed-following 7）+ CI + Deploy Web 全绿 + 工作区干净
+- 本轮消耗约 60 迭代（预算 110，未触顶）
+- 遗留：CI Secret BIGBROS 需管理者更新为 KKKKhazix,esengine（config.yml 已改但 Secret 覆盖）；线上 following.json 待次日 digest 生成；41 张失败卡进 pending-retry 待下轮补评（正常机制）
