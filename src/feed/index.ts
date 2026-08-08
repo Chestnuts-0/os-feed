@@ -813,15 +813,17 @@ export async function generateFeed(
       });
     }
     const abandoned = [...retryMap.values()].filter((pe) => pe.retryCount >= PENDING_MAX_RETRIES).length;
-    const nextEntries = [...retryMap.values()]
-      .filter((pe) => pe.retryCount < PENDING_MAX_RETRIES)
-      .sort((a, b) => a.repo.localeCompare(b.repo))
-      .slice(0, PENDING_MAX);
+    const entriesBeforeCap = [...retryMap.values()].filter((pe) => pe.retryCount < PENDING_MAX_RETRIES);
+    const truncated = Math.max(0, entriesBeforeCap.length - PENDING_MAX);
+    const nextEntries = entriesBeforeCap.sort((a, b) => a.repo.localeCompare(b.repo)).slice(0, PENDING_MAX);
     savePendingRetries(nextEntries);
     if (abandoned > 0) {
       console.log(
         `  [feed/pending] abandoned ${abandoned} repos after ${PENDING_MAX_RETRIES} failed retries`,
       );
+    }
+    if (truncated > 0) {
+      console.log(`  [feed/pending] truncated ${truncated} repos over queue cap (${PENDING_MAX})`);
     }
   }
 

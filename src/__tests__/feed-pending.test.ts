@@ -356,4 +356,39 @@ describe("feed pending-retry 队列", () => {
     const arr = readJson<Record<string, unknown>[]>(pendingPath());
     expect(arr).toEqual([]);
   });
+
+  it("队列条目今天也被抓到 → 用今天新数据评分（不重复恢复），成功则出队", async () => {
+    // 队列里有 repo，今天数据源里恰好也抓到它（数据漂移后再次出现）
+    memFs.set(
+      pendingPath(),
+      JSON.stringify([
+        {
+          repo: "again/repo",
+          desc: "旧快照描述",
+          stars: 999,
+          language: "TypeScript",
+          topics: [],
+          source: "search",
+          starGrowth: 0,
+          bigbros: [],
+          ts: "2026-08-07T00:00:00.000Z",
+          retryCount: 1,
+        },
+      ]),
+    );
+    // 今天抓到它：stars 更新为 500、desc 更新
+    const trending = makeTrendingData(["again/repo"]);
+    llmMock.impl = () => scoreJson("again/repo");
+
+    const cards = await generateFeed(cfg, trending, []);
+
+    const card = cards.find((c) => c.repo === "again/repo");
+    expect(card).toBeDefined();
+    // 用的是今天抓取的新数据（stars=100 而非快照 999）
+    expect(card!.stars).toBe(100);
+    expect(card!.desc).toBe("描述 0");
+    // 评分成功 → 出队
+    const arr = readJson<Record<string, unknown>[]>(pendingPath());
+    expect(arr).toEqual([]);
+  });
 });
