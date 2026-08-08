@@ -1,5 +1,41 @@
 # GitTok 内容多样性修复 — PROGRESS.md
 
+## 🔄 GitTok 待补评队列（2026-08-08，管道缺陷修复，commit 6f2711f）
+
+### 背景与拍板
+- 缺陷实证：增量管道「评分失败卡被 L648 continue 跳过 → 不进 baseline → 永不补评丢卡」（任务书 G 全量重评 7 轮补救、今日 digest 日志 4/13 批次部分失败均实证）
+- 第一性原理审视（栗子要求深思）：场景矩阵推演 → 正常增量下失败卡 100% 是新卡（历史卡缓存命中不会失败）→ 「从上次 feed.json 兜底旧内容」在正常场景无旧内容可兜 → **兜底语义修正 = 兜底「重试机会」而非「旧内容」**（pending 队列持久化）
+- v1.0 自我推翻 ①：队列文件 gitignore 会导致 CI clean checkout 每轮从空队列开始（修复落空，.refresh_cursor 日志 cursor 0/1052 实证）→ **队列文件随 digest 提交进仓库**
+- v1.0 自我推翻 ②：僵尸条目挤占新卡评分名额 → cap 300 + 连败 7 轮放弃
+- 栗子拍板 v1.1 执行
+
+### 实现（src/feed/index.ts +151/-5）
+- [x] PENDING_PATH=data/pending-retry.json（提交仓库，本地/CI 一致）；PENDING_MAX=300；PENDING_MAX_RETRIES=7
+- [x] loadPendingRetries（容错：损坏/缺失=空队列，digest 主流程绝不能挂）
+- [x] 1.5 节恢复：队列 repo 强制并入 repoMap（今天已抓到的用新数据，未抓到的用快照）+ 快照 stars 入 baselineStars 作增长基准；retryCount≥7 跳过恢复
+- [x] 评分队列 pending 优先（pendingFirst 排 nonSearch/roundRobin 之前）
+- [x] 组装循环收集 failedThisRound；4.5 节更新队列：成功出队（scoredNow）+ **已有评分缓存命中出队（防僵尸残留，实测发现后补）** + 失败 retryCount+1 + 放弃清理 + cap
+- [x] 失败卡永不写 feed.json（前端零影响，不回引空行/空字段回归）
+
+### 验证
+- [x] 单测 7/7（src/__tests__/feed-pending.test.ts，vi.mock node:fs 内存文件系统 + callLlm 可控）：
+  ①失败入队（快照完整+retryCount=1）②恢复补评（当天未再被抓取也恢复）+成功出队 ③部分成败（a 出队 b 留队递增）④队列损坏容错 ⑤连败 7 轮放弃 ⑥cap 300 ⑦缓存命中自愈出队
+- [x] 本地真实管道 3 轮（NODE_OPTIONS + export 代理）：
+  - 轮1：baseline 1044 → 8 新卡全评分成功 → saved 1045（+jackc/pgx）零丢失；无失败不创建队列文件
+  - 轮2（故障注入 microsoft/vscode——选错，已在 feed 缓存命中）：发现僵尸残留缺陷 → 补「缓存命中出队」逻辑
+  - 轮3（故障注入 octocat/Hello-World 真幽灵）：restored 1/2（octocat 恢复、vscode 跳过）→ 8 待评（7 新+1 恢复）全成功 → octocat 进 feed（28/107 字、stars 3753）→ 队列清空 [] → 1044→1046 零丢失
+- [x] prettier + tsc + eslint 全过；CI #31242751534 全绿（Lint/Format/Typecheck/Test）；本地 3 个失败为已知 Windows 路径分隔符（CI 无）
+- [x] Deploy Web 未触发 = 正确（paths 只含 web/** data/**，本次只改 src/ 后端；前端站点无需重新部署）
+- [x] 现场恢复：本地跑产物 feed.json 恢复 HEAD 版（octocat 是测试卡不提交线上）、空队列文件删除
+
+### 遗留/说明
+- 明早 08:00 digest 为新代码首个线上实证（队列文件随 digest 提交，跨轮持久化生效）
+- 队列文件被 git add data/ 收录（gitignore 不加，v1.1 拍板）；本地跑管道后 git status 会出现 data/pending-retry.json（空=可删，非空=随数据提交）
+
+---
+
+# GitTok 内容多样性修复 — PROGRESS.md
+
 ## GitTok 体验问题修复 v2（任务书 G v1.0）—— 2026-08-07 深夜
 
 ### 开工回执（任务 0）
