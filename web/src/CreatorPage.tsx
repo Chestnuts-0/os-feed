@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ArrowLeft, ExternalLink } from "./icons.tsx";
 import { FeedCardMemo, GithubAvatar } from "./FeedCard.tsx";
 import type { FeedCard } from "./types.ts";
@@ -31,6 +32,12 @@ export function CreatorPage({
   onOpenCreator,
   onBack,
 }: CreatorPageProps) {
+  // 关注提示：isFollowing 变化时显示/隐藏（关注 → 提示次日生效；取关 → 隐藏）
+  const [followHint, setFollowHint] = useState(false);
+  useEffect(() => {
+    setFollowHint(isFollowing);
+  }, [isFollowing]);
+
   return (
     <div className="creator-page">
       <button className="creator-back" onClick={onBack}>
@@ -58,6 +65,11 @@ export function CreatorPage({
           >
             {isFollowing ? "已关注" : "+ 关注"}
           </button>
+          {followHint && (
+            <div className="hint creator-follow-hint">
+              已关注。TA 的 star 项目流次日随数据更新（在 GitHub 上关注 TA 效果相同）
+            </div>
+          )}
           <div className="creator-count">{projects.length} 个项目</div>
         </div>
       </div>

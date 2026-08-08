@@ -11,6 +11,24 @@ export type FeedSource = "trending" | "bigbro" | "search";
 /** 标签来源 */
 export type TagSource = "llm" | "github" | "language";
 
+/** 大牛 star 采集结果（与 src/bigbro-stars.ts 同步；Starred API 自带 repo 详情，免二次 fetch） */
+export interface BigbroStar {
+  /** owner/repo */
+  repo: string;
+  /** star 了该项目的大牛列表 */
+  bigbros: string[];
+  /** 最近一次 star 的 ISO 时间（Starred API 不带 star 时间，用 repo pushed_at 近似） */
+  ts: string;
+  /** 项目描述 */
+  desc?: string;
+  /** star 数 */
+  stars?: number;
+  /** 主语言 */
+  language?: string;
+  /** topics */
+  topics?: string[];
+}
+
 /** 综合标签（多来源融合） */
 export interface Tag {
   /** 标签文本 */

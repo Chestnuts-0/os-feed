@@ -25,6 +25,7 @@ interface RawConfig {
   openclaw?: RawRepoEntry;
   openclaw_peers?: RawRepoEntry[];
   bigbros?: string[];
+  following_user?: string;
   trending_topics?: { q: string; label: string; quota?: number }[];
   star_threshold?: number;
   interests?: { ai?: number; fun?: number; practical?: number; ai_interests_text?: string };
@@ -49,6 +50,8 @@ export interface RadarConfig {
   openclaw: RepoConfig;
   openclawPeers: RepoConfig[];
   bigbros: string[];
+  /** 用于自动同步关注名单的 GitHub 账号（其 follow 列表 ∪ bigbros 构成大牛名单） */
+  followingUser?: string;
   trendingTopics: TrendingTopic[];
   starThreshold: number;
   interests: InterestProfile;
@@ -125,6 +128,8 @@ const DEFAULT_TRENDING_TOPICS: TrendingTopic[] = [
 
 const DEFAULT_BIGBROS: string[] = [];
 
+const DEFAULT_FOLLOWING_USER = "";
+
 const DEFAULT_STAR_THRESHOLD = 100;
 
 const DEFAULT_INTERESTS: InterestProfile = {
@@ -153,6 +158,7 @@ export function loadConfig(configPath = "config.yml"): RadarConfig {
       openclaw: DEFAULT_OPENCLAW,
       openclawPeers: DEFAULT_OPENCLAW_PEERS,
       bigbros: DEFAULT_BIGBROS,
+      followingUser: DEFAULT_FOLLOWING_USER,
       trendingTopics: DEFAULT_TRENDING_TOPICS,
       starThreshold: DEFAULT_STAR_THRESHOLD,
       interests: DEFAULT_INTERESTS,
@@ -199,6 +205,14 @@ export function loadConfig(configPath = "config.yml"): RadarConfig {
       .filter(Boolean) ?? [];
   const bigbros = envBigbros.length > 0 ? envBigbros : configBigbros;
 
+  // following_user：config.yml 配置 + 环境变量 FOLLOWING_USER 覆盖（env 优先，模式同 BIGBROS）
+  const configFollowingUser =
+    typeof raw?.following_user === "string" && raw.following_user.trim()
+      ? raw.following_user.trim()
+      : DEFAULT_FOLLOWING_USER;
+  const envFollowingUser = process.env["FOLLOWING_USER"]?.trim() ?? "";
+  const followingUser = envFollowingUser !== "" ? envFollowingUser : configFollowingUser;
+
   const starThreshold = typeof raw?.star_threshold === "number" ? raw.star_threshold : DEFAULT_STAR_THRESHOLD;
 
   const interests: InterestProfile = {
@@ -211,8 +225,19 @@ export function loadConfig(configPath = "config.yml"): RadarConfig {
   console.log(
     `[config] Loaded from ${configPath}: ` +
       `${cliRepos.length} CLI repos, ${openclawPeers.length} OpenClaw peers, ` +
-      `${trendingTopics.length} trending topics, ${bigbros.length} bigbros`,
+      `${trendingTopics.length} trending topics, ${bigbros.length} bigbros, ` +
+      `following_user=${followingUser || "(none)"}`,
   );
 
-  return { cliRepos, skillsRepo, openclaw, openclawPeers, bigbros, trendingTopics, starThreshold, interests };
+  return {
+    cliRepos,
+    skillsRepo,
+    openclaw,
+    openclawPeers,
+    bigbros,
+    followingUser,
+    trendingTopics,
+    starThreshold,
+    interests,
+  };
 }

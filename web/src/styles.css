@@ -1396,6 +1396,14 @@ button {
   line-height: 1.8;
 }
 
+/* 创作者页关注提示（复用 hint 视觉参数：muted 小字） */
+.creator-follow-hint {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
 /* --- 加载动画 --- */
 .spinner {
   width: 36px;

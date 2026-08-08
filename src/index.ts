@@ -494,10 +494,11 @@ async function main(): Promise<void> {
   // 开源版抖音信息流：采集大牛 star 动态 + 生成 feed.json
   try {
     console.log("Generating feed...");
-    const { fetchBigbroStars } = await import("./bigbro-stars.ts");
+    const { fetchFollowingUsers, fetchBigbroStars } = await import("./bigbro-stars.ts");
     const { generateFeed } = await import("./feed/index.ts");
-    const bigbroStars = await fetchBigbroStars(BIGBROS);
-    const feedCards = await generateFeed(CONFIG, trendingData, bigbroStars);
+    const followingUsers = await fetchFollowingUsers(BIGBROS);
+    const bigbroStars = await fetchBigbroStars(followingUsers);
+    const feedCards = await generateFeed(CONFIG, trendingData, bigbroStars, followingUsers);
     console.log(`  [feed] generated ${feedCards.length} cards`);
   } catch (err) {
     console.error(`[feed] generation failed: ${err}`);

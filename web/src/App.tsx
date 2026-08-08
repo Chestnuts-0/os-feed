@@ -380,7 +380,10 @@ function getSectionCards(
     case "daily":
       return cards.filter((c) => c.momentum?.includes("daily"));
     case "following":
-      return cards.filter((c) => followingSet.has(c.owner));
+      // 关注频道 = 我关注的创作者的项目 ∪ 我关注的大牛 star 的项目（bigbros 背书）
+      return cards.filter(
+        (c) => followingSet.has(c.owner) || (c.bigbros ?? []).some((b) => followingSet.has(b)),
+      );
     default:
       return cards.filter((c) => c.category === sectionKey);
   }
@@ -642,7 +645,14 @@ export default function App() {
   const [collections, setCollections] = useState<Collection[]>(loadCollections);
   // 关注列表（纯前端，localStorage 持久化；只影响关注频道/我的-关注）
   const [following, setFollowing] = useState<string[]>(loadFollowing);
-  const followingSet = useMemo(() => new Set(following), [following]);
+  // following.json 名单（管道每日生成：GitHub follow 列表 ∪ config bigbros 的快照）
+  const [followingJsonUsers, setFollowingJsonUsers] = useState<string[]>([]);
+  // 关注集并集：localStorage 关注 ∪ following.json 名单（在 GitHub 上关注大牛自动同步）
+  const allFollowing = useMemo(
+    () => [...new Set([...following, ...followingJsonUsers])],
+    [following, followingJsonUsers],
+  );
+  const followingSet = useMemo(() => new Set(allFollowing), [allFollowing]);
   // 创作者页栈（整页替换式子页面：push 进入更深层级，pop 逐级返回；
   // 栈顶即当前创作者页；pop 到空数组回原 tab 原频道——tab/feedChannel 状态不动）
   const [viewStack, setViewStack] = useState<{ owner: string }[]>([]);
@@ -674,6 +684,22 @@ export default function App() {
         setError(err instanceof Error ? err.message : String(err));
         setLoading(false);
       });
+  }, []);
+
+  // 加载关注名单快照 data/following.json（与 FEED_URL 同款相对路径；失败/格式错 → 空名单，不挂）
+  useEffect(() => {
+    fetch("./data/following.json")
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json() as Promise<{ users?: unknown }>;
+      })
+      .then((data) => {
+        const users = Array.isArray(data?.users)
+          ? data.users.filter((u): u is string => typeof u === "string")
+          : [];
+        setFollowingJsonUsers(users);
+      })
+      .catch(() => setFollowingJsonUsers([]));
   }, []);
 
   // ESC 关闭弹窗
@@ -992,12 +1018,17 @@ export default function App() {
     return cards.filter((c) => c.owner === currentCreator).sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
   }, [cards, currentCreator]);
 
-  // 我的-关注：关注的创作者（含 feed.json 项目数，按项目数降序）
+  // 我的-关注：关注的创作者（localStorage ∪ following.json 并集）；
+  // count = TA 的项目数；starCount = TA star 的项目数（卡片 bigbros 含 TA 的卡数）
   const followedCreators = useMemo(() => {
-    return following
-      .map((owner) => ({ owner, count: cards.filter((c) => c.owner === owner).length }))
-      .sort((a, b) => b.count - a.count);
-  }, [following, cards]);
+    return allFollowing
+      .map((owner) => ({
+        owner,
+        count: cards.filter((c) => c.owner === owner).length,
+        starCount: cards.filter((c) => (c.bigbros ?? []).includes(owner)).length,
+      }))
+      .sort((a, b) => b.count + b.starCount - (a.count + a.starCount));
+  }, [allFollowing, cards]);
 
   useEffect(() => {
     setSearchVisible(10);
@@ -1141,9 +1172,12 @@ export default function App() {
                     <div className="status">
                       <p>
                         <Heart size={16} className="icon" />
-                        关注创作者后，他们的项目会出现在这里
+                        还没有关注任何人
                       </p>
-                      <p className="hint">去项目卡片上点创作者名即可关注</p>
+                      <p className="hint">
+                        去项目卡片上点创作者名即可关注；在 GitHub 上关注大牛，TA star
+                        的项目次日随数据更新出现在关注频道
+                      </p>
                     </div>
                   )}
                   {activeSection && (
@@ -1334,17 +1368,20 @@ export default function App() {
                     <>
                       <div className="collections-header">
                         <span className="collections-stats">
-                          <Heart size={14} className="icon" />共 {following.length} 位关注的创作者
+                          <Heart size={14} className="icon" />共 {allFollowing.length} 位关注的创作者
                         </span>
                       </div>
-                      {following.length === 0 ? (
+                      {allFollowing.length === 0 ? (
                         <div className="status">
                           <p>还没有关注任何人</p>
-                          <p className="hint">去项目卡片上点创作者名即可关注</p>
+                          <p className="hint">
+                            去项目卡片上点创作者名即可关注；在 GitHub 上关注大牛，TA star
+                            的项目次日随数据更新出现在关注频道
+                          </p>
                         </div>
                       ) : (
                         <div className="creator-list">
-                          {followedCreators.map(({ owner, count }) => (
+                          {followedCreators.map(({ owner, count, starCount }) => (
                             <div
                               key={owner}
                               className="creator-item"
@@ -1353,7 +1390,9 @@ export default function App() {
                             >
                               <GithubAvatar owner={owner} size={56} className="creator-item-avatar" />
                               <span className="creator-item-name">{owner}</span>
-                              <span className="creator-item-count">{count} 个项目</span>
+                              <span className="creator-item-count">
+                                {count} 个项目{starCount > 0 ? ` · star 了 ${starCount} 个` : ""}
+                              </span>
                               <a
                                 className="creator-item-github"
                                 href={`https://github.com/${owner}`}

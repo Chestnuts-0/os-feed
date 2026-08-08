@@ -60,6 +60,10 @@ const PENDING_PATH = path.join(DATA_DIR, "pending-retry.json");
 const PENDING_MAX = 300;
 /** 单 repo 最大重试轮数（连败放弃，防僵尸条目长期占位） */
 const PENDING_MAX_RETRIES = 7;
+/** bigbro 源每轮评分配额：防首轮大牛 star 流一次性挤占 search 当日新卡评分名额；超出进待补评队列下轮补评 */
+const MAX_BIGBRO_SCORE = 300;
+/** 关注名单快照输出（前端关注频道 = localStorage 关注 ∪ 此名单并集） */
+const FOLLOWING_PATH = path.join(DATA_DIR, "following.json");
 
 // 权威组织/官方仓库 owner 前缀
 const AUTHORITATIVE_ORGS = new Set([
@@ -547,6 +551,8 @@ export async function generateFeed(
   config: RadarConfig,
   trendingData: TrendingData,
   bigbroStars: BigbroStar[],
+  /** 合并后的大牛名单（GitHub follow ∪ config bigbros），输出 data/following.json 供前端关注频道使用 */
+  followingUsers: string[] = [],
 ): Promise<FeedCard[]> {
   const now = new Date().toISOString();
   console.log("[feed] merging trending + search + bigbro (incremental)...");
@@ -652,16 +658,18 @@ export async function generateFeed(
     } else {
       repoMap.set(b.repo, {
         repo: b.repo,
-        desc: "",
-        stars: 0,
-        language: "",
-        topics: [],
+        // 抓取器自带详情（Starred API 返回完整 repo 对象）：有则直接用，缺才走 fetchRepoDetail 兜底
+        desc: b.desc ?? "",
+        stars: b.stars ?? 0,
+        language: b.language ?? "",
+        topics: b.topics ?? [],
         source: "bigbro",
         starGrowth: 0,
         bigbros: b.bigbros,
         ts: b.ts,
       });
-      needDetail.push(b.repo);
+      // stars/desc 缺失时兜底补详情（stars 影响 star 门槛，desc 是 LLM 评分核心输入）
+      if (b.stars === undefined || b.desc === undefined) needDetail.push(b.repo);
     }
   }
   console.log(`  [feed] merged ${repoMap.size} unique repos (${needDetail.length} bigbro-only need detail)`);
@@ -697,7 +705,18 @@ export async function generateFeed(
   // 待补评恢复的 repo 排最前（它们已经等了一轮，先补评）
   const pendingFirst = notScored.filter((m) => m.pending);
   const rest = notScored.filter((m) => !m.pending);
-  const nonSearch = rest.filter((m) => m.source !== "search").sort((a, b) => b.stars - a.stars);
+  // bigbro 源评分配额：防首轮大牛 star 流一次性挤占 search 当日新卡评分名额；
+  // 按 stars 降序截断到 MAX_BIGBRO_SCORE（trending 不受限）；超出的自然进待补评队列，下轮优先补评
+  const bigbroNewCards = rest.filter((m) => m.source === "bigbro").sort((a, b) => b.stars - a.stars);
+  const bigbroQuotaSet = new Set(bigbroNewCards.slice(0, MAX_BIGBRO_SCORE).map((m) => m.repo));
+  const nonSearch = rest
+    .filter((m) => m.source !== "search" && (m.source !== "bigbro" || bigbroQuotaSet.has(m.repo)))
+    .sort((a, b) => b.stars - a.stars);
+  if (bigbroNewCards.length > 0) {
+    console.log(
+      `  [feed] bigbro quota: ${bigbroQuotaSet.size}/${bigbroNewCards.length} (cap ${MAX_BIGBRO_SCORE})`,
+    );
+  }
   const searchBuckets = new Map<string, MergedRepo[]>();
   for (const m of rest) {
     if (m.source !== "search") continue;
@@ -774,7 +793,8 @@ export async function generateFeed(
       tags: buildTags(sc.aiDims, m.topics, m.language),
       aiScore: sc.aiScore,
       source: m.source,
-      bigbros: m.bigbros,
+      // bigbros 截断 10：防名单膨胀后数组体积失控（前端展示前 3 个是既有逻辑）
+      bigbros: m.bigbros.slice(0, 10),
       url: `https://github.com/${m.repo}`,
       ts: m.ts,
       score: 0,
@@ -887,6 +907,18 @@ export async function generateFeed(
   fs.writeFileSync(FEED_PATH, JSON.stringify(final, null, 2), "utf-8");
   console.log(`  [feed] saved ${final.length} cards to ${FEED_PATH}`);
 
+  // 8.5 写 data/following.json（关注频道名单快照；空名单也写；写失败仅日志不挂主流程）
+  try {
+    fs.writeFileSync(
+      FOLLOWING_PATH,
+      JSON.stringify({ updated: now, users: followingUsers }, null, 2),
+      "utf-8",
+    );
+    console.log(`  [feed] saved following list (${followingUsers.length} users) to ${FOLLOWING_PATH}`);
+  } catch (err) {
+    console.error(`  [feed] save following.json failed: ${err}`);
+  }
+
   return final;
 }
 
@@ -898,14 +930,14 @@ async function main(): Promise<void> {
   if (!process.env["GITHUB_TOKEN"]) throw new Error("GITHUB_TOKEN required");
   const { loadConfig } = await import("../config.ts");
   const { fetchTrendingData } = await import("../trending.ts");
-  const { fetchBigbroStars } = await import("../bigbro-stars.ts");
-
+  const { fetchFollowingUsers, fetchBigbroStars } = await import("../bigbro-stars.ts");
   const config = loadConfig();
+  const followingUsers = await fetchFollowingUsers(config.bigbros);
   const [trendingData, bigbroStars] = await Promise.all([
     fetchTrendingData(config.trendingTopics),
-    fetchBigbroStars(config.bigbros),
+    fetchBigbroStars(followingUsers),
   ]);
-  await generateFeed(config, trendingData, bigbroStars);
+  await generateFeed(config, trendingData, bigbroStars, followingUsers);
   console.log("Done!");
 }
 

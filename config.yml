@@ -102,6 +102,13 @@ openclaw_peers:
 # 可在此列用户名，也可用环境变量 BIGBROS（逗号分隔）覆盖。
 bigbros:
   - KKKKhazix
+  - esengine
+
+# ── 关注名单自动同步账号 ───────────────────────────────────────
+# 此账号在 GitHub 上 follow 的人会并入大牛名单（follow ∪ bigbros，去重），
+# 次日 digest 自动生效——在 GitHub 上关注大牛，TA star 的项目就会进你的关注频道。
+# 可用环境变量 FOLLOWING_USER 覆盖。
+following_user: Chestnuts-0
 
 # ── Trending/Search 主题 ───────────────────────────────────────
 # GitHub Search API 查询主题。覆盖 AI/工具/学习/好玩等多个领域。

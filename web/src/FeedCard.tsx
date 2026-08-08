@@ -214,6 +214,14 @@ function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel, o
                 </span>
               );
             })}
+            {/* 大牛 star 徽章：谁 star 了这项目（所有频道统一显示） */}
+            {card.bigbros && card.bigbros.length > 0 && (
+              <span className="card-badge bigbro-badge" title={`${card.bigbros.join("、")} star 了`}>
+                <Star size={12} />
+                {card.bigbros.slice(0, 2).join("、")}
+                {card.bigbros.length > 2 && ` 等${card.bigbros.length}位`} star 了
+              </span>
+            )}
           </div>
         </div>
       </div>
