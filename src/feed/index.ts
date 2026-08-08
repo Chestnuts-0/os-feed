@@ -54,6 +54,12 @@ const REFRESH_BATCH = 2000;
 const REFRESH_CONCURRENCY = 8;
 /** 轮转游标文件（记录下次从哪开始刷新） */
 const REFRESH_CURSOR_PATH = path.join(DATA_DIR, ".refresh_cursor");
+/** 待补评队列文件：LLM 评分失败的 repo 快照在此兜底保留，下轮强制恢复补评（杜绝「失败卡不进 baseline → 永不补评」丢卡） */
+const PENDING_PATH = path.join(DATA_DIR, "pending-retry.json");
+/** 待补评队列容量上限（防失控膨胀挤占新卡评分名额） */
+const PENDING_MAX = 300;
+/** 单 repo 最大重试轮数（连败放弃，防僵尸条目长期占位） */
+const PENDING_MAX_RETRIES = 7;
 
 // 权威组织/官方仓库 owner 前缀
 const AUTHORITATIVE_ORGS = new Set([
@@ -231,6 +237,8 @@ interface MergedRepo {
   starGrowth: number;
   bigbros: string[];
   ts: string;
+  /** 待补评队列恢复的 repo（评分排序优先） */
+  pending?: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -403,6 +411,70 @@ function loadExistingScores(): Map<string, ScoringResult> {
 }
 
 // ---------------------------------------------------------------------------
+// 待补评队列：LLM 评分失败的 repo 快照兜底保留（下轮强制恢复补评）
+// ---------------------------------------------------------------------------
+
+/** 队列条目：MergedRepo 完整快照 + 已失败轮数 */
+interface PendingEntry {
+  repo: string;
+  desc: string;
+  stars: number;
+  language: string;
+  topics: string[];
+  source: FeedSource;
+  starGrowth: number;
+  bigbros: string[];
+  ts: string;
+  retryCount: number;
+}
+
+/** 加载待补评队列（容错：损坏/缺失一律当空队列，digest 主流程绝不能挂） */
+function loadPendingRetries(): Map<string, PendingEntry> {
+  try {
+    if (!fs.existsSync(PENDING_PATH)) return new Map();
+    const arr = JSON.parse(fs.readFileSync(PENDING_PATH, "utf-8"));
+    if (!Array.isArray(arr)) return new Map();
+    const map = new Map<string, PendingEntry>();
+    for (const e of arr) {
+      if (!e || typeof e.repo !== "string" || !e.repo.includes("/")) continue;
+      // 连败超上限的条目保留在 map 中（用于写盘清理），恢复补评时跳过
+      map.set(e.repo, {
+        repo: e.repo,
+        desc: typeof e.desc === "string" ? e.desc : "",
+        stars: typeof e.stars === "number" ? e.stars : 0,
+        language: typeof e.language === "string" ? e.language : "",
+        topics: Array.isArray(e.topics)
+          ? e.topics.filter((t: unknown): t is string => typeof t === "string")
+          : [],
+        source: e.source === "trending" || e.source === "bigbro" ? e.source : "search",
+        starGrowth: typeof e.starGrowth === "number" ? e.starGrowth : 0,
+        bigbros: Array.isArray(e.bigbros)
+          ? e.bigbros.filter((b: unknown): b is string => typeof b === "string")
+          : [],
+        ts: typeof e.ts === "string" ? e.ts : new Date().toISOString(),
+        retryCount: e.retryCount,
+      });
+    }
+    if (map.size > 0) console.log(`  [feed/pending] loaded ${map.size} pending retries from ${PENDING_PATH}`);
+    return map;
+  } catch (err) {
+    console.error(`  [feed/pending] load failed: ${err}, starting with empty queue`);
+    return new Map();
+  }
+}
+
+/** 保存待补评队列（容错：写失败仅日志，不影响主流程；空队列写空数组清盘） */
+function savePendingRetries(entries: PendingEntry[]): void {
+  try {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(PENDING_PATH, JSON.stringify(entries, null, 2), "utf-8");
+    if (entries.length > 0) console.log(`  [feed/pending] saved ${entries.length} repos to ${PENDING_PATH}`);
+  } catch (err) {
+    console.error(`  [feed/pending] save failed: ${err}`);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // LLM 批量评分
 // ---------------------------------------------------------------------------
 
@@ -507,6 +579,34 @@ export async function generateFeed(
     }
   }
 
+  // 1.5 恢复待补评队列：LLM 评分失败的 repo 兜底保留——即使今天未再被抓取也强制补评
+  //     （修复「失败卡不进 baseline → 永不补评」丢卡缺陷；今天已抓到的用新数据覆盖）
+  const pendingRetries = loadPendingRetries();
+  if (pendingRetries.size > 0) {
+    let restored = 0;
+    for (const [repo, pe] of pendingRetries) {
+      if (pe.retryCount >= PENDING_MAX_RETRIES) continue; // 连败超上限：放弃恢复（防僵尸长期占位）
+      if (repoMap.has(repo)) continue; // 今天已抓到 → 保留今天的新数据
+      repoMap.set(repo, {
+        repo: pe.repo,
+        desc: pe.desc,
+        stars: pe.stars,
+        language: pe.language,
+        topics: pe.topics,
+        source: pe.source,
+        starGrowth: pe.starGrowth,
+        bigbros: pe.bigbros,
+        ts: pe.ts,
+        pending: true,
+      });
+      baselineStars.set(repo, pe.stars); // 增长基准 = 快照 stars（防 starGrowth 虚高）
+      restored++;
+    }
+    console.log(
+      `  [feed/pending] restored ${restored}/${pendingRetries.size} repos for retry (${repoMap.size} total)`,
+    );
+  }
+
   for (const t of trendingData.trendingRepos) {
     repoMap.set(t.fullName, {
       repo: t.fullName,
@@ -594,9 +694,12 @@ export async function generateFeed(
   // search 组内按领域（searchQuery label = topics[0]）分桶、桶内按 star 降序、桶间轮询合并，
   // 保证每个领域都有代表进入评分队列（否则高星 AI 会挤掉低星非 AI，非 AI 拿不到评分就进不了 feed）
   const notScored = [...repoMap.values()].filter((m) => !existingScores.has(m.repo));
-  const nonSearch = notScored.filter((m) => m.source !== "search").sort((a, b) => b.stars - a.stars);
+  // 待补评恢复的 repo 排最前（它们已经等了一轮，先补评）
+  const pendingFirst = notScored.filter((m) => m.pending);
+  const rest = notScored.filter((m) => !m.pending);
+  const nonSearch = rest.filter((m) => m.source !== "search").sort((a, b) => b.stars - a.stars);
   const searchBuckets = new Map<string, MergedRepo[]>();
-  for (const m of notScored) {
+  for (const m of rest) {
     if (m.source !== "search") continue;
     const key = m.topics[0] ?? "unknown";
     if (!searchBuckets.has(key)) searchBuckets.set(key, []);
@@ -618,7 +721,7 @@ export async function generateFeed(
     }
     depth++;
   }
-  const reposNeedingScore: RepoForScoring[] = [...nonSearch, ...roundRobin]
+  const reposNeedingScore: RepoForScoring[] = [...pendingFirst, ...nonSearch, ...roundRobin]
     .slice(0, MAX_LLM_SCORE_REPOS)
     .map((m) => ({
       repo: m.repo,
@@ -642,10 +745,15 @@ export async function generateFeed(
   // 4. 组装 FeedCard（只保留 LLM 评分成功的仓库，不使用模板兜底）
   const cards: FeedCard[] = [];
   let llmCount = 0;
+  /** 本轮评分失败（或未轮到评分）的 repo——记入待补评队列，下轮强制恢复补评 */
+  const failedThisRound: MergedRepo[] = [];
   for (const m of repoMap.values()) {
     const sc = scoringMap.get(m.repo);
-    // LLM 评分失败的仓库直接跳过，不进信息流
-    if (!sc || !sc.reasonCn) continue;
+    // LLM 评分失败的仓库直接跳过，不进信息流（但记入待补评队列兜底，杜绝永久丢失）
+    if (!sc || !sc.reasonCn) {
+      failedThisRound.push(m);
+      continue;
+    }
     const [owner = "", ...nameParts] = m.repo.split("/");
     const name = nameParts.join("/") || m.repo;
     llmCount++;
@@ -678,6 +786,44 @@ export async function generateFeed(
     });
   }
   console.log(`  [feed] ${llmCount}/${repoMap.size} repos have LLM content (rest skipped)`);
+
+  // 4.5 更新待补评队列：本轮评分成功的移出（历史缓存命中卡本来就不在队列）；
+  //     本轮失败/未轮到评分的入队（retryCount+1）；连败超上限放弃；cap 防失控膨胀
+  if (failedThisRound.length > 0 || pendingRetries.size > 0) {
+    const retryMap = new Map(pendingRetries);
+    const scoredNow = new Set(newScoringResults.filter((r) => r.reasonCn).map((r) => r.repo));
+    for (const repo of scoredNow) retryMap.delete(repo);
+    // 已通过其他路径持有评分的（缓存命中 = 已解决）→ 出队（防僵尸条目残留）
+    for (const repo of [...retryMap.keys()]) {
+      if (existingScores.has(repo)) retryMap.delete(repo);
+    }
+    for (const m of failedThisRound) {
+      const prev = retryMap.get(m.repo);
+      retryMap.set(m.repo, {
+        repo: m.repo,
+        desc: m.desc,
+        stars: m.stars,
+        language: m.language,
+        topics: m.topics,
+        source: m.source,
+        starGrowth: m.starGrowth,
+        bigbros: m.bigbros,
+        ts: m.ts,
+        retryCount: (prev?.retryCount ?? 0) + 1,
+      });
+    }
+    const abandoned = [...retryMap.values()].filter((pe) => pe.retryCount >= PENDING_MAX_RETRIES).length;
+    const nextEntries = [...retryMap.values()]
+      .filter((pe) => pe.retryCount < PENDING_MAX_RETRIES)
+      .sort((a, b) => a.repo.localeCompare(b.repo))
+      .slice(0, PENDING_MAX);
+    savePendingRetries(nextEntries);
+    if (abandoned > 0) {
+      console.log(
+        `  [feed/pending] abandoned ${abandoned} repos after ${PENDING_MAX_RETRIES} failed retries`,
+      );
+    }
+  }
 
   // 5. star 门槛过滤
   const filtered = cards.filter((c) => c.stars >= config.starThreshold);
