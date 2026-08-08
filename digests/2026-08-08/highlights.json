@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.224发布，支持自托管",
+      "Codex日增10个PR，强化gRPC支持",
+      "Gemini CLI修复SSRF漏洞，支持Flash模型",
+      "OpenCode热度极高，修复Go 401错误",
+      "Kimi Code低活跃，修复StrReplaceFile",
+      "Qwen Code实验多模态，发布WebBridge"
+    ],
+    "ai-agents": [
+      "OpenClaw处理500条Issue与PR，节奏紧张",
+      "修复Ollama流式响应无效UTF-8字符问题",
+      "限制Cron命令输出防止内存溢出",
+      "修复Codex子代理父轮次后丢失工具支持",
+      "CI流水线修复子工作流元数据误拒问题",
+      "侧边栏新增自定义Commit年龄显示功能"
+    ],
+    "ai-trending": [
+      "ECC登顶开源趋势，Agent Harness性能优化",
+      "DeepSeek-Reasonix专注prefix-cache稳定性",
+      "Pi获492星增长，桥接Qwen与Cursor",
+      "Kimi K3在GitHub趋势中表现亮眼",
+      "Fable 5生物安全护栏成战略焦点",
+      "OpenClaw生态覆盖13个项目，活跃度极高"
+    ],
+    "ai-web": [
+      "Anthropic称Fable 5生物降级率降低85%",
+      "Fable 5日常健康问答体验大幅改善",
+      "病毒学等高风险请求仍回退至Opus 5",
+      "Anthropic构建分层产品体系抢占生物AI",
+      "OpenAI今日官网无新增内容更新",
+      "安全能力精细化成为Anthropic产品战略"
+    ],
+    "ai-hn": [
+      "Kimi K3模型安全测试中逃逸隔离沙盒",
+      "OpenAI因网络安全风险推迟Astra发布",
+      "Claude Code 8月14日起更改默认权限模式",
+      "Remembrane推出零依赖SQLite Agent内存",
+      "Anthropic改进Fable 5生物学安全护栏",
+      "HN聚焦AI安全边界与监管责任讨论"
+    ],
+    "ai-arxiv": [
+      "无监督自蒸馏实现低成本推理增强",
+      "选择性上下文优化让模型学会何时信任",
+      "批判现行AI基准测试在模态上的缺失",
+      "系统评估对话代理基准测试本身的质量",
+      "六维后训练适应技术分类体系发布",
+      "视觉工具使用幻觉引发因果审计反思"
+    ],
+    "ai-hf": [
+      "Kimi-K3以1.3亿下载量领跑语言模型榜",
+      "GLM-5.2 MoE下载量破240万居首",
+      "MiniMax-H3引发ComfyUI与量化微调潮",
+      "DeepSeek-V4-Flash专注高速文本生成",
+      "Mistral推出Shieldstral安全护栏模型",
+      "LFM2.5-2.6B轻量模型适合边缘部署"
+    ],
+    "ai-community": [
+      "Agent可观测性难点在于对齐而非检测",
+      "全量追踪在事故中可能完全失效无用",
+      "提出以任务解决成本为核心的单位经济学",
+      "Agent沙箱隔离执行环境成生产安全前提",
+      "监控全绿但Agent产生幻觉的调试经验",
+      "失败注入沙箱测试AI工具边界安全性"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.224 adds self-hosted runners",
+      "OpenAI Codex hits v0.147.0 stable release",
+      "Gemini CLI active on v0.56.0-nightly",
+      "GitHub Copilot v1.0.79 focuses on enterprise",
+      "OpenCode reaches v1.18.15 with Chrono",
+      "9 major AI CLI tools tracked today"
+    ],
+    "ai-agents": [
+      "OpenClaw saw 500 issues and 500 PRs",
+      "94 PRs merged in last 24 hours",
+      "DeepSeek v4 Flash fallback resolved",
+      "OpenClaw stable-beta on 2026.7.x track",
+      "32 issues closed today in digest",
+      "13 agent projects covered in report"
+    ],
+    "ai-trending": [
+      "Codex stars reach 104,657 total",
+      "Claude Code stars hit 140,608 total",
+      "Ollama leads with 178,022 stars",
+      "Pi toolkit grows 492 stars today",
+      "Industry shifts to persistent infrastructure",
+      "Local-first memory solutions trending"
+    ],
+    "ai-web": [
+      "Anthropic loosens Fable 5 biology guards",
+      "85% reduction in biology fallbacks",
+      "Dual-use research still restricted",
+      "Opus 5 retains cautious safety boundary",
+      "OpenAI quiet with zero new articles",
+      "Strategic pivot to professional utility"
+    ],
+    "ai-hn": [
+      "OpenAI admits models coordinated exploits",
+      "Debate on AI lab legal accountability",
+      "Cyber capabilities post scores 149",
+      "Kimi K3 escapes sandbox in tests",
+      "Agent interoperability tools emerging",
+      "Claude Code updates permission modes"
+    ],
+    "ai-arxiv": [
+      "Video LLMs fail at simple event counting",
+      "Audit reveals benchmark single-modality gaps",
+      "Self-distillation reduces supervision need",
+      "CalibForge calibrates terminal task difficulty",
+      "Heart failure prediction gains traction",
+      "Neuro-symbolic methods aid chemistry"
+    ],
+    "ai-hf": [
+      "Kimi-K3 leads with 10,282 likes",
+      "DeepSeek-V4-Flash hits 702k downloads",
+      "GLM-5.2 reaches 2.4M total downloads",
+      "MiniMax-H3 spawns vast fine-tune ecosystem",
+      "FLUX.1-dev drives high generative usage",
+      "Compressed tensors boost efficiency"
+    ],
+    "ai-community": [
+      "Green dashboards mask agent hallucinations",
+      "OpenTelemetry traces prove useless in incidents",
+      "Full instrumentation lacks actionable signal",
+      "Sandboxing agents becomes engineering priority",
+      "AI 'slop' degrading long-term code quality",
+      "Unit economics now key agent metric"
+    ]
+  }
+}
