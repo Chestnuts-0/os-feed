@@ -15,7 +15,7 @@
 
 ## 🚀 在线体验
 
-**🌐 [https://chestnuts-0.github.io/os-feed/](https://chestnuts-0.github.io/os-feed/)**
+**🌐 [https://chestnuts-sisyphus.github.io/os-feed/](https://chestnuts-sisyphus.github.io/os-feed/)**
 
 无需登录，每天 08:00 CST 自动更新数据。
 

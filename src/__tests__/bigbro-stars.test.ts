@@ -158,7 +158,7 @@ describe("fetchBigbroStars", () => {
 
 describe("fetchFollowingUsers", () => {
   it("merges follow list with config bigbros and dedupes", async () => {
-    configMock.followingUser = "Chestnuts-0";
+    configMock.followingUser = "Chestnuts-Sisyphus";
     mockFetch.mockResolvedValueOnce(
       okJson([{ login: "KKKKhazix" }, { login: "torvalds" }, { login: "sindresorhus" }]),
     );
@@ -167,13 +167,13 @@ describe("fetchFollowingUsers", () => {
     expect(users).toHaveLength(4); // torvalds/sindresorhus/esengine + KKKKhazix 去重
     expect(users).toEqual(expect.arrayContaining(["KKKKhazix", "esengine", "torvalds", "sindresorhus"]));
     expect(mockFetch).toHaveBeenCalledWith(
-      "https://api.github.com/users/Chestnuts-0/following?per_page=100",
+      "https://api.github.com/users/Chestnuts-Sisyphus/following?per_page=100",
       expect.anything(),
     );
   });
 
   it("falls back to config bigbros when follow fetch fails (rate limit / network)", async () => {
-    configMock.followingUser = "Chestnuts-0";
+    configMock.followingUser = "Chestnuts-Sisyphus";
     mockFetch.mockResolvedValueOnce({ ok: false, status: 403 });
 
     const users = await fetchFollowingUsers(["KKKKhazix", "esengine"]);
@@ -181,7 +181,7 @@ describe("fetchFollowingUsers", () => {
   });
 
   it("falls back to config bigbros when follow fetch rejects", async () => {
-    configMock.followingUser = "Chestnuts-0";
+    configMock.followingUser = "Chestnuts-Sisyphus";
     mockFetch.mockRejectedValueOnce(new Error("network down"));
 
     const users = await fetchFollowingUsers(["esengine"]);

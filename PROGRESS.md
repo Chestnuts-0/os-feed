@@ -15,7 +15,7 @@
 - 无多余失败，BLOCKED.md 无需记录
 
 ### 任务 1：抓取器升级 ✅（2026-08-08）
-- config.ts：RadarConfig + followingUser（env FOLLOWING_USER 优先，模式同 BIGBROS）；config.yml：bigbros + esengine、following_user: Chestnuts-0
+- config.ts：RadarConfig + followingUser（env FOLLOWING_USER 优先，模式同 BIGBROS）；config.yml：bigbros + esengine、following_user: Chestnuts-Sisyphus
 - bigbro-stars.ts：重写为 Starred API（GET /users/{name}/starred?per_page=100&sort=created）；新增 fetchFollowingUsers（follow ∪ config 去重，失败降级 config）；BigbroStar 扩展 desc/stars/language/topics 可选字段；单大牛失败跳过；ts=pushed_at
 - feed/types.ts 同步 BigbroStar；index.ts 主管道 + feed main() 改为 fetchFollowingUsers → fetchBigbroStars(users) → generateFeed(4 参)
 - **偏差记录**：①RadarConfig.followingUser 设为可选（`?`）——必填会让现有 feed-pending.test.ts 的 cfg fixture 报 TS2741，而现有测试文件禁改；loadConfig 恒返回该字段，功能等价 ②generateFeed 第 4 参带默认值 `= []`——现有测试 3 参调用合法，tsc 保持 0 错（任务 2 启用）
@@ -62,3 +62,9 @@
 - **硬指标 2：前端验收脚本 21/21 PASS** + 新增单测 18 个全绿（bigbro-stars 11 + feed-following 7）+ CI + Deploy Web 全绿 + 工作区干净
 - 本轮消耗约 60 迭代（预算 110，未触顶）
 - 遗留：CI Secret BIGBROS 需管理者更新为 KKKKhazix,esengine（config.yml 已改但 Secret 覆盖）；线上 following.json 待次日 digest 生成；41 张失败卡进 pending-retry 待下轮补评（正常机制）
+
+## 2026-08-09 GitHub 账号改名：Chestnuts-0 → Chestnuts-Sisyphus
+- 全仓库（config.yml/README×2/测试/PROGRESS/digests 651 归档）旧用户名与 Pages URL 已批量替换为 Chestnuts-Sisyphus / chestnuts-sisyphus.github.io（栗子授权全量替换；赫尔墨斯执行，未提交）
+- git remote 已更新为 https://github.com/Chestnuts-Sisyphus/os-feed.git
+- 线上验证：新 Pages URL https://chestnuts-sisyphus.github.io/os-feed/ 返回 200 在线
+- ⚠️ 本次改动含 656 文件未提交，由 GitTok 线自行审查提交
