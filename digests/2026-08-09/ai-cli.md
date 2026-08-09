@@ -797,4 +797,4 @@ Codewhale v0.9.5 正式发布，整合终端应用为单一运行时，移除默
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

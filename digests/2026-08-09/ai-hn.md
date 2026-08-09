@@ -163,4 +163,4 @@
    > 不仅是产品更新公告，更折射出 AI 工具设计理念的深层转变——从辅助人类到替代人类决策，值得开发者深入思考其长期影响。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

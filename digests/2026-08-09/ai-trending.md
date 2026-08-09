@@ -118,4 +118,4 @@
 - **`virgiliojr94/book-to-skill`** — 将 PDF 知识自动转化为 Skill，打通「知识消费→技能内化」闭环，知识工程新方向
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
