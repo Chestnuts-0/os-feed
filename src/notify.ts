@@ -19,7 +19,7 @@ export interface Highlights {
   en: ReportHighlights;
 }
 
-const PAGES_URL_DEFAULT = "https://duanyytop.github.io/agents-radar";
+const PAGES_URL_DEFAULT = "https://chestnuts-sisyphus.github.io/os-feed";
 
 function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
