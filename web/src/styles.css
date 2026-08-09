@@ -123,6 +123,32 @@ button {
   height: 60px;
 }
 
+/* 移动端频道抽屉开关（<768px 显示，桌面隐藏；桌面 grid 第三列落位） */
+.drawer-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(28, 25, 41, 0.55);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.drawer-toggle:hover {
+  background: var(--accent-light);
+  color: var(--text);
+}
+
+/* 移动端专属 UI 的桌面默认态：一律隐藏（<768px 媒体查询内再显示） */
+.drawer,
+.bottom-bar,
+.me-tabs {
+  display: none;
+}
+
 /* 行内图标通用类：与文字基线对齐（lucide SVG 行内场景） */
 .icon {
   display: inline;
@@ -1534,6 +1560,130 @@ button {
     width: 56px;
     height: 56px;
     border-radius: 16px;
+  }
+
+  /* --- 移动端适配（底栏 + 频道抽屉，任务书方案 A） --- */
+  /* T1: 虚拟列表单列（真实容器是 .feed-virtual-grid；.feed-list 规则保留勿删） */
+  .feed-virtual-grid {
+    grid-template-columns: 1fr;
+  }
+  .feed-virtual-row {
+    padding-bottom: 14px;
+  }
+  /* 侧栏（首页 + 我的页）移入抽屉/me-tabs */
+  .sidebar {
+    display: none;
+  }
+  /* T2: ☰ 抽屉开关 */
+  .drawer-toggle {
+    display: flex;
+  }
+  .drawer-mask {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 30;
+  }
+  .drawer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    padding: 64px 10px 24px;
+    overflow-y: auto;
+    background: rgba(22, 20, 35, 0.96);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+  .drawer.open {
+    transform: translateX(0);
+  }
+  /* 抽屉内频道项触控目标（≥44px） */
+  .drawer .side-item {
+    padding: 12px 10px;
+    font-size: 14px;
+    min-height: 44px;
+  }
+  /* T3: 底部导航 */
+  .bottom-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 54px;
+    display: flex;
+    align-items: stretch;
+    background: rgba(28, 25, 41, 0.85);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 20;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .bottom-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+  .bottom-item.active {
+    color: var(--accent);
+  }
+  /* 底栏遮挡兜底：内容区底部留白 + footer 隐藏 */
+  .main {
+    padding-bottom: 70px;
+  }
+  .footer {
+    display: none;
+  }
+  /* T5: 顶栏 tabs 移入底栏（header-inner 保持 flex 现状，☰ 顺延） */
+  .tabs {
+    display: none;
+  }
+  /* T4: 我的页移动端子视图标签（替代 me-sidebar） */
+  .me-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 10px 12px;
+    overflow-x: auto;
+  }
+  .me-tab {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .me-tab.active {
+    background: var(--accent-gradient);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 2px 12px var(--accent-glow);
   }
 }
 

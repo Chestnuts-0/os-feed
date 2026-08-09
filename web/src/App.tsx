@@ -12,6 +12,7 @@ import {
   Heart,
   Home,
   Inbox,
+  Menu,
   Search,
   Star,
   ThumbsDown,
@@ -86,6 +87,58 @@ const ALL_SECTIONS = [...DYNAMIC_SECTIONS, ...CATEGORY_SECTIONS];
 function SectionIcon({ icon, size = 18 }: { icon: string; size?: number }) {
   const Icon = CHANNEL_ICONS[icon];
   return Icon ? <Icon size={size} /> : null;
+}
+
+/**
+ * 频道导航列表（发现组 + 分类组）：桌面侧栏与移动端抽屉共用。
+ * 渲染结构与原侧栏内联版完全一致（side-group-box/side-group/side-item），
+ * 避免双份维护漂移。onPick 由调用方决定是否附带额外动作（如关抽屉）。
+ */
+function ChannelNav({
+  sections,
+  activeKey,
+  onPick,
+}: {
+  sections: { key: string; icon: string; title: string; desc: string; cards: FeedCard[] }[];
+  activeKey: string;
+  onPick: (key: string) => void;
+}) {
+  return (
+    <>
+      <div className="side-group-box">
+        <div className="side-group">发现</div>
+        {DYNAMIC_SECTIONS.filter((s) => s.key === "following" || sections.some((x) => x.key === s.key)).map(
+          (s) => (
+            <button
+              key={s.key}
+              className={`side-item${activeKey === s.key ? " active" : ""}`}
+              onClick={() => onPick(s.key)}
+            >
+              <span className="side-icon">
+                <SectionIcon icon={s.icon} size={18} />
+              </span>
+              <span className="side-text">{s.title}</span>
+            </button>
+          ),
+        )}
+      </div>
+      <div className="side-group-box">
+        <div className="side-group">分类</div>
+        {CATEGORY_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
+          <button
+            key={s.key}
+            className={`side-item${activeKey === s.key ? " active" : ""}`}
+            onClick={() => onPick(s.key)}
+          >
+            <span className="side-icon">
+              <SectionIcon icon={s.icon} size={18} />
+            </span>
+            <span className="side-text">{s.title}</span>
+          </button>
+        ))}
+      </div>
+    </>
+  );
 }
 
 /** 推荐分区每页条数 */
@@ -667,6 +720,8 @@ export default function App() {
   // 本次会话已点踩消失的卡片（不再渲染，避免滚动回来复活）
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
   const [feedChannel, setFeedChannel] = useState<string>("recommended");
+  // 移动端频道抽屉开关（<768px 由 ☰ 打开；选中频道或点遮罩关闭，桌面无感）
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   // 加载 feed.json
@@ -1089,6 +1144,15 @@ export default function App() {
               我的
             </button>
           </nav>
+          {/* 移动端频道抽屉开关（桌面 display:none；桌面 grid 第三列自动落位） */}
+          <button
+            className="drawer-toggle"
+            onClick={() => setDrawerOpen(true)}
+            aria-label="打开频道"
+            title="频道"
+          >
+            <Menu size={20} />
+          </button>
         </div>
       </header>
 
@@ -1132,40 +1196,9 @@ export default function App() {
             )}
             {tab === "feed" && !loading && !error && sections.length > 0 && (
               <div className="feed-layout">
-                {/* 左侧边栏：目的地导航（发现组 + 分类组） */}
+                {/* 左侧边栏：目的地导航（发现组 + 分类组；移动端移入抽屉，桌面保持现状） */}
                 <aside className="sidebar">
-                  <div className="side-group-box">
-                    <div className="side-group">发现</div>
-                    {DYNAMIC_SECTIONS.filter(
-                      (s) => s.key === "following" || sections.some((x) => x.key === s.key),
-                    ).map((s) => (
-                      <button
-                        key={s.key}
-                        className={`side-item${feedChannel === s.key ? " active" : ""}`}
-                        onClick={() => switchFeedChannel(s.key)}
-                      >
-                        <span className="side-icon">
-                          <SectionIcon icon={s.icon} size={18} />
-                        </span>
-                        <span className="side-text">{s.title}</span>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="side-group-box">
-                    <div className="side-group">分类</div>
-                    {CATEGORY_SECTIONS.filter((s) => sections.some((x) => x.key === s.key)).map((s) => (
-                      <button
-                        key={s.key}
-                        className={`side-item${feedChannel === s.key ? " active" : ""}`}
-                        onClick={() => switchFeedChannel(s.key)}
-                      >
-                        <span className="side-icon">
-                          <SectionIcon icon={s.icon} size={18} />
-                        </span>
-                        <span className="side-text">{s.title}</span>
-                      </button>
-                    ))}
-                  </div>
+                  <ChannelNav sections={sections} activeKey={feedChannel} onPick={switchFeedChannel} />
                 </aside>
                 <div className="feed-content">
                   {feedChannel === "following" && !activeSection && (
@@ -1243,6 +1276,30 @@ export default function App() {
                   </div>
                 </aside>
                 <div className="me-content feed-content">
+                  {/* 移动端我的页子视图标签（桌面隐藏；替代 me-sidebar） */}
+                  <div className="me-tabs">
+                    <button
+                      className={`me-tab${meView === "liked" ? " active" : ""}`}
+                      onClick={() => setMeView("liked")}
+                    >
+                      <ThumbsUp size={15} />
+                      喜欢
+                    </button>
+                    <button
+                      className={`me-tab${meView === "collections" ? " active" : ""}`}
+                      onClick={() => setMeView("collections")}
+                    >
+                      <Star size={15} />
+                      收藏
+                    </button>
+                    <button
+                      className={`me-tab${meView === "following" ? " active" : ""}`}
+                      onClick={() => setMeView("following")}
+                    >
+                      <Heart size={15} />
+                      关注
+                    </button>
+                  </div>
                   {meView === "liked" && (
                     <>
                       <div className="collections-header">
@@ -1561,6 +1618,38 @@ export default function App() {
           <ThumbsDown size={14} className="icon" /> {feedback.dislikes.length}
         </span>
       </footer>
+
+      {/* 移动端频道抽屉（<768px；☰ 打开，选中频道或点遮罩关闭；桌面 display:none） */}
+      {drawerOpen && <div className="drawer-mask" onClick={() => setDrawerOpen(false)} />}
+      <div className={`drawer${drawerOpen ? " open" : ""}`}>
+        <ChannelNav
+          sections={sections}
+          activeKey={feedChannel}
+          onPick={(key) => {
+            switchFeedChannel(key);
+            setDrawerOpen(false);
+          }}
+        />
+      </div>
+
+      {/* 移动端底部导航（<768px；首页/搜索/我的，替代顶栏 tabs） */}
+      <nav className="bottom-bar">
+        <button className={`bottom-item${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
+          <Home size={18} />
+          <span>首页</span>
+        </button>
+        <button
+          className={`bottom-item${tab === "search" ? " active" : ""}`}
+          onClick={() => setTab("search")}
+        >
+          <Search size={18} />
+          <span>搜索</span>
+        </button>
+        <button className={`bottom-item${tab === "me" ? " active" : ""}`} onClick={() => setTab("me")}>
+          <User size={18} />
+          <span>我的</span>
+        </button>
+      </nav>
 
       {/* 详情弹窗 */}
       {detailCard && (
