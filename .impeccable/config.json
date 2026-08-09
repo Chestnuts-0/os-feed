@@ -1,0 +1,8 @@
+{
+  "detector": {
+    "ignoreRules": ["side-tab", "gradient-text"],
+    "ignoreFiles": [],
+    "ignoreValues": [],
+    "designSystem": { "enabled": true }
+  }
+}

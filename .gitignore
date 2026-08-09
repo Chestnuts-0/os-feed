@@ -7,3 +7,13 @@ social/
 web/dist/
 web/node_modules/
 data/.refresh_cursor
+
+# impeccable-ignore-start
+# Ephemeral output, runtime state, and per-dev overrides.
+.impeccable/config.local.json
+.impeccable/hook.cache.json
+.impeccable/hook.pending.json
+.impeccable/*.png
+.impeccable/live/
+.impeccable/critique/*.png
+# impeccable-ignore-end
