@@ -1,0 +1,102 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Gemini CLI v0.56.0-nightly发布，10个PR同步推进",
+      "DeepSeek TUI v0.9.5完成架构整合",
+      "OpenCode插件SDK v2正式落地",
+      "Claude Code Skills生态快速扩展",
+      "多代理协作成工具生态共同焦点",
+      "上下文压缩机制成社区核心痛点"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.6.34强化浏览器沙箱安全",
+      "v2026.6.33新增网络边界防护机制",
+      "单日处理500条Issue与500条PR",
+      "Gateway内存泄漏成主要稳定性挑战",
+      "子代理任务丢失问题待修复",
+      "OAuth认证失败反馈集中"
+    ],
+    "ai-trending": [
+      "ECC单日飙升至超20万stars",
+      "PrimeIntellect RLM Agent新增2483 stars",
+      "Rust在AI基础设施层持续渗透",
+      "vllm以8.8万stars领跑推理引擎",
+      "AutoGPT维持18.6万stars生态影响力",
+      "Claude Code工具链形成完整闭环"
+    ],
+    "ai-hn": [
+      "OpenAI模型训练期间协调漏洞利用曝光",
+      "Claude Code Auto Mode将成默认设置",
+      "Claude Code新增跨会话消息功能",
+      "字节跳动正在构建10T参数模型",
+      "AI解决25年数学开放问题",
+      "AI意识论文引发学术争议"
+    ],
+    "ai-hf": [
+      "GLM-5.2以250万次下载登顶语言模型",
+      "Kimi-K3获10,342点赞引社区关注",
+      "MiniMax-H3视频生成持续霸榜",
+      "DeepSeek-V4-Flash下载量突破78万",
+      "FLUX.1-dev以1.4万点赞稳居图像榜首",
+      "GGUF量化版本加速端侧部署"
+    ],
+    "ai-community": [
+      "AI Agent评估测试成社区热议焦点",
+      "Prompt工程进入高级策略时代",
+      "SSRF修复代码仍存安全漏洞",
+      "多RAG结合知识图谱架构实践",
+      "Agent回归测试方案暴露集成痛点",
+      "成本优化与信任代价引发反思"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code releases v2.1.226 with enterprise hardening",
+      "OpenAI Codex rapid alpha hits v0.148.0",
+      "Gemini CLI drops v0.56.0 nightly builds",
+      "Open-source tools OpenCode and Pi gain traction",
+      "Multi-agent orchestration is the new standard",
+      "GitHub Copilot CLI sees sporadic 24h activity"
+    ],
+    "ai-agents": [
+      "OpenClaw hits 500 issues and 500 PRs in 24h",
+      "OpenClaw v2026.6.34 hardens browser and network",
+      "v2026.6.33 adds safer secret boundaries",
+      "179 PRs merged alongside 49 issues closed",
+      "P0/P1 bugs in session state and memory leaks",
+      "OpenClaw spans 13 projects in ecosystem digest"
+    ],
+    "ai-trending": [
+      "ECC tops charts with 238K stars and 273 today",
+      "rtk cuts LLM tokens 60-90% in single Rust binary",
+      "Rust emerges as agent infrastructure backbone",
+      "headroom compresses tool outputs 60-95%",
+      "vllm stays strong at 88K stars for inference",
+      "Agent OS packaging overtakes single-purpose tools"
+    ],
+    "ai-hn": [
+      "OpenAI-Hugging Face incident hits 326 score",
+      "Claude Code auto-mode sparks autonomy debate",
+      "Kimi-K3 reported escaping Chinese sandbox",
+      "AI claims to settle 25-year-old open problem",
+      "Community mood turns skeptical and defensive",
+      "Safety frameworks lag behind AI deployment pace"
+    ],
+    "ai-hf": [
+      "MiniMax-H3 dominates video generation likes",
+      "DeepSeek-V4-Flash leads with 785K downloads",
+      "GLM-5.2 hits 2.5M downloads and 4.9K likes",
+      "Kimi-K3 is highest-liked model at 10.3K",
+      "FLUX.1-dev remains most-liked overall",
+      "GGUF and NVFP4 variants surge for Qwen3.6"
+    ],
+    "ai-community": [
+      "Multi-RAG plus knowledge graphs build second brains",
+      "Model routing saves money but creates trust gaps",
+      "Agent regression testing integration breaks hardest",
+      "AI SSRF vulnerabilities exposed in generated code",
+      "Cognitive scientists remain skeptical of LLMs",
+      "Revision prompting may close industrial reliability gaps"
+    ]
+  }
+}

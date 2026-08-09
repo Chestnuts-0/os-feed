@@ -1,0 +1,348 @@
+[
+  {
+    "repo": "a9gent/mindfs",
+    "desc": "Access your personal AI agents and workstation data anywhere, anytime through MindFS.",
+    "stars": 1658,
+    "language": "TypeScript",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 1658,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2026-08-06T15:23:41Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "anthropics/claude-code-security-review",
+    "desc": "An AI-powered security review GitHub Action using Claude to analyze code changes for security vulnerabilities.",
+    "stars": 5813,
+    "language": "Python",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 5813,
+    "bigbros": [],
+    "ts": "2026-08-09T00:58:42.474Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "anthropics/skills",
+    "desc": "Public repository for Agent Skills",
+    "stars": 167065,
+    "language": "Python",
+    "topics": [
+      "agent-skills"
+    ],
+    "source": "bigbro",
+    "starGrowth": 167065,
+    "bigbros": [
+      "KKKKhazix"
+    ],
+    "ts": "2026-08-07T17:14:15Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "bannedbook/fanqiang",
+    "desc": "翻墙-科学上网",
+    "stars": 49881,
+    "language": "Kotlin",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 49881,
+    "bigbros": [],
+    "ts": "2026-08-09T00:58:42.474Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "charmbracelet/crush",
+    "desc": "Glamourous agentic coding for all 💘",
+    "stars": 27196,
+    "language": "Go",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 27196,
+    "bigbros": [],
+    "ts": "2026-08-09T00:58:42.474Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "cocos/cocos4",
+    "desc": "COCOS 4",
+    "stars": 1410,
+    "language": "C++",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 1410,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2026-08-08T12:36:03Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "colbymchenry/codegraph",
+    "desc": "Pre-indexed code knowledge graph, auto syncs on code changes, for Claude Code, Codex, Gemini, Cursor, OpenCode, AntiGravity, Kiro, and Hermes Agent — fewer tokens, fewer tool calls, 100% local",
+    "stars": 65455,
+    "language": "C",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 65455,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2026-08-08T02:56:05Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "dagrejs/dagre",
+    "desc": "Directed graph layout for JavaScript",
+    "stars": 5750,
+    "language": "TypeScript",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 5750,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2026-08-08T15:09:12Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "dmtrKovalenko/fff",
+    "desc": "The fastest and the most accurate file search SDK for AI agents, Neovim, Rust, C, Python, Bun and NodeJS",
+    "stars": 9915,
+    "language": "Rust",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 9915,
+    "bigbros": [],
+    "ts": "2026-08-09T00:58:42.474Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "esengine/cocos-engine-external",
+    "desc": "external 3rd party modules for cocos-engine",
+    "stars": 1,
+    "language": "",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 1,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2025-12-31T04:14:02Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "esengine/ecs-editor-plugins",
+    "desc": "Official and community plugins registry for ECS Framework Editor",
+    "stars": 1,
+    "language": "JavaScript",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 1,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2025-11-26T08:12:03Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "esengine/HiveMind",
+    "desc": "A self-evolving, personalized AI system with federated learning",
+    "stars": 2,
+    "language": "Python",
+    "topics": [
+      "ai",
+      "federated-learning",
+      "llm",
+      "lora",
+      "machine-learning",
+      "personalization",
+      "qwen"
+    ],
+    "source": "bigbro",
+    "starGrowth": 2,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2026-01-19T03:06:37Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "focus-creative-games/leanclr",
+    "desc": "LeanCLR is a production-oriented CLR implementation. Its core goal is to provide high ECMA-335 compatibility, low integration complexity, and strong cross-platform capability, so developers can truly achieve “Write C#, Run Anywhere.”",
+    "stars": 654,
+    "language": "C++",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 654,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2026-07-23T04:03:26Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "kubernetes-sigs/kueue",
+    "desc": "Kubernetes-native Job Queueing",
+    "stars": 2785,
+    "language": "Go",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 2785,
+    "bigbros": [],
+    "ts": "2026-08-09T00:58:42.474Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "microsoft/agent-governance-toolkit",
+    "desc": "AI Agent Governance Toolkit — Policy enforcement, zero-trust identity, execution sandboxing, and reliability engineering for autonomous AI agents. Covers 10/10 OWASP Agentic Top 10.",
+    "stars": 5801,
+    "language": "Python",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 5801,
+    "bigbros": [],
+    "ts": "2026-08-09T00:58:42.474Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "modelcontextprotocol/servers",
+    "desc": "Model Context Protocol Servers",
+    "stars": 89352,
+    "language": "TypeScript",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 89352,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2026-08-05T13:50:29Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "netease-youdao/LobsterAI",
+    "desc": "Open-source, desktop-grade AI agent that gets real work done — data analysis, slides, docs, video & web research. Built on OpenClaw; runs tools on your real desktop and takes commands from your phone via WeChat, Feishu, DingTalk & Telegram.",
+    "stars": 5821,
+    "language": "TypeScript",
+    "topics": [
+      "agent",
+      "ai-agent",
+      "ai-assistant",
+      "automation",
+      "autonomous-agents",
+      "chatbot",
+      "copilot",
+      "cross-platform",
+      "desktop-app",
+      "electron",
+      "llm",
+      "mcp",
+      "office-automation",
+      "openclaw",
+      "productivity",
+      "react",
+      "tyepscript"
+    ],
+    "source": "bigbro",
+    "starGrowth": 5821,
+    "bigbros": [
+      "KKKKhazix"
+    ],
+    "ts": "2026-08-07T16:43:14Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "open-metadata/OpenMetadata",
+    "desc": "The Open Context Layer for Data and AI , OpenMetadata is the open platform for building trusted data context and business semantics for humans, AI assistants, and agents.",
+    "stars": 14786,
+    "language": "TypeScript",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 14786,
+    "bigbros": [],
+    "ts": "2026-08-09T00:58:42.474Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "Robbyant/lingbot-world",
+    "desc": "Advancing Open-source World Models",
+    "stars": 4346,
+    "language": "Python",
+    "topics": [
+      "aigc",
+      "image-to-video",
+      "lingbot-world",
+      "video-generation",
+      "world-models"
+    ],
+    "source": "bigbro",
+    "starGrowth": 4346,
+    "bigbros": [
+      "KKKKhazix"
+    ],
+    "ts": "2026-07-09T10:39:39Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "tauri-apps/tauri-action",
+    "desc": "Build your Web application as a Tauri binary for macOS, Linux and Windows",
+    "stars": 1596,
+    "language": "TypeScript",
+    "topics": [
+      "github-actions",
+      "hacktoberfest"
+    ],
+    "source": "bigbro",
+    "starGrowth": 1596,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2026-08-07T15:12:03Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "tuyoogame/YooAsset",
+    "desc": "unity3d resources management  system",
+    "stars": 3337,
+    "language": "C#",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 3337,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2026-07-30T02:14:15Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "urho3d/urho3d",
+    "desc": "Game engine",
+    "stars": 4758,
+    "language": "C++",
+    "topics": [
+      "2d",
+      "3d",
+      "3d-graphics",
+      "angelscript",
+      "cpp",
+      "cpp17",
+      "cross-platform",
+      "engine",
+      "game",
+      "game-development",
+      "game-engine",
+      "gamedev",
+      "open-source",
+      "urho3d"
+    ],
+    "source": "bigbro",
+    "starGrowth": 4758,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2023-01-25T17:29:02Z",
+    "retryCount": 1
+  }
+]
