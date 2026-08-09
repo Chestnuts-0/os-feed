@@ -68,4 +68,4 @@
     *   **理由：** 无论指控细节如何，此话题代表了社区对头部 AI 厂商透明度的最低容忍度阈值已打破。阅读相关讨论有助于理解当前开发者对闭源工具链的信任赤字来源。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

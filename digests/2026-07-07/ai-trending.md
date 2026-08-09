@@ -95,4 +95,4 @@
 *   **GUI Agent 标准化**：`ChromeDevTools MCP` 和 `alibaba/page-agent` 的出现，意味着 **浏览器自动化** 将从非标准的脚本走向标准的 MCP 协议交互，是构建通用 AI Agent 的关键一环。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

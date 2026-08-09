@@ -92,4 +92,4 @@
     *   理由: 这是开源基础架构领域对 AI 介入开发流程的一次重大制度性回应，其投票结果将影响未来数年开源项目的合规标准，值得所有关心开源生态的开发者关注。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

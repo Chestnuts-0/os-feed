@@ -106,4 +106,4 @@ Anthropic 今日公布两项重要动向：一是推出 **Claude for Nonprofits*
 **分析方法**：增量更新内容提取 + 战略信号解读
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

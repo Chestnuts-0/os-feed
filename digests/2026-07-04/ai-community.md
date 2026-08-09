@@ -74,4 +74,4 @@ Dev.to 和 Lobste.rs 共同关注 **AI 安全性**与**工程化落地**。开�
    *理由：* Lobste.rs 上讨论热烈的案例，展示了 AI 如何介入传统上依赖人类直觉和经验的高难度工程设计领域，预示着 AI 在硬科技研发中的深远影响。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

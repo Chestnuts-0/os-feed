@@ -134,4 +134,4 @@
 | [New Orleans will use AI to answer 911 calls instead of a human](https://www.shreveporttimes.com/story/news/local/louisiana/2026/07/28/is-new-orleans-using-ai-to-answer-911-calls-instead-of-human-dispatchers-impacts-emergencies-crime/91065014007/) | AI 进入紧急公共服务场景是标志性事件，评论数 50 反映社区对此类高利害关系部署的深度关切，适合政策与技术交叉研究者阅读。 |
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

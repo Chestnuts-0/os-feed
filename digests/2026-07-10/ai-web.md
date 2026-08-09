@@ -115,4 +115,4 @@
 4.  **反思工具的用户心理学**: Anthropic 的“Reflect”功能试图干预用户的行为习惯，这在 AI 产品中极为罕见。它表明 Anthropic 意识到 AI 使用的“过度依赖”风险，并试图通过产品设计来缓解这种社会焦虑，这是一种高阶的品牌信任建设。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -34,4 +34,4 @@
 3. **Oran Looney 的《玫瑰花瓣与归纳法》** —— 虽短小精悍，但其独特的哲学思辨能帮助研究人员跳出代码层面，重新审视机器学习中归纳法的局限与美感。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

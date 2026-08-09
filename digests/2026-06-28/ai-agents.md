@@ -923,4 +923,4 @@ ZeroClaw 在 2026-06-28 保持高活跃度，过去24小时内共产生 45 个 I
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

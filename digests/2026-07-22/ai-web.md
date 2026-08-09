@@ -112,4 +112,4 @@ Anthropic 今日新增收录 12 篇官方公告，核心围绕 Claude 模型矩�
 *报告生成依据：用户提供的 2026-07-22 增量抓取内容。OpenAI 部分因正文缺失仅作元数据记录，未作推测性解读。*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

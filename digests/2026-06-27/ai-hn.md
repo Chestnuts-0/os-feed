@@ -84,4 +84,4 @@
     *   理由: 随着 AI 代码生成普及，版权归属成为悬在开发者头上的达摩克利斯之剑。深入阅读此讨论有助于提前识别法律风险，优化内部合规流程。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

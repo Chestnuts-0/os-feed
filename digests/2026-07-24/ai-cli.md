@@ -1139,4 +1139,4 @@ Qwen Code 发布 `v0.20.1-nightly` 版本，重点修复了遥测指标初始化
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

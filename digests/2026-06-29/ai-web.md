@@ -47,4 +47,4 @@
 **总结**：今日为信息真空日。建议明日继续监控 OpenAI 该页面的内容填充情况，以及 Anthropic 是否会在随后几天发布补偿性的技术博客或研究论文。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

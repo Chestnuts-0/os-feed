@@ -77,4 +77,4 @@ Dev.to 与 Lobste.rs 均高度关注 **AI 系统的工程化成熟度与安全�
    > **理由：** 提供跳出技术细节的宏观视角，帮助技术人员理解 AI 背后的权力结构、伦理困境及对劳动力市场的深远影响。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

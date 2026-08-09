@@ -80,4 +80,4 @@
     *   **理由:** Agent 开发正从“黑盒调用”走向“白盒编排”。Flint 作为可视化的代理语言，代表了下一代 Agent 工程框架的方向。对于正在构建复杂多智能体系统的开发者，了解其设计哲学和实现细节至关重要。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

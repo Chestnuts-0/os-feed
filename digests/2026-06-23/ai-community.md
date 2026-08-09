@@ -87,4 +87,4 @@
    - 理由：除了技术层面，这篇文章从社会学和安全角度剖析了 AI 带来的深层影响，提供了更宏观的视角来理解当前技术变革的代价与机遇。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

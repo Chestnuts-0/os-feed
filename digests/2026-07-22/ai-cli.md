@@ -327,4 +327,4 @@ Pi 连续发布 v0.81.0 与 v0.81.1，正式落地本地 llama.cpp 模型管理�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

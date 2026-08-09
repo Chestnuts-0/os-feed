@@ -74,4 +74,4 @@
    - **理由：** 作为 Lobste.rs 上讨论最激烈的话题，它迫使技术人员思考 AI 发展的外部性成本，是理解当前 AI 行业争议不可或缺的背景材料。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

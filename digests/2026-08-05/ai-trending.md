@@ -94,4 +94,4 @@
 - **[obra/superpowers](https://github.com/obra/superpowers)** — 总量 266K stars，Agentic 技能框架与开发方法论，长期位居热门，说明社区对"Agent 工程化方法论"的持续需求。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

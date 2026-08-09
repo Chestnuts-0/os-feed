@@ -111,4 +111,4 @@
     *   在竞争对手密集发布高质量研究和落地案例时，OpenAI 的沉默是一种强烈的信号。通常在大型发布会前会有这样的静默期。考虑到 Anthropic 正在强化“安全”和“可解释性”标签，OpenAI 下次发布可能会在**Agent 自主性**或**多模态推理效率**上进行反击，以避开其在透明度上的短板。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

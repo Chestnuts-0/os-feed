@@ -126,4 +126,4 @@
 | 3 | [Prime Agent: A Self-Improving RLM Agent](https://www.primeintellect.ai/blog/prime-agent) | 自我改进 Agent 是通往自主 AI 系统的关键一步，无论其当前成熟度如何，该方向的技术路径与安全风险都值得深入研究。 |
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

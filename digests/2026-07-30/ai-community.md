@@ -63,4 +63,4 @@
 > 以血泪经验揭示了生产环境中多模型路由的隐性风险——成本隐藏、延迟分布错误假设、静默失败，为构建鲁棒的混合 AI 系统提供了实用指导。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

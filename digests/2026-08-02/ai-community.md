@@ -113,4 +113,4 @@
 3. **Optimizing LLM Stream Ingestion: Reconstructing Truncated JSON Payloads in 0.0122ms** — 生产级 LLM 系统中最容易被忽视的边界问题，12 微秒的优化对高并发场景有显著收益，是工程深度的典范。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

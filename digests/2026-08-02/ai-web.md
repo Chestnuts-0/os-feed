@@ -94,4 +94,4 @@
 **下次更新建议：** 2026-08-03，重点关注 OpenAI 数学文章正文解读及 Anthropic 可能的内容更新。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

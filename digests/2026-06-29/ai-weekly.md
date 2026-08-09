@@ -77,4 +77,4 @@
 *   **监管与合规落地**：美国政府对前沿模型准入的介入及 Anthropic 的身份验证措施，可能促使其他厂商跟进类似合规策略，开发者需关注 API 接入政策的变动。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

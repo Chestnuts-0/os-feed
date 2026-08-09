@@ -64,4 +64,4 @@
 3.  **[What if LLMs escape through inferences itself?](https://news.ycombinator.com/item?id=49059660)**：即使作为虚构文章，其对逻辑悖论和推理漏洞的分析极具启发性，有助于研究人员重新审视形式化验证在防止模型幻觉或意外行为中的价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

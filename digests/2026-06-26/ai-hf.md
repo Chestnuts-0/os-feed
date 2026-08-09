@@ -87,4 +87,4 @@
     *   **理由：** Gemma 4 在代码领域的潜力被进一步挖掘。该模型通过特定的训练策略增强了代码推理能力，且提供 GGUF 格式，方便开发者在本地快速搭建智能编码助手，性价比极高。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

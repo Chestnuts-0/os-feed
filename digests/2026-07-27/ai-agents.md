@@ -715,4 +715,4 @@ Moltis 项目在昨日保持高活跃度，8 个新 PR 全部处于开放状态�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

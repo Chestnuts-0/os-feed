@@ -41,4 +41,4 @@
 3. **[EchoBridge: Long-Tail-Aware ECG-Echocardiography Text Alignment...] [arXiv](http://arxiv.org/abs/2607.24553v1)**：对于从事生物医学自然语言处理的学者而言，这篇工作展示了如何利用极少阳性标签挖掘出有价值医学知识图谱的技术路径，具备极强的启发意义。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

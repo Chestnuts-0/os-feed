@@ -117,4 +117,4 @@
 *   **[rtk-ai/rtk](https://github.com/rtk-ai/rtk)**：针对 Token 成本的优化方案，在 Agent 频繁调用的场景下，此类中间件能显著降低运营成本，是构建经济型 Agent 系统的必备组件。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

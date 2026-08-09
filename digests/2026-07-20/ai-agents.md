@@ -519,4 +519,4 @@ Moltis 在过去 24 小时内保持中等活跃度，新增 1 个版本发布、
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

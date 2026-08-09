@@ -89,4 +89,4 @@
     *   **理由**：随着文档自动化需求的增加，传统 OCR 难以应对复杂版面。该模型支持无限上下文，能直接输出结构化文本，极大地简化了从图像到可编辑内容的流程，具有极高的实用价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

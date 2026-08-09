@@ -121,4 +121,4 @@ ALiBi是最广泛使用的位置编码方案之一，此文首次在理论上和
 打破传统基准"事件已结束、答案已公开"的局限，通过39天世界杯实时竞赛构建零泄漏评估环境，为LLM预测能力评估提供了全新方法论范式，对关注评估设计与真实世界应用的读者极具启发性。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

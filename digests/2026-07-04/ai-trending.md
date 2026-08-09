@@ -110,4 +110,4 @@
 *   **[openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc)**：**跨平台互操作性试点**。虽然是插件，但它代表了不同大厂 AI 工具之间打破壁垒、实现任务委托的可能性，值得观察后续是否有更多类似标准出现。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

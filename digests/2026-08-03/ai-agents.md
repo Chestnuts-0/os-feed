@@ -1152,4 +1152,4 @@ ZeroClaw 项目今日保持高活跃度，过去24小时内共处理 50 条 Issu
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

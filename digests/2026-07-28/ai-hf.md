@@ -49,4 +49,4 @@ MoE 架构的多语言对话模型，性能强劲且开源友好，备受开发�
 2. **[prism-ml/Bonsai-27B-gguf](https://huggingface.co/prism-ml/Bonsai-27B-gguf)** —— 尽管体积较小却拥有极高性价比，可用于资源受限环境下构建智能助手原型系统。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

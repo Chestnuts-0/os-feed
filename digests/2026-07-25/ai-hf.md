@@ -81,4 +81,4 @@
     *   **理由**：在文档智能和 OCR 领域，百度这款模型的高下载量验证了其鲁棒性。对于任何涉及非结构化文档提取、数字化的应用场景，它都是一个值得优先测试的强大工具。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -33,4 +33,4 @@ Dev.to 与 Lobste.rs 显示出显著的共同关注点：**Agent 系统的健壮
 2. **Image-layer prompt injection: measuring a defense across 108,015 samples** (https://dev.to/rustycoder31/image-layer-prompt-injection-measuring-a-defense-across-108015-samples-1840) - 通过百万级样本量化测试隐写术式的提示词注入攻击，提供了超越文本层面的安全评估视角。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

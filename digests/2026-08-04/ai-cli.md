@@ -1178,4 +1178,4 @@ v0.9.4 release train（#5135）持续整合中，已领先 main 分支 77 个提
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -94,4 +94,4 @@ Anthropic 连续两天发布重磅内容，核心围绕 **Claude Mythos Preview 
 📌 **结语总结**：当前 AI 行业呈现清晰分野 —— Anthropic 走“学术先锋+伦理守门人”路线，以硬核研究成果赢得尊重；OpenAI 则深耕“应用基础设施+教育普及”，致力于成为事实标准提供者。二者在未来半年内的关键胜负手，或许不在于谁更早推出下一代模型，而在谁能更好地定义“什么是负责任的 AI 演进”。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

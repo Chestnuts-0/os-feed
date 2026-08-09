@@ -118,4 +118,4 @@
     *   **理由**: 随着Diffusion LLM成为新赛道，评估标准混乱是最大障碍。该文通过严谨的实验剥离了模型能力与评估方法带来的噪音，为后续研究者提供了正确的基准测试方法论，是进入该领域必读的“避坑指南”。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

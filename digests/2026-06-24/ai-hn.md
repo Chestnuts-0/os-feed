@@ -76,4 +76,4 @@
     *   **理由：** 该帖子虽分数中等，但评论质量高，涉及平台治理、用户权利和 API 使用政策的灰色地带。深入阅读评论有助于理解开发者在与大型 AI 平台博弈时的实际困境和法律/道德界限。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

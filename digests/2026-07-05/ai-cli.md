@@ -985,4 +985,4 @@ Qwen Code 发布了 `v0.19.6-nightly` 构建，重点强化了 PR 审查机制�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

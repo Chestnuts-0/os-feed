@@ -240,4 +240,4 @@ OpenAI 今日更新较少，且主要为元数据提取，无法获取正文内�
 5.  **经济原语（Economic Primitives）的标准化**: Anthropic 建立的这套度量体系（技能、复杂度、自主性等）有望成为行业标准，影响后续对 AI 经济影响的学术研究和政策讨论。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

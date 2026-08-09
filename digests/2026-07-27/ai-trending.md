@@ -51,4 +51,4 @@
 - **📚 langgraph-ai/langgraph**：作为 LangChain 旗下的图式 Agent 框架，它为解决多步骤、循环逻辑的 Agent 任务提供了更鲁壮的架构，是进阶 Agent 开发的必学工具。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

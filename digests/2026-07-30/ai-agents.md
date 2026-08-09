@@ -740,4 +740,4 @@ Telegram 接口适配缺陷需紧急关注，当前无关联PR可参考；Slack 
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

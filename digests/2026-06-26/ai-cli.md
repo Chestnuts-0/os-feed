@@ -1055,4 +1055,4 @@ OpenCode v1.17.11 正式发布，核心亮点是引入了会话快照与回滚�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -117,4 +117,4 @@ Lobste.rs 用户更关注底层技术原理、性能优化及新兴范式：
    - 理由: 展现了系统级编程中跨语言集成的创新可能性，对于关注底层性能优化和内存管理的工程师而言，提供了独特的技术视野。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

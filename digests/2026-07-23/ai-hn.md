@@ -83,4 +83,4 @@
     *   **理由：** 除了网络安全，此报道揭示了 AI 在健康建议领域的潜在致命风险，是探讨 AI 法律责任和用户保护的重要案例。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

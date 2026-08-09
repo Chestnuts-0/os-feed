@@ -76,4 +76,4 @@
 4. **发布时间同步性**: 两家公司的更新均集中在 2026-06-30，可能是为了配合季度末的战略宣发。Anthropic 选择了更激进的产品发布，而 OpenAI 似乎选择了更谨慎或技术性的更新路径。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

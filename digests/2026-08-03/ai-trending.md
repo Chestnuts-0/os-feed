@@ -113,4 +113,4 @@
 - **[NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent)** — 22万+ star 的自进化代理框架，支持技能树动态生长，今日新增 468 stars；在总 star 数上仅次于 ECC，是开源代理社区中最活跃的项目之一，值得持续跟踪其架构演进。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

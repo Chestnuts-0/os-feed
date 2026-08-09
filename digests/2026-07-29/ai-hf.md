@@ -88,4 +88,4 @@ Hugging Face 本周热度集中在多模态大模型与量化社区变体的博�
 3.  **empero-ai/Qwythos-9B-Claude-Mythos-5-1M-GGUF**：理由：仅用 9B 参数实现了百万级上下文窗口推理，这种架构上的突破对于学习长序列处理机制非常有参考价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

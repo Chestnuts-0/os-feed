@@ -142,4 +142,4 @@
     *   **理由**：这篇文章回答了关于RL后训练本质的关键科学问题：它只是放大已有技能还是创造新策略？其结论对于理解模型能力涌现机制以及设计更有效的训练策略至关重要。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

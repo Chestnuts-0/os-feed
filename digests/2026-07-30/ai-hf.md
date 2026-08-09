@@ -105,4 +105,4 @@
 🔹 **empero-ai/Qwythos-9B-Claude-Mythos-5-1M-GGUF** —— “小而聪明”，特别适合研究微型模型如何通过算法补偿参数量劣势。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -1118,4 +1118,4 @@ GitHub Copilot CLI 于昨日发布了 **v1.0.66-2** 补丁版本，主要解决�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

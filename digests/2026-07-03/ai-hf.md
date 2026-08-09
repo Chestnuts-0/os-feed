@@ -104,4 +104,4 @@
     *   **理由**：Google 入场表格 AI 领域，发布了专门的 Tabular Foundation Model。随着企业数据中结构化数据占比巨大，该模型有望填补表格数据预训练的空白，值得关注其在金融、科研等结构化数据分析中的应用潜力。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

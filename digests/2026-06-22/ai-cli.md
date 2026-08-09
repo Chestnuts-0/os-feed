@@ -1100,4 +1100,4 @@ Qwen Code 发布稳定版 `v0.18.5`，核心改进包括强制要求用户 opt-i
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

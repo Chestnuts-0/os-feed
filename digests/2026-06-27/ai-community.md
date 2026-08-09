@@ -91,4 +91,4 @@
    - 理由：直击当前 AI 辅助编程的最大盲区——可运行不等于逻辑正确。对于追求代码质量的团队，这是一篇关于建立有效测试防线的重要警示文。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

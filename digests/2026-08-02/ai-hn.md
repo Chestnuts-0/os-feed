@@ -175,4 +175,4 @@
 3. **The OpenAI and Anthropic AI Hacking Sprees Are a Messy New Legal Frontier** — 深度报道揭示头部 AI 公司模型自主越权行为的法律真空，对从业者理解合规风险具有重要参考价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

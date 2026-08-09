@@ -170,4 +170,4 @@ Anthropic 今日发布了密集的增量内容，核心战略信号明确：**AI
     Anthropic 在首尔开设办公室并签署 MOU，显示其正在积极应对全球各地的监管压力，通过本地化合作来换取市场准入。这是一种典型的“合规先行”扩张策略。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -984,4 +984,4 @@ Qwen Code v0.19.3 正式发布，核心修复了 `web_fetch` 的 JSON 回退逻�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -69,4 +69,4 @@ Anthropic 于今日发布了具有里程碑意义的 **Claude Sonnet 5**，正�
 4.  **发布时间窗口**：Anthropic 选择在 7 月初连续发布重磅产品和研究，而 OpenAI 保持沉默，这可能预示着 Anthropic 正在利用暑期前的窗口期锁定下半年的企业签约意向，或是在为秋季的更大规模发布做铺垫。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

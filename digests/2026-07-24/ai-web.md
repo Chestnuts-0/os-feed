@@ -72,4 +72,4 @@ Anthropic 今日呈现密集的产品迭代与生态扩张态势，核心亮点�
 4.  **OpenAI 的健康话题**: 虽然缺乏细节，但“Health in ChatGPT”暗示了 OpenAI 正在将 LLM 推向高信任门槛的领域（如医疗）。鉴于医疗数据的敏感性，这可能需要比代码生成更严格的合规认证。如果 OpenAI 能率先在受监管的健康领域实现闭环，将是巨大的商业壁垒。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

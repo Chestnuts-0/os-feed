@@ -106,4 +106,4 @@
     *   **理由：** 现有的安全基准往往存在文化偏见。Pluralis 不仅关注语言多样性，还深入探讨了文化禁忌和法律差异对 AI 可靠性的影响。对于致力于全球部署的企业和研究者来说，这篇论文提供的评估视角和方法论具有重要的实践参考价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

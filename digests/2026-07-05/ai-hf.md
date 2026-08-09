@@ -76,4 +76,4 @@
     *   **理由：** 尽管存在合规风险，但其高达 300 万+的下载量证明了市场对“无束缚”创作型 AI 的巨大需求。研究此类模型的训练技巧（如 Abliteration 或特定 RLHF 逆向）对于理解大模型对齐边界具有重要意义。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

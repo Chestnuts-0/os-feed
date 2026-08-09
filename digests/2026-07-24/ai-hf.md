@@ -97,4 +97,4 @@
     *   **理由：** 具身智能是当前 AI 的前沿热点。MiniCPM 在此领域的开源尝试，为研究视觉-语言-动作（VLA）模型提供了宝贵的基准和起点，适合对机器人学习和多模态交互感兴趣的用户。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

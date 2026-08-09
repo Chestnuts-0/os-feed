@@ -91,4 +91,4 @@
 *   **[browser-use/video-use](https://github.com/browser-use/video-use)**：**Agent 媒体处理能力**。证明了 Agent 不仅能处理文本和代码，还能通过编程方式操控视频编辑，拓展了 Agent 的应用边界。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

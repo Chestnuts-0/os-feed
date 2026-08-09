@@ -70,4 +70,4 @@
 *   **OpenAI 的硬件叙事**：尽管缺乏正文，但“Jalapeno Inference Chip”这一特定代号的出现，暗示 OpenAI 在专用加速器领域的布局已进入更深层次的合作或量产阶段，这可能与其降低 API 成本或提升实时响应能力密切相关。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -80,4 +80,4 @@ Anthropic 今日正式推出 **Claude Tag**，这是其向“团队级 AI 代理
 *本报告由 Agnes-2.0-Flash 生成，基于 2026-06-24 的公开信息分析。*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

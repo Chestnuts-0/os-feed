@@ -356,4 +356,4 @@ Copilot CLI 于昨日连续推送 v1.0.72 与 v1.0.73，重点修复了 `agentSt
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

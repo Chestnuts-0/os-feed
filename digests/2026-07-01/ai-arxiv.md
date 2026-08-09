@@ -109,4 +109,4 @@
     *   **理由**：随着 LLM 越来越多地用于生成代码和数学模型，区分“语法正确”与“统计正确”变得至关重要。此文提出的校准与修复框架对于确保 AI 生成内容的科学严谨性具有直接的应用价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

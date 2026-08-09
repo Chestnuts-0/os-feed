@@ -829,4 +829,4 @@ OpenCode v1.18.7 发布，聚焦 macOS 全屏体验优化与命令面板逻辑�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -73,4 +73,4 @@
    - **理由：** 随着 AI 应用复杂度增加，单体 Agent 已难以应对复杂任务，此文提出的多智能体协作理念代表了下一代 AI 应用架构的重要演进方向。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

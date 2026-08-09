@@ -271,4 +271,4 @@ PicoClaw 在过去 24 小时保持中高频维护节奏，共处理 8 个 Issue 
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

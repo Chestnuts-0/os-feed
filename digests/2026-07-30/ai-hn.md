@@ -54,4 +54,4 @@
 2. **[Some thoughts about Anthropic's new cryptanalysis results](https://blog.cryptographyengineering.com/2026/07/29/some-notes-about-anthropics-new-results/)** : 博客详细解析了 Anthricp 新近发布的密码学研究结果，不仅提供了技术层面的洞察还涉及到这些发现如何塑造未来的安全架构设计思路，适合对加密领域感兴趣的专业人士阅读借鉴。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

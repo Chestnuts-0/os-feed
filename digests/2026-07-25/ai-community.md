@@ -85,4 +85,4 @@ Dev.to 和 Lobste.rs 共同关注**AI 应用的工程化成熟度**。开发者�
    - 理由: 随着 AI 模型定制化和部署需求增加，理解底层编译器基础设施（MLIR）变得至关重要，此文为入门和优化模型推理提供了理论基石。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

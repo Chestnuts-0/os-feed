@@ -77,4 +77,4 @@
     *   **理由：** 12B 参数量的代码模型在性能与资源消耗之间取得了极佳平衡，GGUF 格式使其能在消费级显卡上流畅运行，是日常编程助手的理想选择。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -114,4 +114,4 @@
     *   **理由：** 在 AI 监管日益严格的背景下，传统的黑盒安全评估已不足够。该论文提供的严格概率界限计算方法，为企业和监管机构量化 LLM 的安全风险提供了数学基础，对于构建可信 AI 系统至关重要。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

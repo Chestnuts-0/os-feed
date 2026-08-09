@@ -76,4 +76,4 @@
     *   **理由**: 揭示了当前主流模型在基础能力上的潜在退化问题。对于研究者和严谨的工程团队来说，这是一个重要的警示：不要盲目迷信最新发布的闭源模型，需结合具体基准测试进行选型。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

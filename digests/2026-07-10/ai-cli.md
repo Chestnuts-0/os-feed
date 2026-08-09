@@ -1107,4 +1107,4 @@ v0.8.68 版本正式发布，标志着“Fleet/Workflow/Lane”架构模型的�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

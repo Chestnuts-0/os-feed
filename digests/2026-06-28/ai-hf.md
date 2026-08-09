@@ -95,4 +95,4 @@
     *   **理由**：代表了硬件与软件协同优化的前沿。通过 NVFP4 格式，可以在 NVIDIA 硬件上以极低的延迟和高吞吐量运行 35B 参数的 MoE 模型，是生产环境部署的理想候选。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

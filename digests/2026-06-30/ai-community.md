@@ -91,4 +91,4 @@
     *   理由: 对于从事企业级 AI 开发的工程师，如何跨越代码库边界让 AI 理解复杂系统是一个核心难题。本文提供的具体解决方案（如分离分支操作、SLO 保护）具有极高的实操参考价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

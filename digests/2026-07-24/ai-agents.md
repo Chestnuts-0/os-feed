@@ -912,4 +912,4 @@ CoPaw 项目在 v2.0.x 阶段保持高频迭代，过去24小时处理了 37 个
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

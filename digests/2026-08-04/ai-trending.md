@@ -101,4 +101,4 @@
 - **[lyogavin/airllm](https://github.com/lyogavin/airllm)** — 单卡 4GB GPU 推理 70B 模型的突破性方案，大幅降低大模型本地部署门槛，对个人开发者和边缘计算场景具有直接价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -134,4 +134,4 @@
     *   **理由**: 超越了传统的数学或逻辑推理，首次将“科学思想的继承与重组”纳入基准测试，为衡量 AI 是否具备类似人类科学家的创新思维提供了新颖且深刻的评估维度。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

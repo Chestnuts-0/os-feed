@@ -105,4 +105,4 @@
 *   **[OfficeCLI](https://github.com/iOfficeAI/OfficeCLI)**：针对 Office 文档的专用 AI 接口填补了当前生态的一个空白，使得 AI 代理能更自然地融入传统办公自动化流程，具有广泛的实用价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

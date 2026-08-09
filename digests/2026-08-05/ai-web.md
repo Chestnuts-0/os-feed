@@ -105,4 +105,4 @@ Anthropic 今日宣布前卡内基国际和平基金会主席、加州最高法�
 **分析师备注**：OpenAI 内容因仅元数据访问权限受限，建议后续补充正文抓取以实现完整分析。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

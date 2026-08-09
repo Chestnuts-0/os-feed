@@ -74,4 +74,4 @@
    - **理由：** 通过攻击者视角反思 RAG 存储的安全性，揭示了检索时防御的局限性，对个人 AI 记忆系统的未来设计有重要启示。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

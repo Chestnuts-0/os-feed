@@ -79,4 +79,4 @@
 *   **[AWS Agent Toolkit](https://github.com/aws/agent-toolkit-for-aws)**：企业级 AI 部署者应密切关注此项目。它代表了云厂商对 MCP 协议的官方支持，预示着未来企业 AI 基础设施将更加标准化和安全可控。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

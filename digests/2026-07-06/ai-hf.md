@@ -112,4 +112,4 @@
     *   **理由**: 作为一个新兴的 MoE 架构模型，其官方权重与 GGUF 量化版本同步更新，且遵循 MIT 许可，为开发者提供了一个免费、高效且具备良好扩展性的 35B 级别基座，值得深入研究其架构设计。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

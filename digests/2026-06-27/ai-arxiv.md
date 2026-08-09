@@ -116,4 +116,4 @@
     *   **理由**：图像生成模型正趋向于“全能型”发展，但编辑与生成往往存在内在冲突。该论文提出的统一框架解决了这一痛点，对于希望在一个模型中实现多种视觉生成能力的开发者而言，提供了极具价值的技术路径。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

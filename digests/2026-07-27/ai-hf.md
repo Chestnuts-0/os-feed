@@ -116,4 +116,4 @@
 ✅ **poolside/Laguna-S-2.1-NVFP4** —— 若你拥有 Ampere/Arc GPU 并希望快速部署轻量级文本生成服务，该 NVFP4 格式版本提供了比常规 safetensors 更快启动速度与更低内存占用的平衡方案。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -74,4 +74,4 @@
     *   **理由：** RAG 系统的黑盒问题是当前工程痛点，此文提供的语义可观测性方案是提升生产环境 RAG 可靠性的关键实践指南。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

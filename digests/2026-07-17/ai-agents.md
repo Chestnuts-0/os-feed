@@ -457,4 +457,4 @@ Hermes Agent 在过去24小时保持极高活跃度，共产生 **50条 Issue �
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

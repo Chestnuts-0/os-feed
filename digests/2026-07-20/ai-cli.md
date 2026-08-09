@@ -396,4 +396,4 @@ Qwen Code 于 v0.20.x 窗口进入高频迭代期，v0.20.0 稳定版与 v0.20.1
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

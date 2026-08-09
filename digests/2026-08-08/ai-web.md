@@ -49,4 +49,4 @@ Anthropic 正在通过 Fable 5 的定义**主导“生物+AI”的讨论框架**
 - **发布时机**: 选择在周六（8月7日）发布，通常用于避免与大型会议或竞品发布直接撞车，适合面向专业人士进行深度阅读的技术/产品公告。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

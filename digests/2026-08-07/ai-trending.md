@@ -110,4 +110,4 @@
 - **`Dicklesworthstone/destructive_command_guard`** — 专为 AI Agent 安全设计的命令防护工具，阻止 Agent 执行危险 git/shell 操作。随着 Agent 获得越来越多系统权限，此类"Agent 护栏"工具将从可选变为必选。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

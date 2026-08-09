@@ -69,4 +69,4 @@
 *   **📡 非视觉 AI 感知**：`ruvnet/RuView` 展示了利用 WiFi 信号进行感知的创新方向，这为隐私敏感场景（如养老监护、智能家居）提供了新的技术路径，值得关注其后续的多模态融合进展。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

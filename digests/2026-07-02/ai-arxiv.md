@@ -118,4 +118,4 @@
     *   **理由**：代表了 AI for Science 的新方向。传统 LLM 生成的科学假设往往缺乏逻辑链条的可追溯性。该方法结合图结构和强化学习，旨在生成“可解释、可验证”的科学洞见，为解决 AI 幻觉和增强科学严谨性提供了新思路。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

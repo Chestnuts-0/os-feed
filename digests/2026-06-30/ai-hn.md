@@ -79,4 +79,4 @@
     *   **理由**：理解全球 AI 供应链格局变化的关键文件。高额的国家补贴将如何影响存储芯片价格、机器人成本以及地缘政治博弈，此文提供了宏观背景，对行业分析师和投资决策者至关重要。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

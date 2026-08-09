@@ -1115,4 +1115,4 @@ Qwen Code 发布了 v0.19.7 正式版本及多个预览版，重点强化了 PR 
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -126,4 +126,4 @@
     *   **理由**：尽管存在争议，但其惊人的下载量（400 万+）揭示了市场对“无束缚”模型的巨大需求。研究此类模型的微调技术、潜在风险及其在创意生成或对抗测试中的应用，对于理解开源社区的技术偏好和安全边界具有重要意义。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

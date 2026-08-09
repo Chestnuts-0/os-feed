@@ -105,4 +105,4 @@
 - **📌 `Panniantong/Agent-Reach`**（63,437 stars）：零 API 费用的全平台数据获取 Agent 工具，解决 Agent 「信息盲区」问题，适合内容创作与市场调研场景
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

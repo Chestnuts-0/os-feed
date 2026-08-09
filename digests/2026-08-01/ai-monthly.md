@@ -223,4 +223,4 @@ Kronos（金融）、`vxcontrol/pentagi`（安全渗透）、`iOfficeAI/OfficeCL
 *本报告基于 2026 年 7 月第 28–31 周共 4 份周报综合分析生成。数据截止日期：2026-07-27。*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

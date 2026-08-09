@@ -134,4 +134,4 @@
 3. **MACRO**（Paper 18）——在Transformer架构层面提供了一条无需重新训练的动态路由新思路，与当前MoE、稀疏激活等方向形成有趣对照，值得架构研究者深入参考。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

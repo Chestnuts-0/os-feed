@@ -45,4 +45,4 @@
 *   **[QwenPaw](https://github.com/agentscope-ai/QwenPaw)**：作为国产通义系列的优秀代表，它展示了构建易于部署且功能强大的个人 AI 助理的成熟方案，尤其适合注重数据隐私的用户。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

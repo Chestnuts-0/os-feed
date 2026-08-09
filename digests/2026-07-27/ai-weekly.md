@@ -98,4 +98,4 @@
 📌 **总结**：AI 工具生态正经历从“可用”到“可信、可控、可降本”的结构性转型。开发者应重点关注跨平台稳定性、Agent 可观测性与本地化部署能力，这将是未来半年核心竞争力所在。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -134,4 +134,4 @@
     *理由:* 这篇论文提供了关于当前流行的 MoE、路由和多模型集成的冷静反思。它指出了“共同失败”这一被忽视的性能上限指标，有助于研究者更理性地设计多模型系统，避免盲目堆砌模型带来的边际效应递减。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -60,4 +60,4 @@
    作者分享了自己在实践中遇到的问题及相应的解决思路，特别强调了限制访问权限和实施严格检查机制的重要性，这对于保障应用安全具有重要借鉴意义。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

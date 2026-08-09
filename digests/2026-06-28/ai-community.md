@@ -79,4 +79,4 @@
     *   实操性强，直接关联开发者的钱包和项目 ROI，提供了具体的账单分析维度，是优化 AI 基础设施成本的实用指南。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

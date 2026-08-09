@@ -68,4 +68,4 @@
     *   **理由：** 作为非美国厂商推出的直接竞品，ZCode 代表了全球 AI 工具链的多元化竞争格局。阅读相关讨论有助于了解中国 AI 技术在工程化落地方面的最新进展和国际社区的反馈。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

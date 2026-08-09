@@ -81,4 +81,4 @@
 今日热榜清晰映射出 AI 开源生态的三大演进方向：**Agent 编排标准化**、**本地化记忆基建崛起**、**垂直场景 ROI 驱动落地**。过去以“提示词工程”为核心的开发模式正被“Agent Harness + MCP 工具链”取代，ECC、Ruflo、Deer-Flow 等项目表明社区已转向构建可插拔、可审计、支持长期运行的智能体操作系统。同时，RAG 领域从单纯向量检索升级为“图谱+记忆+流式更新”的复合架构，Graphiti、Mem0、ZVec 的爆发说明开发者更看重数据的结构化沉淀与低延迟检索。此外，Coding Agent（Gemini CLI、Codex、Claude Code 生态）与垂直
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

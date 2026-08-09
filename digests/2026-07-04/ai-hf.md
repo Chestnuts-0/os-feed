@@ -94,4 +94,4 @@
     *   **理由：** 作为 Google 发布的表格数据专用模型，它代表了结构化数据 AI 化的新方向。对于金融、电商等领域的表格数据分析，提供了一个比传统机器学习更先进的开源基准。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

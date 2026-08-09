@@ -78,4 +78,4 @@
 *   **成本管控工具需求:** 面对“AI 税”的舆论压力，下周预计会有更多**Token 压缩**、**计费透明化**及**成本监控**类的开源工具受到关注，帮助企业和开发者控制 AI 支出。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

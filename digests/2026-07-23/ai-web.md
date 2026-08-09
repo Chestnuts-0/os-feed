@@ -84,4 +84,4 @@ Anthropic 向非党派组织 Public First Action 追加捐赠 2000 万美元，�
 *   **OpenAI 的元数据缺失：** OpenAI 今日仅有 URL 标题而无正文，这可能暗示其内容发布系统存在延迟，或者这些页面是静态的旧内容更新。在 Anthropic 高调推进政策议程的背景下，OpenAI 的这种“缺席”本身也是一种信号——可能意味着其内部战略重心的不同步，或者是对 Anthropic 政策攻势的暂时性观察。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

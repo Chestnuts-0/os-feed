@@ -77,4 +77,4 @@
    > **理由**：代表了行业趋势的风向标。如果企业级客户开始大规模抛弃成熟框架转向原生架构，那么独立开发者和小型团队需要重新评估技术栈的长期维护成本和扩展性限制。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -1113,4 +1113,4 @@ v0.8.68 里程碑进入收尾冲刺阶段，核心焦点集中在 **Fleet 代理
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

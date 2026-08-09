@@ -150,4 +150,4 @@
 **建议**：开发者应重点关注 SQLite 迁移带来的数据一致性改进、MCP 协议的标准化进展，以及本地化 AI 工具的性能优化。企业用户需重新评估 AI 工具的成本结构和合规风险，特别是在跨国业务场景中。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*

@@ -62,4 +62,4 @@
 - **数据边界提示：** OpenAI 条目目前仅有元数据，无法验证正文是否包含具体模型架构假设、基准测试或产品路线图。在补充完整内容前，相关战略判断仅基于标题与分类的客观推导，不作为确定性结论。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-0/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
