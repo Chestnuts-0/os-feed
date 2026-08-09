@@ -68,3 +68,11 @@
 - git remote 已更新为 https://github.com/Chestnuts-Sisyphus/os-feed.git
 - 线上验证：新 Pages URL https://chestnuts-sisyphus.github.io/os-feed/ 返回 200 在线
 - ⚠️ 本次改动含 656 文件未提交，由 GitTok 线自行审查提交
+
+## 2026-08-09 移动端适配（底栏 + 频道抽屉，任务书方案 A）
+- commit 5864326（3 文件 +274/-33）：web/src/App.tsx + icons.tsx + styles.css，禁碰后端/data/config ✓
+- 改动：T1 修复 .feed-virtual-grid 768px 单列死代码 bug（原规则打在 .feed-list 上，手机 103px 窄条）；T2 频道抽屉（250px + mask + ☰）+ 侧栏频道列表抽 ChannelNav 组件共用；T3 底栏（54px 三项，main padding-bottom 70px 防遮挡，footer 隐藏）；T4 我的页移动端顶部 me-tabs；T5 顶栏 tabs 移动端隐藏（header-inner 保持 flex）；T6 详情弹窗 350px 全宽确认、CreatorPage 无溢出
+- 工程：prettier --check ✓、tsc --noEmit 0 错 ✓、npm run build ✓、vitest 230 过 3 基线失败（无新增）
+- 验收（headless Chrome 390×844 + 1440×900，脚本 D:/tmp/gittok_mobile_accept.py）：**20/20 PASS**；桌面回归 sidebar 192px/tabs 可见/两列网格/移动 UI 全隐藏 ✓
+- 坑（验收踩到）：① 8901 端口被本机 douyin_tray 占用 → 验收服务改 8911；② 「热门」等空分区被 sections 过滤不出现在抽屉（与桌面侧栏一致，属数据现象非 bug）；③ tsconfig.tsbuildinfo 虽在 .gitignore 但被历史跟踪 → 每次构建产生脏状态，勿提交（还原即可）
+- push 走 Clash 代理 + token 编码 ✓ a33d228..5864326
