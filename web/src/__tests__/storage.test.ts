@@ -1,3 +1,5 @@
+// @ts-ignore —— vitest 依赖装在仓库根（web 是独立 npm 包，CI Deploy 的 web npm ci 不含 vitest，tsc -b 会 TS2307）；
+// 本文件由根 vitest 运行（vitest.config include 已含 web/src/__tests__），运行时从根 node_modules 解析，@ts-ignore 只跳过编译期模块解析
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { loadSafe, saveDual, bakKey, corruptKey } from "../storage.ts";
 
