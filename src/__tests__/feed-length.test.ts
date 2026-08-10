@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import fs from "node:fs";
 import path from "node:path";
 import type { RadarConfig } from "../config.ts";
 import type { TrendingData } from "../trending.ts";
@@ -54,7 +55,7 @@ vi.mock("../report.ts", async (importOriginal) => {
 // stars 轮转刷新不打真网络（resp.ok=false → 跳过刷新，无害）
 vi.stubGlobal("fetch", vi.fn(async () => ({ ok: false, status: 404 })) as unknown as typeof fetch);
 
-import { generateFeed, effLen } from "../feed/index.ts";
+import { generateFeed, effLen, summaryFromDetailFirstPara } from "../feed/index.ts";
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -245,5 +246,45 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     expect(card).toBeDefined();
     expect(effLen(card!.reasonCn)).toBeGreaterThanOrEqual(100);
     expect(callCount.n).toBe(1);
+  });
+
+  it("summaryFromDetailFirstPara：从第一段截 20-35 字且句号收尾", () => {
+    const detail =
+      "简单来说，这是一个帮你本地跑大模型的神器，不需要昂贵的显卡。\n\n技术上，它用纯 C++ 实现推理内核。\n\n安装很简单，一行命令搞定。";
+    const s = summaryFromDetailFirstPara(detail);
+    expect(s.length).toBeGreaterThanOrEqual(15);
+    expect(effLen(s)).toBeLessThanOrEqual(38);
+    expect(s.startsWith("简单来说")).toBe(true);
+    expect(s.endsWith("。")).toBe(true);
+    // 空输入 → ""
+    expect(summaryFromDetailFirstPara("")).toBe("");
+  });
+
+  it("重评失败 + 有 detail → 兜底构造的卡 summary 非空且 20-35 字（不再留空被前端填充）", async () => {
+    llmMock.impl = () => {
+      throw new Error("mock llm unavailable"); // 批量 + 重评全失败
+    };
+    const trending = makeTrendingData(["new/fallback-sum"]);
+    // 预置 baseline feed（含该卡 detailCn，走「无评分 + detailMap 兜底」路径）
+    const prevFeed = [
+      {
+        repo: "new/fallback-sum",
+        owner: "new",
+        name: "fallback-sum",
+        detailCn:
+          "这是一个测试项目：用来验证兜底时一句话描述也能生成。\n\n技术上它测试若干边界情况，包括内存管理、并发处理与数据索引优化，并且提供了友好的 REST 与 gRPC 接口，让开发者可以快速接入并处理大规模向量数据，这一段需要写得足够长以满足一百等效宽度的兜底要求。\n\n安装无要求。",
+        reasonCn: "",
+        aiScore: 0,
+      },
+    ];
+    memFs.set(path.join("data", "feed.json"), JSON.stringify(prevFeed));
+
+    const cards = await generateFeed(cfg, trending, []);
+
+    const card = cards.find((c) => c.repo === "new/fallback-sum");
+    expect(card).toBeDefined();
+    expect(card!.summaryCn.length).toBeGreaterThanOrEqual(10);
+    expect(effLen(card!.summaryCn)).toBeLessThanOrEqual(38);
+    expect(card!.summaryCn.startsWith("这是一个测试项目")).toBe(true);
   });
 });

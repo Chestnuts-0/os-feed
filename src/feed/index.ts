@@ -437,6 +437,29 @@ export function fallbackReasonFromDetail(detailCn: string): string | null {
   return effLen(acc) >= 100 ? acc : null;
 }
 
+/**
+ * detail 第一段截取 summary（P0a 兜底收尾：一句话描述从「这是什么」段截 20-35 字句号收尾，
+ * 与 reason 用的技术段互补不重复；避免 summary 留空被前端用 reason 首句填充成超长文本）。
+ * 返回 effLen 尽量落在 20-35；无法截取返回 ""。
+ */
+export function summaryFromDetailFirstPara(detailCn: string): string {
+  const segments = detailCn
+    .split(/\n\n+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+  if (segments.length === 0) return "";
+  let body = segments[0] ?? "";
+  if (effLen(body) < 20) body = segments.join(" ");
+  let acc = "";
+  let reached = false;
+  for (const ch of body) {
+    acc += ch;
+    if (effLen(acc) >= 20) reached = true;
+    if (reached && (/[。！？]/.test(ch) || effLen(acc) >= 35)) break;
+  }
+  return acc;
+}
+
 // ---------------------------------------------------------------------------
 // 加载已有评分缓存（避免重复 LLM 调用）
 // ---------------------------------------------------------------------------
@@ -873,13 +896,14 @@ export async function generateFeed(
                 `  [feed/scoring] ${m.repo}: rescore failed, fallback reason from detail (effLen=${effLen(fallback).toFixed(1)})`,
               );
               if (!sc) {
-                // 本轮评分失败 + 历史 detail 兜底：构造最小评分（summary 留空，由后续轮次清字段重评补全）
+                // 本轮评分失败 + 历史 detail 兜底：构造最小评分（summary 从 detail 第一段截 20-35 字，
+                // 防前端用 reason 首句填充成超长文本——P0a 收尾）
                 sc = {
                   repo: m.repo,
                   aiDims: [],
                   aiDim: "其他",
                   aiScore: 0.5,
-                  summaryCn: "",
+                  summaryCn: summaryFromDetailFirstPara(detail),
                   reasonCn: fallback,
                   detailCn: detail,
                 };
