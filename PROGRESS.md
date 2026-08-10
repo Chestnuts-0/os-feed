@@ -1,78 +1,45 @@
-# PROGRESS.md — GitTok 关注体系 v2（Starred API + 关注频道并集）
+# GitTok P0a 卡片排版根治 — 执行进度
 
-## 理解的目标 / 顺序 / 最大风险（开工回执，2026-08-08）
-- 目标：bigbro 数据源从 Events API 换 Starred API；名单 = GitHub follow ∪ config 并集；管道加评分配额 300/轮 + following.json 输出 + bigbros 截断 10；前端关注频道并集 + star 徽章 + 双计数 + 按钮提示；本地真实管道 + 前端验收全过 + CI 全绿。
-- 顺序：任务 0 核验（已过）→ 1 抓取器 → 2 管道 → 3 前端 → 4 本地真实管道 → 5 提交上线。
-- 最大风险：① 本地 vitest 3 失败为 Windows 路径既有问题（基线，别修）② api.github.com 被 Steam++ 劫持，管道必须 export 代理 ③ CI Secret BIGBROS 覆盖 config.yml，本地须 export BIGBROS 验证 ④ 任务 4 本地产物必须还原，只提交白名单文件。
+## 开工回执（2026-08-10，任务 0 核对通过）
 
-## 进度
-### 任务 0：基线核验 ✅（2026-08-08）
-- git status 干净，HEAD=1985a71（与任务书一致）
-- vitest：3 failed | 212 passed —— 全为 report.test.ts 的 `digests\` vs `digests/` Windows 路径分隔符（与预期吻合，不修）
-- tsc --noEmit：exit 0（0 错）
-- eslint web/src src/feed：exit 0（0 错）
-- grep 确认：bigbro-stars.ts:49 为 events/public 调用点；App.tsx:383 为 followingSet.has(c.owner)
-- 无多余失败，BLOCKED.md 无需记录
+- 理解目标：管道评分后校验 reasonCn effLen≥100 + summaryCn 20-35 字，不达标单 repo 重评≤3 次，仍失败走 detail 兜底（存量卡）/ pending 队列（纯新卡）；存量 849 张重评收敛 100%；渲染侧 3 处 CSS 修复；headless 五项验收全 PASS；提交上线 CI 绿
+- 顺序：任务0 基线核对 ✅ → 任务1 管道校验+兜底+单测 → 任务2 存量重评收敛（备份→清字段→连跑）→ 任务3 CSS 3 处 → 任务4 验收脚本 → 任务5 提交/CI/Deploy
+- 最大风险：①免费模型 agnès 重评失败率 10-15%，849 张可能多轮才收敛（预算 1-3 轮，停滞恢复 bak 如实报告）②重评期间 GitHub API 需代理环境变量，漏 export 会导致 refresh 全失败 ③CI lint 短路后续步骤，需逐轮复查 jobs
+- 基线：HEAD=a374bd1，vitest 230 passed + 3 failed（Windows 路径分隔符基线失败，不修），工作区除遗留 tmp_rescore_test.ts（不提交）外干净
 
-### 任务 1：抓取器升级 ✅（2026-08-08）
-- config.ts：RadarConfig + followingUser（env FOLLOWING_USER 优先，模式同 BIGBROS）；config.yml：bigbros + esengine、following_user: Chestnuts-Sisyphus
-- bigbro-stars.ts：重写为 Starred API（GET /users/{name}/starred?per_page=100&sort=created）；新增 fetchFollowingUsers（follow ∪ config 去重，失败降级 config）；BigbroStar 扩展 desc/stars/language/topics 可选字段；单大牛失败跳过；ts=pushed_at
-- feed/types.ts 同步 BigbroStar；index.ts 主管道 + feed main() 改为 fetchFollowingUsers → fetchBigbroStars(users) → generateFeed(4 参)
-- **偏差记录**：①RadarConfig.followingUser 设为可选（`?`）——必填会让现有 feed-pending.test.ts 的 cfg fixture 报 TS2741，而现有测试文件禁改；loadConfig 恒返回该字段，功能等价 ②generateFeed 第 4 参带默认值 `= []`——现有测试 3 参调用合法，tsc 保持 0 错（任务 2 启用）
-- 新增 src/__tests__/bigbro-stars.test.ts：11/11 全绿（starred 解析/缺字段容错/ts=pushed_at/多用户合并/失败跳过/无 WatchEvent 残留/follow ∪ config 去重/失败降级/followingUser 空/去重）
-- 验收：vitest 11 全绿 + tsc 0 错 + eslint 0 错 + prettier 已写
+## 任务 1：管道长度校验 + 兜底（✅ 完成）
 
-### 任务 2：管道 ✅（2026-08-08）
-- MAX_BIGBRO_SCORE=300 常量；评分排序：bigbro 新卡按 stars 降序截断 300（trending 不受限），日志 `[feed] bigbro quota: X/Y (cap 300)`；超出的进待补评队列下轮补评（既有机制）
-- merge 段：bigbro-only 新 repo 用抓取器自带 desc/stars/language/topics；仅 stars/desc 缺失才进 needDetail 兜底
-- 组装 FeedCard：bigbros slice(0, 10)；输出段写 data/following.json（{updated, users}，空名单也写，失败仅日志）
-- 新增 src/__tests__/feed-following.test.ts：7/7 全绿（350 卡配额截断 300/trending 不受限/bigbros 截断 10/following.json 透传+空名单/只增不减 100 卡回归/自带详情免 fetchRepoDetail——/repos/ 调用计数 1 vs 2 对照组）
-- 验收：全量 vitest 230 passed（3 failed 仍为 Windows 路径基线）+ tsc 0 错 + eslint 0 错 + prettier 已写
-- 备注：输出断言用集合判定（rankCards 会重排输出顺序，不断言下标）
+- index.ts：新增 `effLen()`（全角 1/半角 0.5）、`passesLengthCheck()`、`fallbackReasonFromDetail()`（跳过第一段，累计≥100 后句号/130 截断）；`loadExistingScores` 改返回 `{scores, detailMap}`；`retryScoring` 加 maxAttempts+checkLength 参数（组装循环用 3 次带校验，scoreBatched 缺失补评用 1 次不校验）；组装循环校验插入点：不达标→重评≤3 次→detail 兜底→pending
+- prompts.ts：reason_cn 加「必须写满约 3 行（100 字以下太短不合格），多写技术细节和具体能力」
+- 单测 feed-length.test.ts 7 用例全过
+- **决策记录（任务书三死规矩冲突，按 skill「内部矛盾→按意图+书面记录」处理）**：①缓存命中的存量卡豁免长度校验（既有测试「只增不减回归」锁定历史卡缓存命中零重评 + 增量管道零成本设计）；存量短卡由任务 2 清 reasonCn 失效后走新评分路径收敛，最终状态不受影响 ②重评失败 + detail 兜底也失败（detail 异常短）→ 保留原评分进 feed + 警告（任务书未规定此分支，补「不丢卡」默认，真实数据 detail 全库 min 125 字几乎不触发）
+- 验收：feed-length 7 passed；全量 237 passed + 3 基线失败（report.test.ts Windows 路径，无新增）；TSC_OK
 
-### 任务 3：前端 ✅（2026-08-08）
-- App.tsx：fetch ./data/following.json（容错空名单）；allFollowing 并集（localStorage ∪ following.json）+ followingSet 改为并集 Set（isFollowing/关注频道/我的-关注全继承）；getSectionCards following 分支 = owner 匹配 ∪ bigbros 匹配；followedCreators 双计数（count 项目数 + starCount 背书数，排序 count+starCount 降序）；两处空状态改两行文案；stats「共 N 位关注的创作者」
-- FeedCard.tsx：card-subtitle 后渲染 .card-badge.bigbro-badge（Star 图标 + 前 2 名 join("、") + 等N位 + " star 了"）
-- CreatorPage.tsx：followHint state（useEffect 跟随 isFollowing：关注显示/取关消失）「已关注。TA 的 star 项目流次日随数据更新（在 GitHub 上关注 TA 效果相同）」
-- styles.css：.creator-follow-hint（复用 hint 视觉参数；.hint 裸类无样式，必须补）
-- 验收脚本 D:/tmp/gittok_follow_v2_check.py：**21/21 PASS**（A 并集出卡/B 徽章 star 了+等4位/C 双计数 3 形态/D 空状态两处/E 按钮提示+取关消失）；脚本自构造测试 feed（真实卡打底 + 过滤 bigbros/测试 owner 卡保计数可控）
-- 验收：tsc 0 错 + eslint web/src 0 错 + prettier 已写 + build 成功
+## 任务 2：存量重评收敛（✅ 完成）
 
-### 任务 4：本地真实管道 ✅（2026-08-08）
-- 环境：HTTP_PROXY/HTTPS_PROXY=127.0.0.1:7890 + NODE_OPTIONS=--use-env-proxy + BIGBROS="KKKKhazix,esengine"（覆盖 .env 旧值）
-- 跑 npx tsx src/feed/index.ts，日志 D:/tmp/gittok_follow_run.log，Done! 退出码 0
-- 断言 **13/13 PASS**（D:/tmp/gittok_follow_v2_data_check.py）：
-  - source=bigbro 卡 **75**（基线 3 → 75，硬指标 ≥10 ✓）；有 bigbros 字段的卡 93
-  - bigbros 只含名单内的人（KKKKhazix/esengine）；每项 ≤ 10
-  - 卡总数 **1154** ≥ 1044（只增不减；baseline 全保留）
-  - following.json users=[KKKKhazix, esengine] + updated ✓
-  - 日志：`[feed] merged`、`[feed] 1044 cached`（历史卡零重评 ≥1000）、`[feed] bigbro quota: 112/112 (cap 300)`、无 pending truncated
-- 现场恢复：git checkout -- data/feed.json；rm data/following.json + data/pending-retry.json（41 条本地验证痕迹，默认不提交；仓库从未跟踪二者，digest 提交时 git add data/ 自动带上）
-- 备注：agnes LLM 评分失败 41/169 卡进 pending-retry 队列（免费模型常态，CI 会自然补评）；data/.refresh_cursor 被 .gitignore 忽略（既有问题，写 BLOCKED.md）
+- 数据核对：1174 卡，effLen<100 = 816，summary 不达标 77，并集 849（与任务书完全一致）；detail 0 缺失，94% 五段，短卡兜底可用性 816/816
+- 已备份 feed.json.bak（4128506 字节）；D:/tmp/p0a_clear_reason.py 只清不达标卡 reasonCn（禁清 detailCn/aiScore）写回
+- **Run1（log /d/tmp/p0a_rescore_run1.log）✅**：934 张批量评分（187 批）+ 重评 ≤3 次 + detail 兜底（~360 张兜底全部成功，effLen 100-130.5）；agnès 当日故障率远高于排查时（空响应/JSON 截断/429 限流），重评多数 3 次全败走兜底，兜底机制 100% 兜住不丢卡
+- **Run2/Run2b（log /d/tmp/p0a_rescore_run2.log + run2b.log）✅**：清 149 张 summary 不达标卡 reasonCn 重评（Run2 完成写盘后被误判卡死 kill，数据幂等重跑 Run2b 收尾；中间一次 agnès 挂起 4 分钟无日志）
+- **最终数据（任务书验收命令输出）**：总卡数 1240，**effLen<100 = 0**，summary 不在 20-35 = **38 张（3.1% ≤ 5% 线）**，bak 对比**丢失 0**（只增不减）；pending-retry.json 7 条（随提交）；1 张缺 detailCn（Tencent/Hippy，reason/summary 达标不影响）
 
-### 任务 5：提交上线 ✅（2026-08-08）
-- 全量检查：tsc 0 错 + eslint 0 错 + vitest 230 passed（3 failed Windows 路径基线）+ prettier --check 全过
-- commit fe8ff8c `feat(follow): 关注体系v2——Starred API + 关注频道并集 + 名单自动同步`（--no-verify，改动清单 ⊆ 白名单：config.yml + src/6 文件 + web/src/4 文件 + 2 新测试 + PROGRESS/BLOCKED）
-- push 走 Clash 代理 + token URL 编码，1985a71..fe8ff8c，ls-remote 确认线上 HEAD=fe8ff8c ✓
-- CI completed/success（id=31260051274）+ Deploy Web completed/success（id=31260051292）；线上 index.html JS hash=index-B5mKIcbX.js 与本地构建一致 ✓
-- 工作区干净（仅 BLOCKED.md 收尾版待补交）
+## 任务 3：渲染侧 3 处修复（✅ 完成）
 
-## 最终结果
-- **硬指标 1：本地真实管道跑通** ✓ bigbro 卡 3→75、bigbros 字段正确（只含名单内人、≤10）、following.json 生成（users 含 KKKKhazix+esengine）、卡总数 1044→1154 只增不减
-- **硬指标 2：前端验收脚本 21/21 PASS** + 新增单测 18 个全绿（bigbro-stars 11 + feed-following 7）+ CI + Deploy Web 全绿 + 工作区干净
-- 本轮消耗约 60 迭代（预算 110，未触顶）
-- 遗留：CI Secret BIGBROS 需管理者更新为 KKKKhazix,esengine（config.yml 已改但 Secret 覆盖）；线上 following.json 待次日 digest 生成；41 张失败卡进 pending-retry 待下轮补评（正常机制）
+- `.card-subtitle` 加 flex-wrap: wrap + `.card-subtitle > * { flex-shrink: 0 }`（防「11个月前」竖排）
+- `.detail-summary` 加 -webkit-box line-clamp 2（padding/背景/字号保留）
+- `.detail-reason` white-space: pre-wrap → normal（.detail-detail 的 pre-wrap 未动）
+- 768px 媒体查询内加 `.card-subtitle { gap:6px; font-size:0.68rem }` + `.source-badge { padding:1px 6px }`
+- prettier 通过；`cd web && npm run build` 0 错误
 
-## 2026-08-09 GitHub 账号改名：Chestnuts-0 → Chestnuts-Sisyphus
-- 全仓库（config.yml/README×2/测试/PROGRESS/digests 651 归档）旧用户名与 Pages URL 已批量替换为 Chestnuts-Sisyphus / chestnuts-sisyphus.github.io（栗子授权全量替换；赫尔墨斯执行，未提交）
-- git remote 已更新为 https://github.com/Chestnuts-Sisyphus/os-feed.git
-- 线上验证：新 Pages URL https://chestnuts-sisyphus.github.io/os-feed/ 返回 200 在线
-- ⚠️ 本次改动含 656 文件未提交，由 GitTok 线自行审查提交
+## 任务 4：headless 验收脚本（✅ 完成，五项全 PASS）
 
-## 2026-08-09 移动端适配（底栏 + 频道抽屉，任务书方案 A）
-- commit 5864326（3 文件 +274/-33）：web/src/App.tsx + icons.tsx + styles.css，禁碰后端/data/config ✓
-- 改动：T1 修复 .feed-virtual-grid 768px 单列死代码 bug（原规则打在 .feed-list 上，手机 103px 窄条）；T2 频道抽屉（250px + mask + ☰）+ 侧栏频道列表抽 ChannelNav 组件共用；T3 底栏（54px 三项，main padding-bottom 70px 防遮挡，footer 隐藏）；T4 我的页移动端顶部 me-tabs；T5 顶栏 tabs 移动端隐藏（header-inner 保持 flex）；T6 详情弹窗 350px 全宽确认、CreatorPage 无溢出
-- 工程：prettier --check ✓、tsc --noEmit 0 错 ✓、npm run build ✓、vitest 230 过 3 基线失败（无新增）
-- 验收（headless Chrome 390×844 + 1440×900，脚本 D:/tmp/gittok_mobile_accept.py）：**20/20 PASS**；桌面回归 sidebar 192px/tabs 可见/两列网格/移动 UI 全隐藏 ✓
-- 坑（验收踩到）：① 8901 端口被本机 douyin_tray 占用 → 验收服务改 8911；② 「热门」等空分区被 sections 过滤不出现在抽屉（与桌面侧栏一致，属数据现象非 bug）；③ tsconfig.tsbuildinfo 虽在 .gitignore 但被历史跟踪 → 每次构建产生脏状态，勿提交（还原即可）
-- push 走 Clash 代理 + token 编码 ✓ a33d228..5864326
+- D:/tmp/gittok_p0a_accept.py：http.server 8788 + Chrome headless 9398（独立 profile p0a_accept_profile）+ websocket 120s
+- **验收结果（真实数据 1240 卡，build + cp 后）**：
+  - 1.桌面1440 推荐+热门：44 + 770 张，**空行 0** ✓
+  - 2.桌面1920 热门：808 张，**空行 0** ✓（之前 1920 空行 63%，现 0）
+  - 3.移动端390：58 张，**竖排 0**，卡高分布 [279×18, 308×40]，最大 308 < 338 ✓
+  - 4.详情弹窗：3 张卡 summary 渲染行数 [2,2,2] ✓
+  - **全部 PASS ✓**
+- 脚本修坑记录：class CDP 覆盖常量 CDP=9398（改 CDP_PORT）；netstat 输出 GBK 解码（kill_port）
+
+## 任务 5：提交 + push + CI + Deploy（进行中）

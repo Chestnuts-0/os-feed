@@ -548,10 +548,15 @@ button {
 .card-subtitle {
   display: flex;
   align-items: center;
+  flex-wrap: wrap; /* P0a：放不下换行而非压缩子项（防移动端文字竖排） */
   gap: 8px;
   margin-top: 3px;
   font-size: 0.74rem;
   color: var(--text-muted);
+}
+/* P0a：subtitle 子项禁收缩（「11个月前」曾被压到 13px 宽竖排 83px 高） */
+.card-subtitle > * {
+  flex-shrink: 0;
 }
 
 .source-badge {
@@ -779,6 +784,11 @@ button {
   background: linear-gradient(135deg, var(--accent-light), transparent);
   border-left: 4px solid var(--accent);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  /* P0a：详情弹窗 summary 永不超 2 行（350px 弹窗物理放不下 20-35 字一行） */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .detail-reason {
@@ -786,7 +796,7 @@ button {
   line-height: 1.9;
   color: var(--text-secondary);
   margin-bottom: 20px;
-  white-space: pre-wrap;
+  white-space: normal; /* P0a：详情 reason 去 pre-wrap（.detail-detail 的 pre-wrap 保留，勿动） */
 }
 
 .detail-label {
@@ -1563,6 +1573,14 @@ button {
   }
 
   /* --- 移动端适配（底栏 + 频道抽屉，任务书方案 A） --- */
+  /* P0a：subtitle 移动端收紧（防换行撑高卡片） */
+  .card-subtitle {
+    gap: 6px;
+    font-size: 0.68rem;
+  }
+  .source-badge {
+    padding: 1px 6px;
+  }
   /* T1: 虚拟列表单列（真实容器是 .feed-virtual-grid；.feed-list 规则保留勿删） */
   .feed-virtual-grid {
     grid-template-columns: 1fr;

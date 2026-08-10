@@ -384,16 +384,73 @@ async function refreshStarsRoundRobin(
 }
 
 // ---------------------------------------------------------------------------
+// P0a 长度校验：reasonCn 等效宽度 ≥100 + summaryCn 20-35 字
+// ---------------------------------------------------------------------------
+
+/**
+ * 中文字符串等效宽度：全角（汉字/CJK 标点/全角符号）算 1，其余（半角）算 0.5。
+ * 混英文时字符数不可靠（96 字可能 2 行也可能 3 行），卡宽 710 的空行边界实测 effLen 93-95，
+ * 校验线 effLen ≥100 为安全线（栗子已拍板）。
+ */
+export function effLen(s: string): number {
+  let w = 0;
+  for (const ch of s) {
+    w += /[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]/.test(ch) ? 1 : 0.5;
+  }
+  return w;
+}
+
+/** reasonCn effLen ≥100 且 summaryCn 20-35 字（P0a 长度校验线） */
+function passesLengthCheck(sc: ScoringResult): boolean {
+  return (
+    !!sc.reasonCn &&
+    effLen(sc.reasonCn) >= 100 &&
+    !!sc.summaryCn &&
+    sc.summaryCn.length >= 20 &&
+    sc.summaryCn.length <= 35
+  );
+}
+
+/**
+ * detail 兜底：从 detailCn 截取 reason 用内容（零成本，防重评失败丢卡）。
+ * 按 \n\n+ 分段，跳过第一段（与 summary 语义重复，实测重叠度高），
+ * 从第二段起累计（段落 join 空格），累计到 effLen ≥100 后继续到最近句号（。！？）
+ * 或 effLen 130 封顶截断；第二段起总 effLen <100 时并入第一段尾部再截。
+ * 返回必须 effLen ≥100，无法兜底返回 null。
+ */
+export function fallbackReasonFromDetail(detailCn: string): string | null {
+  const segments = detailCn
+    .split(/\n\n+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+  if (segments.length === 0) return null;
+  let body = segments.slice(1).join(" ");
+  if (effLen(body) < 100) body = segments.join(" ");
+  if (effLen(body) < 100) return null;
+  let acc = "";
+  let reached = false;
+  for (const ch of body) {
+    acc += ch;
+    if (effLen(acc) >= 100) reached = true;
+    if (reached && (/[。！？]/.test(ch) || effLen(acc) >= 130)) break;
+  }
+  return effLen(acc) >= 100 ? acc : null;
+}
+
+// ---------------------------------------------------------------------------
 // 加载已有评分缓存（避免重复 LLM 调用）
 // ---------------------------------------------------------------------------
 
-function loadExistingScores(): Map<string, ScoringResult> {
+function loadExistingScores(): { scores: Map<string, ScoringResult>; detailMap: Map<string, string> } {
   try {
-    if (!fs.existsSync(FEED_PATH)) return new Map();
+    if (!fs.existsSync(FEED_PATH)) return { scores: new Map(), detailMap: new Map() };
     const raw = fs.readFileSync(FEED_PATH, "utf-8");
     const cards = JSON.parse(raw) as FeedCard[];
     const map = new Map<string, ScoringResult>();
+    // baseline 每卡的 detailCn（P0a detail 兜底数据源：重评失败 + 有历史 detail → 第二段截取）
+    const detailMap = new Map<string, string>();
     for (const c of cards) {
+      if (c.detailCn) detailMap.set(c.repo, c.detailCn);
       if (c.reasonCn && c.aiScore !== undefined) {
         map.set(c.repo, {
           repo: c.repo,
@@ -407,10 +464,10 @@ function loadExistingScores(): Map<string, ScoringResult> {
       }
     }
     console.log(`  [feed/cache] loaded ${map.size} existing scores from ${FEED_PATH}`);
-    return map;
+    return { scores: map, detailMap };
   } catch {
     console.log(`  [feed/cache] no existing feed.json, scoring all repos`);
-    return new Map();
+    return { scores: new Map(), detailMap: new Map() };
   }
 }
 
@@ -509,7 +566,7 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
             console.log(
               `  [feed/scoring] batch ${batchNum}/${batches.length}: ${parsed.length}/${batch.length} scored, retrying ${missing.length} missing...`,
             );
-            const retried = await retryScoring(missing, aiInterestsText);
+            const retried = await retryScoring(missing, aiInterestsText, 1, false);
             return [...parsed, ...retried];
           }
           console.log(
@@ -527,17 +584,34 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
   return results;
 }
 
-/** 对缺失的 repo 逐个重试 LLM 评分（单 repo prompt，输出短，成功率更高） */
-async function retryScoring(repos: RepoForScoring[], aiInterestsText: string): Promise<ScoringResult[]> {
+/** 对缺失/不达标的 repo 逐个重试 LLM 评分（单 repo prompt，输出短，成功率更高）。
+ *  checkLength=true 时每个 repo 最多重试 maxAttempts 次，每次校验长度（reasonCn effLen≥100 且 summaryCn 20-35 字），达标即用；
+ *  checkLength=false 用于批量解析缺失补评（长度校验统一在组装循环做）。 */
+async function retryScoring(
+  repos: RepoForScoring[],
+  aiInterestsText: string,
+  maxAttempts = 3,
+  checkLength = true,
+): Promise<ScoringResult[]> {
   const results: ScoringResult[] = [];
   for (const repo of repos) {
-    try {
-      const prompt = buildFeedScoringPrompt([repo], aiInterestsText);
-      const raw = await callLlm(prompt, 4096);
-      const parsed = parseScoringResult(raw);
-      if (parsed[0]) results.push(parsed[0]);
-    } catch (err) {
-      console.error(`  [feed/scoring] retry ${repo.repo} failed: ${err}`);
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      try {
+        const prompt = buildFeedScoringPrompt([repo], aiInterestsText);
+        const raw = await callLlm(prompt, 4096);
+        const parsed = parseScoringResult(raw);
+        if (parsed[0] && (!checkLength || passesLengthCheck(parsed[0]))) {
+          results.push(parsed[0]);
+          break;
+        }
+        if (parsed[0]) {
+          console.log(
+            `  [feed/scoring] retry ${repo.repo} attempt ${attempt + 1}: length check failed (reason effLen=${effLen(parsed[0].reasonCn).toFixed(1)}, summary ${parsed[0].summaryCn.length}字)`,
+          );
+        }
+      } catch (err) {
+        console.error(`  [feed/scoring] retry ${repo.repo} attempt ${attempt + 1} failed: ${err}`);
+      }
     }
   }
   return results;
@@ -697,7 +771,7 @@ export async function generateFeed(
   }
 
   // 3. LLM 批量评分（增量模式：跳过已有缓存的仓库，只给新仓库评分）
-  const existingScores = loadExistingScores();
+  const { scores: existingScores, detailMap } = loadExistingScores();
   // 评分队列均衡：trending/bigbro 来源优先（保证今日热门/大牛推荐不被 search 淹没）；
   // search 组内按领域（searchQuery label = topics[0]）分桶、桶内按 star 降序、桶间轮询合并，
   // 保证每个领域都有代表进入评分队列（否则高星 AI 会挤掉低星非 AI，非 AI 拿不到评分就进不了 feed）
@@ -767,8 +841,70 @@ export async function generateFeed(
   /** 本轮评分失败（或未轮到评分）的 repo——记入待补评队列，下轮强制恢复补评 */
   const failedThisRound: MergedRepo[] = [];
   for (const m of repoMap.values()) {
-    const sc = scoringMap.get(m.repo);
-    // LLM 评分失败的仓库直接跳过，不进信息流（但记入待补评队列兜底，杜绝永久丢失）
+    let sc = scoringMap.get(m.repo);
+    // 缓存命中的存量卡原样输出：增量管道「历史卡缓存命中零重评」铁律（既有测试锁定，历史卡零 LLM 成本）。
+    // P0a 长度校验只作用于本轮新评分/恢复补评的卡；存量短卡由任务 2 清 reasonCn 失效后走新评分路径收敛。
+    const cachedHit = existingScores.has(m.repo);
+    if (!cachedHit) {
+      // P0a 长度校验：reasonCn effLen <100（等高卡片第三行空白）或 summaryCn 不在 20-35 字 → 不达标
+      if (
+        !sc ||
+        !sc.reasonCn ||
+        effLen(sc.reasonCn) < 100 ||
+        !sc.summaryCn ||
+        sc.summaryCn.length < 20 ||
+        sc.summaryCn.length > 35
+      ) {
+        // 不达标 → 单 repo 重评 ≤3 次（每次校验，达标即用）
+        const retried = await retryScoring(
+          [{ repo: m.repo, description: m.desc, stars: m.stars, language: m.language, topics: m.topics }],
+          config.interests.aiInterestsText,
+          3,
+        );
+        if (retried.length > 0) {
+          sc = retried[0]!;
+        } else {
+          const detail = sc?.detailCn || detailMap.get(m.repo) || "";
+          if (detail) {
+            // 重评仍失败 + 有历史/本轮 detail → detail 第二段兜底（零成本，防丢卡）
+            const fallback = fallbackReasonFromDetail(detail);
+            if (fallback) {
+              console.log(
+                `  [feed/scoring] ${m.repo}: rescore failed, fallback reason from detail (effLen=${effLen(fallback).toFixed(1)})`,
+              );
+              if (!sc) {
+                // 本轮评分失败 + 历史 detail 兜底：构造最小评分（summary 留空，由后续轮次清字段重评补全）
+                sc = {
+                  repo: m.repo,
+                  aiDims: [],
+                  aiDim: "其他",
+                  aiScore: 0.5,
+                  summaryCn: "",
+                  reasonCn: fallback,
+                  detailCn: detail,
+                };
+              } else {
+                sc = { ...sc, reasonCn: fallback, detailCn: detail };
+              }
+            } else if (sc) {
+              // 重评失败 + detail 兜底也失败（detail 异常短）：保留原评分进 feed（不丢卡，符合只增不减设计）
+              console.warn(
+                `  [feed/scoring] ${m.repo}: rescore failed & detail fallback failed, keeping original score`,
+              );
+            } else {
+              // 无评分可保留 → 待补评队列，下轮补评
+              failedThisRound.push(m);
+              continue;
+            }
+          } else {
+            // 重评失败且无 detail 可兜底 → 记入待补评队列，下轮补评（本轮不进 feed）
+            failedThisRound.push(m);
+            continue;
+          }
+        }
+      }
+    }
+    // 评分失败（重评/兜底均不可用）的仓库直接跳过，不进信息流（但记入待补评队列兜底，杜绝永久丢失）
     if (!sc || !sc.reasonCn) {
       failedThisRound.push(m);
       continue;
