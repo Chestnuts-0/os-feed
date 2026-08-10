@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import fs from "node:fs";
 import path from "node:path";
 import type { RadarConfig } from "../config.ts";
 import type { TrendingData } from "../trending.ts";
