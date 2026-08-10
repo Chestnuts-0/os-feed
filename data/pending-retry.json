@@ -1,113 +1,43 @@
 [
   {
-    "repo": "aceberg/WatchYourLAN",
-    "desc": "Lightweight network IP scanner written in Go. With notifications, history, export to Grafana",
-    "stars": 7489,
-    "language": "Go",
+    "repo": "esengine/GFramework-Cocos",
+    "desc": "",
+    "stars": 3,
+    "language": "TypeScript",
     "topics": [],
-    "source": "trending",
-    "starGrowth": 7489,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
+    "source": "bigbro",
+    "starGrowth": 3,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2023-05-27T16:09:10Z",
     "retryCount": 1
   },
   {
-    "repo": "aden-hive/hive",
-    "desc": "Multi-Agent Harness for Production AI",
-    "stars": 10887,
+    "repo": "esengine/HiveMind",
+    "desc": "A self-evolving, personalized AI system with federated learning",
+    "stars": 2,
     "language": "Python",
     "topics": [
-      "automation"
+      "ai",
+      "federated-learning",
+      "llm",
+      "lora",
+      "machine-learning",
+      "personalization",
+      "qwen"
     ],
-    "source": "search",
-    "starGrowth": 10887,
-    "bigbros": [],
-    "ts": "2026-08-09T14:36:44Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "browseros-ai/BrowserOS",
-    "desc": "🌐 The open-source Agentic browser; alternative to ChatGPT Atlas, Perplexity Comet, Dia.",
-    "stars": 13127,
-    "language": "TypeScript",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 13127,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "dmtrKovalenko/fff",
-    "desc": "The fastest and the most accurate file search SDK for AI agents, Neovim, Rust, C, Python, Bun and NodeJS",
-    "stars": 9925,
-    "language": "Rust",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 9915,
-    "bigbros": [],
-    "ts": "2026-08-09T00:58:42.474Z",
-    "retryCount": 2
-  },
-  {
-    "repo": "esengine/ecs-editor-plugins",
-    "desc": "Official and community plugins registry for ECS Framework Editor",
-    "stars": 1,
-    "language": "JavaScript",
-    "topics": [],
     "source": "bigbro",
-    "starGrowth": 1,
+    "starGrowth": 2,
     "bigbros": [
       "esengine"
     ],
-    "ts": "2025-11-26T08:12:03Z",
-    "retryCount": 2
-  },
-  {
-    "repo": "esengine/mvvm-ui-framework",
-    "desc": "一个轻量级、高性能的MVVM UI数据管理框架，支持与任何UI库集成",
-    "stars": 8,
-    "language": "TypeScript",
-    "topics": [],
-    "source": "bigbro",
-    "starGrowth": 8,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2025-08-16T05:56:41Z",
+    "ts": "2026-01-19T03:06:37Z",
     "retryCount": 1
   },
   {
-    "repo": "esengine/nova-ecs-editor",
-    "desc": "",
-    "stars": 1,
-    "language": "TypeScript",
-    "topics": [],
-    "source": "bigbro",
-    "starGrowth": 1,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2025-07-24T15:42:08Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "esengine/nova-ecs-math",
-    "desc": "Fixed-point mathematics library for NovaECS- providing deterministic mathematical operations for game development",
-    "stars": 6,
-    "language": "TypeScript",
-    "topics": [],
-    "source": "bigbro",
-    "starGrowth": 6,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2025-07-21T12:45:12Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "esengine/nova-ecs-physics-core",
-    "desc": "Core physics engine abstraction layer for NovaECS",
+    "repo": "esengine/nova-ecs-render-canvas",
+    "desc": "Canvas 2D rendering implementation for NovaECS render core, providing high-performance 2D graphics rendering with world coordinate system support.",
     "stars": 2,
     "language": "TypeScript",
     "topics": [],
@@ -116,241 +46,63 @@
     "bigbros": [
       "esengine"
     ],
-    "ts": "2025-07-23T12:14:48Z",
+    "ts": "2025-07-22T04:24:29Z",
     "retryCount": 1
   },
   {
-    "repo": "esengine/nova-ecs-render-core",
-    "desc": "Universal rendering abstraction layer for NovaECS, providing a unified interface for different rendering backends.",
-    "stars": 1,
+    "repo": "esengine/nova-ecs-render-three",
+    "desc": "",
+    "stars": 2,
     "language": "TypeScript",
     "topics": [],
     "source": "bigbro",
-    "starGrowth": 1,
+    "starGrowth": 2,
     "bigbros": [
       "esengine"
     ],
-    "ts": "2025-07-22T02:15:38Z",
+    "ts": "2025-07-25T04:09:16Z",
     "retryCount": 1
   },
   {
-    "repo": "funstory-ai/BabelDOC",
-    "desc": "Yet Another Document Translator",
-    "stars": 9228,
+    "repo": "gmh5225/awesome-game-security",
+    "desc": "awesome game security [Welcome to PR]",
+    "stars": 3335,
     "language": "Python",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 9228,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "InsForge/InsForge",
-    "desc": "The all-in-one, open-source backend platform for agentic coding. InsForge gives your coding agent database, auth, storage, compute, hosting, and AI gateway to ship full-stack apps end-to-end.",
-    "stars": 12687,
-    "language": "TypeScript",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 12687,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "is-a-dev/register",
-    "desc": "Grab your own sweet-looking '.is-a.dev' subdomain.",
-    "stars": 10940,
-    "language": "JavaScript",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 10940,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "jorge07/symfony-7-es-cqrs-boilerplate",
-    "desc": "Symfony 7 DDD ES CQRS backend boilerplate.",
-    "stars": 1089,
-    "language": "PHP",
     "topics": [
-      "backend"
+      "game"
     ],
     "source": "search",
-    "starGrowth": 1089,
+    "starGrowth": 3335,
     "bigbros": [],
-    "ts": "2026-08-09T20:30:44Z",
+    "ts": "2026-08-10T06:03:16Z",
     "retryCount": 1
   },
   {
-    "repo": "Kuberwastaken/claurst",
-    "desc": "Agentic Coding for Builders who Ship",
-    "stars": 10216,
-    "language": "Rust",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 10216,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "lanyeeee/bilibili-video-downloader",
-    "desc": "哔哩哔哩 bilibili B站 视频 下载器，图形界面 + nfo刮削 + 广告标记 + 字幕下载 + 弹幕下载，轻松将视频加入emby等媒体库",
-    "stars": 1816,
-    "language": "Rust",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 1816,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "louis-e/arnis",
-    "desc": "Generate any location from the real world in Minecraft with a high level of detail.",
-    "stars": 17375,
-    "language": "Rust",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 17375,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "MervinPraison/PraisonAI",
-    "desc": "PraisonAI 🦞 — Hire a 24/7 AI Workforce. Stop writing boilerplate and start shipping autonomous self-improving agents that research, plan, code, and execute tasks. Deployed in 5 lines of code with built-in memory, RAG, and support for 100+ LLMs.",
-    "stars": 8776,
-    "language": "Python",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 8776,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "microsoft/agent-governance-toolkit",
-    "desc": "AI Agent Governance Toolkit — Policy enforcement, zero-trust identity, execution sandboxing, and reliability engineering for autonomous AI agents. Covers 10/10 OWASP Agentic Top 10.",
-    "stars": 5839,
-    "language": "Python",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 5801,
-    "bigbros": [],
-    "ts": "2026-08-09T00:58:42.474Z",
-    "retryCount": 2
-  },
-  {
-    "repo": "microsoft/mxc",
-    "desc": "Policy-driven, layered isolation and containment",
-    "stars": 1212,
-    "language": "Rust",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 1212,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "Mininglamp-OSS/octo-web",
-    "desc": "Web &amp; desktop (Electron) client for the OCTO open workplace — one React + TypeScript codebase shipping browser and PC surfaces, with first-class AI agent UX.",
-    "stars": 605,
-    "language": "TypeScript",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 605,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "mubeng/mubeng",
-    "desc": "An incredibly fast proxy checker &amp; IP rotator with ease.",
-    "stars": 2393,
-    "language": "Go",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 2393,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "nitrojs/nitro",
-    "desc": "Next Generation Server Toolkit. Create web servers with everything you need and deploy them wherever you prefer.",
-    "stars": 11088,
-    "language": "TypeScript",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 11088,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "open-telemetry/opentelemetry.io",
-    "desc": "The OpenTelemetry website and documentation",
-    "stars": 945,
+    "repo": "javierbyte/img2css",
+    "desc": "Convert any image to pure CSS. Recreates images using only box-shadows.",
+    "stars": 2497,
     "language": "JavaScript",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 945,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "Pumpkin-MC/Pumpkin",
-    "desc": "Empowering everyone to host fast and efficient Minecraft servers.",
-    "stars": 10638,
-    "language": "Rust",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 10638,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "stanfordnlp/dspy",
-    "desc": "DSPy: The framework for programming—not prompting—language models",
-    "stars": 36910,
-    "language": "Python",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 36910,
-    "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "tuyoogame/YooAsset",
-    "desc": "unity3d resources management  system",
-    "stars": 3337,
-    "language": "C#",
-    "topics": [],
-    "source": "bigbro",
-    "starGrowth": 3337,
-    "bigbros": [
-      "esengine"
+    "topics": [
+      "design"
     ],
-    "ts": "2026-07-30T02:14:15Z",
-    "retryCount": 2
+    "source": "search",
+    "starGrowth": 2497,
+    "bigbros": [],
+    "ts": "2026-08-10T06:24:38Z",
+    "retryCount": 1
   },
   {
-    "repo": "vectorize-io/hindsight",
-    "desc": "Hindsight: Agent Memory That Learns",
-    "stars": 19401,
+    "repo": "parasail-ai/openai-batch",
+    "desc": "Make OpenAI batch easy to use.",
+    "stars": 8,
     "language": "Python",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 19401,
+    "topics": [
+      "llm-model"
+    ],
+    "source": "search",
+    "starGrowth": 8,
     "bigbros": [],
-    "ts": "2026-08-10T01:01:18.782Z",
+    "ts": "2026-07-20T09:33:54Z",
     "retryCount": 1
   }
 ]
