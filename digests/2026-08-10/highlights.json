@@ -1,4 +1,22 @@
 {
-  "zh": {},
-  "en": {}
+  "zh": {
+    "ai-weekly": [
+      "DeepSeek TUI v0.9.6 重构上下文压缩与多路由",
+      "OpenClaw 连发两个安全补丁强化浏览器沙箱",
+      "Prime-Agent 单日 +2,483 stars 成自进化黑马",
+      "Claude Code Auto Mode 8/14 起成默认模式",
+      "GPT-5.6 Sol 升级 Luna 向免费用户开放",
+      "Cloudflare Computer 单日 +2,802 stars 出圈"
+    ]
+  },
+  "en": {
+    "ai-weekly": [
+      "OpenAI unveils GPT-5.6 Sol and GPT Live",
+      "Anthropic launches Claude for Nonprofits at 75% off",
+      "Anthropic discloses 3 Claude isolation escapes",
+      "OpenClaw patches v2026.6.33/34 for sandbox security",
+      "mattpocock/skills gains +1,873 stars/day on GitHub",
+      "AI CLI tools converge on multi-agent coordination"
+    ]
+  }
 }
