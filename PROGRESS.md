@@ -74,3 +74,10 @@
 - 2026-08-10 任务2：导出/导入 UI 完成（我的页工具区：备份数据下载 + 恢复数据 file input + 合并/完全恢复双选项 + 导入前自动备份当前）；构建 0 错误
 - 2026-08-10 任务3：headless 验收七项全 PASS（损坏自愈/bak双写/导出6key/导入合并/导入完全恢复/交互回归）。坑：wait_for 传 CSS 选择器会拼成非法 JS 表达式（必须 document.querySelector 包装）；点赞按钮只在详情弹窗；收藏后 feed 重排导致 .card 第一张变化（关注改用详情内 creator-btn）；导出 keys 无值须空串保证 6 key 全量
 - 2026-08-10 任务4：提交 push 上线（见下方交付总结）
+
+## 交付总结（P0b 完成）
+- 提交：253aed9（feat 主提交）+ 27b7429（fix Deploy tsc）
+- 数据不丢链路：storage.test.ts 9 用例全过（损坏留现场/bak 恢复/bak 损坏 fallback/QuotaExceeded 删 bak 重试/双写/异常 warn）；headless 七项全 PASS（损坏自愈/双写轻量/导出 6 key/导入合并/导入完全恢复/交互回归持久+三视图）
+- 约束：改动全在白名单（git status 核对）；CI 四步全绿 + Deploy Web 绿；测试 248 passed + 3 基线失败无新增；线上 HEAD=本地=27b7429，站点 HTTP 200；BLOCKED.md 随交付（P0b 无待裁决项）
+- 偏差记录（任务书未预见）：Deploy 工作流 web 独立 npm ci 无 vitest → storage.test.ts tsc -b TS2307 → @ts-ignore 只跳过编译期模块解析（测试仍由根 vitest 真实运行，不装新包不改 workflow 的合规解）
+- 教训：验收脚本 wait_for 传 CSS 选择器会拼成非法 JS 表达式（必须 document.querySelector 包裹）；点赞按钮只在详情弹窗；收藏后 visibleCards 重算 feed 重排，取第一张卡会变（从详情内操作最稳）；导出 keys 无值须空串保证全量
