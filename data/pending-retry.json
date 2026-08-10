@@ -1,137 +1,53 @@
 [
   {
-    "repo": "a9gent/mindfs",
-    "desc": "Access your personal AI agents and workstation data anywhere, anytime through MindFS.",
-    "stars": 1658,
-    "language": "TypeScript",
-    "topics": [],
-    "source": "bigbro",
-    "starGrowth": 1658,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2026-08-06T15:23:41Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "anthropics/claude-code-security-review",
-    "desc": "An AI-powered security review GitHub Action using Claude to analyze code changes for security vulnerabilities.",
-    "stars": 5813,
-    "language": "Python",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 5813,
-    "bigbros": [],
-    "ts": "2026-08-09T00:58:42.474Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "anthropics/skills",
-    "desc": "Public repository for Agent Skills",
-    "stars": 167065,
-    "language": "Python",
-    "topics": [
-      "agent-skills"
-    ],
-    "source": "bigbro",
-    "starGrowth": 167065,
-    "bigbros": [
-      "KKKKhazix"
-    ],
-    "ts": "2026-08-07T17:14:15Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "bannedbook/fanqiang",
-    "desc": "翻墙-科学上网",
-    "stars": 49881,
-    "language": "Kotlin",
-    "topics": [],
-    "source": "trending",
-    "starGrowth": 49881,
-    "bigbros": [],
-    "ts": "2026-08-09T00:58:42.474Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "charmbracelet/crush",
-    "desc": "Glamourous agentic coding for all 💘",
-    "stars": 27196,
+    "repo": "aceberg/WatchYourLAN",
+    "desc": "Lightweight network IP scanner written in Go. With notifications, history, export to Grafana",
+    "stars": 7489,
     "language": "Go",
     "topics": [],
     "source": "trending",
-    "starGrowth": 27196,
+    "starGrowth": 7489,
     "bigbros": [],
-    "ts": "2026-08-09T00:58:42.474Z",
+    "ts": "2026-08-10T01:01:18.782Z",
     "retryCount": 1
   },
   {
-    "repo": "cocos/cocos4",
-    "desc": "COCOS 4",
-    "stars": 1410,
-    "language": "C++",
-    "topics": [],
-    "source": "bigbro",
-    "starGrowth": 1410,
-    "bigbros": [
-      "esengine"
+    "repo": "aden-hive/hive",
+    "desc": "Multi-Agent Harness for Production AI",
+    "stars": 10887,
+    "language": "Python",
+    "topics": [
+      "automation"
     ],
-    "ts": "2026-08-08T12:36:03Z",
+    "source": "search",
+    "starGrowth": 10887,
+    "bigbros": [],
+    "ts": "2026-08-09T14:36:44Z",
     "retryCount": 1
   },
   {
-    "repo": "colbymchenry/codegraph",
-    "desc": "Pre-indexed code knowledge graph, auto syncs on code changes, for Claude Code, Codex, Gemini, Cursor, OpenCode, AntiGravity, Kiro, and Hermes Agent — fewer tokens, fewer tool calls, 100% local",
-    "stars": 65455,
-    "language": "C",
-    "topics": [],
-    "source": "bigbro",
-    "starGrowth": 65455,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2026-08-08T02:56:05Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "dagrejs/dagre",
-    "desc": "Directed graph layout for JavaScript",
-    "stars": 5750,
+    "repo": "browseros-ai/BrowserOS",
+    "desc": "🌐 The open-source Agentic browser; alternative to ChatGPT Atlas, Perplexity Comet, Dia.",
+    "stars": 13127,
     "language": "TypeScript",
     "topics": [],
-    "source": "bigbro",
-    "starGrowth": 5750,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2026-08-08T15:09:12Z",
+    "source": "trending",
+    "starGrowth": 13127,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
     "retryCount": 1
   },
   {
     "repo": "dmtrKovalenko/fff",
     "desc": "The fastest and the most accurate file search SDK for AI agents, Neovim, Rust, C, Python, Bun and NodeJS",
-    "stars": 9915,
+    "stars": 9925,
     "language": "Rust",
     "topics": [],
     "source": "trending",
     "starGrowth": 9915,
     "bigbros": [],
     "ts": "2026-08-09T00:58:42.474Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "esengine/cocos-engine-external",
-    "desc": "external 3rd party modules for cocos-engine",
-    "stars": 1,
-    "language": "",
-    "topics": [],
-    "source": "bigbro",
-    "starGrowth": 1,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2025-12-31T04:14:02Z",
-    "retryCount": 1
+    "retryCount": 2
   },
   {
     "repo": "esengine/ecs-editor-plugins",
@@ -145,161 +61,270 @@
       "esengine"
     ],
     "ts": "2025-11-26T08:12:03Z",
+    "retryCount": 2
+  },
+  {
+    "repo": "esengine/mvvm-ui-framework",
+    "desc": "一个轻量级、高性能的MVVM UI数据管理框架，支持与任何UI库集成",
+    "stars": 8,
+    "language": "TypeScript",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 8,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2025-08-16T05:56:41Z",
     "retryCount": 1
   },
   {
-    "repo": "esengine/HiveMind",
-    "desc": "A self-evolving, personalized AI system with federated learning",
-    "stars": 2,
-    "language": "Python",
-    "topics": [
-      "ai",
-      "federated-learning",
-      "llm",
-      "lora",
-      "machine-learning",
-      "personalization",
-      "qwen"
+    "repo": "esengine/nova-ecs-editor",
+    "desc": "",
+    "stars": 1,
+    "language": "TypeScript",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 1,
+    "bigbros": [
+      "esengine"
     ],
+    "ts": "2025-07-24T15:42:08Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "esengine/nova-ecs-math",
+    "desc": "Fixed-point mathematics library for NovaECS- providing deterministic mathematical operations for game development",
+    "stars": 6,
+    "language": "TypeScript",
+    "topics": [],
+    "source": "bigbro",
+    "starGrowth": 6,
+    "bigbros": [
+      "esengine"
+    ],
+    "ts": "2025-07-21T12:45:12Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "esengine/nova-ecs-physics-core",
+    "desc": "Core physics engine abstraction layer for NovaECS",
+    "stars": 2,
+    "language": "TypeScript",
+    "topics": [],
     "source": "bigbro",
     "starGrowth": 2,
     "bigbros": [
       "esengine"
     ],
-    "ts": "2026-01-19T03:06:37Z",
+    "ts": "2025-07-23T12:14:48Z",
     "retryCount": 1
   },
   {
-    "repo": "focus-creative-games/leanclr",
-    "desc": "LeanCLR is a production-oriented CLR implementation. Its core goal is to provide high ECMA-335 compatibility, low integration complexity, and strong cross-platform capability, so developers can truly achieve “Write C#, Run Anywhere.”",
-    "stars": 654,
-    "language": "C++",
+    "repo": "esengine/nova-ecs-render-core",
+    "desc": "Universal rendering abstraction layer for NovaECS, providing a unified interface for different rendering backends.",
+    "stars": 1,
+    "language": "TypeScript",
     "topics": [],
     "source": "bigbro",
-    "starGrowth": 654,
+    "starGrowth": 1,
     "bigbros": [
       "esengine"
     ],
-    "ts": "2026-07-23T04:03:26Z",
+    "ts": "2025-07-22T02:15:38Z",
     "retryCount": 1
   },
   {
-    "repo": "kubernetes-sigs/kueue",
-    "desc": "Kubernetes-native Job Queueing",
-    "stars": 2785,
-    "language": "Go",
+    "repo": "funstory-ai/BabelDOC",
+    "desc": "Yet Another Document Translator",
+    "stars": 9228,
+    "language": "Python",
     "topics": [],
     "source": "trending",
-    "starGrowth": 2785,
+    "starGrowth": 9228,
     "bigbros": [],
-    "ts": "2026-08-09T00:58:42.474Z",
+    "ts": "2026-08-10T01:01:18.782Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "InsForge/InsForge",
+    "desc": "The all-in-one, open-source backend platform for agentic coding. InsForge gives your coding agent database, auth, storage, compute, hosting, and AI gateway to ship full-stack apps end-to-end.",
+    "stars": 12687,
+    "language": "TypeScript",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 12687,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "is-a-dev/register",
+    "desc": "Grab your own sweet-looking '.is-a.dev' subdomain.",
+    "stars": 10940,
+    "language": "JavaScript",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 10940,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "jorge07/symfony-7-es-cqrs-boilerplate",
+    "desc": "Symfony 7 DDD ES CQRS backend boilerplate.",
+    "stars": 1089,
+    "language": "PHP",
+    "topics": [
+      "backend"
+    ],
+    "source": "search",
+    "starGrowth": 1089,
+    "bigbros": [],
+    "ts": "2026-08-09T20:30:44Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "Kuberwastaken/claurst",
+    "desc": "Agentic Coding for Builders who Ship",
+    "stars": 10216,
+    "language": "Rust",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 10216,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "lanyeeee/bilibili-video-downloader",
+    "desc": "哔哩哔哩 bilibili B站 视频 下载器，图形界面 + nfo刮削 + 广告标记 + 字幕下载 + 弹幕下载，轻松将视频加入emby等媒体库",
+    "stars": 1816,
+    "language": "Rust",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 1816,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "louis-e/arnis",
+    "desc": "Generate any location from the real world in Minecraft with a high level of detail.",
+    "stars": 17375,
+    "language": "Rust",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 17375,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "MervinPraison/PraisonAI",
+    "desc": "PraisonAI 🦞 — Hire a 24/7 AI Workforce. Stop writing boilerplate and start shipping autonomous self-improving agents that research, plan, code, and execute tasks. Deployed in 5 lines of code with built-in memory, RAG, and support for 100+ LLMs.",
+    "stars": 8776,
+    "language": "Python",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 8776,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
     "retryCount": 1
   },
   {
     "repo": "microsoft/agent-governance-toolkit",
     "desc": "AI Agent Governance Toolkit — Policy enforcement, zero-trust identity, execution sandboxing, and reliability engineering for autonomous AI agents. Covers 10/10 OWASP Agentic Top 10.",
-    "stars": 5801,
+    "stars": 5839,
     "language": "Python",
     "topics": [],
     "source": "trending",
     "starGrowth": 5801,
     "bigbros": [],
     "ts": "2026-08-09T00:58:42.474Z",
-    "retryCount": 1
+    "retryCount": 2
   },
   {
-    "repo": "modelcontextprotocol/servers",
-    "desc": "Model Context Protocol Servers",
-    "stars": 89352,
-    "language": "TypeScript",
+    "repo": "microsoft/mxc",
+    "desc": "Policy-driven, layered isolation and containment",
+    "stars": 1212,
+    "language": "Rust",
     "topics": [],
-    "source": "bigbro",
-    "starGrowth": 89352,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2026-08-05T13:50:29Z",
+    "source": "trending",
+    "starGrowth": 1212,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
     "retryCount": 1
   },
   {
-    "repo": "netease-youdao/LobsterAI",
-    "desc": "Open-source, desktop-grade AI agent that gets real work done — data analysis, slides, docs, video & web research. Built on OpenClaw; runs tools on your real desktop and takes commands from your phone via WeChat, Feishu, DingTalk & Telegram.",
-    "stars": 5821,
-    "language": "TypeScript",
-    "topics": [
-      "agent",
-      "ai-agent",
-      "ai-assistant",
-      "automation",
-      "autonomous-agents",
-      "chatbot",
-      "copilot",
-      "cross-platform",
-      "desktop-app",
-      "electron",
-      "llm",
-      "mcp",
-      "office-automation",
-      "openclaw",
-      "productivity",
-      "react",
-      "tyepscript"
-    ],
-    "source": "bigbro",
-    "starGrowth": 5821,
-    "bigbros": [
-      "KKKKhazix"
-    ],
-    "ts": "2026-08-07T16:43:14Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "open-metadata/OpenMetadata",
-    "desc": "The Open Context Layer for Data and AI , OpenMetadata is the open platform for building trusted data context and business semantics for humans, AI assistants, and agents.",
-    "stars": 14786,
+    "repo": "Mininglamp-OSS/octo-web",
+    "desc": "Web &amp; desktop (Electron) client for the OCTO open workplace — one React + TypeScript codebase shipping browser and PC surfaces, with first-class AI agent UX.",
+    "stars": 605,
     "language": "TypeScript",
     "topics": [],
     "source": "trending",
-    "starGrowth": 14786,
+    "starGrowth": 605,
     "bigbros": [],
-    "ts": "2026-08-09T00:58:42.474Z",
+    "ts": "2026-08-10T01:01:18.782Z",
     "retryCount": 1
   },
   {
-    "repo": "Robbyant/lingbot-world",
-    "desc": "Advancing Open-source World Models",
-    "stars": 4346,
-    "language": "Python",
-    "topics": [
-      "aigc",
-      "image-to-video",
-      "lingbot-world",
-      "video-generation",
-      "world-models"
-    ],
-    "source": "bigbro",
-    "starGrowth": 4346,
-    "bigbros": [
-      "KKKKhazix"
-    ],
-    "ts": "2026-07-09T10:39:39Z",
+    "repo": "mubeng/mubeng",
+    "desc": "An incredibly fast proxy checker &amp; IP rotator with ease.",
+    "stars": 2393,
+    "language": "Go",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 2393,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
     "retryCount": 1
   },
   {
-    "repo": "tauri-apps/tauri-action",
-    "desc": "Build your Web application as a Tauri binary for macOS, Linux and Windows",
-    "stars": 1596,
+    "repo": "nitrojs/nitro",
+    "desc": "Next Generation Server Toolkit. Create web servers with everything you need and deploy them wherever you prefer.",
+    "stars": 11088,
     "language": "TypeScript",
-    "topics": [
-      "github-actions",
-      "hacktoberfest"
-    ],
-    "source": "bigbro",
-    "starGrowth": 1596,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2026-08-07T15:12:03Z",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 11088,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "open-telemetry/opentelemetry.io",
+    "desc": "The OpenTelemetry website and documentation",
+    "stars": 945,
+    "language": "JavaScript",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 945,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "Pumpkin-MC/Pumpkin",
+    "desc": "Empowering everyone to host fast and efficient Minecraft servers.",
+    "stars": 10638,
+    "language": "Rust",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 10638,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "stanfordnlp/dspy",
+    "desc": "DSPy: The framework for programming—not prompting—language models",
+    "stars": 36910,
+    "language": "Python",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 36910,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
     "retryCount": 1
   },
   {
@@ -314,35 +339,18 @@
       "esengine"
     ],
     "ts": "2026-07-30T02:14:15Z",
-    "retryCount": 1
+    "retryCount": 2
   },
   {
-    "repo": "urho3d/urho3d",
-    "desc": "Game engine",
-    "stars": 4758,
-    "language": "C++",
-    "topics": [
-      "2d",
-      "3d",
-      "3d-graphics",
-      "angelscript",
-      "cpp",
-      "cpp17",
-      "cross-platform",
-      "engine",
-      "game",
-      "game-development",
-      "game-engine",
-      "gamedev",
-      "open-source",
-      "urho3d"
-    ],
-    "source": "bigbro",
-    "starGrowth": 4758,
-    "bigbros": [
-      "esengine"
-    ],
-    "ts": "2023-01-25T17:29:02Z",
+    "repo": "vectorize-io/hindsight",
+    "desc": "Hindsight: Agent Memory That Learns",
+    "stars": 19401,
+    "language": "Python",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 19401,
+    "bigbros": [],
+    "ts": "2026-08-10T01:01:18.782Z",
     "retryCount": 1
   }
 ]
