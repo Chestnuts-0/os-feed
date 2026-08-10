@@ -122,9 +122,6 @@ function scoreJson(
   ]);
 }
 
-function feedPath(): string {
-  return path.join("data", "feed.json");
-}
 function pendingPath(): string {
   return path.join("data", "pending-retry.json");
 }
@@ -152,7 +149,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
 
   it("不达标（reason 短）触发重评：重评达标后进 feed", async () => {
     // 新卡：批量评分第一次返回短 reason，重评返回达标
-    llmMock.impl = (prompt: string) => {
+    llmMock.impl = (_prompt: string) => {
       if (callCount.n === 1) return scoreJson("new/short", SHORT_REASON);
       return scoreJson("new/short");
     };
@@ -168,7 +165,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
   });
 
   it("重评成功替换不达标内容：最终 reasonCn 是重评返回值", async () => {
-    llmMock.impl = (prompt: string) => {
+    llmMock.impl = (_prompt: string) => {
       if (callCount.n === 1) return scoreJson("new/replace", SHORT_REASON);
       return scoreJson("new/replace", GOOD_REASON + "重评补充的技术细节与具体能力说明");
     };
@@ -223,7 +220,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
   });
 
   it("summary 超长（>35 字）触发重评：重评达标后 summary 落在 20-35", async () => {
-    llmMock.impl = (prompt: string) => {
+    llmMock.impl = (_prompt: string) => {
       if (callCount.n === 1) return scoreJson("new/longsum", GOOD_REASON, LONG_SUMMARY);
       return scoreJson("new/longsum");
     };
