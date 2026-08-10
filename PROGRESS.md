@@ -42,4 +42,18 @@
   - **全部 PASS ✓**
 - 脚本修坑记录：class CDP 覆盖常量 CDP=9398（改 CDP_PORT）；netstat 输出 GBK 解码（kill_port）
 
-## 任务 5：提交 + push + CI + Deploy（进行中）
+## 任务 5：提交 + push + CI + Deploy（✅ 完成）
+
+- commit c8faa82「fix: 管道评分长度校验 + detail 兜底（P0a 空行根治）」9 文件（BLOCKED.md 含决策记录随交付提交）
+- push 被拒（线上今日 digest 4 提交：22cb635/473c707/ba6ba3a/67d2569）→ rebase FETCH_HEAD
+- **⚠️ rebase 冲突取错方向**：rebase 中 `--ours` = 线上（与 merge 相反），feed.json/following.json/pending-retry.json 被线上 digest 旧产物覆盖（1216 卡 838 短卡）并 push 上线 → 从 reflog f2039c5 恢复重评产物，补提交 1b1bd53 修正上线
+- CI lint 失败（feed-length.test.ts 4 个未用变量，本地没跑 eslint 的锅）→ 修复 + 提交 e276f7a → **CI success**
+- **最终状态**：本地 HEAD = 线上 HEAD = e276f7a；线上 feed.json 1240 卡 effLen<100=0（与本地一致）；站点 https://chestnuts-sisyphus.github.io/os-feed/ HTTP 200；Deploy Web（1b1bd53，data/ 变更触发）success；本地测试 237 passed + 3 基线失败（无新增）
+- 教训：rebase 冲突 --ours/--theirs 语义与 merge 相反；本地必须跑 `pnpm lint`（CI 会短路）；push 前用 `git show <old_sha>:<file>` 交叉验证数据文件
+
+## 交付总结（P0a 完成）
+
+- 数据：全库 reasonCn effLen≥100 100%（816→0），summary 20-35 96.9%（38/1240 ≤5% 线），零丢卡（1174→1240 只增不减）
+- 渲染：headless 五项全 PASS（1440/1920 空行 0、移动端无竖排卡高<338、弹窗≤2 行）
+- 约束：改动全在白名单；CI 四步全绿 + Deploy Web 绿；测试 230+3 基线无新增失败；BLOCKED.md 随提交（任务 1 决策记录）
+- 遗留：tmp_rescore_test.ts（08-09 排查残留，未跟踪未提交）
