@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import type { ChangeEvent } from "react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import type { FeedCard, Collection } from "./types.ts";
 import { FeedCardMemo, CardDetail, GithubAvatar } from "./FeedCard.tsx";
 import { CreatorPage } from "./CreatorPage.tsx";
 import { weightedSearch } from "./search.ts";
+import { loadSafe, saveDual } from "./storage.ts";
 import {
   AlertTriangle,
   ChevronRight,
@@ -37,6 +39,79 @@ const COLLECTIONS_KEY = "os-feed-collections";
 const SEEN_KEY = "os-feed-seen";
 const INTERACTIONS_KEY = "os-feed-interactions";
 const FOLLOWING_KEY = "os-feed-following";
+/** 6 个主数据 key（导出/完全恢复的白名单；导入备份也用它） */
+const ALL_STORAGE_KEYS = [STORAGE_KEY, PREF_KEY, COLLECTIONS_KEY, SEEN_KEY, INTERACTIONS_KEY, FOLLOWING_KEY];
+
+/** 备份文件结构（导出/导入共用；keys 存 localStorage 原始字符串） */
+interface BackupPayload {
+  app: string;
+  type: string;
+  version: number;
+  exportedAt?: string;
+  keys: Record<string, string>;
+}
+
+/** 合并导入：feedback 并集（likes/dislikes/快照各自并集） */
+function mergeFeedbackData(a: Feedback, b: Feedback): Feedback {
+  return {
+    likes: Array.from(new Set([...a.likes, ...b.likes])),
+    dislikes: Array.from(new Set([...a.dislikes, ...b.dislikes])),
+    likedSnapshots: { ...a.likedSnapshots, ...b.likedSnapshots },
+  };
+}
+
+/** 合并导入：collections 按 id 匹配（同 id 的 repos/snapshots 并集，文件独有的新建） */
+function mergeCollectionsData(a: Collection[], b: Collection[]): Collection[] {
+  const map = new Map<string, Collection>();
+  for (const col of a) map.set(col.id, col);
+  for (const col of b) {
+    const existing = map.get(col.id);
+    if (existing) {
+      map.set(col.id, {
+        ...existing,
+        repos: Array.from(new Set([...existing.repos, ...col.repos])),
+        snapshots: { ...existing.snapshots, ...col.snapshots },
+      });
+    } else {
+      map.set(col.id, col);
+    }
+  }
+  return Array.from(map.values());
+}
+
+/** 导出备份：6 个主 key 原始字符串 → JSON 下载（含损坏现场原文，不解析不加工；无值 key 导出空串保证全量） */
+function exportBackup(): void {
+  const keys: Record<string, string> = {};
+  for (const k of ALL_STORAGE_KEYS) {
+    try {
+      const raw = localStorage.getItem(k);
+      keys[k] = raw ?? "";
+    } catch (e) {
+      console.warn(`[gittok-storage] 导出读取 ${k} 失败:`, e);
+      keys[k] = "";
+    }
+  }
+  const payload: BackupPayload = {
+    app: "gittok",
+    type: "backup",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    keys,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(
+    now.getDate(),
+  ).padStart(2, "0")}`;
+  a.href = url;
+  a.download = `gittok-backup-${dateStr}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
 type Tab = "feed" | "search" | "me";
 
@@ -171,121 +246,63 @@ const LEARNING_RE =
 // ---------------------------------------------------------------------------
 
 function loadFeedback(): Feedback {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as Feedback;
-      return {
-        likes: parsed.likes ?? [],
-        dislikes: parsed.dislikes ?? [],
-        likedSnapshots: parsed.likedSnapshots ?? {},
-      };
-    }
-  } catch {
-    /* ignore */
-  }
-  return { likes: [], dislikes: [], likedSnapshots: {} };
+  const parsed = loadSafe<Partial<Feedback>>(STORAGE_KEY, {});
+  return {
+    likes: parsed.likes ?? [],
+    dislikes: parsed.dislikes ?? [],
+    likedSnapshots: parsed.likedSnapshots ?? {},
+  };
 }
 
 function saveFeedback(fb: Feedback): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(fb));
-  } catch {
-    /* ignore */
-  }
+  // bak 轻量版：只存列表不存快照（~10KB 内）；恢复后快照由迁移逻辑用当天数据重补
+  saveDual(STORAGE_KEY, fb, { likes: fb.likes, dislikes: fb.dislikes });
 }
 
 function loadPreferences(): Preferences {
-  try {
-    const raw = localStorage.getItem(PREF_KEY);
-    if (raw) return JSON.parse(raw) as Preferences;
-  } catch {
-    /* ignore */
-  }
-  return { tagWeights: {}, lastUpdateTs: "" };
+  return loadSafe<Preferences>(PREF_KEY, { tagWeights: {}, lastUpdateTs: "" });
 }
 
 function savePreferences(prefs: Preferences): void {
-  try {
-    localStorage.setItem(PREF_KEY, JSON.stringify(prefs));
-  } catch {
-    /* ignore */
-  }
+  saveDual(PREF_KEY, prefs);
 }
 
 function loadCollections(): Collection[] {
-  try {
-    const raw = localStorage.getItem(COLLECTIONS_KEY);
-    if (raw) return JSON.parse(raw) as Collection[];
-  } catch {
-    /* ignore */
-  }
-  return [];
+  return loadSafe<Collection[]>(COLLECTIONS_KEY, []);
 }
 
 function saveCollections(cols: Collection[]): void {
-  try {
-    localStorage.setItem(COLLECTIONS_KEY, JSON.stringify(cols));
-  } catch {
-    /* ignore */
-  }
+  saveDual(
+    COLLECTIONS_KEY,
+    cols,
+    cols.map((c) => ({ id: c.id, name: c.name, repos: c.repos })),
+  );
 }
 
 function loadFollowing(): string[] {
-  try {
-    const raw = localStorage.getItem(FOLLOWING_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return parsed.filter((o): o is string => typeof o === "string");
-    }
-  } catch {
-    /* ignore */
-  }
+  const parsed = loadSafe<unknown>(FOLLOWING_KEY, []);
+  if (Array.isArray(parsed)) return parsed.filter((o): o is string => typeof o === "string");
   return [];
 }
 
 function saveFollowing(list: string[]): void {
-  try {
-    localStorage.setItem(FOLLOWING_KEY, JSON.stringify(list));
-  } catch {
-    /* ignore */
-  }
+  saveDual(FOLLOWING_KEY, list);
 }
 
 function loadSeen(): Record<string, number> {
-  try {
-    const raw = localStorage.getItem(SEEN_KEY);
-    if (raw) return JSON.parse(raw) as Record<string, number>;
-  } catch {
-    /* ignore */
-  }
-  return {};
+  return loadSafe<Record<string, number>>(SEEN_KEY, {});
 }
 
 function saveSeen(s: Record<string, number>): void {
-  try {
-    localStorage.setItem(SEEN_KEY, JSON.stringify(s));
-  } catch {
-    /* ignore */
-  }
+  saveDual(SEEN_KEY, s);
 }
 
 function loadInteractions(): Record<string, InteractionRecord> {
-  try {
-    const raw = localStorage.getItem(INTERACTIONS_KEY);
-    if (raw) return JSON.parse(raw) as Record<string, InteractionRecord>;
-  } catch {
-    /* ignore */
-  }
-  return {};
+  return loadSafe<Record<string, InteractionRecord>>(INTERACTIONS_KEY, {});
 }
 
 function saveInteractions(ints: Record<string, InteractionRecord>): void {
-  try {
-    localStorage.setItem(INTERACTIONS_KEY, JSON.stringify(ints));
-  } catch {
-    /* ignore */
-  }
+  saveDual(INTERACTIONS_KEY, ints);
 }
 
 // ---------------------------------------------------------------------------
@@ -945,6 +962,121 @@ export default function App() {
     setViewStack((prev) => prev.slice(0, -1));
   }, []);
 
+  // === P0b 数据备份/恢复 ===
+  const [pendingImport, setPendingImport] = useState<BackupPayload | null>(null);
+
+  /** 选择备份文件 → 解析校验（app/type）→ 弹导入方式选择 */
+  const handleImportFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // 允许重复选择同一文件
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(String(reader.result ?? "")) as BackupPayload;
+        if (!parsed || typeof parsed !== "object" || parsed.app !== "gittok" || parsed.type !== "backup") {
+          alert("不是有效的 GitTok 备份文件（app/type 标识校验失败）");
+          return;
+        }
+        setPendingImport(parsed);
+      } catch {
+        alert("备份文件解析失败：不是有效的 JSON");
+      }
+    };
+    reader.onerror = () => {
+      alert("备份文件读取失败");
+    };
+    reader.readAsText(file);
+  }, []);
+
+  /** 执行导入：merge=合并（只并集三个用户数据 key，行为数据忽略）｜restore=完全恢复（先备份当前再覆盖） */
+  const applyImport = useCallback(
+    (mode: "merge" | "restore") => {
+      if (!pendingImport) return;
+      const fileKeys = pendingImport.keys ?? {};
+      if (mode === "restore") {
+        // ① 先把当前 6 个主 key 原文导出到 os-feed-backup-<ts>（防误操作）
+        const current: Record<string, string> = {};
+        for (const k of ALL_STORAGE_KEYS) {
+          try {
+            const raw = localStorage.getItem(k);
+            if (raw !== null) current[k] = raw;
+          } catch (e) {
+            console.warn(`[gittok-storage] 恢复前导出 ${k} 失败:`, e);
+          }
+        }
+        const ts = new Date().toISOString().replace(/[:.]/g, "-");
+        try {
+          localStorage.setItem(`os-feed-backup-${ts}`, JSON.stringify(current));
+        } catch (e) {
+          console.warn("[gittok-storage] 导入前备份（os-feed-backup）失败:", e);
+        }
+        // ② 用文件内容覆盖（白名单主 key；文件缺的 key 不动）
+        for (const k of ALL_STORAGE_KEYS) {
+          if (typeof fileKeys[k] === "string") {
+            try {
+              localStorage.setItem(k, fileKeys[k]);
+            } catch (e) {
+              console.warn(`[gittok-storage] 完全恢复写 ${k} 失败:`, e);
+            }
+          }
+        }
+        window.location.reload();
+        return;
+      }
+      // 合并导入：只并集 feedback/collections/following；preferences/seen/interactions 忽略（行为数据，合并无意义）
+      try {
+        const fileFb = JSON.parse(fileKeys[STORAGE_KEY] ?? "null") as Feedback | null;
+        if (
+          fileFb &&
+          typeof fileFb === "object" &&
+          Array.isArray(fileFb.likes) &&
+          Array.isArray(fileFb.dislikes)
+        ) {
+          saveFeedback(
+            mergeFeedbackData(
+              {
+                likes: feedback.likes,
+                dislikes: feedback.dislikes,
+                likedSnapshots: feedback.likedSnapshots ?? {},
+              },
+              { likes: fileFb.likes, dislikes: fileFb.dislikes, likedSnapshots: fileFb.likedSnapshots ?? {} },
+            ),
+          );
+        } else {
+          console.warn("[gittok-storage] 合并导入：feedback 文件数据无效，跳过");
+        }
+      } catch (e) {
+        console.warn("[gittok-storage] 合并导入 feedback 失败:", e);
+      }
+      try {
+        const fileCols = JSON.parse(fileKeys[COLLECTIONS_KEY] ?? "null") as Collection[] | null;
+        if (Array.isArray(fileCols)) {
+          saveCollections(mergeCollectionsData(collections, fileCols));
+        } else {
+          console.warn("[gittok-storage] 合并导入：collections 文件数据无效，跳过");
+        }
+      } catch (e) {
+        console.warn("[gittok-storage] 合并导入 collections 失败:", e);
+      }
+      try {
+        const fileFollowing = JSON.parse(fileKeys[FOLLOWING_KEY] ?? "null") as unknown;
+        if (Array.isArray(fileFollowing)) {
+          const merged = Array.from(
+            new Set([...following, ...fileFollowing.filter((o): o is string => typeof o === "string")]),
+          );
+          saveFollowing(merged);
+        } else {
+          console.warn("[gittok-storage] 合并导入：following 文件数据无效，跳过");
+        }
+      } catch (e) {
+        console.warn("[gittok-storage] 合并导入 following 失败:", e);
+      }
+      window.location.reload();
+    },
+    [pendingImport, feedback, collections, following],
+  );
+
   // 历史数据迁移：feed 加载完成后——
   // 1) 为旧的 likes/收藏（只有 repo 名）补快照：repo 还在当天数据里的自动补上
   // 2) 清理无数据记录：无快照且不在当天数据的（历史遗留无法找回），从列表中移除，避免「N 个喜欢 0 个可展示」
@@ -1476,6 +1608,57 @@ export default function App() {
                       )}
                     </>
                   )}
+
+                  {/* === P0b 数据备份/恢复工具区 === */}
+                  <div className="storage-tools">
+                    <div className="storage-tools-header">
+                      <span className="storage-tools-title">数据备份</span>
+                    </div>
+                    <p className="storage-tools-hint">
+                      收藏 / 点赞 /
+                      关注数据保存在本浏览器。换浏览器或清理缓存前先备份；「恢复数据」可把备份迁移到新设备。
+                    </p>
+                    <div className="storage-tools-buttons">
+                      <button className="storage-tool-btn" onClick={exportBackup}>
+                        备份数据
+                      </button>
+                      <label className="storage-tool-btn storage-tool-btn-secondary">
+                        恢复数据
+                        <input
+                          type="file"
+                          accept="application/json,.json"
+                          className="storage-tool-file-input"
+                          onChange={handleImportFile}
+                        />
+                      </label>
+                    </div>
+                    {pendingImport && (
+                      <div className="storage-import-panel">
+                        <p className="storage-import-info">
+                          已读取备份文件
+                          {pendingImport.exportedAt ? `（导出时间 ${pendingImport.exportedAt}）` : ""}
+                          ，请选择导入方式：
+                        </p>
+                        <div className="storage-import-actions">
+                          <button className="storage-tool-btn" onClick={() => applyImport("merge")}>
+                            合并导入（默认）
+                          </button>
+                          <button
+                            className="storage-tool-btn storage-tool-btn-danger"
+                            onClick={() => applyImport("restore")}
+                          >
+                            完全恢复
+                          </button>
+                          <button
+                            className="storage-tool-btn storage-tool-btn-ghost"
+                            onClick={() => setPendingImport(null)}
+                          >
+                            取消
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             )}

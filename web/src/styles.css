@@ -1973,3 +1973,89 @@ button {
   border-color: var(--danger);
   color: var(--danger);
 }
+
+/* --- 数据备份/恢复工具区（P0b） --- */
+.storage-tools {
+  margin-top: 28px;
+  padding: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+.storage-tools-header {
+  margin-bottom: 8px;
+}
+.storage-tools-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.storage-tools-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.storage-tools-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.storage-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: var(--accent-gradient);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.storage-tool-btn:hover {
+  opacity: 0.85;
+}
+.storage-tool-btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.storage-tool-btn-danger {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+}
+.storage-tool-btn-ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+}
+.storage-tool-btn-ghost:hover {
+  opacity: 0.7;
+}
+.storage-tool-file-input {
+  display: none;
+}
+.storage-import-panel {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+}
+.storage-import-info {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  line-height: 1.6;
+  word-break: break-all;
+}
+.storage-import-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

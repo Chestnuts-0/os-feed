@@ -57,3 +57,20 @@
 - 渲染：headless 五项全 PASS（1440/1920 空行 0、移动端无竖排卡高<338、弹窗≤2 行）
 - 约束：改动全在白名单；CI 四步全绿 + Deploy Web 绿；测试 230+3 基线无新增失败；BLOCKED.md 随提交（任务 1 决策记录）
 - 遗留：tmp_rescore_test.ts（08-09 排查残留，未跟踪未提交）
+
+---
+
+# GitTok P0b 个人数据不丢（2026-08-10）
+
+## 开工回执（任务 0）
+- 目标：个人数据不丢——损坏自动备份现场+bak 轻量恢复（列表永不静默丢）+ 导出/导入迁移 + 存储异常可见（禁静默 catch）
+- 顺序：任务1 storage.ts 封装+App.tsx 替换+单测 → 任务2 导出/导入 UI → 任务3 headless 七项验收 → 任务4 提交+push+CI+Deploy
+- 最大风险：① load/save 逻辑等价性（调用点数据形状不能变）② 基线 239+3 无新增失败 ③ push 代理/CI 网络抖动 ④ 导入合并语义（并集实现错）
+- 状态：任务0 完成（HEAD=51a99a3、工作区干净、基线 239 passed + 3 failed 确认）
+
+## 任务日志
+- 2026-08-10 任务0：基线核对通过（HEAD=51a99a3、工作区干净、239 passed + 3 failed）
+- 2026-08-10 任务1：storage.ts 完成（loadSafe 损坏留现场+bak 恢复+fallback；saveDual 双写+QuotaExceeded 删 bak 重试）；App.tsx 12 个 load/save 全部改走封装，数据形状保持；storage.test.ts 9 个用例全过；全量 248 passed + 3 failed 无新增失败；根 tsc + web tsc 都过
+- 2026-08-10 任务2：导出/导入 UI 完成（我的页工具区：备份数据下载 + 恢复数据 file input + 合并/完全恢复双选项 + 导入前自动备份当前）；构建 0 错误
+- 2026-08-10 任务3：headless 验收七项全 PASS（损坏自愈/bak双写/导出6key/导入合并/导入完全恢复/交互回归）。坑：wait_for 传 CSS 选择器会拼成非法 JS 表达式（必须 document.querySelector 包装）；点赞按钮只在详情弹窗；收藏后 feed 重排导致 .card 第一张变化（关注改用详情内 creator-btn）；导出 keys 无值须空串保证 6 key 全量
+- 2026-08-10 任务4：提交 push 上线（见下方交付总结）
