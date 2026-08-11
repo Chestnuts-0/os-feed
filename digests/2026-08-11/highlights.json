@@ -1,0 +1,102 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.227 聚焦跨端同步与 Windows 稳定性修复",
+      "OpenAI Codex 2 alpha 推进 MCP 认证与 Computer Use",
+      "Gemini CLI v0.56.0-nightly 解决子代理可靠性问题",
+      "Copilot CLI v1.0.79 企业策略异常引发 10+ 活跃 Issue",
+      "OpenCode v1.18.16 持续优化 CPU 占用与桌面端体验",
+      "Qwen Code v0.21.9 发布多 Agent Fleet 与插件生态 RFC"
+    ],
+    "ai-agents": [
+      "OpenClaw 24h 产生 500 条 Issues 和 500 条 PRs 更新",
+      "PR #121599 统一 provider 诊断信息脱敏防数据泄露",
+      "PR #121647 修复长会话后 durable context engine 卡死",
+      "PR #121509 修复 claude-cli 心跳切换丢失对话上下文",
+      "PR #112932 修复 OAuth refresh 死 grant 重复重试",
+      "Issue #7707 讨论按来源添加记忆信任标签防 poisoning"
+    ],
+    "ai-web": [
+      "Claude Sonnet 5 发布定位最 Agentic 的 Sonnet 模型",
+      "Claude 黎曼猜想研究将下界从 41.6% 提升至 67.2%",
+      "Anthropic 工程博客明确收敛至 Claude Managed Agents",
+      "Sonnet 5 原生支持规划与终端工具调用接近 Opus",
+      "Claude Sonnet 5 对 Free/Pro 用户已默认开放",
+      "OpenAI 内容向网络安全防御与金融垂直场景倾斜"
+    ],
+    "ai-hn": [
+      "Needle2 仅 14MB 端侧智能体 LLM 获 Show HN 高分 151",
+      "Claude 黎曼猜想进展 113 条评论引发激烈讨论",
+      "FPGA 上 21000 tok/s 高速 LLM 推理获社区关注",
+      "Claude/GPT 知识截止日期系统性梳理获 94 分",
+      "humanising LLM outputs 争议引发 87 条评论反思",
+      "Anthropic 证明 AI 未持续变强观点虽有争议但引讨论"
+    ],
+    "ai-hf": [
+      "Kimi-K3 获 10470 赞 151 万下载稳居 LLM 榜首",
+      "DeepSeek-V4-Flash-0731 获 3059 赞 95 万下载紧随",
+      "MiniMax-H3 image-text-to-video 登顶周赞榜首",
+      "FLUX.1-dev 保持 1.4 万点赞长期热度",
+      "百度 Unlimited-OCR 292 万下载成多模态实用标杆",
+      "Kimi-K3 支持图像文本多模态理解领跑国产开源"
+    ],
+    "ai-community": [
+      "单 TPU v5e 部署 Gemma 4 Agent 后端实操指南",
+      "Kimi 蒸馏 Qwen 解析揭示风格迁移不等于能力迁移",
+      "Agent 仅获一个签名权限却无法自我铸造安全案例",
+      "Agent 通过 2283 项测试却在生产环境失败引反思",
+      "MCP 协议安全性与调试方法成社区热点讨论",
+      "地缘寓言阐释 AI 代理策略思维启发意图建模"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.227 released with 10 hot issues",
+      "OpenAI Codex ships dual alpha builds today",
+      "GitHub Copilot CLI holds at v1.0.79, no updates",
+      "Gemini CLI drops v0.56.0-nightly release",
+      "Cross-session continuity emerging as key trend",
+      "9 major AI CLI tools tracked in ecosystem digest"
+    ],
+    "ai-agents": [
+      "OpenClaw sees 500 issues and 500 PRs in 24h",
+      "19% issue close rate signals healthy resolution",
+      "Discord duplicate reply bug fixed in #114690",
+      "Telegram duplicate message bug closed in #96242",
+      "Model registry schema violation closed in #116116",
+      "No new releases published today"
+    ],
+    "ai-trending": [
+      "ECC surges to 239K stars, +261 today",
+      "agency-agents hits 141K, +1,349 stars",
+      "Ollama maintains 178K star lead",
+      "ComfyUI gains 922 stars in one day",
+      "Google DeepMind weather model debuts at 7.3K stars",
+      "OmniRoute AI gateway hits 45K stars"
+    ],
+    "ai-web": [
+      "Claude Sonnet 5 now broadly available",
+      "Sonnet 5 reaches near-Opus agentic performance",
+      "Anthropic posts Riemann zeta function milestone",
+      "OpenAI publishes only metadata pages today",
+      "Agent engineering blog updated for tooling shifts",
+      "Anthropic narrowing Sonnet-Opus capability gap"
+    ],
+    "ai-hf": [
+      "MiniMax-H3 spawns full community adapter ecosystem",
+      "Kimi-K3 hits 10,470 likes and 1.5M downloads",
+      "DeepSeek-V4-Flash returns with strong adoption",
+      "Baidu Unlimited-OCR leads with nearly 3M downloads",
+      "FLUX.1-dev remains top text-to-image by likes",
+      "Unsloth GGUF variants enable efficient local inference"
+    ],
+    "ai-community": [
+      "Gemma 4 self-hosted on single TPU v5e chip",
+      "Agent passes 2,283 tests but fails in production",
+      "Reranker may cause more RAG misses than fixes",
+      "Production hardening dominates community discussion",
+      "MCP security emerges as key agent concern",
+      "Benchmark-to-reality gap fuels developer anxiety"
+    ]
+  }
+}
