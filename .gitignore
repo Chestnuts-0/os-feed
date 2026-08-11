@@ -6,7 +6,6 @@ social/
 *.tsbuildinfo
 web/dist/
 web/node_modules/
-data/.refresh_cursor
 
 # impeccable-ignore-start
 # Ephemeral output, runtime state, and per-dev overrides.
