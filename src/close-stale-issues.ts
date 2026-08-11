@@ -1,6 +1,6 @@
 import { closeStaleIssues } from "./github.ts";
 
-const STALE_DAYS = 7;
+const STALE_DAYS = 1;
 
 async function main(): Promise<void> {
   const closed = await closeStaleIssues(STALE_DAYS);
