@@ -90,3 +90,27 @@
 - 改动：.gitignore 删 `data/.refresh_cursor` 行 + 提交游标文件（当前值 0 合法=全刷完回原点）；digest workflow `git add digests/ data/` 自动携带
 - 验证：CI success + Deploy Web success（data/** 触发重复部署一次，无害）；线上 HEAD=本地=b0f71f3
 - 边界：真正收益在库超 2000 后显现；若想提前轮转可调小 REFRESH_BATCH（待议，未动）
+
+---
+
+# GitTok 三件套（2026-08-11）：Action 升级 + 品牌清理 + 智谱 LLM 切换
+
+## ① GitHub Actions 升级（node24）
+- 背景：checkout@v4/setup-node@v4/pnpm/action-setup@v4 跑 Node 20 runtime，GitHub 已弃用（08-11 早 digest 日志 warning 实证）
+- 改动（279a923）：checkout@v6 / setup-node@v7 / pnpm/action-setup@v6 / configure-pages@v6 / deploy-pages@v5 / upload-pages-artifact@v5（CI 上实际用 pnpm，本地才用 npm）
+- 验证：CI 全绿 + 新 run 日志 `Node.js 20 is deprecated` = 0（升级前 3 个 action 触发）
+
+## ② agents-radar 品牌残留清理
+- 背景：08-09 改名只修 URL，品牌名残留 22 处（飞书/Telegram 标题、RSS title、日报页脚、社媒文案、8 个 UA、注释、测试断言）
+- 改动（0eaff4c）：全量替换 GitTok；social.ts 旧链接 duanyytop/agents-radar → Chestnuts-Sisyphus/os-feed；README 历史叙述保留；web.ts UA 的 search?q 链接修正
+- 踩坑：sed 顺序——先全局替换再修 URL 会匹配不到（agents-radar 已被替换成 GitTok），两步修复
+- 验证：src 零残留、测试全过、CI 绿
+
+## ③ LLM 切换 agnès → 智谱 GLM-4.7-Flash
+- 调研结论：agnès=免费 AI 网关（双重免费=结构不稳定）；智谱官方永久免费 GLM-4.7-Flash（200K 上下文/128K 输出，2026 免费主力，替代已下线的 4.5-Flash）；DeepSeek 兜底（chat 1 元/2 元每百万 token，已有 provider）
+- 对比测试（15 卡真实 prompt）：批量解析成功率 agnès 47% vs zhipu 87%；单 repo 重评达标 20% vs 40%
+- **429 限流实测**：智谱免费档账户速率限制+模型级高峰限流并存——5 并发全 429、2 并发初始批量仍 429、串行才稳 → **LLM_CONCURRENCY 5→1 + 429 退避 5s→15s**（bb2e29f）
+- 上线（4a10fea）：daily-digest.yml LLM_PROVIDER=zhipu + ZHIPU_API_KEY secret（agnès 配置保留，回滚改一个词）
+- **首次 digest 实测（run 31477308265）**：provider 生效、7 批评分 6/7 全过+1 批重试补回、429 仅 6 次退避全过、**pending 12→1 条**、LLM 内容 1309/1310（99.9%）、1287 卡只增不减、effLen<100=0、summary 达标 97.4%
+- 诚实地板：免费模型+超长输出（detail 500-800 字）字数达标率仍是瓶颈（批量场景两个模型都偏短），靠重评+detail 兜底保障；串行使 digest 时间变长（~45 分钟），CI 90 分钟预算内
+- 遗留：智谱并发/速率限制申请提高（栗子可操作，非必须）；明早 08:00 自动 digest 复验（长期确认）
