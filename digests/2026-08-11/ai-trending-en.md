@@ -1,96 +1,145 @@
 # AI Open Source Trends 2026-08-11
 
-> Sources: GitHub Trending + GitHub Search API | Generated: 2026-08-11 00:56 UTC
+> Sources: GitHub Trending + GitHub Search API | Generated: 2026-08-11 09:21 UTC
 
 ---
 
-
-
-# AI Open Source Trends Report — 2026-08-11
+# AI Open Source Trends Report
+**Date**: 2026-08-11  
+**Data Sources**: GitHub Trending (82 repos) & Topic Search (908 repos)
 
 ---
 
 ## 1. Today's Highlights
 
-The most explosive development today is the **agent harness & skills ecosystem**, with `affaan-m/ECC` surging to 239K stars (+261 today) and `msitarzewski/agency-agents` hitting 141K (+1,349) — signaling that developers are rapidly building layered tooling on top of Claude Code, Codex, and Cursor. Concurrently, **graph-native RAG** is emerging as a serious alternative to vector search, highlighted by Semantica's 4K-star debut and Google DeepMind's weather foundation model launching with 325 new stars. Meanwhile, **local-first inference and data pipelines** remain dominant, with Ollama maintaining 178K stars and ComfyUI adding 922 stars in a single day.
+The open-source AI ecosystem is experiencing a surge in **Agent Engineering** and **Local-First Infrastructure**. The community is rapidly moving from simple chatbots to sophisticated, multi-agent orchestration frameworks and "harnesses" designed to manage complex workflows. A clear trend is the shift toward **"Engineering" AI**—using specialized CLI tools and patterns (like Loop Engineering) to make AI coding agents deterministic and cost-effective. Simultaneously, there is a strong demand for **Privacy-First AI Tools**, with local-first meeting assistants, uncensored local studios, and offline data processing tools seeing significant growth.
 
 ---
 
 ## 2. Top Projects by Category
 
 ### 🔧 AI Infrastructure
+*Infrastructure includes frameworks, SDKs, inference engines, and development tools.*
 
-| Project | Stars | Today | Description |
-|---------|-------|-------|-------------|
-| [ollama/ollama](https://github.com/ollama/ollama) | ⭐178,237 | +94 | The dominant local LLM runner; now supporting Kimi-K2.6, GLM-5.2, DeepSeek and 30+ models via a single CLI — the backbone of every local-first agent stack. |
-| [Comfy-Org/ComfyUI](https://github.com/Comfy-Org/ComfyUI) | ⭐126,320 | +922 | The most powerful diffusion-model GUI with a graph/nodes interface — today's largest single-day gain among image/video AI tools, reflecting sustained momentum in local generative media. |
-| [google-deepmind/weathernext](https://github.com/google-deepmind/weathernext) | ⭐7,352 | +325 | Google DeepMind's weather forecasting foundation model — a notable entry of a major lab into open scientific AI, with strong early traction. |
-| [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute) | ⭐45,192 | +975 | An open-source AI gateway routing 290+ providers through one endpoint, with 15–95% token savings via compression and auto-fallback — essential middleware for agent apps. |
-| [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | ⭐75,500 | — | A Rust CLI proxy cutting LLM token consumption by 60–90% on common dev commands; addresses the cost bottleneck of agent-heavy workflows. |
-| [run-llama/liteparse](https://github.com/run-llama/liteparse) | ⭐12,027 | +35 | Llama's fast, open-source document parser — fills a critical gap in the agent data pipeline for turning PDFs, docs, and pages into structured context. |
+1.  **[Affaan-m/ECC](https://github.com/affaan-m/ECC)**
+    *   ⭐ 239,326 (+261 today)
+    *   **What it is**: An agent harness performance optimization system that integrates skills, instincts, memory, and security for Claude Code and other coding agents.
+    *   **Why it matters**: It represents the cutting edge of "Agent Harness" engineering, focusing on making AI agents faster, more secure, and production-ready.
+
+2.  **[Google/skills](https://github.com/google/skills)**
+    *   ⭐ 17,692 (+498 today)
+    *   **What it is**: Agent Skills for Google products and technologies, enabling agents to perform specific tasks within the Google ecosystem.
+    *   **Why it matters**: Shows major tech companies actively building specialized "skills" to extend AI agent capabilities into their proprietary environments.
+
+3.  **[rtk-ai/rtk](https://github.com/rtk-ai/rtk)**
+    *   ⭐ 75,606 [topic:llm]
+    *   **What it is**: A CLI proxy that reduces LLM token consumption by 60-90% on common dev commands with a single Rust binary.
+    *   **Why it matters**: Addresses the rising cost of LLM usage by offering a zero-dependency, Rust-based solution for efficient command execution.
+
+4.  **[Automattic/harper](https://github.com/Automattic/harper)**
+    *   ⭐ 14,342 (+38 today)
+    *   **What it is**: An offline, privacy-first grammar checker powered by Rust.
+    *   **Why it matters**: Highlights the demand for high-performance, offline NLP tools that respect user privacy.
 
 ### 🤖 AI Agents / Workflows
+*Agent frameworks, automation tools, and multi-agent orchestration systems.*
 
-| Project | Stars | Today | Description |
-|---------|-------|-------|-------------|
-| [affaan-m/ECC](https://github.com/affaan-m/ECC) | ⭐239,246 | +261 | The highest-starred agent harness project today — a performance-optimization system for Claude Code, Codex, and Cursor covering skills, memory, security, and research-first development. |
-| [msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents) | ⭐141,828 | +1,349 | A complete "AI agency" in a repo with specialized agents (frontend wizards, community ninjas, etc.) — the most aggressive daily star gain, signaling viral interest in multi-agent workflows. |
-| [PrimeIntellect-ai/prime-agent](https://github.com/PrimeIntellect-ai/prime-agent) | ⭐13,064 | +2,642 | A self-improving RLM agent for coding and long-running autonomous tasks — the second-largest daily gain, showing demand for agents that evolve their own capabilities. |
-| [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | ⭐67,580 | +108 | An agent meta-harness deploying intelligent multi-player swarms with adaptive memory, self-learning, and RAG — part of the emerging "harness of harnesses" trend. |
-| [paperclipai/paperclip](https://github.com/paperclipai/paperclip) | ⭐76,481 | +198 | The open-source app for managing AI agents at work — positions itself as the operational control plane for agent fleets in team settings. |
-| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | ⭐85,741 | +659 | Production-grade engineering skills for AI coding agents — Addy Osmani's curation continues to be the go-to reference for Claude Code / Codex skill catalogs. |
-| [Hmbown/CodeWhale](https://github.com/Hmbown/CodeWhale) | ⭐40,646 | +57 | Community-driven agent harness with a focus on collaborative, extensible agent workflows. |
-| [tinyhumansai/openhuman](https://github.com/tinyhumansai/openhuman) | ⭐36,168 | +39 | A local-first personal AI "brain" that builds persistent memory and orchestrates agent fleets — representative of the privacy-first agent trend. |
+1.  **[PrimeIntellect-ai/prime-agent](https://github.com/PrimeIntellect-ai/prime-agent)**
+    *   ⭐ 13,512 (+2,642 today)
+    *   **What it is**: A self-improving RLM agent for coding workflows and long-running autonomous tasks.
+    *   **Why it matters**: Massive daily growth indicates a surge of interest in autonomous agents that can evolve and handle complex, multi-step coding tasks without human intervention.
+
+2.  **[msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)**
+    *   ⭐ 142,164 (+1,349 today)
+    *   **What it is**: A complete AI agency at your fingertips, featuring specialized agents for frontend wizards, Reddit community management, and reality checking.
+    *   **Why it matters**: The explosion in stars reflects a desire for "All-in-One" AI solutions that handle diverse tasks, from coding to social media management, with distinct personalities.
+
+3.  **[cobusgreyling/loop-engineering](https://github.com/cobusgreyling/loop-engineering)**
+    *   ⭐ 10,164 (+65 today)
+    *   **What it is**: Practical patterns, starters, and CLI tools for "loop engineering" with AI coding agents to design systems that orchestrate agents.
+    *   **Why it matters**: Introduces a methodology for structuring AI workflows, moving beyond ad-hoc prompting to systematic, repeatable engineering patterns.
+
+4.  **[ruvnet/RuView](https://github.com/ruvnet/RuView)**
+    *   ⭐ 89,515 (+154 today)
+    *   **What it is**: The original agent meta-harness for deploying intelligent multi-player swarms and coordinating autonomous workflows.
+    *   **Why it matters**: A popular tool for building conversational AI systems and multi-agent environments, focusing on adaptive memory and RAG integration.
 
 ### 📦 AI Applications
+*Specific applications, vertical solutions, and user-facing tools.*
 
-| Project | Stars | Today | Description |
-|---------|-------|-------|-------------|
-| [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) | ⭐97,217 | +177 | Multi-agent LLM financial trading framework — agents collaborate on market analysis and execution, a mature vertical application with strong community follow-through. |
-| [ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis) | ⭐61,740 | +731 | LLM-powered multi-market stock analysis with real-time news, dashboards, and auto-push — huge daily gains reflecting retail investor interest in AI-driven finance. |
-| [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) | ⭐40,421 | +202 | "Write HTML, render video" — an agent-native video generation platform from HeyGen, merging coding agents with creative production. |
-| [Anil-matcha/Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI) | ⭐26,026 | +83 | Self-hosted alternative to Midjourney/Kling/Sora with 500+ models and no content filters — meets demand for unrestricted generative media. |
-| [Zackriya-Solutions/meetily](https://github.com/Zackriya-Solutions/meetily) | ⭐28,861 | +162 | Privacy-first AI meeting assistant with 4× faster local Whisper transcription and Ollama summarization — a practical, local-first productivity tool. |
-| [screenpipe/screenpipe](https://github.com/screenpipe/screenpipe) | ⭐20,885 | +33 | YC-backed screen recording + agent context pipeline, plugging 24/7 screen data into OpenClaw, Hermes, and 100+ apps — an emerging "screen memory" layer for agents. |
+1.  **[screenpipe/screenpipe](https://github.com/screenpipe/screenpipe)**
+    *   ⭐ 20,894 (+33 today)
+    *   **What it is**: A local, private, secure tool to record your screen 24/7 and plug into your agents.
+    *   **Why it matters**: Critical infrastructure for "Computer Use" agents, enabling AI to see and interact with your screen while maintaining privacy.
+
+2.  **[Zackriya-Solutions/meetily](https://github.com/Zackriya-Solutions/meetily)**
+    *   ⭐ 28,895 (+162 today)
+    *   **What it is**: An AI meeting assistant with 4x faster live transcription, speaker diarization, and Ollama summarization, built on Rust.
+    *   **Why it matters**: A top performer in the "Local-First Productivity" space, offering a private alternative to cloud-based transcription services.
+
+3.  **[Anil-matcha/Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI)**
+    *   ⭐ 26,055 (+83 today)
+    *   **What it is**: An unrestricted open-source alternative to AI video platforms with 500+ models (Flux, Sora, etc.) and no content filters.
+    *   **Why it matters**: Addresses the demand for censorship-free, self-hostable generative media tools, capitalizing on the popularity of advanced video models.
 
 ### 🧠 LLMs / Training
+*Model weights, training frameworks, fine-tuning tools, and model management.*
 
-| Project | Stars | Today | Description |
-|---------|-------|-------|-------------|
-| [hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) | ⭐73,974 | — | Unified fine-tuning for 100+ LLMs and VLMs (ACL 2024) — the de facto standard for anyone fine-tuning open models today. |
-| [unslothai/unsloth](https://github.com/unslothai/unsloth) | ⭐69,858 | — | Local UI for running and training text/diffusion models including Kimi K3, Gemma 4, Qwen 3.6, DeepSeek-V4, FLUX — key tool for local model iteration. |
-| [vllm-project/vllm](https://github.com/vllm-project/vllm) | ⭐88,705 | — | High-throughput LLM inference engine — continues to be the backbone for serving open and commercial models at scale. |
-| [jingyaogong/minimind](https://github.com/jingyaogong/minimind) | ⭐54,537 | — | Train a 64M-parameter LLM from scratch in 2 hours — the leading educational project for understanding LLM training end-to-end. |
-| [esengine/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix) | ⭐33,721 | — | DeepSeek-native terminal coding agent with prefix-cache stability — built specifically around DeepSeek's inference characteristics. |
+1.  **[google-deepmind/weathernext](https://github.com/google-deepmind/weathernext)**
+    *   ⭐ 7,435 (+325 today)
+    *   **What it is**: A project by Google DeepMind (likely related to weather forecasting or next-step prediction models).
+    *   **Why it matters**: Google DeepMind releasing a new model (or framework) to the open-source community creates a major spike in interest and adoption.
+
+2.  **[hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory)**
+    *   ⭐ 73,988 [topic:llm]
+    *   **What it is**: A unified, efficient framework for fine-tuning 100+ LLMs and VLMs.
+    *   **Why it matters**: The go-to tool for developers looking to fine-tune open-source models for specific use cases.
+
+3.  **[unslothai/unsloth](https://github.com/unslothai/unsloth)**
+    *   ⭐ 69,896 [topic:llm]
+    *   **What it is**: A local UI to run and train LLMs and diffusion models, including the latest models like Gemma 4 and DeepSeek-V4.
+    *   **Why it matters**: Lowers the barrier to entry for training, providing a user-friendly interface for fine-tuning state-of-the-art models locally.
 
 ### 🔍 RAG / Knowledge
+*Vector databases, retrieval-augmented generation, and knowledge management.*
 
-| Project | Stars | Today | Description |
-|---------|-------|-------|-------------|
-| [semantica-agi/semantica](https://github.com/semantica-agi/semantica) | ⭐4,098 | +970 | Graph-native infrastructure for context and accountable AI systems — today's most noteworthy new entry, proposing a structural-graph alternative to vector RAG. |
-| [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | ⭐105,000 | — | Turns any codebase into a queryable knowledge graph via deterministic AST parsing — a major shift from vector to graph-based code RAG. |
-| [vitali87/code-graph-rag](https://github.com/vitali87/code-graph-rag) | ⭐3,532 | +682 | "The ultimate RAG for your monorepo" — knowledge-graph-powered codebase querying and editing, a hot new entry in agent-enabled code understanding. |
-| [mem0ai/mem0](https://github.com/mem0ai/mem0) | ⭐62,957 | — | Universal memory layer for AI agents — persistent, structured memory across sessions, now a standard dependency for production agents. |
-| [HKUDS/LightRAG](https://github.com/HKUDS/LightRAG) | ⭐38,732 | — | EMNLP 2025 paper implementation: simple and fast retrieval-augmented generation — academic-grade RAG with practical performance. |
-| [VectifyAI/PageIndex](https://github.com/VectifyAI/PageIndex) | ⭐35,124 | — | Vectorless, reasoning-based RAG document index — challenges the assumption that vector databases are required for RAG. |
-| [microsoft/graphrag](https://github.com/microsoft/graphrag) | ⭐35,392 | — | Microsoft's modular graph-based RAG system — the lab-backed push for knowledge-graph RAG at enterprise scale. |
-| [headroomlabs-ai/headroom](https://github.com/headroomlabs-ai/headroom) | ⭐65,821 | — | Compresses tool outputs, logs, and RAG chunks before they reach the LLM — 20% fewer tokens for coding agents, up to 95% for JSON. |
+1.  **[vitali87/code-graph-rag](https://github.com/vitali87/code-graph-rag)**
+    *   ⭐ 3,658 (+682 today)
+    *   **What it is**: The ultimate RAG for monorepos, using AI and knowledge graphs to query, understand, and edit codebases.
+    *   **Why it matters**: Solves the specific challenge of indexing complex codebases, allowing AI to navigate and modify large projects efficiently.
+
+2.  **[google/langextract](https://github.com/google/langextract)**
+    *   ⭐ 38,168 [topic:llm]
+    *   **What it is**: A Python library for extracting structured information from unstructured text using LLMs.
+    *   **Why it matters**: A specialized tool for data extraction, enabling developers to automatically parse and structure unstructured data (like PDFs or web pages) using LLMs.
+
+3.  **[mem0ai/mem0](https://github.com/mem0ai/mem0)**
+    *   ⭐ 63,003 [topic:llm]
+    *   **What it is**: A universal memory layer for AI Agents, enabling persistent and contextual memory across sessions.
+    *   **Why it matters**: Addresses the "memory" problem in AI agents, allowing them to retain information from previous interactions and apply it to new tasks.
 
 ---
 
 ## 3. Trend Signal Analysis
 
-Today's trending data reveals a clear **inflection point in the agent ecosystem**: the conversation has shifted from "how do I build an agent?" to "how do I *operate, optimize, and scale* a fleet of agents." The dominant signal is the rise of **agent harnesses and meta-harnesses** — projects like ECC (239K ⭐), Prime-Agent (+2,642 today), and Agency-Agents (+1,349 today) are not agent frameworks themselves but the *operating layers* that sit between developers and raw coding agents (Claude Code, Codex, Cursor). This mirrors the evolution of the web: frameworks → frameworks-for-frameworks. A second major signal is **graph-based RAG gaining credible momentum** alongside the vector-database dominant paradigm. Semantica, Graphify (105K ⭐), Code-Graph-RAG, and Microsoft's GraphRAG all point to a community increasingly dissatisfied with pure vector search for code and enterprise knowledge, seeking structured, explainable retrieval. Third, **token efficiency** is emerging as a first-class concern — OmniRoute (975 new stars), RTK (75K ⭐), and Headroom (65K ⭐) all promise 60–95% token savings, reflecting the economic reality that agent-heavy workflows are expensive. Finally, the **local-first / self-hosted** wave remains undiminished: Ollama, Mem0, Jan, and Meetily all prioritize privacy and on-device execution, suggesting that data sovereignty is a non-negotiable requirement for the next generation of AI tools.
+The data from 2026-08-11 reveals a clear shift from **"Consumption"** to **"Engineering"** in the open-source AI ecosystem.
+
+**Explosive Growth in Agent Orchestration**: The most striking trend is the surge in **Multi-Agent Systems**. Projects like `PrimeIntellect-ai/prime-agent` and `msitarzewski/agency-agents` are seeing massive daily star increases. This indicates that developers are moving beyond single-model chatbots to complex, multi-agent orchestration—where specialized agents work together to solve large, multi-step problems. This aligns with the rise of "Agent Skills" and "Harness" concepts, treating AI agents as first-class engineering components rather than just conversational interfaces.
+
+**The Rise of "Local-First" Infrastructure**: There is a strong resurgence of interest in **privacy-preserving infrastructure**. Tools like `screenpipe` (screen recording for agents) and `meetily` (local transcription) are trending because they allow agents to interact with the user's environment without sending sensitive data to the cloud. This is driven by the maturity of local LLMs (Ollama, Llama 3.x) and the need for secure, on-device data processing.
+
+**Engineering AI for Cost & Efficiency**: A new category of tools is emerging to solve the economic reality of using LLMs. `rtk-ai/rtk` (token reduction) and `cobusgreyling/loop-engineering` (workflow patterns) represent a move toward **"Agentic Engineering."** Developers are actively looking for ways to reduce token usage, optimize agent loops, and structure workflows to make AI applications scalable and cost-effective.
+
+**Verticalization**: We see a trend toward highly specialized tools. Instead of general-purpose coding assistants, we are seeing specialized agents for **Trading** (`TauricResearch/TradingAgents`), **Finance** (`NanmiCoder/MediaCrawler`), and **Generative Video** (`Anil-matcha/Open-Generative-AI`). These tools leverage the power of LLMs but are tailored to specific, high-value industries.
 
 ---
 
 ## 4. Community Hot Spots
 
-- **`affaan-m/ECC`** — At 239K stars and growing fastest, this is the de facto agent harness performance layer. Developers should watch how it integrates with Claude Code and Codex as the standard optimization stack.
-- **`semantica-agi/semantica`** — The top new entry (+970 stars today) proposing graph-native context infrastructure. If it delivers on accountable, structured AI systems, it could redefine how agent context is managed beyond vector search.
-- **`Graphify-Labs/graphify`** — 105K stars with a deterministic AST-parsing approach to code knowledge graphs. The most credible alternative to vector-based code RAG; worth evaluating for any team doing agentic codebase operations.
-- **`PrimeIntellect-ai/prime-agent`** — The largest single-day star gain (+2,642) signals viral interest in self-improving agents. Monitor whether its "self-improving" claims hold up in long-running usage.
-- **`diegosouzapw/OmniRoute`** — An AI gateway supporting 290+ providers with token compression and auto-fallback. As multi-provider agent apps become standard, this kind of routing layer will be essential infrastructure — worth starring for early access.
+*   **Agent Skills & Harnesses**: The community is intensely focused on **"Skills"** (specialized capabilities) and **"Harnesses"** (meta-controllers for agents). Tools like `affaan-m/ECC` and `Google/skills` are the center of attention. Developers are building and sharing these to extend the capabilities of agents like Claude Code and Cursor.
+*   **Local-First Productivity**: The "Privacy-First" movement is exploding. Projects like `screenpipe` and `meetily` are critical for agents that need to interact with your screen, clipboard, or meetings. This is becoming a standard requirement for serious AI tooling.
+*   **Codebase Intelligence**: There is a massive push to solve the problem of indexing and understanding large codebases. `vitali87/code-graph-rag` and `mufeedvh/code2prompt` are hot because they allow agents to "read" and "understand" an entire codebase, not just a single file, enabling them to make large-scale refactoring changes.
+*   **General-Purpose Agent Platforms**: The community is looking for "All-in-One" platforms. `msitarzewski/agency-agents` and `ruvnet/RuView` are popular because they offer a suite of ready-to-use agents and workflows, reducing the time it takes to set up a complex AI system.
 
 ---
-*This digest is auto-generated by [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed).*
+*This digest is auto-generated by [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed).*
