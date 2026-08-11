@@ -93,5 +93,5 @@ export function saveFile(content: string, ...segments: string[]): string {
 export function autoGenFooter(lang: Lang = "zh"): string {
   const digestRepo = process.env["DIGEST_REPO"] ?? "";
   if (!digestRepo) return "";
-  return `\n\n---\n*${FOOTER.autoGen[lang]} [agents-radar](https://github.com/${digestRepo})${lang === "en" ? "." : " 自动生成。"}*`;
+  return `\n\n---\n*${FOOTER.autoGen[lang]} [GitTok](https://github.com/${digestRepo})${lang === "en" ? "." : " 自动生成。"}*`;
 }

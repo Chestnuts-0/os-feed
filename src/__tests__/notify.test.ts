@@ -16,7 +16,7 @@ describe("buildMessage", () => {
 
   it("builds a daily message with zh + en reports", () => {
     const msg = buildMessage("2026-03-09", ["ai-cli", "ai-cli-en", "ai-agents", "ai-agents-en"], BASE_URL);
-    expect(msg).toContain("agents-radar");
+    expect(msg).toContain("GitTok");
     expect(msg).toContain("2026-03-09");
     expect(msg).toContain("📡");
     // zh links

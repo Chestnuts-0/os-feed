@@ -69,7 +69,7 @@ export function buildFeishuMessage(
 
   const icon = isMonthly ? "📆" : isWeekly ? "📅" : "📡";
   const suffix = isMonthly ? " 月报" : isWeekly ? " 周报" : "";
-  const lines: string[] = [`${icon} **agents-radar${suffix} · ${date}**`];
+  const lines: string[] = [`${icon} **GitTok${suffix} · ${date}**`];
 
   const ordered = [
     ...baseReports.filter((r) => !r.includes("weekly") && !r.includes("monthly")),
@@ -141,7 +141,7 @@ async function main(): Promise<void> {
   const isWeekly = reports.some((r) => r === "ai-weekly");
   const icon = isMonthly ? "📆" : isWeekly ? "📅" : "📡";
   const suffix = isMonthly ? " 月报" : isWeekly ? " 周报" : "";
-  const title = `${icon} agents-radar${suffix} · ${date}`;
+  const title = `${icon} GitTok${suffix} · ${date}`;
 
   const content = buildFeishuMessage(date, reports, undefined, highlights);
 

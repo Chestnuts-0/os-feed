@@ -59,7 +59,7 @@ export async function fetchLobstersData(): Promise<LobstersData> {
       TAG_URLS.map(async (tagUrl) => {
         try {
           const resp = await fetch(tagUrl, {
-            headers: { "User-Agent": "agents-radar/1.0" },
+            headers: { "User-Agent": "GitTok/1.0" },
           });
 
           if (!resp.ok) {

@@ -114,7 +114,7 @@ async function fetchGitHubTrending(): Promise<{ repos: TrendingRepo[]; success: 
           : "https://github.com/trending?since=daily";
         const resp = await fetch(url, {
           headers: {
-            "User-Agent": "Mozilla/5.0 (compatible; agents-radar/1.0)",
+            "User-Agent": "Mozilla/5.0 (compatible; GitTok/1.0)",
             Accept: "text/html",
           },
         });

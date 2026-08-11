@@ -155,7 +155,7 @@ async function main(): Promise<void> {
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">\n` +
     `  <channel>\n` +
-    `    <title>agents-radar</title>\n` +
+    `    <title>GitTok</title>\n` +
     `    <link>${SITE_URL}</link>\n` +
     `    <description>AI 开源生态每日简报 · Daily AI ecosystem digest</description>\n` +
     `    <language>zh-CN</language>\n` +

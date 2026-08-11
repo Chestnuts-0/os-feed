@@ -58,7 +58,7 @@ export function buildMessage(
 
   const icon = isMonthly ? "📆" : isWeekly ? "📅" : "📡";
   const suffix = isMonthly ? " 月报" : isWeekly ? " 周报" : "";
-  const lines: string[] = [`${icon} <b>agents-radar${suffix} · ${date}</b>`];
+  const lines: string[] = [`${icon} <b>GitTok${suffix} · ${date}</b>`];
 
   // Daily reports first, then rollups
   const ordered = [
