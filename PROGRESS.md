@@ -81,3 +81,12 @@
 - 约束：改动全在白名单（git status 核对）；CI 四步全绿 + Deploy Web 绿；测试 248 passed + 3 基线失败无新增；线上 HEAD=本地=27b7429，站点 HTTP 200；BLOCKED.md 随交付（P0b 无待裁决项）
 - 偏差记录（任务书未预见）：Deploy 工作流 web 独立 npm ci 无 vitest → storage.test.ts tsc -b TS2307 → @ts-ignore 只跳过编译期模块解析（测试仍由根 vitest 真实运行，不装新包不改 workflow 的合规解）
 - 教训：验收脚本 wait_for 传 CSS 选择器会拼成非法 JS 表达式（必须 document.querySelector 包裹）；点赞按钮只在详情弹窗；收藏后 visibleCards 重算 feed 重排，取第一张卡会变（从详情内操作最稳）；导出 keys 无值须空串保证全量
+
+---
+
+# GitTok .refresh_cursor 随 digest 提交（2026-08-11）
+
+- 背景：stars 轮转刷新游标（data/.refresh_cursor）被 .gitignore 忽略 → CI clean checkout 每轮从 0 开始（实证：08-11 日志 `cursor 0/1306`）。当前 REFRESH_BATCH=2000 > 库 1306 全刷一轮游标回 0，无实际损失；库持续增长（~35/天）超过 2000 后 batch<total，游标必须持久化才能轮转续跑，否则永远只刷前 2000 个、后续 repo 的 starGrowth 失真
+- 改动：.gitignore 删 `data/.refresh_cursor` 行 + 提交游标文件（当前值 0 合法=全刷完回原点）；digest workflow `git add digests/ data/` 自动携带
+- 验证：CI success + Deploy Web success（data/** 触发重复部署一次，无害）；线上 HEAD=本地=b0f71f3
+- 边界：真正收益在库超 2000 后显现；若想提前轮转可调小 REFRESH_BATCH（待议，未动）
