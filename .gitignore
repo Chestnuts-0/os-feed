@@ -16,3 +16,8 @@ web/node_modules/
 .impeccable/live/
 .impeccable/critique/*.png
 # impeccable-ignore-end
+
+# Internal dev docs — tracked locally, not published (public-facing repo hygiene)
+PROGRESS.md
+BLOCKED.md
+.impeccable/
