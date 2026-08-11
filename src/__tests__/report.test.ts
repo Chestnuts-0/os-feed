@@ -175,8 +175,8 @@ describe("callLlm", () => {
 
     const promise = callLlm("prompt", 1024);
 
-    // First call rejects with 429 — advance past the 5 s backoff
-    await vi.advanceTimersByTimeAsync(5_000);
+    // First call rejects with 429 — advance past the 15 s backoff
+    await vi.advanceTimersByTimeAsync(15_000);
 
     const result = await promise;
     expect(result).toBe("success after retry");
@@ -196,10 +196,10 @@ describe("callLlm", () => {
     // before the expect() below gets a chance to inspect the rejection.
     promise.catch(() => {});
 
-    // Advance through all 3 retry backoffs: 5s, 10s, 20s
-    await vi.advanceTimersByTimeAsync(5_000);
-    await vi.advanceTimersByTimeAsync(10_000);
-    await vi.advanceTimersByTimeAsync(20_000);
+    // Advance through all 3 retry backoffs: 15s, 30s, 60s
+    await vi.advanceTimersByTimeAsync(15_000);
+    await vi.advanceTimersByTimeAsync(30_000);
+    await vi.advanceTimersByTimeAsync(60_000);
 
     await expect(promise).rejects.toThrow("rate limited");
     // 1 initial + 3 retries = 4 total calls
@@ -219,14 +219,14 @@ describe("callLlm", () => {
     mockCall.mockResolvedValueOnce("ok");
 
     const promise = callLlm("prompt");
-    await vi.advanceTimersByTimeAsync(5_000);
+    await vi.advanceTimersByTimeAsync(15_000);
     await promise;
 
-    // If slots leaked, subsequent calls would hang. Fire LLM_CONCURRENCY (5)
-    // calls to prove all slots are available.
+    // If slots leaked, subsequent calls would hang. Fire LLM_CONCURRENCY (1)
+    // call to prove all slots are available.
     mockCall.mockResolvedValue("ok");
-    const batch = Array.from({ length: 5 }, (_, i) => callLlm(`p${i}`));
+    const batch = Array.from({ length: 1 }, (_, i) => callLlm(`p${i}`));
     const results = await Promise.all(batch);
-    expect(results).toEqual(["ok", "ok", "ok", "ok", "ok"]);
+    expect(results).toEqual(["ok"]);
   });
 });

@@ -119,7 +119,7 @@ describe("LlmProvider interface", () => {
 // ---------------------------------------------------------------------------
 
 describe("VALID_PROVIDER_NAMES", () => {
-  it("contains all six supported providers", () => {
+  it("contains all supported providers", () => {
     expect(VALID_PROVIDER_NAMES).toEqual([
       "anthropic",
       "openai",
@@ -127,6 +127,7 @@ describe("VALID_PROVIDER_NAMES", () => {
       "openrouter",
       "deepseek",
       "agnes",
+      "zhipu",
     ]);
   });
 });

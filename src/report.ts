@@ -25,7 +25,7 @@ const provider: LlmProvider = createProvider();
 // any given time; the rest queue and run as slots free up.
 // ---------------------------------------------------------------------------
 
-const LLM_CONCURRENCY = 5;
+const LLM_CONCURRENCY = 1; // 智谱免费档限流紧（账户速率限制+模型级高峰），串行最稳
 let llmSlots = LLM_CONCURRENCY;
 const llmQueue: Array<() => void> = [];
 
@@ -51,7 +51,7 @@ function releaseSlot(): void {
 // ---------------------------------------------------------------------------
 
 const MAX_RETRIES = 3;
-const RETRY_BASE_MS = 5_000; // 5 s, 10 s, 20 s
+const RETRY_BASE_MS = 15_000; // 15 s, 30 s, 60 s — 免费模型限流常为分钟级窗口，退避需覆盖
 
 export function is429(err: unknown): boolean {
   return (err as { status?: number })?.status === 429 || String(err).includes("429");
