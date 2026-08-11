@@ -34,7 +34,9 @@ jobs:
       - name: Run daily digest + feed generation
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LLM_PROVIDER: agnes
+          LLM_PROVIDER: zhipu
+          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
+          # agnès 配置保留（回滚只改 LLM_PROVIDER 一个词）
           AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
           AGNES_MODEL: ${{ secrets.AGNES_MODEL || 'agnes-2.0-flash' }}
           PRODUCTHUNT_TOKEN: ${{ secrets.PRODUCTHUNT_TOKEN }}
