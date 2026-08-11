@@ -1,95 +1,110 @@
-# GitTok — 开源版抖音信息流，用中文刷 GitHub 好项目
+# GitTok — An open-source "TikTok" for GitHub, in Chinese
 
 **English** | [中文](./README.zh.md)
 
-> GitTok 每天自动聚合 GitHub 与全球 AI 生态的最新动向，用中文推荐、分类、评分，以抖音式信息流呈现给你——刷 GitHub，像刷短视频一样上瘾。
+> GitTok automatically aggregates the latest trends from GitHub and the global AI ecosystem every day — with LLM-powered Chinese summaries, classification, and scoring, presented as a TikTok-style feed. Swipe through GitHub like short videos.
 
-## ✨ 特性
+## ✨ Features
 
-- 📱 **抖音式信息流**：上下滑动刷项目，卡片式呈现，点赞/点踩/收藏
-- 🧠 **AI 中文推荐**：LLM 自动评分（Agnes 免费模型），中文总结每个项目
-- 🗂️ **8 大板块**：热门 / AI 前沿 / 每日飙升 / 权威 / 新锐 / 兴趣 / 技能 / 学习
-- 👤 **个性化**：你的点赞点踩会训练专属推荐（localStorage）
-- 🔍 **搜索**：全库搜索项目
-- 🌍 **多数据源**：GitHub Trending + Search API、Hacker News、Product Hunt、ArXiv、Hugging Face、Dev.to、Lobsters、Anthropic/OpenAI 站点
+- 📱 **TikTok-style feed**: vertical swipe, card layout, like / dislike / bookmark
+- 🧠 **AI Chinese recommendations**: LLM scoring (Zhipu GLM-4.7-Flash, free) writes a Chinese summary for every project
+- 🗂️ **Smart sections**: Dynamic (Recommended / Hot / Daily / Following) + Categories (AI / Fun / Tools / Learning)
+- 👤 **Personalization**: your likes and dislikes train a personal feed (localStorage, no account needed)
+- ⭐ **Following**: follow GitHub users — the repos they star automatically land in your Following channel (synced from your GitHub follow list)
+- 🔍 **Search**: full-library search with weighted ranking
+- 📱 **Mobile-ready**: bottom navigation + channel drawer on small screens
+- 🌍 **Multi-source**: GitHub Trending + Search, Hacker News, Product Hunt, ArXiv, Hugging Face, Dev.to, Lobsters, Anthropic/OpenAI
 
-## 🚀 在线体验
+## 🚀 Live demo
 
 **🌐 [https://chestnuts-sisyphus.github.io/os-feed/](https://chestnuts-sisyphus.github.io/os-feed/)**
 
-无需登录，每天 08:00 CST 自动更新数据。
+No login required. Data updates automatically every day at 08:00 CST.
 
-## 🏗️ 架构
+## 🏗️ Architecture
 
 ```
-GitHub Actions (daily-digest.yml) 每天 08:00 CST
-  ├─ 并行抓取 10+ 数据源（GitHub/HN/PH/ArXiv/HF/Dev.to/...）
-  ├─ LLM 中文评分（Agnes agnes-2.0-flash，免费）
-  ├─ 生成 digests/ 日报 + data/feed.json（信息流数据）
-  ├─ 自动提交 + 部署 GitHub Pages
-  └─ 推送 Telegram / 飞书 / RSS
+GitHub Actions (daily-digest.yml) — daily 08:00 CST
+  ├─ Fetch 10+ sources in parallel (GitHub / HN / PH / ArXiv / HF / Dev.to / ...)
+  ├─ LLM scoring in Chinese (Zhipu GLM-4.7-Flash, free)
+  ├─ Generate digests/ daily reports + data/feed.json (feed data)
+  ├─ Auto commit + deploy to GitHub Pages
+  └─ Push to Telegram / Feishu / RSS
 ```
 
-| 模块 | 说明 |
+| Module | Description |
 |------|------|
-| `src/` | 数据管道（抓取 / LLM 评分 / feed 生成） |
-| `web/` | React 前端（信息流 UI） |
-| `data/feed.json` | 信息流数据（前端读取） |
-| `digests/` | 每日日报 Markdown |
-| `.github/workflows/` | 每日流水线 + Pages 部署 |
+| `src/` | Data pipeline (fetch / LLM scoring / feed generation) |
+| `web/` | React frontend (feed UI) |
+| `data/feed.json` | Feed data (read by the frontend) |
+| `digests/` | Daily digest reports (Markdown) |
+| `.github/workflows/` | Daily pipeline + Pages deployment |
 
-## 📦 本地开发
+## 📦 Local development
 
 ```bash
-# 1. 安装依赖
+# 1. Install dependencies
 pnpm install
 
-# 2. 配置环境变量（复制 .env.example 为 .env）
+# 2. Configure environment (copy .env.example to .env)
 cp .env.example .env
-# 填入 AGNES_API_KEY（https://platform.agnes-ai.com 免费获取）
-# 填入 GITHUB_TOKEN（可选，用于搜索 API 提额）
+# Fill in ZHIPU_API_KEY (free tier: https://open.bigmodel.cn — Zhipu AI console → API Keys)
+# Fill in GITHUB_TOKEN (optional, raises API rate limits)
 
-# 3. 跑完整数据管道
-pnpm start
+# 3. Run the full pipeline
+LLM_PROVIDER=zhipu pnpm start
 
-# 4. 前端开发
+# 4. Frontend
 cd web && pnpm install && pnpm dev
 ```
 
-## 🔑 环境变量
+## 🔑 Environment variables
 
-| 变量 | 必填 | 说明 |
+| Variable | Required | Description |
 |------|------|------|
-| `LLM_PROVIDER` | 否 | 默认 `agnes`（免费） |
-| `AGNES_API_KEY` | 是 | Agnes 免费 API Key |
-| `AGNES_MODEL` | 否 | 默认 `agnes-2.0-flash` |
-| `GITHUB_TOKEN` | 否 | GitHub Token（提高 API 限额） |
-| `DIGEST_REPO` | 否 | 日报推送的仓库（默认本仓库） |
+| `LLM_PROVIDER` | No | `zhipu` (used in CI). Other options: `deepseek` / `openai` / `anthropic` / `openrouter` / `github-copilot` |
+| `ZHIPU_API_KEY` | Yes | Zhipu AI API key (GLM-4.7-Flash is permanently free) |
+| `ZHIPU_MODEL` | No | Default `glm-4.7-flash` |
+| `GITHUB_TOKEN` | No | GitHub token (raises API rate limits) |
+| `DIGEST_REPO` | No | Repo receiving digest reports (default: this repo) |
+| `BIGBROS` | No | Comma-separated GitHub usernames whose starred repos get followed |
+| `FOLLOWING_USER` | No | GitHub user whose follow list is auto-synced into the big-bro list |
 
-## 📄 数据源
+## 📄 Data sources
 
-| 来源 | 类型 | 数据 |
+| Source | Type | Data |
 |------|------|------|
-| [GitHub Repos](https://github.com) | API | 17+ 个 AI 工具仓库的 Issues/PR/Releases |
-| [GitHub Trending](https://github.com/trending) | HTML + API | 每日热门仓库 + AI 主题搜索 |
-| [Hacker News](https://news.ycombinator.com) | Algolia API | Top 30 AI 热帖 |
-| [Product Hunt](https://www.producthunt.com) | GraphQL API | 昨日 AI 产品 |
-| [ArXiv](https://arxiv.org) | ArXiv API | cs.AI/cs.CL/cs.LG 最新论文 |
-| [Hugging Face](https://huggingface.co) | Hub API | 热门模型 |
-| [Dev.to](https://dev.to) | Forem API | AI/LLM 热门文章 |
-| [Lobste.rs](https://lobste.rs) | JSON API | AI/ML 内容 |
-| [Anthropic](https://anthropic.com) + [OpenAI](https://openai.com) | Sitemap | 新文章 |
+| [GitHub Search](https://github.com/search) | REST API | 21 topic queries (AI + games / database / security / devops / ...) |
+| [GitHub Trending](https://github.com/trending) | HTML | Daily trending repositories |
+| [GitHub Stars](https://docs.github.com/rest/activity/starring) | REST API | Repos starred by followed users |
+| [Hacker News](https://news.ycombinator.com) | Algolia API | Top AI stories |
+| [Product Hunt](https://www.producthunt.com) | GraphQL API | Yesterday's AI products |
+| [ArXiv](https://arxiv.org) | ArXiv API | Latest cs.AI / cs.CL / cs.LG papers |
+| [Hugging Face](https://huggingface.co) | Hub API | Trending models |
+| [Dev.to](https://dev.to) | Forem API | Popular AI/LLM articles |
+| [Lobste.rs](https://lobste.rs) | JSON API | AI/ML content |
+| [Anthropic](https://anthropic.com) + [OpenAI](https://openai.com) | Sitemap | New articles (incremental crawl) |
 
-## 📜 技术栈
+## 🤔 Why "os-feed" and not "gittok"?
 
-- **后端**：Node.js + TypeScript，GitHub Actions 定时驱动
-- **前端**：React + Vite，GitHub Pages 部署
-- **LLM**：Agnes（OpenAI 兼容，免费）
+The product is called **GitTok**, but the repo is named **os-feed**. Reasons:
 
-## 📝 许可证
+1. `gittok` is heavily taken on GitHub — 54 repos already use the name, including a similar product (`BlackShoreTech/gittok.dev`, 137★)
+2. `os-feed` is descriptive: **open-source feed**, matching the product's positioning
+3. Renaming the repo would break the GitHub Pages URL and existing links for zero benefit at this stage
+
+So: brand name **GitTok**, repo name **os-feed**. Both point to the same thing.
+
+## 📜 Tech stack
+
+- **Backend**: Node.js + TypeScript, driven by GitHub Actions cron
+- **Frontend**: React + Vite, deployed on GitHub Pages
+- **LLM**: Zhipu GLM-4.7-Flash (OpenAI-compatible endpoint, permanently free)
+
+## 📝 License
 
 MIT License
 
 ---
 
-*项目前身为 [agents-radar](https://github.com/duanyytop/agents-radar)，由栗子改造为 GitTok 信息流产品。*
+*Forked from [agents-radar](https://github.com/duanyytop/agents-radar), reimagined as GitTok by [Chestnuts-Sisyphus](https://github.com/Chestnuts-Sisyphus).*
