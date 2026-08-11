@@ -13,6 +13,7 @@ export { GitHubCopilotProvider } from "./github-copilot.ts";
 export { OpenRouterProvider } from "./openrouter.ts";
 export { DeepSeekProvider } from "./deepseek.ts";
 export { AgnesProvider } from "./agnes.ts";
+export { ZhipuProvider } from "./zhipu.ts";
 
 import type { LlmProvider, ProviderFactory } from "./types.ts";
 import { AnthropicProvider } from "./anthropic.ts";
@@ -21,6 +22,7 @@ import { GitHubCopilotProvider } from "./github-copilot.ts";
 import { OpenRouterProvider } from "./openrouter.ts";
 import { DeepSeekProvider } from "./deepseek.ts";
 import { AgnesProvider } from "./agnes.ts";
+import { ZhipuProvider } from "./zhipu.ts";
 
 // ---------------------------------------------------------------------------
 // Single source of truth — add new providers here only.
@@ -33,6 +35,7 @@ const PROVIDERS = {
   openrouter: () => new OpenRouterProvider(),
   deepseek: () => new DeepSeekProvider(),
   agnes: () => new AgnesProvider(),
+  zhipu: () => new ZhipuProvider(),
 } satisfies Record<string, ProviderFactory>;
 
 /** Supported provider name — derived from the PROVIDERS registry. */
