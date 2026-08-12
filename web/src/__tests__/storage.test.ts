@@ -73,16 +73,16 @@ describe("storage 封装", () => {
 
   it("损坏：corrupt key 留现场 + bak 恢复", () => {
     // 先正常双写（建立 bak）
-    saveDual("os-feed-feedback", { likes: ["a"], dislikes: [] }, { likes: ["a"], dislikes: [] });
+    saveDual("gittok-feedback", { likes: ["a"], dislikes: [] }, { likes: ["a"], dislikes: [] });
     // 主 key 被写坏（模拟外部破坏/写坏）
-    localStorage.setItem("os-feed-feedback", '{likes: "broken');
+    localStorage.setItem("gittok-feedback", '{likes: "broken');
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
-    const result = loadSafe<{ likes: string[]; dislikes: string[] }>("os-feed-feedback", {
+    const result = loadSafe<{ likes: string[]; dislikes: string[] }>("gittok-feedback", {
       likes: [],
       dislikes: [],
     });
     // 现场保留（覆盖写留最新现场）
-    expect(localStorage.getItem(corruptKey("os-feed-feedback"))).toBe('{likes: "broken');
+    expect(localStorage.getItem(corruptKey("gittok-feedback"))).toBe('{likes: "broken');
     // bak 恢复列表
     expect(result).toEqual({ likes: ["a"], dislikes: [] });
     expect(warn).toHaveBeenCalled();

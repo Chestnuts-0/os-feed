@@ -108,7 +108,7 @@ const FETCH_TIMEOUT_MS = 10_000;
 // ---------------------------------------------------------------------------
 
 const WEB_HEADERS = {
-  "User-Agent": "Mozilla/5.0 (compatible; GitTok/1.0; +https://github.com/Chestnuts-Sisyphus/os-feed)",
+  "User-Agent": "Mozilla/5.0 (compatible; GitTok/1.0; +https://github.com/Chestnuts-Sisyphus/gittok)",
   Accept: "text/html,application/xml,text/xml,*/*",
   "Accept-Language": "en-US,en;q=0.9",
 };

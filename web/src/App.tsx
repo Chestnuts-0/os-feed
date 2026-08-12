@@ -5,7 +5,7 @@ import type { FeedCard, Collection } from "./types.ts";
 import { FeedCardMemo, CardDetail, GithubAvatar } from "./FeedCard.tsx";
 import { CreatorPage } from "./CreatorPage.tsx";
 import { weightedSearch } from "./search.ts";
-import { loadSafe, saveDual } from "./storage.ts";
+import { loadSafe, saveDual, migrateLegacyKeys } from "./storage.ts";
 import {
   AlertTriangle,
   ChevronRight,
@@ -33,14 +33,17 @@ import "./styles.css";
 // ---------------------------------------------------------------------------
 
 const FEED_URL = "./data/feed.json";
-const STORAGE_KEY = "os-feed-feedback";
-const PREF_KEY = "os-feed-preferences";
-const COLLECTIONS_KEY = "os-feed-collections";
-const SEEN_KEY = "os-feed-seen";
-const INTERACTIONS_KEY = "os-feed-interactions";
-const FOLLOWING_KEY = "os-feed-following";
+const STORAGE_KEY = "gittok-feedback";
+const PREF_KEY = "gittok-preferences";
+const COLLECTIONS_KEY = "gittok-collections";
+const SEEN_KEY = "gittok-seen";
+const INTERACTIONS_KEY = "gittok-interactions";
+const FOLLOWING_KEY = "gittok-following";
 /** 6 个主数据 key（导出/完全恢复的白名单；导入备份也用它） */
 const ALL_STORAGE_KEYS = [STORAGE_KEY, PREF_KEY, COLLECTIONS_KEY, SEEN_KEY, INTERACTIONS_KEY, FOLLOWING_KEY];
+
+// 一次性迁移：旧前缀 key -> 新前缀（模块顶层，任何 load 之前）
+migrateLegacyKeys();
 
 /** 备份文件结构（导出/导入共用；keys 存 localStorage 原始字符串） */
 interface BackupPayload {
@@ -995,7 +998,7 @@ export default function App() {
       if (!pendingImport) return;
       const fileKeys = pendingImport.keys ?? {};
       if (mode === "restore") {
-        // ① 先把当前 6 个主 key 原文导出到 os-feed-backup-<ts>（防误操作）
+        // ① 先把当前 6 个主 key 原文导出到 gittok-backup-<ts>（防误操作）
         const current: Record<string, string> = {};
         for (const k of ALL_STORAGE_KEYS) {
           try {
@@ -1007,9 +1010,9 @@ export default function App() {
         }
         const ts = new Date().toISOString().replace(/[:.]/g, "-");
         try {
-          localStorage.setItem(`os-feed-backup-${ts}`, JSON.stringify(current));
+          localStorage.setItem(`gittok-backup-${ts}`, JSON.stringify(current));
         } catch (e) {
-          console.warn("[gittok-storage] 导入前备份（os-feed-backup）失败:", e);
+          console.warn("[gittok-storage] 导入前备份（gittok-backup）失败:", e);
         }
         // ② 用文件内容覆盖（白名单主 key；文件缺的 key 不动）
         for (const k of ALL_STORAGE_KEYS) {

@@ -17,7 +17,7 @@
 
 ## 🚀 在线体验
 
-**🌐 [https://chestnuts-sisyphus.github.io/os-feed/](https://chestnuts-sisyphus.github.io/os-feed/)**
+**🌐 [https://chestnuts-sisyphus.github.io/gittok/](https://chestnuts-sisyphus.github.io/gittok/)**
 
 无需登录，每天 08:00 CST 自动更新数据。
 
@@ -84,16 +84,6 @@ cd web && pnpm install && pnpm dev
 | [Dev.to](https://dev.to) | Forem API | AI/LLM 热门文章 |
 | [Lobste.rs](https://lobste.rs) | JSON API | AI/ML 内容 |
 | [Anthropic](https://anthropic.com) + [OpenAI](https://openai.com) | Sitemap | 新文章（增量抓取） |
-
-## 🤔 为什么叫 os-feed 不叫 gittok？
-
-产品名叫 **GitTok**，仓库名却是 **os-feed**，原因：
-
-1. `gittok` 在 GitHub 上重度撞名——已有 54 个同名仓库，包括同赛道产品（`BlackShoreTech/gittok.dev`，137★）
-2. `os-feed` 是描述性命名：**open-source feed**（开源信息流），与产品定位一致
-3. 改仓库名会破坏 GitHub Pages URL 与既有链接，现阶段零收益
-
-所以：品牌叫 **GitTok**，仓库叫 **os-feed**，指向同一个东西。
 
 ## 🎯 「Tok」是什么意思？
 

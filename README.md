@@ -17,7 +17,7 @@
 
 ## 🚀 Live demo
 
-**🌐 [https://chestnuts-sisyphus.github.io/os-feed/](https://chestnuts-sisyphus.github.io/os-feed/)**
+**🌐 [https://chestnuts-sisyphus.github.io/gittok/](https://chestnuts-sisyphus.github.io/gittok/)**
 
 No login required. Data updates automatically every day at 08:00 CST.
 
@@ -84,16 +84,6 @@ cd web && pnpm install && pnpm dev
 | [Dev.to](https://dev.to) | Forem API | Popular AI/LLM articles |
 | [Lobste.rs](https://lobste.rs) | JSON API | AI/ML content |
 | [Anthropic](https://anthropic.com) + [OpenAI](https://openai.com) | Sitemap | New articles (incremental crawl) |
-
-## 🤔 Why "os-feed" and not "gittok"?
-
-The product is called **GitTok**, but the repo is named **os-feed**. Reasons:
-
-1. `gittok` is heavily taken on GitHub — 54 repos already use the name, including a similar product (`BlackShoreTech/gittok.dev`, 137★)
-2. `os-feed` is descriptive: **open-source feed**, matching the product's positioning
-3. Renaming the repo would break the GitHub Pages URL and existing links for zero benefit at this stage
-
-So: brand name **GitTok**, repo name **os-feed**. Both point to the same thing.
 
 ## 🎯 What does "Tok" mean?
 
