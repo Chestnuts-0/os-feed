@@ -351,12 +351,17 @@ async function refreshStarsRoundRobin(
         }
         const d = (await resp.json()) as { stargazers_count?: number };
         const newStars = d.stargazers_count ?? 0;
-        const oldStars = baselineStars.get(item.repo) ?? 0;
         const m = repoMap.get(item.repo);
         if (m) {
           m.stars = newStars;
-          // 只对今天刷新到的 repo 计算增长（真实今日信号）
-          m.starGrowth = Math.max(m.starGrowth, newStars - oldStars);
+          // 只对「有增长基准」的 repo 计算今日增长（真实今日信号）：
+          // 基准缺失 = 当天新入库的卡，newStars-0 会把总 star 当增长（虚高，见 starGrowth 研讨稿）
+          if (baselineStars.has(item.repo)) {
+            const oldStars = baselineStars.get(item.repo)!;
+            const diff = newStars - oldStars;
+            // 同轮内多数据源取大；stars 减少/持平（diff<=0）→ 不动（保留 merge 的 todayStars 或 0）
+            if (diff > 0) m.starGrowth = Math.max(m.starGrowth, diff);
+          }
         }
         results.set(item.repo, newStars);
       } catch (err) {
@@ -671,7 +676,7 @@ export async function generateFeed(
           language: c.language,
           topics: c.topics,
           source: c.source,
-          starGrowth: c.starGrowth || 0,
+          starGrowth: 0, // 跨轮不保留旧增长值：starGrowth=「今日增长」每轮从 0 重算（防历史虚高固化）
           bigbros: c.bigbros,
           ts: c.ts,
         });
@@ -697,7 +702,7 @@ export async function generateFeed(
         language: pe.language,
         topics: pe.topics,
         source: pe.source,
-        starGrowth: pe.starGrowth,
+        starGrowth: 0, // 快照值可能已虚高，从 0 重算（refresh 用真实差值覆盖）
         bigbros: pe.bigbros,
         ts: pe.ts,
         pending: true,
