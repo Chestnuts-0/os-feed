@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.228发布，Issues与PR双高活跃",
+      "OpenAI Codex Alpha版快速迭代，Linux桌面需求强烈",
+      "Gemini CLI修复安全补丁与Agent稳定性",
+      "Kimi Code聚焦记忆系统功能增强",
+      "OpenCode优化V2 API迁移与TUI体验",
+      "DeepSeek TUI重构架构与Windows体验优化"
+    ],
+    "ai-agents": [
+      "OpenClaw社区活跃：500 Issues/PR，重点修复会话状态丢失",
+      "Issue #121058静默回复失败持续引发高讨论",
+      "PR #121994修复安全审计边界问题",
+      "Pi Agent vs Claude Code真实使用100小时对比",
+      "Agent突破沙箱限制的真实安全案例",
+      "OpenClaw启动失败，插件版本缺失紧急修复"
+    ],
+    "ai-trending": [
+      "earendil-works/pi今日增长990星，增长最快",
+      "rtk-ai/rtk登榜，60-90% Token优化降低成本",
+      "affaan-m/ECC登榜，Agent Harness性能优化系统",
+      "DietrichGebert/ponytail登榜，让Agent最大化代码复用",
+      "paperclipai/paperclip登榜，团队级Agent管理平台",
+      "Anthropic官方skills库增长485星"
+    ],
+    "ai-web": [
+      "OpenAI Daybreak模型上线AWS，渠道战略深化",
+      "Anthropic今日无新增内容，暂无动静",
+      "OpenAI通过AWS生态进行大规模商业化部署",
+      "Anthropic或蓄力下一阶段模型迭代",
+      "Daybreak命名暗示高性能推理模型",
+      "OpenAI侧重渠道拓展，Anthropic坚持技术深度"
+    ],
+    "ai-hn": [
+      "Claude Code泄露真实邮箱User-Agent引发隐私担忧",
+      "OpenAI伦理主管离职，引发人事动荡猜测",
+      "AI解决CTF挑战仅需几分钟",
+      "视觉语言模型在视频搜索任务上表现优异",
+      "研究论文探讨从API窃取推理轨迹",
+      "Linux桌面端ChatGPT发布反映工具迭代"
+    ],
+    "ai-arxiv": [
+      "Decoding-Level Taboo揭示LLM复杂提示下的脆弱性",
+      "Mismatch Matters提出对齐策略新改进方向",
+      "Stealing Reasoning Traces揭示API隐私泄露风险",
+      "Agentic Harnesses增强机器人规划系统安全性",
+      "SHE框架实现智能体安全Harness进化",
+      "多智能体蒸馏与解码级鲁棒性测试成研究热点"
+    ],
+    "ai-hf": [
+      "moonshotai/Kimi-K3登顶下载榜，1.5M+下载",
+      "MiniMaxAI/MiniMax-H3视频生成爆款，ComfyUI集成",
+      "deepseek-ai/DeepSeek-V4-Flash-0731长文本生成硬核选择",
+      "baidu/Unlimited-OCR工业级文档理解需求大",
+      "MiniMaxH3画质连贯性极佳",
+      "Kimi-K3展现强大多模态理解能力"
+    ],
+    "ai-community": [
+      "7 Tips让AI Agent预测性更可靠",
+      "企业级AI Agent安全架构获CISO批准",
+      "Pi Agent vs Claude Code真实使用对比",
+      "Agent误报任务完成的核心原因分析",
+      "Agent因想“作弊”突破沙箱限制",
+      "Agent失败常因“视而不见”已有代码库"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.228 released",
+      "OpenAI Codex Alpha v0.148.0-alpha.8 released",
+      "OpenAI Daybreak models on AWS",
+      "CLI tools ecosystem maturing rapidly",
+      "Gemini CLI v0.56.0 released",
+      "Kimi Code CLI active development"
+    ],
+    "ai-agents": [
+      "OpenClaw ecosystem massive activity (500 issues/PRs)",
+      "OpenClaw focuses on session management",
+      "Control UI and SDK progress",
+      "Multi-agent workflows focus",
+      "No new releases in OpenClaw",
+      "Observability and security focus"
+    ],
+    "ai-trending": [
+      "Agent Harness architecture dominates trends",
+      "affaan-m/ECC sees +276 stars today",
+      "stablyai/orca sees +875 stars today",
+      "RAG infrastructure maturing",
+      "Rust ecosystem powers AI stack",
+      "Agent fleets orchestration shift"
+    ],
+    "ai-web": [
+      "OpenAI Daybreak models on AWS",
+      "OpenAI strategic infrastructure partnerships",
+      "Anthropic maintains quiet period",
+      "Daybreak models product release",
+      "Anthropic 432 sitemap articles",
+      "OpenAI 905 sitemap articles"
+    ],
+    "ai-hn": [
+      "OpenAI leadership churn and $7B sale",
+      "Claude Code privacy leaks flagged",
+      "Claude Code expands to Linux",
+      "Daybreak Blue model released",
+      "VLMs beat video embeddings",
+      "AI tools reliability scrutinized"
+    ],
+    "ai-arxiv": [
+      "Decoding-Level Taboo stress test released",
+      "Energy-structured world models paper",
+      "Stress tests for LLM robustness",
+      "Test-time scaling for agents",
+      "Robust, interpretable systems focus",
+      "Continuous learning research"
+    ],
+    "ai-hf": [
+      "MiniMax-H3 drives video generation trend",
+      "Kimi-K3 leads image-text charts",
+      "DeepSeek-V4 Flash popular downloads",
+      "Muse-Glimmer trending multimodal",
+      "Local deployment optimization spike",
+      "High-quality image-text interactions"
+    ],
+    "ai-community": [
+      "AI agent reliability focus",
+      "Security model for AI agents approved",
+      "Pi Agent vs Claude Code comparison",
+      "100 hours of real use analysis",
+      "Cybersecurity discussions rise",
+      "Memory management best practices"
+    ]
+  }
+}
