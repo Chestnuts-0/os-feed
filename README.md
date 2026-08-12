@@ -2,11 +2,11 @@
 
 **English** | [中文](./README.zh.md)
 
-> GitTok automatically aggregates the latest trends from GitHub and the global AI ecosystem every day — with LLM-powered Chinese summaries, classification, and scoring, presented as a TikTok-style feed. Swipe through GitHub like short videos.
+> GitTok automatically aggregates the best projects from GitHub and the global AI ecosystem every day — with LLM-powered Chinese summaries, classification, and scoring. Browsing GitHub feels like swiping short videos: fun, addictive, and always something new.
 
 ## ✨ Features
 
-- 📱 **TikTok-style feed**: vertical swipe, card layout, like / dislike / bookmark
+- 🃏 **Addictive card feed**: card-based browsing with personalized recommendations — the thrill of short videos, the density of a real feed. Like / dislike / bookmark
 - 🧠 **AI Chinese recommendations**: LLM scoring (Zhipu GLM-4.7-Flash, free) writes a Chinese summary for every project
 - 🗂️ **Smart sections**: Dynamic (Recommended / Hot / Daily / Following) + Categories (AI / Fun / Tools / Learning)
 - 👤 **Personalization**: your likes and dislikes train a personal feed (localStorage, no account needed)
@@ -94,6 +94,10 @@ The product is called **GitTok**, but the repo is named **os-feed**. Reasons:
 3. Renaming the repo would break the GitHub Pages URL and existing links for zero benefit at this stage
 
 So: brand name **GitTok**, repo name **os-feed**. Both point to the same thing.
+
+## 🎯 What does "Tok" mean?
+
+GitTok is not a fullscreen clone of TikTok. **"Tok" is the feeling**: browsing GitHub projects should be as fun and addictive as scrolling short videos. GitTok delivers that with an algorithm-driven card feed — personalized recommendations, Chinese summaries for every project, and fresh picks every day. Swipe through GitHub like short videos, with the density of a real feed.
 
 ## 📜 Tech stack
 
