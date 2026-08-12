@@ -134,4 +134,4 @@
     **理由：** 长程智能体执行的核心瓶颈在于环境交互的成本与地面真值（grounding）的获取。该工作提出的“世界预演”概念为减少对外部模拟器依赖、提升智能体对环境动力学的内化理解提供了新颖且实用的视角，具有重要的工程参考价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

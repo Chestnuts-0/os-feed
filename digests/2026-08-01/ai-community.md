@@ -85,4 +85,4 @@
 3. **[You Could Have Come Up With Kimi Delta Attention](https://blog.doubleword.ai/you-could-have-come-up-with-kimi-delta-attention)** —  清晰拆解 Kimi Delta Attention 的技术原理，无需阅读原始论文即可理解其创新点，是了解注意力机制最新进展的优质入口。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

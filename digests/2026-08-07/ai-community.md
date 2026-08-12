@@ -104,4 +104,4 @@ https://localai.io/blog/why-we-write-our-own-engines/
 > LocalAI 团队的开源实战经验，揭示推理引擎自研背后的工程权衡——适合需要深度定制部署、性能或许可合规的企业开发者。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

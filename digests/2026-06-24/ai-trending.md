@@ -79,4 +79,4 @@
     *   **理由：** 开源 AI 语音工作室的崛起，预示着个性化语音内容生成（克隆、听写）的低门槛化，是 AI 音频应用的重要入口。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

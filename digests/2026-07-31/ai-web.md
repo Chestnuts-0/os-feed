@@ -75,4 +75,4 @@ OpenAI 官网路径中出现 `gpt-5-6` 而非 `gpt-5.6` 或 `gpt-v5.6`，可能�
 Anthropic 开篇即提及 OpenAI 同类事件，实为建立"我们比你更安全"的隐性比较框架。结合其此前发布的 Constitution AI 理念，正在构建"道德优先型 AI 厂商"的品牌护城河。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

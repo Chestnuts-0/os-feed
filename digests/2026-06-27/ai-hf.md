@@ -123,4 +123,4 @@
     *   **理由**：对于开发者而言，这是一个经过精心微调且量化良好的代码专用模型。它不仅继承了 Gemma 4 的基础优势，还通过 Fable5 等技术增强了代码生成和推理能力，非常适合本地化编程助手场景。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

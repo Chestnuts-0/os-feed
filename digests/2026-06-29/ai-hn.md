@@ -80,4 +80,4 @@
     *   **理由**: 作为大型传统制造业代表，福特的决策具有风向标意义。它揭示了在复杂工业场景中，现有 AI 技术在鲁棒性和可解释性上的不足，提醒开发者避免过度自动化，重视人机协作的实际价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

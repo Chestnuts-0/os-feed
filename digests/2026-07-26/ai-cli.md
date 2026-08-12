@@ -1151,4 +1151,4 @@ Qwen Code 于今日发布 v0.21.0-nightly.20260726 版本，主要修复了 CLI 
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

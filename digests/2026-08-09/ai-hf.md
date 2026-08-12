@@ -90,4 +90,4 @@ MiniMax-H3 视频生成模型持续霸榜，衍生出数十个社区微调与量
 3. **[baidu/Unlimited-OCR](https://huggingface.co/baidu/Unlimited-OCR)** — 支持超长文档识别的开源 OCR 模型，290 万次下载说明其在实际工业场景中已被广泛采用，适合文档数字化、票据识别等落地应用。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

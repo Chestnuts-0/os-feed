@@ -107,4 +107,4 @@ Rust 语言在 AI 基础设施领域持续 gaining traction，多个高性能项
 - **[cognee](https://github.com/topoteretes/cognee)** — Agent 记忆平台，知识图谱驱动的持久化记忆方案，解决多会话上下文保持问题
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

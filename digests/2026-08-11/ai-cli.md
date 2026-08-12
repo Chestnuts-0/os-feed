@@ -1134,4 +1134,4 @@ Qwen Code 发布了 **v0.21.9** 正式版及对应的夜间构建版本，主要
 </details>
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

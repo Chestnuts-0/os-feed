@@ -906,4 +906,4 @@ v0.9.4 发布集成冲刺持续推进，当前已领先主干 77 个提交。Run
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -1150,4 +1150,4 @@ Qwen Code 于过去24小时内发布了 **v0.19.0** 及 **v0.19.1** 版本，核
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

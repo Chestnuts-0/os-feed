@@ -114,4 +114,4 @@
 - **`firecrawl/firecrawl`（16.2万星，+583 今日）**：Web 上下文 API，为 Agent 提供实时网络数据，是 RAG 体系中的重要数据源组件。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

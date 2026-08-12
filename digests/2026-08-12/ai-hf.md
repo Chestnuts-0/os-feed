@@ -99,4 +99,4 @@
     *   🔗 [https://huggingface.co/unsloth/DeepSeek-V4-Flash-0731-GGUF](https://huggingface.co/unsloth/DeepSeek-V4-Flash-0731-GGUF)
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

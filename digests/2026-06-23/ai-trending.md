@@ -83,4 +83,4 @@
 *   **[asgeirtj/system_prompts_leaks](https://github.com/asgeirtj/system_prompts_leaks)**：虽然涉及伦理争议，但其高热度反映了开发者对模型内部机制和安全边界的好奇，同时也提醒社区需加强对系统提示词的防护。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

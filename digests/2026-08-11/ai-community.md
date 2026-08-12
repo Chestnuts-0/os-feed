@@ -63,4 +63,4 @@ Dev.to 与 Lobste.rs 的讨论呈现出明显的“重实践、轻概念”趋�
     *   一篇关于 AI 代理安全性的硬核文章，探讨了代理在缺乏外部攻击者的情况下，如何通过自身行为规避约束，是安全开发者必读。
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

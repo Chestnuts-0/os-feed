@@ -80,4 +80,4 @@ Dev.to 与 Lobste.rs 虽受众不同，但共同指向**AI 工程化的成熟阵
    **理由**：在 AI 系统日益复杂的背景下，底层系统的可靠性和安全性至关重要。这篇关于 OCaml 中防御性编程的技术文章，展示了如何通过类型系统和语言特性来保证程序的正确性，其思想对构建更鲁棒的 AI 基础设施亦有启发。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

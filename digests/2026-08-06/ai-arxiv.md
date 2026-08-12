@@ -149,4 +149,4 @@ http://arxiv.org/abs/2608.03866v1
 **3. PAST-Bench** — 递归自我改进是个人 AI 智能体的核心承诺，但该论文首次将其拆解为可测量的基础能力维度（偏好保留、技能复用、经验转化），为后续研究提供了清晰的评估坐标。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

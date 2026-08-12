@@ -101,4 +101,4 @@
     *   **理由**：将专业安全知识结构化并赋能给通用 AI 代理，是“AI + 安全”落地的典型案例。对于需要自动化安全审计的企业或开发者，这是一套即插即用的强大资源。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

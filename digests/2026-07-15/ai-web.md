@@ -60,4 +60,4 @@
 - **发布节奏暗示**：三篇内容同日上线（Jul 14），涵盖产品、投资、研究，属于典型的“生态+产品+数据”组合发布。结合教育行业暑期教研规划周期，通常预示Q3将有一波面向教育与企业端的规模化推广与API集成动作，建议开发者关注后续课程映射接口的开放程度与计费策略。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

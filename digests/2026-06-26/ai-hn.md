@@ -84,4 +84,4 @@
     *   **理由：** 作为今日最高热度项目，它代表了“本地优先、AI 原生”的新兴产品范式，其架构设计和社区反馈趋势可能预示下一代知识管理工具的发展方向。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

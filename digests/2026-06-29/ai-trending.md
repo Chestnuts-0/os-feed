@@ -64,4 +64,4 @@
 *   **📊 垂直领域 Agent 框架**：`Vibe-Trading` 和 `ai-berkshire` 证明了将 AI Agent 与特定行业知识（金融、投资）深度结合的可行性，这种“Domain-Specific Agent”模式将在医疗、法律、科研等领域得到复制。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

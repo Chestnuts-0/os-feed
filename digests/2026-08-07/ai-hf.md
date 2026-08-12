@@ -133,4 +133,4 @@ MiniMax-H3 Turbo LoRA 的 ComfyUI 集成版本，剪枝优化，便于可视化�
 本周生态呈现三个显著趋势：其一，**国产大模型矩阵化竞争加剧**——DeepSeek-V4、Kimi-K3、GLM-5.2 均进入热门榜，MoE 架构成为主流选择；其二，**MiniMax-H3 视频生成引发全链路生态
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

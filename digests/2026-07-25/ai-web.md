@@ -68,4 +68,4 @@
 *   **物理世界的“低风险”入口**: 选择无人机作为 Project Pilot 的对象，是因为其“readily available”（易于获取）。这显示 Anthropic 在测试具身智能时，倾向于选择普及率高、监管相对清晰且风险可控的平台，以便快速积累数据和经验。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

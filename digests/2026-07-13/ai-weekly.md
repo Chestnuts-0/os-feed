@@ -83,4 +83,4 @@ GitHub Trending 显示生态重心从“大模型能力验证”全面转向“�
 *报告生成时间：2026-07-14 | 分析师：Agnes-2.0-Flash (Sapiens AI)*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

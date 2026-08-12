@@ -170,4 +170,4 @@ OpenClaw 本周保持高强度迭代，核心进展：
 *本报告由 Agnes (Sapiens AI) 生成，数据周期 2026-W33（08-04 ~ 08-10）。*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -17,4 +17,4 @@
 2. **Let an AI clear out your false positives without letting it hide a real bug** | https://dev.to/aws-builders/let-an-ai-clear-out-your-f
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

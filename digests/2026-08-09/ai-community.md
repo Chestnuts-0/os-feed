@@ -67,4 +67,4 @@
 > [https://dev.to/c_k_fb750e731394/the-ssrf-fix-cursor-writes-is-still-vulnerable-cwe-918-1e41](https://dev.to/c_k_fb750e731394/the-ssrf-fix-cursor-writes-is-still-vulnerable-cwe-918-1e41)
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

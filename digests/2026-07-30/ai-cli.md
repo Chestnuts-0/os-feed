@@ -739,4 +739,4 @@ Qwen Code v0.21.1-nightly.20260730 发布，核心修复了 Anthropic API 兼容
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

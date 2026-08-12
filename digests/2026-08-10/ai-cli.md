@@ -820,4 +820,4 @@ v0.9.6 发布，本次为"减法运行时"版本，重新构建了上下文压�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

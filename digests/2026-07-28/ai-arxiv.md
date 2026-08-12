@@ -70,4 +70,4 @@
 2.  **《MS-GPT: Rethinking MS/MS De Novo Structure Elucidation...》** (cs.CL, cs.LG): 该文巧妙地将传统的化学逆向工程转化为 LLM 的概率推断任务，不仅展现了大模型在高端科研领域的迁移能力，也为无需数据库的知识型计算提供了极具启发性的范式。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

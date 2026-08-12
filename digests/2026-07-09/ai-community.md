@@ -72,4 +72,4 @@
    **理由：** 提供了极具操作性的优化方案。通过具体案例展示如何利用新标准（MCP）解决常见的 Token 浪费问题，是提升 AI 应用性价比的实用指南。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -97,4 +97,4 @@
 3.  **internscience/Agents-A1**: 推荐理由：作为专为 Agent 设计的 MoE 模型，它在工具使用和逻辑规划上优于通用 LLM，是搭建复杂自动化工作流的理想基座。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

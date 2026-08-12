@@ -102,4 +102,4 @@
 *   **[安全与伦理：System Prompts 泄露](https://github.com/asgeirtjg/system_prompts_leaks)**：该仓库的高热度揭示了行业对模型内部逻辑和安全边界的焦虑。开发者应借此机会审视自身 Agent 系统的 Prompt 注入防护，并关注各大厂商在系统提示词保护方面的最新动态。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

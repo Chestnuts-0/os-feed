@@ -96,4 +96,4 @@ Dev.to 与 Lobste.rs 的内容显示出明显的**务实主义**倾向。开发�
     *   **理由**：这篇文章虽然简短但极具深度，它通过数学视角重新审视了 AI 的本质，有助于开发者从底层理解模型的工作机制，而非仅仅停留在 API 调用层面。
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

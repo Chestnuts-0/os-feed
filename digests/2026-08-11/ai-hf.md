@@ -89,4 +89,4 @@ MiniMax AI 再次引领多模态风潮，其视频生成模型 **MiniMax-H3** �
     *   **理由：** 文本生成领域的绝对主力。其 "Flash" 版本在保持性能的同时大幅降低了延迟，是研究高性能推理或构建本地大语言应用的首选模型。
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

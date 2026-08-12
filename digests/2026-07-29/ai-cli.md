@@ -862,4 +862,4 @@ Copilot CLI v1.0.76-1 发布了语音模式、定时刷新等新特性，但伴�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -74,4 +74,4 @@
    这是一篇思想实验式的佳作，它挑战了我们对语言模型本质的认知，通过经典的压缩算法视角重新解读 AI 的原理，有助于拓宽技术视野，理解通用智能与信息压缩之间的内在联系。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

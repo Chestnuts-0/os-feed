@@ -95,4 +95,4 @@
 3. **prism-ml/Ternary-Bonsai-27B-gguf** — 2-bit 三分量量化技术在保持 27B 参数规模的同时实现极致压缩，是探索超低精度量化与高效推理的前沿参考。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

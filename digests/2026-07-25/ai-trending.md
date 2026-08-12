@@ -81,4 +81,4 @@
     *   **理由：** 垂直领域大模型的代表作。针对金融市场的专门建模展示了 LLM 在专业领域深度应用的潜力，为量化交易和金融分析提供了新的开源技术路径。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

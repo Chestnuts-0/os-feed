@@ -79,4 +79,4 @@
 3.  **yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF**：对于需要在资源受限环境下运行高质量代码助手的开发者，这个模型提供了极佳的平衡点，其高下载量验证了社区对本地代码智能体的迫切需求。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

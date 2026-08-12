@@ -50,4 +50,4 @@ Anthropic官网今日未推送任何新闻、研究论文、工程博客或学�
 - **数据受限提示**：因正文缺失，无法确认该评估表是否包含开源基准、行业垂直场景（如医疗、金融、代码生成）的权重倾斜或第三方审计合作名单。建议设置定时监控，待全文开放后立即进行深度语义解析与数据交叉验证。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

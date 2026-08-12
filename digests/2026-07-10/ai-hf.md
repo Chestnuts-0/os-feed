@@ -97,4 +97,4 @@
 3.  **yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF**: 推荐理由：Gemini 4 的编码专项微调版，针对开发者工作流优化，适合需要在本地进行代码辅助和调试的场景，且 GGUF 格式便于集成。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -125,4 +125,4 @@ AWS 的开源 Agent 编排器直接回应了多 Agent 协作的工程难题，12
 LocalAI 团队的技术选型理由，触及 AI 部署自主可控的核心议题，对关注离线部署、成本优化和模型定制的团队值得深入理解。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

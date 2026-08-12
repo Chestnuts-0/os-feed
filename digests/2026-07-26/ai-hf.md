@@ -95,4 +95,4 @@
     *   **理由：** 代表了 VLA（Vision-Language-Action）模型的最新进展。对于从事机器人研究或具身智能开发的工程师来说，这是一个极佳的基线模型，展示了如何将多模态大模型的能力转化为具体的物理控制指令。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

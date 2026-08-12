@@ -55,4 +55,4 @@ Anthropic 于今日（6月22日）发布了题为《Agentic coding and persisten
 *   **发布时间点**: 选择在 6 月 22 日发布此研究，正值半年度总结前夕，可能意在为下半年的企业销售周期提供强有力的数据支持，强调 Claude Code 在企业环境中的成熟度和投资回报率。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -143,4 +143,4 @@
    学术层面的实质性反驳，代表数学界对 AI 数学能力的检验标准，对研究者评估 AI 数学推理边界具有参考价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -126,4 +126,4 @@
     *   **理由**：长上下文是 LLM 的核心痛点之一。该论文提出的训练方法直击长度泛化难题，对于需要处理海量文档或长对话的应用场景至关重要，是理解如何突破上下文窗口限制的重要参考。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -87,4 +87,4 @@ Anthropic 于 2026 年 7 月 1 日发布重磅更新，正式解除因美国出�
 4.  **出口管制的即时性与验证难题：** 文中提到“由于命令立即生效且我们当时没有可靠的方法来实时验证国籍”，这揭示了当前 AI 行业面临的实际合规挑战。Anthropic 选择“一刀切”暂停全球访问以规避法律风险，随后又迅速恢复，反映了企业在法律合规与用户体验之间的艰难平衡。这也预示着未来更多 AI 公司可能面临类似的合规压力测试。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

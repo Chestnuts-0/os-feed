@@ -118,4 +118,4 @@
     *   **理由：** 在技术乐观主义泛滥的背景下，这篇批判性文章提供了必要的冷思考。它指出了 AI 技术被误用、滥用可能导致的社会治理失效问题。对于从事 AI 战略、政策研究或高层技术管理的读者而言，这篇文章能帮助识别当前行业叙事中的盲点和风险。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

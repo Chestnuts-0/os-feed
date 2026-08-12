@@ -71,4 +71,4 @@
     *   **理由：** 虽然是商业新闻，但其高讨论量（199 评论）反映了 AI 基础设施（如芯片、电力）已成为地缘政治和经济博弈的核心战场，值得深入了解行业背后的资源配置逻辑。
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

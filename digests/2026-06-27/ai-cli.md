@@ -1045,4 +1045,4 @@ Qwen Code 在 2026-06-27 发布了 `v0.19.2` 及后续 Nightly 构建，重点�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

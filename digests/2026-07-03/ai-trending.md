@@ -101,4 +101,4 @@
 *   **[browser-use/browser-use](https://github.com/browser-use/browser-use)**：在 API 受限或需要模拟人类交互的场景下，Browser-use 是让 Agent 能够操控 Web UI 的关键库，对于构建自动化办公或数据抓取 Agent 极具价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

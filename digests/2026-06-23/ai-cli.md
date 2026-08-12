@@ -1215,4 +1215,4 @@ v0.8.64 版本正式确立了 **CodeWhale** 为官方 canonical 名称，旧版 
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

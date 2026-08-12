@@ -102,4 +102,4 @@
 *   **[hugohe3/ppt-master](https://github.com/hugohe3/ppt-master)**：展示了 AI 生成内容的“可编辑性”趋势。未来的 AI 应用不仅要生成内容，还要生成可被人类进一步加工的结构化资产（如可编辑 PPT、代码、设计稿），这是 AI 融入专业工作流的关键一步。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -91,4 +91,4 @@
     *   **理由：** 政策解读对于全球 AI 从业者至关重要，这标志着高端模型获取壁垒的降低，可能重塑国际 AI 竞争格局，需密切关注后续的市场反应和合规细节。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

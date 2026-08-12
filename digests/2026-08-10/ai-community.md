@@ -91,4 +91,4 @@
 3. **Why Do Cognitive Scientists Hate LLMs?** — 随着模型能力不断逼近人类水平，认知科学对统计拟合 vs. 真正理解的区分变得更加紧迫。这篇 2023 年的讲座为当前关于 AI 能力的讨论提供了理论基础。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

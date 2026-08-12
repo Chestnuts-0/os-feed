@@ -116,4 +116,4 @@
     *   **理由：** 在云服务和隐私担忧之间寻求平衡的代表作。深入研究其架构和技术选型，可以为那些需要私有化部署大语言模型应用的团队提供切实可行的参考路径。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

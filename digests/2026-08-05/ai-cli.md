@@ -1145,4 +1145,4 @@ OpenCode 发布 **v1.18.13**，修复 TUI PR review 上下文显示及 Desktop R
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

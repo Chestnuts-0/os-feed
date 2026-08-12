@@ -113,4 +113,4 @@
 - **[xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire)**：提供了多 Agent 对抗分析在金融领域的实战案例，展示了如何通过结构化提示词和方法论让 Agent 模拟人类专家的投资逻辑。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

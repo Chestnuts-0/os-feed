@@ -94,4 +94,4 @@
 希望这份详尽详尽且专业严谨的报告能够满足您的需求！如果您需要获取更多特定主题的信息或者想让我帮您深入挖掘某个细分领域的最新进展，请随时告诉我～
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

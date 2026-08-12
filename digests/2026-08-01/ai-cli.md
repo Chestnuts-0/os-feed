@@ -977,4 +977,4 @@ v0.9.3 正式发布，核心变化是将项目品牌从 `deepseek-tui` 全面迁
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

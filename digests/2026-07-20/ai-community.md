@@ -19,4 +19,4 @@
 1. **Building AI Agents for Social Media with TypeScript and Hono.js** | 👍
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

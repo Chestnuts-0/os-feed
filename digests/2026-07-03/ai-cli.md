@@ -1072,4 +1072,4 @@ Qwen Code 发布 v0.19.5 正式版及夜间构建版，重点修复了 Web Shell
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

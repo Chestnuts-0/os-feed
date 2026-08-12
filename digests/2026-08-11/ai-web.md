@@ -83,4 +83,4 @@
 *报告生成时间：2026-08-11 | 数据来源：Anthropic 官方工程/研究/新闻页、OpenAI 官网 index 页（增量抓取）*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

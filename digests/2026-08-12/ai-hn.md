@@ -89,4 +89,4 @@
     *   **理由：** 这是一篇关于**AI 安全与逆向工程**的学术论文。虽然目前关注度不如新闻类帖子，但它从技术底层探讨了如何窃取模型的思维链。对于关注 AI 安全、对大模型黑盒机制感兴趣的研究者来说，这是必读内容。
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

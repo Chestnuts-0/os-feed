@@ -116,4 +116,4 @@
 *   **🛡️ AI 安全与渗透测试**：留意 **usestrix/strix**。AI 在网络安全领域的应用正在从辅助分析转向主动攻击和防御，此类工具的出现预示着 AI 驱动的自动化安全测试将成为新趋势。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

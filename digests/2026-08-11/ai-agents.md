@@ -951,4 +951,4 @@ Moltis 项目在过去 24 小时内保持了中等活跃度，主要围绕 Apple
 </details>
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

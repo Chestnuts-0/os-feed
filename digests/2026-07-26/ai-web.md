@@ -52,4 +52,4 @@ Anthropic 今日正式发布了 **Claude Opus 5**，标志着其旗舰模型在�
 *   **与 Fable 5 的对比**: 文中多次提及 Claude Fable 5，称 Opus 5 以一半价格接近其智能水平。Fable 5 可能是 Anthropic 内部尚未完全公开或定位为更昂贵/更慢的超前沿模型，或者是某种特定用途的变体。这种内部模型的层级划分显示了 Anthropic 正在构建更加精细化的模型产品线。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

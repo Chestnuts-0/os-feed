@@ -93,4 +93,4 @@
 3. **[upstage/Solar-Open2-250B](https://huggingface.co/upstage/Solar-Open2-250B)** — 250B 参数级开源模型代表当前开源规模的天花板，搭配 Nota-AI 的 NVFP4 量化版本可探索高精度低资源部署路径，值得关注其推理效率与开源生态配套进展。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

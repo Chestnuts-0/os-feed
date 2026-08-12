@@ -105,4 +105,4 @@
 *   **[TencentCloud/TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory)**：长期记忆是 Agent 智能的核心。该项目提供的纯本地、多阶段记忆管道，为构建具有连续性的个人 AI 助手提供了极佳的技术范本。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

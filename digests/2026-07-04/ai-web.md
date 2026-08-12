@@ -93,4 +93,4 @@ Anthropic 于今日集中发布了三项关键内容，标志着其在大模型�
     *   在 Anthropic 密集发布关于“思维”和“安全”的深度内容时，OpenAI 的缺席本身就是一个信号。这可能意味着 OpenAI 的下一个重大公告侧重于其他维度（如多模态原生、硬件整合或全新架构），或者其内部正在经历重大的战略调整期。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -82,4 +82,4 @@
    - **理由：** 引入了软件工程中的成熟概念来解决 AI 评估中的新问题，代表了社区对“如何科学评估 LLM”这一难题的深层思考和创新尝试。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

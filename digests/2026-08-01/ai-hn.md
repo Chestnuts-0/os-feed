@@ -157,4 +157,4 @@
 *数据来源：Hacker News API | 报告生成时间：2026-08-01*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

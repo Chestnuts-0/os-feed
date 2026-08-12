@@ -136,4 +136,4 @@
     *   **理由**: 该论文跳出了纯算法优化的框架，从系统工程角度提出用传统网络安全策略管理 AI 代理。这种跨学科的视角为解决“人类监督瓶颈”提供了切实可行的规模化方案，值得 AI 安全研究者深入阅读。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

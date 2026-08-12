@@ -92,4 +92,4 @@
 这是一篇跨学科杰作，将神经网络架构设计与新型光学器件紧密结合。其创新点在于首次引入波长复用技术与反演设计交叉开关模块，有望在未来取代部分 GPU 承担大规模 transformer 推理任务，具有极高的产业转化潜力。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -61,4 +61,4 @@
 3. **Scientific computing in the age of agentic AI**：探讨 AI 代理在科研领域的应用潜力，链接: [openai.com/index/scientific-computing-agentic-ai/](https://openai.com/index/scientific-computing-agentic-ai/)，对科学工作者具参考价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

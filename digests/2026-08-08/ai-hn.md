@@ -104,4 +104,4 @@
     *   *理由*：随着 Claude Code 默认模式转向自动化，这篇深度技术分析能帮助开发者理解“自动化边界”到底在哪里，以及如何规避潜在的意外操作风险，具有极高的实用指导意义。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

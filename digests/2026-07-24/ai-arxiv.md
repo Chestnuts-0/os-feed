@@ -114,4 +114,4 @@
     *   **理由**：将生成式 AI 从文本/图像扩展到具备物理规律的 4D 动态世界，是通往通用机器人和复杂仿真模拟的关键一步。其打破传统计算机图形学人工构建瓶颈的思路，展示了生成式模拟在科研和工业仿真中的巨大潜力。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -136,4 +136,4 @@
     *   **理由**: 这是一篇重要的理论文章，纠正了对扩散模型采样稳定性的常见误解。对于从事生成式 AI 基础算法研究的学者，本文关于前向误差与反向采样轨迹关系的分析极具启发意义。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

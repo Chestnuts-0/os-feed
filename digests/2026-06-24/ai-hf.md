@@ -92,4 +92,4 @@
     *   **理由**：在处理复杂文档、长图或模糊图像时，传统 OCR 模型往往受限。Unlimited-OCR 旨在突破分辨率限制，对于文档数字化、法律/医疗档案处理等实际业务场景具有极高的实用价值和落地潜力。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

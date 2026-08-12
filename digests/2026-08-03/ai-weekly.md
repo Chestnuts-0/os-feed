@@ -142,4 +142,4 @@
 *周报生成时间：2026-08-03 | 数据来源：GitHub Trending、各项目 Issue/PR、Hacker News、官方博客*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

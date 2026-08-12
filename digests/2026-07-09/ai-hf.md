@@ -93,4 +93,4 @@
 3.  **[unsloth/Qwen3.6-27B-MTP-GGUF](https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF)**：结合了 MTP（多令牌预测）加速技术和 Unsloth 的优化，是本地部署 27B 级别高性能模型的最佳实践参考，值得研究其推理加速效果。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

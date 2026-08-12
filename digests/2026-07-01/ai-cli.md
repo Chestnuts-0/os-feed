@@ -1037,4 +1037,4 @@ Pi v0.80.3 正式发布，核心亮点是引入了对 **Anthropic Claude Sonnet 
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

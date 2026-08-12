@@ -1445,4 +1445,4 @@ ZeroClaw 在过去24小时内保持高活跃度：共处理50条Issue和50条PR�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

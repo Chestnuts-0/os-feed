@@ -57,4 +57,4 @@
 3. **[Why we write our own C and C++ inference engines](https://lobste.rs/s/t7zdif/why_we_write_our_own_c_c_inference_engines)** — LocalAI 团队的推理引擎自研动机与技术取舍，对关注模型部署与性能优化的工程师有直接启发。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

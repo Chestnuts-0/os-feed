@@ -78,4 +78,4 @@ Anthropic 于今日（实际发布/更新于 6 月 22 日）密集发布两项�
     Anthropic 选择在周末前夕（6 月 22 日周一前）发布重磅研究和新闻，旨在抢占下周初的行业讨论焦点。OpenAI 在 6 月 23 日（周日）仅更新元数据，显示出不同的传播节奏，可能意在避免噪音，或在酝酿更大的突发新闻。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -102,4 +102,4 @@
     *   **理由:** 在处理非结构化文档信息提取时，传统 OCR 往往受限于分辨率或版面复杂度。该模型支持的“无限分辨率”特性使其在处理高清扫描件、长图表或复杂排版文档时具有独特优势，是文档自动化流程中的重要一环。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

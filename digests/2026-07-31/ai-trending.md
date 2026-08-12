@@ -88,4 +88,4 @@
 > *以上所有项目均可通过上述 GitHub 链接获取最新代码与文档，建议结合具体业务场景进行快速原型验证与二次开发。*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

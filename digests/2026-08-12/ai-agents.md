@@ -919,4 +919,4 @@ Moltis 项目在 2026-08-12 这一天保持了较为平稳的开发节奏。过�
 </details>
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

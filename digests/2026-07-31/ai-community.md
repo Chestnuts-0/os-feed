@@ -63,4 +63,4 @@ Dev.to 与 Lobste.rs 呈现出明显的工程实践导向。双方均高度关�
 2. **《A Year of AI Pair Programming: What Actually Changed》** —— 针对 Copilot/Cursor 等工具的长期使用心得，没有夸大其词，而是冷静分析了代码所有权转移和生产力的真实边际增长，极具参考价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

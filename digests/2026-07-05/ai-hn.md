@@ -116,4 +116,4 @@
     *   链接: https://ekinertac.com/blog/i-dont-know-rust-my-ai-is-rewriting-php-in-it/
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

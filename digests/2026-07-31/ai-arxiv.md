@@ -55,4 +55,4 @@
 *   **《One Human, $N$ Agents: Audit-Budget Allocation...》**: 这篇关于智能体审计预算分配的文章非常有实践洞察力。它模拟了现实世界中管理者面对大量低成本、高并发但可能撒谎的 AI 员工时的困境，利用高斯 copula 建模的相关性误差问题极具创新性，适合从事 AI 系统运维和监管的人员研读。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

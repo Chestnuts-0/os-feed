@@ -106,4 +106,4 @@
     *   **理由：** 提供了用户视角下对头部 AI 公司公关与产品策略的深度复盘，有助于理解社区信任是如何建立和崩塌的，对任何希望建立长期用户关系的 AI 从业者都是重要警示。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

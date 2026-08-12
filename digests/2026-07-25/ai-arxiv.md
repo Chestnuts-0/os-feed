@@ -106,4 +106,4 @@
     *   **理由：** 随着 LLM 在社会交互中的深入，简单的“不冒犯”已不足以应对复杂的伦理困境。该文提出的结构化抵抗与顺从机制，为构建具备独立道德判断力的下一代对齐模型奠定了理论基础，是 AI 安全领域的重要进展。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

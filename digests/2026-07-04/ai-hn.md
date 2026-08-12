@@ -84,4 +84,4 @@
     *   **理由**: 揭示了快速迭代背后的安全风险，提醒开发者和企业在采用最新模型时，必须将安全性评估置于功能测试之前，特别是对于涉及敏感数据的场景。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

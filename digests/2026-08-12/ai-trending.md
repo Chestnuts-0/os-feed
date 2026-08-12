@@ -87,4 +87,4 @@
 - **AI 自动化向"Agent-as-Software"转型**：`agent-browser`、`agent-skills` 等项目将 AI 能力嵌入标准软件工作流，推动 AI 从"助手"向"操作系统"演进。
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

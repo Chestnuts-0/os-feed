@@ -61,4 +61,4 @@
 *   **[sgl-project/sglang](https://github.com/sgl-project/sglang)**：在多模态 Serving 领域的优势明显，若需搭建高性能 LLM 服务，SGLang 是比传统接口更具扩展性的选择。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

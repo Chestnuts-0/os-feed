@@ -22,4 +22,4 @@
   首次从隐藏状态表征层面定位裁判偏差的来源，突破传统提示词干预局限，为模型评估公平性提供可解释的底层
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

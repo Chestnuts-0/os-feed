@@ -161,4 +161,4 @@
 *本报告基于 agents-radar 自动生成数据与公开社区动态整理，部分项目因摘要生成失败导致定量指标暂缺，后续将持续跟踪补充。*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

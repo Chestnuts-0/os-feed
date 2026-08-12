@@ -1135,4 +1135,4 @@ Qwen Code 发布 `v0.19.2` 夜间构建版，核心修复了 `web_fetch` 的 JSO
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

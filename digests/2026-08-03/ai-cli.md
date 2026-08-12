@@ -1111,4 +1111,4 @@ Qwen Code 发布 `v0.21.3-nightly.20260803` 补丁版本，修复了 TUI 键盘�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

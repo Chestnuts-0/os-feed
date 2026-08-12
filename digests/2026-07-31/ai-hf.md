@@ -49,4 +49,4 @@
 3.  **baidu/Unlimited-OCR**: 作为榜单中下载量最高的单功能模型，其在高精度光学字符识别方面的表现值得参考，特别是在中文文档处理领域的工程落地案例。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

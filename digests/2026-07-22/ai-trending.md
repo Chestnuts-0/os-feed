@@ -116,4 +116,4 @@
 - **`tirth8205/code-review-graph`**（今日 +1,925 ⭐）—— 为 MCP 和 CLI 构建持久化代码库图谱，让 AI 代码审查只读取相关上下文，大仓库场景下效果显著。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

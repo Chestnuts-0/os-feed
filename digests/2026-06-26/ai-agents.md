@@ -950,4 +950,4 @@ ZeroClaw 在 v0.8.2 发布后保持高活跃度，过去24小时新增 Issue 27 
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

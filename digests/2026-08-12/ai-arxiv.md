@@ -116,4 +116,4 @@
     *   **理由：** 多模态大模型（MLLM）的可解释性一直是黑盒。本文提供了一种通过特征差异（Diffing）来反向定位模型内部特征方向的方法，这对于理解模型为何产生特定视觉理解、以及进行可控的微调具有极高的研究价值。
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

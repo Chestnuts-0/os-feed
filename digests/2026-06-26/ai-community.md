@@ -78,4 +78,4 @@
     *   理由：对于希望突破云端依赖、探索端侧 AI 计算的工程师来说，深入理解底层硬件编译流程是优化性能和功耗的必经之路。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

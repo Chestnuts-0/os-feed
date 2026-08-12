@@ -63,4 +63,4 @@ Dev.to 与 Lobste.rs 共同聚焦于 **AI 的工程化成熟度与副作用**。
    **推荐理由**：虽然偏向宏观视角，但它提供了理解 AI 基础设施背后隐性成本的关键视角。在追求性能的同时，考虑能源效率和数据冗余问题，是未来架构师必须具备的全局视野。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

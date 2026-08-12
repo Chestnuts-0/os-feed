@@ -76,4 +76,4 @@
    *理由*：深入剖析高级推理功能的潜在安全漏洞，对构建高安全性 AI 应用至关重要。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

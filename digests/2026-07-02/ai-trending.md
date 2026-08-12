@@ -83,4 +83,4 @@
 *   **📊 [HKUDS/Vibe-Trading](https://github.com/HKUDS/Vibe-Trading)**：代表了“垂直领域 Agent”的潜力。金融交易是高风险、高数据密度的领域，该项目的成功表明，经过良好微调的 Agent 可以在特定专业领域超越通用助手，值得投资者和技术人员关注。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

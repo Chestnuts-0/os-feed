@@ -1017,4 +1017,4 @@ v0.9.4 版本发布前的最后清理工作加速进行，CI 阻塞项已解决�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

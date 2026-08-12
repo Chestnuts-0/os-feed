@@ -84,4 +84,4 @@
    - 理由：该文章不仅提供了具体的监控工具链实践，更揭示了 AI 系统行为的不确定性与黑盒特性，对于构建可信、可控的智能体系统具有极高的借鉴意义。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -1006,4 +1006,4 @@ Qwen Code 近期社区高度关注 **MCP 安全漏洞修复与多工作区 daemo
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

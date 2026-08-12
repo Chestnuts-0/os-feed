@@ -103,4 +103,4 @@
     *   **理由：** 结合了最新一代 GLM-5.2 的架构优势与 Unsloth 的高效推理技术。对于希望体验最新 MoE 模型性能并控制硬件成本的开发者来说，这是一个兼具前沿性和实用性的标杆模型。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

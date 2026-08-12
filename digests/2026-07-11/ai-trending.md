@@ -119,4 +119,4 @@
 *   **代理治理与安全**：`microsoft/agent-governance-toolkit` 是企业级 AI 落地的必修课。随着代理权限扩大，零信任身份和执行沙箱将成为标配，需提前评估合规风险。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -84,4 +84,4 @@
     *   **理由**: 结合 OpenAI 即将 IPO 的背景，此次多州联合调查可能对其估值和法律结构产生深远影响。投资者和行业观察者需密切关注此事件后续进展，以预判 AI 行业的监管红线。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

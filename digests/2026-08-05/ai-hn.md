@@ -154,4 +154,4 @@
    — 深度分析闭源大厂与开源模型生态的竞争态势，揭示 Anthropic 在开放路线上的战略盲区，为理解 AI 行业长期格局提供关键视角。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

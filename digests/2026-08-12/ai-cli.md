@@ -1152,4 +1152,4 @@ OpenCode V2 Beta 正式进入活跃开发阶段，**TUI（终端界面）体验*
 </details>
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

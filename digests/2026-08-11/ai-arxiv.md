@@ -142,4 +142,4 @@
 *   **理由：** 智能体应用落地最大的障碍在于不可控性。该论文提出的 SHE 框架展示了如何让智能体的“安全机制”本身具备学习能力，这是实现可靠智能体系统的关键技术路径。
 
 ---
-*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

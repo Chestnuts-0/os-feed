@@ -198,4 +198,4 @@
 **baidu/Unlimited-OCR**：百度开源的高性能 OCR 模型，近 300 万下载证明其广泛实用性，适合文档数字化与多语言文本识别任务。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

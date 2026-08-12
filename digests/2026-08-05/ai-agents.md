@@ -1589,4 +1589,4 @@ ZeroClaw 今日保持高活跃开发节奏，共产生 47 条 Issue 与 50 条 P
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

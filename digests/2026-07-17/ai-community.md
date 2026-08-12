@@ -95,4 +95,4 @@
    以真实项目案例剖析 AI 辅助编程的隐性技术债，帮助团队建立科学的代码审查与长期维护策略，避免“短期提效、长期崩盘”。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

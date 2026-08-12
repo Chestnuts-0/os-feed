@@ -80,4 +80,4 @@
 3.  **[Context.dev Launch HN](https://news.ycombinator.com/item?id=48847562)**：对于从事 Agent 开发的工程师，这是一个解决数据摄取难题的实用工具，值得尝试其 API 并参与早期反馈。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -831,4 +831,4 @@ NanoBot 项目在报告日保持极高的活跃度，48 条 PR 更新表明社�
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

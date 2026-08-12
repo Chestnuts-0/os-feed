@@ -40,4 +40,4 @@
 3. **AI辅助代码审计实践案例分析** - 提供了宝贵的经验和数据支持，让同行能够借鉴并优化自己的工作流程。(链接: https://www.isgroup.biz/en/cyber-security/llm-based-code-security-review-costs-findings-methodology.html)
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

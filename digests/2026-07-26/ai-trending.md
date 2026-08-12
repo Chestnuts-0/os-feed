@@ -74,4 +74,4 @@
 *   **🛡️ 安全与合规集成 (`usestrix/strix`, `alibaba/open-code-review`)**：AI 安全性（渗透测试）和代码质量（智能审查）成为企业采纳 AI 的关键考量，相关工具的热度反映了 B 端市场的强烈需求。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

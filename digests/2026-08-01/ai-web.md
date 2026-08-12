@@ -66,4 +66,4 @@
 **报告说明**：本报告基于 2026-08-01 增量数据生成，当日有效信息量有限，建议结合历史数据交叉分析。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -77,4 +77,4 @@
    结合了最新学术研究与一线工程实践，揭示了构建可靠 AI Agent 系统的两个关键维度：人类专家的作用与自动化控制平面。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

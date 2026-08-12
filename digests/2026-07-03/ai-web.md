@@ -75,4 +75,4 @@ Anthropic 今日发布重磅模型 **Claude Sonnet 5**，标志着“代理式 A
 *报告生成完毕。数据来源：Anthropic 官网公告。*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

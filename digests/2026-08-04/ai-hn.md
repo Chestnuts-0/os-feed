@@ -168,4 +168,4 @@
 *报告生成时间：2026-08-04 | 数据来源：Hacker News 过去 24 小时热门帖子*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

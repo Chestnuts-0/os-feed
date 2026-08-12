@@ -85,4 +85,4 @@ Kimi-K3 以超万点赞领跑今日榜单，月之暗面在多模态对话领域
 3. **[Unlimited-OCR](https://huggingface.co/baidu/Unlimited-OCR)** — 百度开源 OCR 标杆模型，270 万+ 下载量印证了其在实际场景中的广泛采用，适合有文档解析、多语言识别需求的工程落地。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

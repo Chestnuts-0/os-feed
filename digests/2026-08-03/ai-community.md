@@ -104,4 +104,4 @@ Agent 生产化设计的方法论文章，提出"验证循环"替代"模型正�
 轻量模型在特定任务上的实战胜利，为隐私敏感场景的 AI 部署提供可复现的工程参考。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

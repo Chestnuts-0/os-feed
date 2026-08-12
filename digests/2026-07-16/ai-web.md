@@ -75,4 +75,4 @@ Anthropic 今日内容更新集中呈现“从对话模型向工作流智能体�
 *本报告基于 2026-07-16 官方增量抓取内容生成，仅供技术决策与战略研判参考。*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

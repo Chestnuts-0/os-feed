@@ -119,4 +119,4 @@
     *理由：* 人形机器人的灵巧操作是具身智能的皇冠明珠。该工作突破了传统的离散动作模式，实现了连续的运动与操作协调，代表了机器人控制领域的前沿方向，适合对 RL 和机器人学感兴趣的读者深入研读。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -69,4 +69,4 @@
    - **理由：** 深刻剖析当前 Transformer 架构演进中的内在局限性，对于处于算法调优或新架构探索阶段的读者，提供了超越参数量迷雾的底层洞察。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

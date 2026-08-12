@@ -342,4 +342,4 @@ OpenCode v1.18.3 正式发布，聚焦子代理选择器交互优化与桌面端
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

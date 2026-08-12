@@ -58,4 +58,4 @@
 - **数据局限提示**：本报告所有 OpenAI 条目均基于元数据结构，未包含正文信息。建议在 24-48 小时内二次抓取验证技术细节，当前分析仅反映索引层面的发布意图与节奏特征。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

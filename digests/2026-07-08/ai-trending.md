@@ -84,4 +84,4 @@
 *   **[TencentCloud/CubeSandbox](https://github.com/TencentCloud/CubeSandbox)**：企业级 Agent 部署的关键组件。如果需要大规模运行不受信任的 AI 代码，该沙箱提供了高性能的安全隔离方案。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

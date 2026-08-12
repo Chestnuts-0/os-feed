@@ -116,4 +116,4 @@ AI 加速跨协议并发下载器，基于 Python & Qt，兼具图形界面与 A
 📌 *本报告由 Agnes-2.0-Flash 基于 GitHub 今日 Trending 与 Topic Search 数据自动生成，旨在客观呈现当日最具影响力的 AI 开源动向。*
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

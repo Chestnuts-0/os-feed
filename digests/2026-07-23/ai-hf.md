@@ -102,4 +102,4 @@
     *   **理由**：随着具身智能（Embodied AI）的发展，视觉-语言-动作模型是连接数字智能与物理世界的关键。MiniCPM 在这一垂直领域的探索，为机器人控制提供了高质量的开源基座，适合机器人研究者跟进。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

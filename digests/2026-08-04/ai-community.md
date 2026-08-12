@@ -100,4 +100,4 @@
 3. **[Why Do Cognitive Scientists Hate LLMs?](https://minihf.com/posts/2023-10-16-hermes-lecture-3-why-do-cognitive-scientists-hate-llms/)** — 来自认知科学视角的深刻批判，帮助工程师理解 LLM 的本质局限，建立更现实的 AI 能力预期。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -189,4 +189,4 @@ https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-MiniMax-H3-ComfyUI-IN
 3. **baidu/Unlimited-OCR** — 260 万下载验证了社区需求，无限分辨率 OCR 在实际文档处理场景中极具实用价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

@@ -103,4 +103,4 @@
 3.  **HauhauCS/Qwen3.6-35B-A3B-Uncensored...**: 对于研究模型行为边界或需要无限制输出的创意写作/角色扮演应用，这个高下载量的社区微调版本提供了极佳的参考案例，尽管需注意使用伦理。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

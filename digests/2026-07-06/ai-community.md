@@ -75,4 +75,4 @@
     *   **理由**：详细的失败实验记录比成功故事更具参考价值，帮助开发者理解当前 AI 基础架构的物理极限与挑战。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

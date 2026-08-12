@@ -70,4 +70,4 @@
 *   **[NVIDIA/OpenShell](https://github.com/NVIDIA/OpenShell)**：**值得关注的理由**：NVIDIA 入局 Agent 运行时安全，预示着企业级 AI Agent 的安全标准将逐步确立。对于需要在生产环境大规模部署 Agent 的企业而言，这是一个重要的风向标。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

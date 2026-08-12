@@ -879,4 +879,4 @@ LobsterAI 在过去24小时内保持了中等偏上的开发活跃度，共有 8
 </details>
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

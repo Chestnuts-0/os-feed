@@ -97,4 +97,4 @@
     *   **理由**：英伟达推出的这一模型解决了视觉应用中“指代明确”的痛点，对于需要高精度对象检测的多模态应用（如机器人视觉、AR）具有极高的实用价值。
 
 ---
-*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/os-feed) 自动生成。*
+*本日报由 [agents-radar](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*
