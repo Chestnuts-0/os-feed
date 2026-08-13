@@ -1,0 +1,126 @@
+{
+  "zh": {
+    "ai-cli": [
+      "OpenCode 与 Qwen Code 活跃度爆表，发布新版本",
+      "Claude Code v2.1.229 今日发布，多代理稳定性待优化",
+      "CLI 工具生态迈向“自主智能体”，跨会话记忆成核心痛点",
+      "Kimi Code 社区活跃度垫底，多代理并发成关注焦点",
+      "DeepSeek TUI v0.9.6 发布，修复流式响应输出问题",
+      "Gemini CLI 修复夜间任务上下文丢失问题"
+    ],
+    "ai-agents": [
+      "OpenClaw 社区今日 1000+ Issue/PR，多代理路由机制获重大更新",
+      "OpenClaw 修复 UTF-8 乱码与配置类型校验，界面体验优化",
+      "OpenClaw 子代理完成静默丢失 Bug 引发社区激烈讨论",
+      "OpenClaw 新增 Gateway 渠道生命周期管理，防止请求干扰",
+      "OpenClaw 记忆安全增强提案获 45 评论，防投毒成热点",
+      "OpenClaw 多代理配置迁移问题修复，保障网关启动稳定性"
+    ],
+    "ai-trending": [
+      "Anthropic 发布 56 项研究，量化 AI 劳动力再培训效果",
+      "Agency-Agents 日增 1873 Stars，多智能体编排登顶榜首",
+      "Claude Code Stars 突破 14.1 万，编程助手生态持续成熟",
+      "Orca 日增 1235 Stars，并行智能体舰队受开发者追捧",
+      "RTK 模型日增 205 Stars，Rust 实现 Token 消耗降 60%",
+      "Firecrawl 日增 641 Stars，AI 实时网络数据抓取能力受关注"
+    ],
+    "ai-web": [
+      "Anthropic 转型政策研究，发布就业再培训政策元分析",
+      "OpenAI 发布企业落地实践报告，聚焦 AI 业务流程集成",
+      "Anthropic 试图通过数据研究占据 AI 治理道德高地",
+      "OpenAI 教育市场消除企业采购顾虑，构建商业护城河",
+      "Anthropic 从模型竞赛转向社会影响评估与治理框架",
+      "OpenAI 从消费级应用转向企业级商业化与 ROI 展示"
+    ],
+    "ai-hn": [
+      "有人伪造 ClaudeBot 身份进行大规模漏洞扫描引热议",
+      "OJCP 协议发布，旨在标准化 Agent 交互数据格式",
+      "AI 代码验证是否成为开发瓶颈引发开发者焦虑",
+      "国会致信 Sam Altman，要求 HuggingFace 事件透明化",
+      "新研究揭示从专有 API 窃取推理轨迹的方法",
+      "社区关注 Anthropic 数据中心扩张及监管透明度问题"
+    ],
+    "ai-arxiv": [
+      "ReRound 解决 LLM 量化中间点模糊，精度损失关键突破",
+      "V-FiLLM 构建金融推理基准，填补结构化数据评估空白",
+      "LLM 在低资源语言安全对齐存在“幻觉”现象",
+      "工具使用 Agent 跨语言政策保留率首次被量化",
+      "Surgical WAM 模型解决医疗手术数据稀缺难题",
+      "SCOUT 提出对称共识异常检测，诊断前训练故障"
+    ],
+    "ai-hf": [
+      "DeepSeek-V4-Flash 下载超百万，本地化部署成新宠",
+      "Kimi-K3 点赞破万，集成图像理解功能",
+      "MiniMax-H3 视频生成霸主，点赞 3716 获高热度",
+      "Qwen3.8-2.4T-A95B 发布，聚焦高性价比文本生成",
+      "Nemotron 3.5 Lightning 30B 专为 NVIDIA 硬件优化",
+      "Ling-3.0-flash 专注跨模态交互与理解"
+    ],
+    "ai-community": [
+      "开发者角色从代码实现转向意图编排",
+      "本地构建 RAG 应用教程，零成本规避 API 费用",
+      "Agent 插件生态的运行时授权与安全架构探讨",
+      "企业级 AI 运行时控制策略与安全审计实践",
+      "AI 代码生成工具在系统设计与安全漏洞方面存风险",
+      "构建“记忆审计”机制检测 Agent 系统中的过时事实"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.229 released",
+      "OpenAI Codex moves to Rust",
+      "Gemini CLI hits nightly builds",
+      "GitHub Copilot CLI stable",
+      "Kimi Code CLI quiet",
+      "DeepSeek TUI active"
+    ],
+    "ai-agents": [
+      "OpenClaw ecosystem booming",
+      "500 issues and PRs daily",
+      "Meta-Harnesses drive trends",
+      "Agent infrastructure scaling",
+      "Hermes Agent active",
+      "Multi-agent workflows trending"
+    ],
+    "ai-trending": [
+      "Orca gains 1,235 stars",
+      "BoundaryML Baml trending",
+      "Rust migration dominates",
+      "RTK reduces tokens 60-90%",
+      "Agent memory systems key",
+      "Graph-RAG emerging"
+    ],
+    "ai-hn": [
+      "Mass vulnerability scans spoofing bots",
+      "Reasoning traces stolen from APIs",
+      "OJCP protocol for agent jobs",
+      "Ethics of AI-to-AI marketplaces",
+      "Interviews scrutinized for API access",
+      "State-backed data center partnerships"
+    ],
+    "ai-arxiv": [
+      "ReRound fixes quantization rounding",
+      "TEAMMix for weak-supervised text",
+      "LingT2I benchmark for multilingual images",
+      "Efficiency focus in models",
+      "Post-training quantization advances",
+      "Calibration-free methods emerging"
+    ],
+    "ai-hf": [
+      "MiniMax-H3 leads video generation",
+      "Kimi-K3 most popular model",
+      "DeepSeek-V4 drives quantization",
+      "Qwen3.8 MoE model trending",
+      "LTX-2.5 video generation tool",
+      "Ling-3.0 flash model MIT licensed"
+    ],
+    "ai-community": [
+      "Gemini config deleted by agents",
+      "Developers orchestrate intent",
+      "Cloud Run AI inference deep dive",
+      "Audit agent memory techniques",
+      "Enterprise AI governance focus",
+      "AI companies destroying books"
+    ]
+  }
+}
