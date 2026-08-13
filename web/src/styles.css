@@ -15,9 +15,28 @@
 }
 
 :root {
-  --bg: #0a0b0f;
-  --bg-gradient: radial-gradient(ellipse at top, #131520 0%, #0a0b0f 60%);
+  color-scheme: dark;
+  --bg: #08060e;
+  --bg-gradient: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
   --bg-secondary: rgba(13, 14, 21, 0.55);
+  --glass-gradient: linear-gradient(
+    180deg,
+    rgba(38, 32, 62, 0.86) 0%,
+    rgba(26, 22, 44, 0.88) 55%,
+    rgba(20, 17, 34, 0.9) 100%
+  );
+  --glass-gradient-hover: linear-gradient(
+    180deg,
+    rgba(46, 40, 74, 0.9) 0%,
+    rgba(32, 28, 54, 0.92) 55%,
+    rgba(24, 20, 40, 0.94) 100%
+  );
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --side-group-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.82) 0%, rgba(24, 20, 40, 0.86) 100%);
   --card-bg: rgba(22, 24, 35, 0.8);
   --card-border: rgba(255, 255, 255, 0.06);
   --card-border-hover: rgba(255, 255, 255, 0.14);
@@ -39,29 +58,7 @@
     0 0 24px rgba(99, 102, 241, 0.08);
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--card-border);
   --max-width: 1650px;
-  --header-blur: blur(18px) saturate(1.3);
-  --header-bg: rgba(28, 25, 41, 0.55);
   --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f7f7fa;
-    --bg-gradient: radial-gradient(ellipse at top, #eef0f6 0%, #f7f7fa 60%);
-    --bg-secondary: rgba(240, 241, 247, 0.7);
-    --card-bg: rgba(255, 255, 255, 0.85);
-    --card-border: rgba(0, 0, 0, 0.06);
-    --card-border-hover: rgba(0, 0, 0, 0.14);
-    --text: #1a1a2e;
-    --text-secondary: #555;
-    --text-muted: #999;
-    --border: rgba(0, 0, 0, 0.08);
-    --shadow-hover:
-      0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05), 0 0 0 1px var(--card-border-hover),
-      0 0 24px rgba(99, 102, 241, 0.06);
-    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--card-border);
-    --header-bg: rgba(255, 255, 255, 0.72);
-  }
 }
 
 html {
@@ -71,10 +68,8 @@ html {
 
 body {
   font-family: var(--font-serif);
-  background: var(--bg);
-  background-image:
-    radial-gradient(ellipse at 15% 0%, rgba(139, 108, 199, 0.1), transparent 45%),
-    radial-gradient(ellipse at 85% 100%, rgba(139, 108, 199, 0.06), transparent 50%), var(--bg-gradient);
+  background: #08060e;
+  background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
   background-attachment: fixed;
   color: var(--text);
   line-height: 1.65;
@@ -106,9 +101,8 @@ button {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--header-bg);
-  backdrop-filter: var(--header-blur);
-  -webkit-backdrop-filter: var(--header-blur);
+  background: var(--glass-bg);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.07);
   border-bottom: 1px solid var(--border);
 }
 
@@ -253,10 +247,7 @@ button {
      时下方露出 body 死黑背景的「半截贴图」）；sticky 吸顶后整条固定，与顶栏视觉连续 */
   height: calc(100vh - 60px);
   padding: 20px 10px 32px;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(28, 25, 41, 0.55);
-  backdrop-filter: blur(18px) saturate(1.3);
-  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  background: transparent;
   position: sticky;
   top: 60px;
   z-index: 5;
@@ -264,11 +255,12 @@ button {
 
 /* 分组容器（玻璃圆角卡片，间距由容器 margin 分隔） */
 .side-group-box {
-  background: rgba(28, 25, 41, 0.55);
-  border: 1px solid var(--card-border);
-  border-radius: 14px;
-  padding: 12px 12px 6px;
-  margin-bottom: 14px;
+  background: var(--side-group-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  padding: 14px 12px 8px;
+  margin-bottom: 18px;
 }
 .side-group-box:last-child {
   margin-bottom: 0;
@@ -351,9 +343,8 @@ button {
   margin-bottom: 20px;
   border: 1px solid var(--card-border);
   border-radius: var(--radius-sm);
-  background: rgba(28, 25, 41, 0.4);
-  backdrop-filter: blur(14px) saturate(1.2);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  background: rgba(30, 26, 50, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 .ch-icon {
   display: inline-flex;
@@ -432,32 +423,15 @@ button {
 
 /* --- 卡片 --- */
 .card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: var(--glass-gradient);
+  border: 1px solid var(--glass-border);
   border-radius: 18px;
   padding: 20px;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   cursor: pointer;
-}
-
-/* 视口感知 blur：feed 虚拟列表只在真正可见的行开毛玻璃（视觉零妥协，性能大幅提升） */
-.feed-virtual .card {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-.feed-virtual-row.vf-in-viewport .card {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-/* 非 feed 虚拟列表场景（收藏/大牛/搜索/详情里的卡片，数量少）保持毛玻璃 */
-.feed-list .card,
-.detail-panel .card,
-.card-modal .card {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 .card::before {
@@ -473,8 +447,14 @@ button {
 }
 
 .card:hover {
-  border-color: rgba(99, 102, 241, 0.25);
-  box-shadow: var(--shadow-hover);
+  background: var(--glass-gradient-hover);
+  border-color: rgba(184, 153, 255, 0.35);
+  box-shadow:
+    var(--glass-highlight-top),
+    var(--glass-highlight-bottom),
+    var(--glass-shadow),
+    0 0 0 1px rgba(184, 153, 255, 0.25),
+    0 0 28px rgba(99, 102, 241, 0.18);
   transform: translateY(-4px);
 }
 .card:hover::before {
@@ -675,8 +655,6 @@ button {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   z-index: 200;
   display: flex;
   align-items: flex-start;
@@ -696,15 +674,16 @@ button {
 }
 
 .detail-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-gradient);
   border-radius: 20px;
   border: 1px solid var(--card-border-hover);
   max-width: 1200px;
   width: 100%;
   padding: 32px;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    var(--glass-highlight-top),
+    var(--glass-highlight-bottom),
+    0 24px 80px rgba(0, 0, 0, 0.5);
   animation: slideUp 0.3s ease;
   position: relative;
 }
@@ -992,9 +971,7 @@ button {
   margin-top: 8px;
   width: 320px;
   max-height: 360px;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-gradient);
   border: 1px solid var(--card-border-hover);
   border-radius: var(--radius);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
@@ -1254,8 +1231,7 @@ button {
   align-items: center;
   gap: 16px;
   padding: 24px;
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
+  background: var(--glass-gradient);
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
   margin-bottom: 24px;
@@ -1308,8 +1284,6 @@ button {
   border-radius: 28px;
   font-size: 0.95rem;
   background: rgba(28, 25, 41, 0.45);
-  backdrop-filter: blur(18px) saturate(1.3);
-  -webkit-backdrop-filter: blur(18px) saturate(1.3);
   color: var(--text);
   outline: none;
   transition: all 0.2s;
@@ -1521,8 +1495,7 @@ button {
   font-size: 0.78rem;
   color: var(--text-muted);
   border-top: 1px solid var(--border);
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg);
 }
 
 /* --- 响应式 --- */
@@ -1613,9 +1586,7 @@ button {
     flex-direction: column;
     padding: 64px 10px 24px;
     overflow-y: auto;
-    background: rgba(22, 20, 35, 0.96);
-    backdrop-filter: blur(18px) saturate(1.3);
-    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    background: rgba(26, 22, 44, 0.72);
     border-right: 1px solid rgba(255, 255, 255, 0.08);
     transform: translateX(-100%);
     transition: transform 0.25s ease;
@@ -1638,9 +1609,7 @@ button {
     height: 54px;
     display: flex;
     align-items: stretch;
-    background: rgba(28, 25, 41, 0.85);
-    backdrop-filter: blur(18px) saturate(1.3);
-    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    background: rgba(26, 22, 44, 0.72);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     z-index: 20;
     padding-bottom: env(safe-area-inset-bottom);
