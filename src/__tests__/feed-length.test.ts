@@ -102,6 +102,8 @@ const SHORT_REASON = "这是一个很简短的推荐理由";
 /** 超长摘要（>35 字） */
 const LONG_SUMMARY =
   "这是一个远远超过三十五个字限制的超级长摘要文本内容，用来验证超长摘要会被长度校验拦截并触发重评流程确保最终输出符合规范要求";
+/** 不达标的短摘要（<20 字） */
+const SHORT_SUMMARY = "太短了";
 
 /** 构造 LLM 成功响应 */
 function scoreJson(
@@ -285,5 +287,36 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     expect(card!.summaryCn.length).toBeGreaterThanOrEqual(10);
     expect(effLen(card!.summaryCn)).toBeLessThanOrEqual(38);
     expect(card!.summaryCn.startsWith("这是一个测试项目")).toBe(true);
+  });
+
+  it("批量评分成功但 summary 短 + 重评失败 → else 分支兜底：summary 从 detail 第一段截取达标", async () => {
+    // 复现 2026-08-13 线上真实漏网：批量评分成功（sc 有值）但 summary<20 字，
+    // 重评 3 次均不达标 → 走「rescore failed, fallback reason from detail」else 分支，
+    // 该分支曾只兜 reasonCn、漏 summaryCn（修复后 summary 一并从 detail 第一段截取）
+    const detail = [
+      "简单来说这是一个测试项目，专门用来验证摘要兜底。第一段内容到此为止。",
+      "第二段核心技术亮点：包含具体的架构设计与优化手段，比如模块化的组件划分、高效的数据处理流程，以及与其他同类项目相比的独特之处，内容足够详细扎实，让读者能够理解它为什么厉害，这一段文字要写得足够长，超过一百字的等效宽度。",
+      "第三段安装与上手使用说明。",
+    ].join("\n\n");
+    // 批量 + 重评全部返回「短 reason + 短 summary + 长 detail」→ 每次长度校验均失败
+    llmMock.impl = () => scoreJson("new/fallback-shortsum", SHORT_REASON, SHORT_SUMMARY, detail);
+    const trending = makeTrendingData(["new/fallback-shortsum"]);
+
+    const cards = await generateFeed(cfg, trending, []);
+
+    const card = cards.find((c) => c.repo === "new/fallback-shortsum");
+    expect(card).toBeDefined();
+    // reason 走 detail 第二段兜底达标
+    expect(effLen(card!.reasonCn)).toBeGreaterThanOrEqual(100);
+    expect(card!.reasonCn).toContain("核心技术亮点");
+    // 关键断言：summary 不再是不达标的短值，而是从 detail 第一段截取的 20-35 字
+    expect(card!.summaryCn).not.toBe(SHORT_SUMMARY);
+    expect(card!.summaryCn.length).toBeGreaterThanOrEqual(20);
+    expect(card!.summaryCn.length).toBeLessThanOrEqual(35);
+    expect(card!.summaryCn.startsWith("简单来说这是一个测试项目")).toBe(true);
+    // detail 保留
+    expect(card!.detailCn).toBe(detail);
+    // 重评确实被触发（批量 1 次 + 重评 ≥1 次）
+    expect(callCount.n).toBeGreaterThanOrEqual(2);
   });
 });

@@ -913,7 +913,15 @@ export async function generateFeed(
                   detailCn: detail,
                 };
               } else {
-                sc = { ...sc, reasonCn: fallback, detailCn: detail };
+                // sc 有值（本轮批量评分成功）但长度不达标 + 重评失败：reason 用 detail 兜底的同时，
+                // summary 若不达标也一并从 detail 第一段截取（与 reason 用的第二段互补，零重复风险）
+                const summaryOk = sc.summaryCn && sc.summaryCn.length >= 20 && sc.summaryCn.length <= 35;
+                sc = {
+                  ...sc,
+                  reasonCn: fallback,
+                  detailCn: detail,
+                  summaryCn: summaryOk ? sc.summaryCn : summaryFromDetailFirstPara(detail),
+                };
               }
             } else if (sc) {
               // 重评失败 + detail 兜底也失败（detail 异常短）：保留原评分进 feed（不丢卡，符合只增不减设计）
