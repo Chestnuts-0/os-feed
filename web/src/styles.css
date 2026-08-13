@@ -31,6 +31,13 @@
     rgba(32, 28, 54, 0.92) 55%,
     rgba(24, 20, 40, 0.94) 100%
   );
+  /* 详情弹窗专属实底（阅读性：半透明玻璃透出 feed 内容干扰文字，提实至 0.97） */
+  --detail-card-bg: linear-gradient(
+    180deg,
+    rgba(38, 32, 62, 0.97) 0%,
+    rgba(26, 22, 44, 0.97) 55%,
+    rgba(20, 17, 34, 0.97) 100%
+  );
   --glass-border: rgba(224, 217, 255, 0.13);
   --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
@@ -654,7 +661,7 @@ button {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.75);
   z-index: 200;
   display: flex;
   align-items: flex-start;
@@ -674,7 +681,7 @@ button {
 }
 
 .detail-card {
-  background: var(--glass-gradient);
+  background: var(--detail-card-bg);
   border-radius: 20px;
   border: 1px solid var(--card-border-hover);
   max-width: 1200px;
