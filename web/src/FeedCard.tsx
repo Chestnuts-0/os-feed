@@ -55,28 +55,7 @@ function cleanReason(text: string): string {
   return text.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
 }
 
-/** 点踩后的统一文案（卡片与详情必须同一套词） */
-export const IGNORE_LABEL = "不感兴趣";
-export const UNDO_LABEL = "撤销";
-
 export type OpenCardHandler = (card: Card, sourceEl?: HTMLElement) => void;
-
-function IgnoreRow({ onUndo }: { onUndo: () => void }) {
-  return (
-    <button
-      type="button"
-      className="ignore-chip"
-      title={`${IGNORE_LABEL} · ${UNDO_LABEL}`}
-      onClick={(e) => {
-        e.stopPropagation();
-        onUndo();
-      }}
-    >
-      <span className="ignore-chip-label">{IGNORE_LABEL}</span>
-      <span className="ignore-chip-action">{UNDO_LABEL}</span>
-    </button>
-  );
-}
 
 const LANG_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
@@ -189,7 +168,6 @@ interface Props {
   ignored?: boolean;
   dismissing?: boolean;
   onOpen: OpenCardHandler;
-  onDislike?: (repo: string) => void;
   channel?: string;
   onOpenCreator?: (owner: string) => void;
 }
@@ -200,7 +178,6 @@ function FeedCardComponent({
   ignored = false,
   dismissing = false,
   onOpen,
-  onDislike,
   channel,
   onOpenCreator,
 }: Props) {
@@ -213,16 +190,10 @@ function FeedCardComponent({
       className={`card${dismissing ? " dismissing" : ""}${ignored ? " ignored" : ""}`}
       onClick={(e) => onOpen(card, e.currentTarget)}
     >
-      {ignored && onDislike ? (
-        <div className="card-ignore">
-          <IgnoreRow onUndo={() => onDislike(card.repo)} />
-        </div>
-      ) : (
-        liked && (
-          <span className="card-liked" title="已点赞">
-            <Heart size={14} fill="currentColor" />
-          </span>
-        )
+      {liked && (
+        <span className="card-liked" title="已点赞">
+          <Heart size={14} fill="currentColor" />
+        </span>
       )}
       <div className="card-header">
         <GithubAvatar owner={card.owner} size={40} className="avatar" />
@@ -487,10 +458,6 @@ export function CardDetail({
           </div>
         )}
 
-        <div className="detail-ignore-slot" aria-live="polite">
-          {disliked && <IgnoreRow onUndo={() => onDislike(card.repo)} />}
-        </div>
-
         <div className="detail-actions">
           <button
             className={`action-btn like-btn${liked ? " active" : ""}`}
@@ -500,8 +467,6 @@ export function CardDetail({
           </button>
           <button
             className={`action-btn dislike-btn${disliked ? " active" : ""}`}
-            title={disliked ? UNDO_LABEL : IGNORE_LABEL}
-            aria-label={disliked ? UNDO_LABEL : IGNORE_LABEL}
             onClick={() => onDislike(card.repo)}
           >
             <ThumbsDown size={20} />

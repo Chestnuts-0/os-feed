@@ -519,7 +519,6 @@ interface FeedVirtualListProps {
   likedSet: Set<string>;
   dislikedSet: Set<string>;
   onOpen: (card: FeedCard, sourceEl?: HTMLElement) => void;
-  onDislike: (repo: string) => void;
   onEndHint?: string;
   channel?: string;
   onOpenCreator?: (owner: string) => void;
@@ -536,7 +535,6 @@ interface FeedVirtualRowProps {
   likedSet: Set<string>;
   dislikedSet: Set<string>;
   onOpen: (card: FeedCard, sourceEl?: HTMLElement) => void;
-  onDislike: (repo: string) => void;
   measureRef?: (node: HTMLDivElement | null) => void;
   channel?: string;
   onOpenCreator?: (owner: string) => void;
@@ -552,7 +550,6 @@ function FeedVirtualRow({
   likedSet,
   dislikedSet,
   onOpen,
-  onDislike,
   measureRef,
   channel,
   onOpenCreator,
@@ -602,7 +599,6 @@ function FeedVirtualRow({
               liked={likedSet.has(left.repo)}
               ignored={dislikedSet.has(left.repo)}
               onOpen={onOpen}
-              onDislike={onDislike}
               channel={channel}
               onOpenCreator={onOpenCreator}
             />
@@ -618,7 +614,6 @@ function FeedVirtualRow({
               liked={likedSet.has(right.repo)}
               ignored={dislikedSet.has(right.repo)}
               onOpen={onOpen}
-              onDislike={onDislike}
               channel={channel}
               onOpenCreator={onOpenCreator}
             />
@@ -634,7 +629,6 @@ function FeedVirtualList({
   likedSet,
   dislikedSet,
   onOpen,
-  onDislike,
   onEndHint,
   channel,
   onOpenCreator,
@@ -700,7 +694,6 @@ function FeedVirtualList({
               likedSet={likedSet}
               dislikedSet={dislikedSet}
               onOpen={onOpen}
-              onDislike={onDislike}
               channel={channel}
               onOpenCreator={onOpenCreator}
               entering={entering}
@@ -1322,7 +1315,6 @@ export default function App() {
             isFollowing={followingSet.has(currentCreator)}
             onToggleFollow={toggleFollow}
             onOpen={handleOpenDetail}
-            onDislike={handleDislike}
             onOpenCreator={openCreator}
             onBack={closeCreator}
           />
@@ -1388,7 +1380,6 @@ export default function App() {
                         likedSet={likedSet}
                         dislikedSet={dislikedSet}
                         onOpen={handleOpenDetail}
-                        onDislike={handleDislike}
                         channel={feedChannel}
                         onOpenCreator={openCreator}
                         entering={channelEnter}
@@ -1483,7 +1474,6 @@ export default function App() {
                               liked={true}
                               ignored={dislikedSet.has(card.repo)}
                               onOpen={handleOpenDetail}
-                              onDislike={handleDislike}
                               onOpenCreator={openCreator}
                             />
                           ))}
@@ -1558,7 +1548,6 @@ export default function App() {
                                           liked={feedback.likes.includes(card.repo)}
                                           ignored={dislikedSet.has(card.repo)}
                                           onOpen={handleOpenDetail}
-                                          onDislike={handleDislike}
                                           onOpenCreator={openCreator}
                                         />
                                         <button
@@ -1758,7 +1747,6 @@ export default function App() {
                             liked={feedback.likes.includes(card.repo)}
                             ignored={dislikedSet.has(card.repo)}
                             onOpen={handleOpenDetail}
-                            onDislike={handleDislike}
                             onOpenCreator={openCreator}
                           />
                         ))}
@@ -1800,7 +1788,6 @@ export default function App() {
                           liked={feedback.likes.includes(card.repo)}
                           ignored={dislikedSet.has(card.repo)}
                           onOpen={handleOpenDetail}
-                          onDislike={handleDislike}
                           onOpenCreator={openCreator}
                         />
                       ))}

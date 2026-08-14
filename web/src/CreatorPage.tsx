@@ -17,7 +17,6 @@ interface CreatorPageProps {
   onToggleFollow: (owner: string) => void;
   /** 项目卡片打开详情（overlay，与页面栈独立） */
   onOpen: (card: FeedCard, sourceEl?: HTMLElement) => void;
-  onDislike: (repo: string) => void;
   /** 创作者页内项目卡片点其他 owner → 压栈（第二层） */
   onOpenCreator: (owner: string) => void;
   /** 返回（pop 一层） */
@@ -32,7 +31,6 @@ export function CreatorPage({
   isFollowing,
   onToggleFollow,
   onOpen,
-  onDislike,
   onOpenCreator,
   onBack,
 }: CreatorPageProps) {
@@ -91,7 +89,6 @@ export function CreatorPage({
                 liked={likedSet.has(card.repo)}
                 ignored={dislikedSet.has(card.repo)}
                 onOpen={onOpen}
-                onDislike={onDislike}
                 onOpenCreator={onOpenCreator}
               />
             ))}
