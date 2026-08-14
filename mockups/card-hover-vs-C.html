@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>卡片悬停 · 对照现网</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-gradient-hover: linear-gradient(180deg, rgba(46, 40, 74, 0.9) 0%, rgba(32, 28, 54, 0.92) 55%, rgba(24, 20, 40, 0.94) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --warning: #f59e0b; --border: rgba(255, 255, 255, 0.08);
+  --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif); color: var(--text); min-height: 100vh;
+  background: #08060e; background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.banner { position: sticky; top: 0; z-index: 50; background: var(--glass-bg); border-bottom: 1px solid var(--border); padding: 12px 24px 14px; }
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); }
+.hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
+.back:hover { color: var(--accent); }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px 20px 8px; }
+.pair-title { padding: 20px 20px 0; font-size: 0.9rem; font-weight: 700; }
+.pair-title span { font-weight: 500; color: var(--text-muted); font-size: 0.8rem; }
+.pane { border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; background: rgba(20,17,34,0.45); min-height: 220px; position: relative; }
+.pane.now { box-shadow: inset 0 0 0 1px rgba(99,102,241,0.35); }
+.pane-h { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.78rem; display: flex; justify-content: space-between; }
+.pane-h .nowtag { color: var(--accent); font-weight: 700; }
+.pane-b { padding: 12px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 16px; box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  position: relative; overflow: hidden; cursor: pointer; margin-bottom: 12px;
+}
+.card:last-child { margin-bottom: 0; }
+.card-header { display: flex; gap: 10px; margin-bottom: 8px; }
+.avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); }
+.repo-owner { color: var(--text-secondary); font-size: 0.88rem; }
+.repo-name { font-weight: 700; color: var(--accent); font-size: 0.88rem; display: inline-block; }
+.summary {
+  font-size: 0.9rem; font-weight: 700; padding: 6px 10px; margin-bottom: 0;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.feed2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.feed2 .card { margin: 0; }
+
+
+.now .card { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+.now .card::before { content:""; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent-gradient); opacity:0; transition:opacity 0.3s; }
+.now .card:hover {
+  background: var(--glass-gradient-hover);
+  border-color: rgba(184,153,255,0.35);
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow),
+    0 0 0 1px rgba(184,153,255,0.25), 0 0 28px rgba(99,102,241,0.18);
+  transform: translateY(-4px);
+}
+.now .card:hover::before { opacity: 1; }
+
+.vD .card { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s; }
+.vD .card:hover { transform: scale(0.97); box-shadow: inset 0 2px 16px rgba(0,0,0,0.5), var(--glass-highlight-bottom); }
+
+.vF .card::before {
+  content:""; position:absolute; left:0; top:0; bottom:0; width:4px;
+  background: var(--accent-gradient); transform: scaleY(0); transform-origin: top; transition: transform 0.28s ease;
+}
+.vF .card:hover::before { transform: scaleY(1); }
+.vF .card:hover { background: var(--glass-gradient-hover); }
+
+.vG .feed2 .card { transition: opacity 0.28s ease; }
+.vG .feed2 .card.is-dim { opacity: 0.32; }
+.vG .feed2 .card:hover { background: var(--glass-gradient-hover); }
+
+.vG2 .feed2 .card { transition: opacity 0.28s ease, transform 0.28s ease, background 0.28s; }
+.vG2 .feed2 .card.is-dim { opacity: 0.32; }
+.vG2 .feed2 .card:hover { background: var(--glass-gradient-hover); transform: translateY(-2px); }
+</style>
+</head><body>
+<header class="banner">
+  <div class="banner-kicker">第三轮 · 左侧一律是现网</div>
+  <h1>候选 1 · 每条都跟现网并排</h1>
+  <p>没点名的已刷。D / F / G 留下。你说 G 抬太高挡上卡：原版 G 是邻卡压暗、并不抬；挡上卡的是已刷掉的 J（抬 10px）。G 做成不抬；G低 是压暗+抬 2px。</p>
+  <div class="hint">每对左侧现网、右侧方案。悬停同一位置看差。</div>
+  <a class="back" href="./00-点菜.html">← 回点菜页</a>
+</header>
+
+<div class="pair-title">D · 沉入纸面 <span>卡往里凹，和现网往上浮相反</span></div>
+<div class="pair">
+  <div class="pane now"><div class="pane-h"><span>现网 C</span><span class="nowtag">现状</span></div><div class="pane-b"><div class="now"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="card" data-name="next.js">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div>
+  </div>
+  <div class="summary">React 全栈框架，路由开箱即用</div>
+  
+</div></div></div></div>
+  <div class="pane "><div class="pane-h"><span>方案</span><span>对照</span></div><div class="pane-b"><div class="vD"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="card" data-name="next.js">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div>
+  </div>
+  <div class="summary">React 全栈框架，路由开箱即用</div>
+  
+</div></div></div></div>
+</div>
+<div class="pair-title">F · 左侧色条 <span>左边长出一条，卡不移动</span></div>
+<div class="pair">
+  <div class="pane now"><div class="pane-h"><span>现网 C</span><span class="nowtag">现状</span></div><div class="pane-b"><div class="now"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="card" data-name="next.js">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div>
+  </div>
+  <div class="summary">React 全栈框架，路由开箱即用</div>
+  
+</div></div></div></div>
+  <div class="pane "><div class="pane-h"><span>方案</span><span>对照</span></div><div class="pane-b"><div class="vF"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="card" data-name="next.js">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div>
+  </div>
+  <div class="summary">React 全栈框架，路由开箱即用</div>
+  
+</div></div></div></div>
+</div>
+<div class="pair-title">G · 邻卡压暗（不抬） <span>悬一张，其余变淡；自己不位移，不会挡上卡</span></div>
+<div class="pair">
+  <div class="pane now"><div class="pane-h"><span>现网 C</span><span class="nowtag">现状</span></div><div class="pane-b"><div class="now"><div class="feed2"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="card" data-name="next.js">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div>
+  </div>
+  <div class="summary">React 全栈框架，路由开箱即用</div>
+  
+</div><div class="card" data-name="vscode">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">microsoft</span> / <span class="repo-name">vscode</span></div>
+  </div>
+  <div class="summary">代码编辑器，插件把编辑器变成 IDE</div>
+  
+</div><div class="card" data-name="whisper">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">openai</span> / <span class="repo-name">whisper</span></div>
+  </div>
+  <div class="summary">开源语音识别，本地把录音转成字</div>
+  
+</div></div></div></div></div>
+  <div class="pane "><div class="pane-h"><span>方案</span><span>对照</span></div><div class="pane-b"><div class="vG"><div class="feed2"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="card" data-name="next.js">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div>
+  </div>
+  <div class="summary">React 全栈框架，路由开箱即用</div>
+  
+</div><div class="card" data-name="vscode">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">microsoft</span> / <span class="repo-name">vscode</span></div>
+  </div>
+  <div class="summary">代码编辑器，插件把编辑器变成 IDE</div>
+  
+</div><div class="card" data-name="whisper">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">openai</span> / <span class="repo-name">whisper</span></div>
+  </div>
+  <div class="summary">开源语音识别，本地把录音转成字</div>
+  
+</div></div></div></div></div>
+</div>
+<div class="pair-title">G低 · 压暗 + 抬 2px <span>按「调低」来的：压暗还在，只抬 2px（现网是 4px，J 是 10px）</span></div>
+<div class="pair">
+  <div class="pane now"><div class="pane-h"><span>现网 C</span><span class="nowtag">现状</span></div><div class="pane-b"><div class="now"><div class="feed2"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="card" data-name="next.js">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div>
+  </div>
+  <div class="summary">React 全栈框架，路由开箱即用</div>
+  
+</div><div class="card" data-name="vscode">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">microsoft</span> / <span class="repo-name">vscode</span></div>
+  </div>
+  <div class="summary">代码编辑器，插件把编辑器变成 IDE</div>
+  
+</div><div class="card" data-name="whisper">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">openai</span> / <span class="repo-name">whisper</span></div>
+  </div>
+  <div class="summary">开源语音识别，本地把录音转成字</div>
+  
+</div></div></div></div></div>
+  <div class="pane "><div class="pane-h"><span>方案</span><span>对照</span></div><div class="pane-b"><div class="vG2"><div class="feed2"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="card" data-name="next.js">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div>
+  </div>
+  <div class="summary">React 全栈框架，路由开箱即用</div>
+  
+</div><div class="card" data-name="vscode">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">microsoft</span> / <span class="repo-name">vscode</span></div>
+  </div>
+  <div class="summary">代码编辑器，插件把编辑器变成 IDE</div>
+  
+</div><div class="card" data-name="whisper">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">openai</span> / <span class="repo-name">whisper</span></div>
+  </div>
+  <div class="summary">开源语音识别，本地把录音转成字</div>
+  
+</div></div></div></div></div>
+</div>
+
+<script>
+function dim(rootSel) {
+  document.querySelectorAll(rootSel).forEach(feed => {
+    const cards = [...feed.querySelectorAll('.card')];
+    cards.forEach(c => {
+      c.addEventListener('mouseenter', () => cards.forEach(o => o.classList.toggle('is-dim', o !== c)));
+      c.addEventListener('mouseleave', () => cards.forEach(o => o.classList.remove('is-dim')));
+    });
+  });
+}
+dim('.vG .feed2'); dim('.vG2 .feed2');
+</script>
+
+</body></html>

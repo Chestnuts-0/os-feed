@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>弹窗入场 · 对比</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  color-scheme: dark;
+  --bg: #08060e;
+  --bg-gradient: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-gradient-hover: linear-gradient(180deg, rgba(46, 40, 74, 0.9) 0%, rgba(32, 28, 54, 0.92) 55%, rgba(24, 20, 40, 0.94) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --side-group-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.82) 0%, rgba(24, 20, 40, 0.86) 100%);
+  --card-bg: rgba(22, 24, 35, 0.8);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --card-border-hover: rgba(255, 255, 255, 0.14);
+  --text: #f0f0f5;
+  --text-secondary: #a0a3b1;
+  --text-muted: #6b6e7f;
+  --accent: #6366f1;
+  --accent-glow: rgba(99, 102, 241, 0.4);
+  --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --border: rgba(255, 255, 255, 0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif);
+  background: #08060e;
+  background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  line-height: 1.65;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+
+.banner {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--glass-bg);
+  border-bottom: 1px solid var(--border);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.07);
+  padding: 12px 24px 14px;
+}
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); }
+.banner .hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); }
+.back:hover { color: var(--accent); }
+
+
+.feed { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 24px; max-width: 1100px; }
+.card {
+  background: var(--glass-gradient);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.card-header { display: flex; gap: 10px; margin-bottom: 10px; }
+.avatar { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); flex-shrink: 0; }
+.repo-owner { color: var(--text-secondary); font-size: 0.92rem; }
+.repo-name { font-weight: 700; color: var(--accent); font-size: 0.92rem; }
+.card-sub { font-size: 0.74rem; color: var(--text-muted); margin-top: 3px; }
+.summary {
+  font-size: 0.98rem; font-weight: 700; line-height: 1.5; color: var(--text);
+  margin-bottom: 8px; padding: 8px 12px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.reason { font-size: 0.82rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 10px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.meta { font-size: 0.78rem; color: var(--text-secondary); }
+.stars { color: var(--warning); font-weight: 600; }
+.growth { color: var(--success); font-weight: 600; margin-left: 10px; }
+.tags { display: flex; gap: 4px; margin-top: 8px; height: 26px; overflow: hidden; }
+.tag { font-size: 0.68rem; padding: 2px 8px; border-radius: 6px; background: var(--accent-light); color: var(--accent); font-weight: 500; }
+
+
+.layout { display: flex; align-items: flex-start; min-height: calc(100vh - 88px); }
+.sidebar { width: 192px; flex-shrink: 0; padding: 20px 10px; }
+.side-group-box {
+  background: var(--side-group-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  padding: 14px 12px 8px;
+}
+.side-group {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 0.95rem; font-weight: 700; color: var(--text-secondary);
+  padding: 0 4px 8px; margin-bottom: 6px;
+}
+.side-group::before {
+  content: ""; width: 3px; height: 12px; border-radius: 2px;
+  background: var(--accent-gradient); flex-shrink: 0;
+}
+.side-item {
+  display: flex; align-items: center; width: 100%;
+  padding: 10px 12px; margin-bottom: 4px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary); font-size: 0.92rem; text-align: left;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, font-weight 0.25s ease;
+}
+.side-item:hover { background: var(--accent-light); color: var(--text); }
+.side-item.active {
+  background: var(--accent-gradient); color: #fff; font-weight: 700;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+}
+.feed-wrap { flex: 1; min-width: 0; }
+
+
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 16px; }
+.col {
+  border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden;
+  background: rgba(20, 17, 34, 0.5);
+}
+.col-h { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.col-h strong { display: block; font-size: 0.9rem; }
+.col-h span { font-size: 0.75rem; color: var(--text-muted); }
+.col-b { padding: 12px; }
+.col .feed { display: block; padding: 0; max-width: none; }
+.col .card { margin-bottom: 12px; }
+.col .card:last-child { margin-bottom: 0; }
+.col .sidebar { width: 100%; padding: 0; }
+.col .layout { display: block; min-height: 0; }
+
+
+.detail-overlay {
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: 200;
+  display: none; align-items: flex-start; justify-content: center;
+  padding: 8vh 20px; overflow-y: auto;
+}
+.detail-overlay.open { display: flex; }
+.detail-card {
+  background: var(--detail-card-bg); border-radius: 20px;
+  border: 1px solid var(--card-border-hover);
+  max-width: 720px; width: 100%; padding: 32px;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), 0 24px 80px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+.detail-close {
+  position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent-light); color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center;
+}
+.detail-close:hover { background: var(--danger); color: #fff; }
+.detail-summary {
+  font-size: 1.05rem; font-weight: 700; line-height: 1.6; margin: 12px 0 16px; padding: 14px 18px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.detail-reason { font-size: 1rem; line-height: 1.9; color: var(--text-secondary); }
+.retry {
+  margin: 16px 24px 0; padding: 7px 16px; border-radius: 20px;
+  border: 1px solid var(--border); color: var(--text-secondary); font-size: 0.82rem;
+}
+.retry:hover { border-color: var(--accent); color: var(--accent); }
+
+.vA .detail-overlay.open { animation: fadeInA 0.15s ease; }
+.vA .detail-overlay.open .detail-card { animation: fadeOnlyA 0.18s ease; }
+@keyframes fadeInA { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOnlyA { from { opacity: 0; } to { opacity: 1; } }
+.vB .detail-overlay.open { animation: fadeInB 0.18s ease; }
+.vB .detail-overlay.open .detail-card { animation: microUpB 0.22s ease-out; }
+@keyframes fadeInB { from { opacity: 0; } to { opacity: 1; } }
+@keyframes microUpB { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.vC .detail-overlay.open { animation: fadeInC 0.2s ease; }
+.vC .detail-overlay.open .detail-card { animation: slideUpC 0.3s ease; }
+@keyframes fadeInC { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUpC { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.mini-open {
+  padding: 7px 14px; border-radius: 16px; border: 1px solid var(--border);
+  color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 10px;
+}
+.mini-open:hover { border-color: var(--accent); color: var(--accent); }
+.col .detail-overlay { position: absolute; border-radius: 0 0 14px 14px; padding: 24px 12px; }
+.col { position: relative; min-height: 420px; }
+
+</style>
+</head>
+<body>
+<header class="banner">
+  <div class="banner-kicker">三列对比 · 建议点菜用这一页</div>
+  <h1>弹窗入场 · A / B / C</h1>
+  <p>改什么：详情弹窗打开时的位移和时长。为什么：阅读主场景，现网上滑 20px / 300ms 偏弹出。</p>
+  <div class="hint">每列点「打开详情」。A 只淡入 / B 微距 8px / C 现网 20px。</div>
+  <a class="back" href="./00-点菜.html">← 回点菜页</a>
+</header>
+<div class="grid3">
+<div class="col vA"><div class="col-h"><strong>方案 A · 淡入贴层</strong><span>本列独立样式，互不影响</span></div><div class="col-b">
+<button class="mini-open" type="button" data-col="A">打开详情</button>
+<div class="card" data-col="A">
+  <div class="card-header"><div class="avatar"></div>
+  <div><div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  <div class="card-sub">点卡片或按钮看入场</div></div></div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+</div>
+<div class="detail-overlay" id="ovA">
+  <div class="detail-card">
+    <button class="detail-close" type="button" data-close="A">×</button>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+    <div class="detail-summary">方案 A 入场</div>
+    <div class="detail-reason">关了再开，只看这一列的节奏。</div>
+  </div>
+</div>
+</div></div><div class="col vB"><div class="col-h"><strong>方案 B · 微距上浮</strong><span>本列独立样式，互不影响</span></div><div class="col-b">
+<button class="mini-open" type="button" data-col="B">打开详情</button>
+<div class="card" data-col="B">
+  <div class="card-header"><div class="avatar"></div>
+  <div><div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  <div class="card-sub">点卡片或按钮看入场</div></div></div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+</div>
+<div class="detail-overlay" id="ovB">
+  <div class="detail-card">
+    <button class="detail-close" type="button" data-close="B">×</button>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+    <div class="detail-summary">方案 B 入场</div>
+    <div class="detail-reason">关了再开，只看这一列的节奏。</div>
+  </div>
+</div>
+</div></div><div class="col vC"><div class="col-h"><strong>方案 C · 现网对照</strong><span>本列独立样式，互不影响</span></div><div class="col-b">
+<button class="mini-open" type="button" data-col="C">打开详情</button>
+<div class="card" data-col="C">
+  <div class="card-header"><div class="avatar"></div>
+  <div><div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  <div class="card-sub">点卡片或按钮看入场</div></div></div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+</div>
+<div class="detail-overlay" id="ovC">
+  <div class="detail-card">
+    <button class="detail-close" type="button" data-close="C">×</button>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+    <div class="detail-summary">方案 C 入场</div>
+    <div class="detail-reason">关了再开，只看这一列的节奏。</div>
+  </div>
+</div>
+</div></div>
+</div>
+
+<script>
+function openCol(k) {
+  const ov = document.getElementById('ov' + k);
+  ov.classList.remove('open');
+  void ov.offsetWidth;
+  ov.classList.add('open');
+}
+function closeCol(k) { document.getElementById('ov' + k).classList.remove('open'); }
+document.querySelectorAll('[data-col]').forEach(el => {
+  el.addEventListener('click', e => { e.stopPropagation(); openCol(el.getAttribute('data-col')); });
+});
+document.querySelectorAll('[data-close]').forEach(el => {
+  el.addEventListener('click', e => { e.stopPropagation(); closeCol(el.getAttribute('data-close')); });
+});
+['A','B','C'].forEach(k => {
+  const ov = document.getElementById('ov' + k);
+  ov.addEventListener('click', e => { if (e.target === ov) closeCol(k); });
+});
+</script>
+
+</body>
+</html>

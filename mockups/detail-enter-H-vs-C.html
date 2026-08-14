@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>弹窗 H 全幅 · 对照现网</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-gradient-hover: linear-gradient(180deg, rgba(46, 40, 74, 0.9) 0%, rgba(32, 28, 54, 0.92) 55%, rgba(24, 20, 40, 0.94) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --border: rgba(255, 255, 255, 0.08); --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif); color: var(--text); min-height: 100vh;
+  background: #08060e; background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.banner { position: sticky; top: 0; z-index: 40; background: var(--glass-bg); border-bottom: 1px solid var(--border); padding: 12px 24px 14px; }
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); }
+.hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px 20px; }
+.pane { border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; background: rgba(20,17,34,0.45); }
+.pane.now { box-shadow: inset 0 0 0 1px rgba(99,102,241,0.35); }
+.pane-h { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.78rem; display: flex; justify-content: space-between; }
+.nowtag { color: var(--accent); font-weight: 700; }
+.pane-b { padding: 14px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 16px; margin-bottom: 12px; cursor: pointer; position: relative; overflow: hidden;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+}
+.card:last-child { margin-bottom: 0; }
+.card-header { display: flex; gap: 10px; margin-bottom: 8px; }
+.avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); }
+.repo-owner { color: var(--text-secondary); font-size: 0.88rem; }
+.repo-name { font-weight: 700; color: var(--accent); }
+.summary {
+  font-size: 0.9rem; font-weight: 700; padding: 6px 10px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+
+.split { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 110px); }
+.col { border-right: 1px solid var(--border); position: relative; overflow: auto; padding: 16px; }
+.col:last-child { border-right: none; }
+.col-label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; display: flex; justify-content: space-between; }
+.nowtag { color: var(--accent); font-weight: 700; }
+.overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: flex-start; justify-content: center; padding: 8vh 16px; z-index: 8; }
+.overlay.open { display: flex; }
+.dcard { background: var(--detail-card-bg); border-radius: 20px; border: 1px solid rgba(255,255,255,0.14); padding: 24px; width: 100%; max-width: 520px; position: relative;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), 0 24px 80px rgba(0,0,0,0.5); }
+.now .overlay.open { animation: ov 0.2s ease; }
+.now .overlay.open .dcard { animation: up 0.3s ease; }
+@keyframes ov { from { opacity: 0; } to { opacity: 1; } }
+@keyframes up { from { transform: translateY(20px); opacity: 0; } to { transform: none; opacity: 1; } }
+.x { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%; background: var(--accent-light); }
+.notes { padding: 16px 20px 32px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
+.notes h2 { font-size: 0.95rem; color: var(--text); margin: 12px 0 6px; }
+.notes li { margin: 4px 0 4px 1.1em; }
+@media (max-width: 700px) {
+  .split { grid-template-columns: 1fr; }
+  .col { min-height: 70vh; border-right: none; border-bottom: 1px solid var(--border); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .now .overlay.open, .now .overlay.open .dcard { animation: ov 0.15s ease; }
+}
+</style>
+</head><body>
+<header class="banner">
+  <div class="banner-kicker">第四轮 · 左侧一律现网</div>
+  <h1>候选 2 · 从卡片长出 vs 现网上滑（全幅，不再塞进小格子）</h1>
+  <p>上一版对照把 H 塞进小格子，FLIP 起终点被压扁，所以看起来不像第一眼那个 H。这一版两列都是整列高度。下面写了不同设备怎么兜底。</p>
+  <div class="hint">左列点卡片看现网，右列点卡片看 H。请拉一下窗口宽度再试一次。</div>
+  <a class="back" href="./00-点菜.html">← 回点菜页</a>
+</header>
+
+<div class="split">
+  <div class="col now" id="colC">
+    <div class="col-label"><span>现网 C · 上滑 20px / 300ms</span><span class="nowtag">现状</span></div>
+    <div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div></div>
+    <div class="summary">声明式 UI 库，组件化写界面的事实标准</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div></div>
+    <div class="summary">React 全栈框架，路由开箱即用</div></div>
+    <div class="overlay" id="ovC"><div class="dcard">现网入场<button class="x" type="button" id="xC">×</button></div></div>
+  </div>
+  <div class="col" id="colH">
+    <div class="col-label"><span>H · 从这张卡长到中央</span><span>对照</span></div>
+    <div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div></div>
+    <div class="summary">声明式 UI 库，组件化写界面的事实标准</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div></div>
+    <div class="summary">React 全栈框架，路由开箱即用</div></div>
+    <div class="overlay" id="ovH"><div class="dcard" id="dcH">从卡片长出<button class="x" type="button" id="xH">×</button></div></div>
+  </div>
+</div>
+<div class="notes">
+  <h2>H 的适配（会不会在别的设备上坏）</h2>
+  <ul>
+    <li><strong>宽屏 / 窄屏</strong>：起点是矮卡片、终点是宽弹窗，宽高比差大会被拉扁。做法：宽高比差超过 2.5 倍时，放弃 FLIP，改成短淡入（和现网类似，只是更短）。窄屏手机上卡片和弹窗都接近全宽，比例接近，FLIP 最稳。</li>
+    <li><strong>Tabbit 软渲染</strong>：只用 transform / opacity，不碰 blur、不碰宽高动画。和现网卡片悬停同一类合成属性。</li>
+    <li><strong>虚拟列表</strong>：只对点到的那张可见卡做 FLIP；滚走回收的节点不会参与。</li>
+    <li><strong>动画中途滚动</strong>：播放时锁住这一列 overflow，结束再放开，避免起终点对不齐。</li>
+    <li><strong>系统「减少动态」</strong>：直接淡入，不跑 FLIP。</li>
+    <li><strong>旧浏览器</strong>：没有 Web Animations 就退回现网 slideUp。不作为主路径。</li>
+  </ul>
+</div>
+
+
+<script>
+const ovC = document.getElementById('ovC');
+document.querySelectorAll('#colC .card').forEach(c => c.addEventListener('click', () => {
+  ovC.classList.remove('open'); void ovC.offsetWidth; ovC.classList.add('open');
+}));
+document.getElementById('xC').addEventListener('click', e => { e.stopPropagation(); ovC.classList.remove('open'); });
+
+const colH = document.getElementById('colH');
+const ovH = document.getElementById('ovH');
+const dc = document.getElementById('dcH');
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function closeH() {
+  ovH.classList.remove('open');
+  dc.style.transition = 'none';
+  dc.style.transform = '';
+  dc.style.opacity = '';
+  colH.style.overflow = 'auto';
+}
+function openH(card) {
+  ovH.classList.add('open');
+  colH.style.overflow = 'hidden';
+  requestAnimationFrame(() => {
+    if (reduce) { dc.style.opacity = '1'; return; }
+    dc.style.transition = 'none';
+    const r = card.getBoundingClientRect();
+    const d = dc.getBoundingClientRect();
+    const sx = r.width / d.width, sy = r.height / d.height;
+    const ratio = Math.max(sx / sy, sy / sx);
+    if (ratio > 2.5) {
+      dc.style.opacity = '0';
+      requestAnimationFrame(() => {
+        dc.style.transition = 'opacity 0.22s ease';
+        dc.style.opacity = '1';
+      });
+      return;
+    }
+    dc.style.transformOrigin = 'top left';
+    dc.style.transform = 'translate(' + (r.left - d.left) + 'px,' + (r.top - d.top) + 'px) scale(' + sx + ',' + sy + ')';
+    dc.style.opacity = '1';
+    requestAnimationFrame(() => {
+      dc.style.transition = 'transform 0.38s cubic-bezier(0.4,0,0.2,1)';
+      dc.style.transform = 'translate(0,0) scale(1)';
+    });
+  });
+}
+document.querySelectorAll('#colH .card').forEach(c => c.addEventListener('click', () => { closeH(); requestAnimationFrame(() => openH(c)); }));
+document.getElementById('xH').addEventListener('click', e => { e.stopPropagation(); closeH(); });
+</script>
+
+</body></html>

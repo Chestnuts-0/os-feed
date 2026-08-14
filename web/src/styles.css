@@ -695,6 +695,34 @@ button {
   position: relative;
 }
 
+/* 点赞成功：顶条从左 scaleX 扫过一次再淡出（方向2候选7点菜 A） */
+.like-flash-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-gradient);
+  transform-origin: left center;
+  pointer-events: none;
+  z-index: 3;
+  animation: like-flash-bar 0.7s ease forwards;
+}
+@keyframes like-flash-bar {
+  0% {
+    opacity: 1;
+    transform: scaleX(0);
+  }
+  35% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
 @keyframes slideUp {
   from {
     transform: translateY(20px);
@@ -865,7 +893,23 @@ button {
   border-color: var(--accent);
   color: var(--accent);
   background: var(--accent-light);
-  transform: scale(1.1);
+  /* 原：transform: scale(1.1); 方向2候选3点菜 J：悬停不再放大 */
+}
+.like-btn:active,
+.dislike-btn:active,
+.bookmark-btn:active {
+  transform: scale(1.08, 0.82);
+}
+@media (prefers-reduced-motion: reduce) {
+  .like-flash-bar {
+    animation: none;
+    opacity: 0;
+  }
+  .like-btn:active,
+  .dislike-btn:active,
+  .bookmark-btn:active {
+    transform: none;
+  }
 }
 .like-btn.active {
   background: rgba(239, 68, 68, 0.15);

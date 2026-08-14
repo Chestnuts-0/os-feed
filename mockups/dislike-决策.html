@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>点踩之后页面怎么变 · 决策</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-hi: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --border: rgba(255, 255, 255, 0.08);
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-serif); color: var(--text); line-height: 1.7;
+  background: #08060e; background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+  padding: 0 0 64px;
+}
+.banner { position: sticky; top: 0; z-index: 20; background: var(--glass-bg); border-bottom: 1px solid var(--border); padding: 12px 24px 14px; }
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+h1 { font-size: 1.15rem; margin: 2px 0 4px; }
+.lead { font-size: 0.88rem; color: var(--text-secondary); }
+.hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 24px 20px; }
+h2 { font-size: 1.05rem; margin: 28px 0 10px; }
+h3 { font-size: 0.92rem; margin: 0 0 8px; }
+p, li { font-size: 0.9rem; color: var(--text-secondary); }
+ul { padding-left: 1.2em; margin: 8px 0 12px; }
+.warn { border: 1px solid rgba(245, 158, 11, 0.35); background: rgba(245, 158, 11, 0.08); border-radius: 12px; padding: 12px 14px; color: var(--text); font-size: 0.88rem; margin: 12px 0 20px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 12px 0 20px; }
+th, td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+th { color: var(--text); background: rgba(255,255,255,0.03); }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 28px; }
+.pane { border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; background: rgba(20,17,34,0.5); }
+.pane.now { box-shadow: inset 0 0 0 1px rgba(99,102,241,0.35); }
+.pane-h { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.78rem; display: flex; justify-content: space-between; }
+.nowtag { color: var(--accent); font-weight: 700; }
+.pane-b { padding: 12px; min-height: 260px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 14px;
+  padding: 10px 12px; font-size: 0.82rem; position: relative;
+  box-shadow: var(--glass-hi), var(--glass-shadow);
+}
+.card strong { color: var(--accent); }
+.card .gone { opacity: 0; transform: scale(0.96); transition: opacity 0.3s, transform 0.3s; pointer-events: none; }
+.card.hole { opacity: 0; pointer-events: none; }
+.card.muted { opacity: 0.38; }
+.card button { margin-top: 6px; padding: 4px 10px; border-radius: 10px; border: 1px solid var(--border); font-size: 0.75rem; color: var(--text-secondary); }
+.card button:hover { border-color: var(--danger); color: var(--danger); }
+.reset { margin-top: 10px; padding: 5px 12px; border-radius: 12px; border: 1px solid var(--border); font-size: 0.78rem; color: var(--text-secondary); }
+.note { font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; }
+</style>
+</head>
+<body>
+<header class="banner">
+  <div class="banner-kicker">候选 8 · 这不是换皮，先拍板行为</div>
+  <h1>点踩之后，这一页到底怎么变</h1>
+  <p class="lead">上一轮只比了卡片怎么飞走，没问飞走之后列表还剩什么。飞走只是皮；列表怎么补位才是功能。</p>
+  <div class="hint">每对左侧都是现网。先读现状，再点格子里的「踩」看整页，不要只看那一张卡。</div>
+  <a class="back" href="./00-点菜.html">← 回点菜页</a>
+</header>
+<div class="wrap">
+
+<div class="warn">方向 2 原约束是「功能不动，只换皮」。点踩后卡还在不在、旁边的卡动不动，已经是逻辑。下面三个方案要你授权才能改代码。不授权 = 维持现网（动画也维持现网微缩）。</div>
+
+<h2>现状（代码里现在就是这样）</h2>
+<ul>
+  <li><strong>这张卡</strong>：点踩后 300ms 淡出缩到 0.96，然后从当前频道的渲染列表里删掉。</li>
+  <li><strong>还在不在这个项目里</strong>：<em>数据还在</em>（feed.json 没删）。只是你这台浏览器用 localStorage 把它藏起来。</li>
+  <li><strong>别的频道</strong>：7 天内热门 / 每日 / 分类也都看不见。推荐频道更狠：只要记过点踩，就不进推荐池（没有 7 天解禁）。</li>
+  <li><strong>展示顺序</strong>：剩下的卡<strong>相对顺序不变</strong>，但两列网格会<strong>补位</strong>——右边的卡会填到左边的坑，下一行会顶上来。所以你会看见整页在挪，不是只有一张卡消失。</li>
+  <li><strong>撤销</strong>：卡抽走后，当前列表上点不到它。没有「撤销踩」入口（除非你还开着详情弹窗，再点一次踩会 toggle）。页脚只显示踩过的数量。</li>
+  <li><strong>刷新 / 换频道</strong>：dismissed 只在本次会话的内存里；刷新后靠 7 天过滤继续藏。所以「抽走」在刷新后仍然看不见，不是只玩一次动画。</li>
+</ul>
+
+<table>
+  <thead>
+    <tr><th></th><th>这张卡</th><th>其他卡位置</th><th>项目还在站点吗</th><th>撤销</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>现网 C</th><td>淡出，抽走</td><td>补位，整页会挪</td><td>在数据里，你这边 7 天内看不见</td><td>列表上基本撤不掉</td></tr>
+    <tr><th>方案 留坑</th><td>淡出，留一个空位</td><td>钉死不动</td><td>同现网</td><td>同现网</td></tr>
+    <tr><th>方案 留卡</th><td>还在，变淡，带撤销</td><td>完全不动</td><td>还在当前页上，只是标成不感兴趣</td><td>当场撤销</td></tr>
+  </tbody>
+</table>
+
+<h2>1. 留坑 vs 现网</h2>
+<p>现网抽走会让后面的卡跳位——两列布局里这很明显。留坑：这张卡没了，位置空着，别人不动。代价是列表出现空洞，像少了一块。</p>
+<div class="pair">
+  <div class="pane now">
+    <div class="pane-h"><span>现网 · 抽走补位</span><span class="nowtag">现状</span></div>
+    <div class="pane-b" data-demo="pack">
+      <div class="grid"></div>
+      <button class="reset" type="button">重置</button>
+      <p class="note">点任意一张的「踩」，看旁边的卡会不会挪。</p>
+    </div>
+  </div>
+  <div class="pane">
+    <div class="pane-h"><span>方案 · 留一个坑</span><span>对照</span></div>
+    <div class="pane-b" data-demo="hole">
+      <div class="grid"></div>
+      <button class="reset" type="button">重置</button>
+      <p class="note">同样点「踩」，其他卡钉在原地。</p>
+    </div>
+  </div>
+</div>
+
+<h2>2. 留卡可撤销 vs 现网</h2>
+<p>内容站更常见的是「还在，只是被标了」。卡不用飞走，顺序不用争。代价：不感兴趣的东西还占着屏；要靠撤销才能改主意。</p>
+<div class="pair">
+  <div class="pane now">
+    <div class="pane-h"><span>现网 · 抽走补位</span><span class="nowtag">现状</span></div>
+    <div class="pane-b" data-demo="pack2">
+      <div class="grid"></div>
+      <button class="reset" type="button">重置</button>
+    </div>
+  </div>
+  <div class="pane">
+    <div class="pane-h"><span>方案 · 留在原位 + 撤销</span><span>对照</span></div>
+    <div class="pane-b" data-demo="mute">
+      <div class="grid"></div>
+      <button class="reset" type="button">重置</button>
+      <p class="note">踩完变淡。再点「撤销」回来。</p>
+    </div>
+  </div>
+</div>
+
+<h2>建议（供你否，不是替你定）</h2>
+<ul>
+  <li>如果讨厌整页跳来跳去：<strong>留坑</strong>或<strong>留卡</strong>，不要现网补位。</li>
+  <li>如果点踩的意义是「别再让我看见」：现网抽走更对，但两列补位的跳动要想办法（留坑是折中）。</li>
+  <li>如果点踩只是轻量「不感兴趣」、还想改主意：<strong>留卡 + 撤销</strong>。</li>
+  <li>动画本身：你已经说 AB 飞走还不如现网微缩。无论上面哪条行为，动画建议先维持现网 C，别再换飞走方向。</li>
+</ul>
+<p>请回：<strong>现网 / 留坑 / 留卡</strong> 三选一。选完才谈要不要改动画。</p>
+</div>
+<script>
+const NAMES = [
+  ["facebook", "react"], ["vercel", "next.js"], ["microsoft", "vscode"],
+  ["openai", "whisper"], ["golang", "go"], ["rust-lang", "rust"]
+];
+function makeCards(grid) {
+  grid.innerHTML = "";
+  NAMES.forEach(([o, n], i) => {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.dataset.i = String(i);
+    el.innerHTML = "<div>" + o + " / <strong>" + n + "</strong></div><button type='button' data-kick>踩</button>";
+    grid.appendChild(el);
+  });
+}
+function bind(root, mode) {
+  const grid = root.querySelector(".grid");
+  makeCards(grid);
+  root.querySelector(".reset").addEventListener("click", () => makeCards(grid));
+  grid.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-kick], [data-undo]");
+    if (!btn) return;
+    const card = btn.closest(".card");
+    if (btn.dataset.undo !== undefined) {
+      card.classList.remove("muted");
+      btn.dataset.kick = "";
+      delete btn.dataset.undo;
+      btn.textContent = "踩";
+      return;
+    }
+    if (mode === "pack" || mode === "pack2") {
+      card.style.transition = "opacity 0.3s, transform 0.3s";
+      card.style.opacity = "0";
+      card.style.transform = "scale(0.96)";
+      setTimeout(() => card.remove(), 300);
+    } else if (mode === "hole") {
+      card.style.transition = "opacity 0.3s";
+      card.style.opacity = "0";
+      setTimeout(() => { card.classList.add("hole"); card.innerHTML = ""; }, 300);
+    } else if (mode === "mute") {
+      card.classList.add("muted");
+      btn.textContent = "撤销";
+      btn.dataset.undo = "";
+      delete btn.dataset.kick;
+    }
+  });
+}
+document.querySelectorAll("[data-demo]").forEach((el) => bind(el, el.dataset.demo));
+</script>
+</body>
+</html>

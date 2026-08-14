@@ -297,6 +297,15 @@ export function CardDetail({
 
   const [showPicker, setShowPicker] = useState(false);
   const [newName, setNewName] = useState("");
+  const prevLiked = useRef(liked);
+  const [likeFlashGen, setLikeFlashGen] = useState(0);
+
+  useEffect(() => {
+    if (liked && !prevLiked.current) {
+      setLikeFlashGen((n) => n + 1);
+    }
+    prevLiked.current = liked;
+  }, [liked]);
 
   const inCollections = collections.filter((c) => c.repos.includes(card.repo));
 
@@ -326,6 +335,7 @@ export function CardDetail({
   return (
     <div className="detail-overlay" onClick={onClose}>
       <div className="detail-card" onClick={(e) => e.stopPropagation()}>
+        {likeFlashGen > 0 && <span key={likeFlashGen} className="like-flash-bar" aria-hidden="true" />}
         <button className="detail-close" onClick={onClose}>
           <X size={18} />
         </button>

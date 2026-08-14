@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>弹窗入场 · 对照现网</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-gradient-hover: linear-gradient(180deg, rgba(46, 40, 74, 0.9) 0%, rgba(32, 28, 54, 0.92) 55%, rgba(24, 20, 40, 0.94) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --warning: #f59e0b; --border: rgba(255, 255, 255, 0.08);
+  --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif); color: var(--text); min-height: 100vh;
+  background: #08060e; background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.banner { position: sticky; top: 0; z-index: 50; background: var(--glass-bg); border-bottom: 1px solid var(--border); padding: 12px 24px 14px; }
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); }
+.hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
+.back:hover { color: var(--accent); }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px 20px 8px; }
+.pair-title { padding: 20px 20px 0; font-size: 0.9rem; font-weight: 700; }
+.pair-title span { font-weight: 500; color: var(--text-muted); font-size: 0.8rem; }
+.pane { border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; background: rgba(20,17,34,0.45); min-height: 220px; position: relative; }
+.pane.now { box-shadow: inset 0 0 0 1px rgba(99,102,241,0.35); }
+.pane-h { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.78rem; display: flex; justify-content: space-between; }
+.pane-h .nowtag { color: var(--accent); font-weight: 700; }
+.pane-b { padding: 12px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 16px; box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  position: relative; overflow: hidden; cursor: pointer; margin-bottom: 12px;
+}
+.card:last-child { margin-bottom: 0; }
+.card-header { display: flex; gap: 10px; margin-bottom: 8px; }
+.avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); }
+.repo-owner { color: var(--text-secondary); font-size: 0.88rem; }
+.repo-name { font-weight: 700; color: var(--accent); font-size: 0.88rem; display: inline-block; }
+.summary {
+  font-size: 0.9rem; font-weight: 700; padding: 6px 10px; margin-bottom: 0;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.feed2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.feed2 .card { margin: 0; }
+
+
+.detail-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.75); display:none; align-items:flex-start; justify-content:center; padding:24px 12px; z-index:5; }
+.detail-overlay.open { display:flex; }
+.detail-card { background:var(--detail-card-bg); border-radius:16px; border:1px solid rgba(255,255,255,0.14); padding:20px; width:100%; max-width:420px; position:relative; }
+.mini { padding:6px 12px; border-radius:14px; border:1px solid var(--border); font-size:0.8rem; color:var(--text-secondary); margin-bottom:8px; }
+.now .detail-overlay.open { animation: ovC 0.2s ease; }
+.now .detail-overlay.open .detail-card { animation: upC 0.3s ease; }
+@keyframes ovC { from { opacity:0; } to { opacity:1; } }
+@keyframes upC { from { transform:translateY(20px); opacity:0; } to { transform:none; opacity:1; } }
+.vE .detail-overlay.open { animation: ovE 0.18s ease; }
+.vE .detail-overlay.open .detail-card { animation: fromRight 0.32s ease; }
+@keyframes ovE { from { opacity:0; } to { opacity:1; } }
+@keyframes fromRight { from { transform:translateX(48px); opacity:0; } to { transform:none; opacity:1; } }
+.vF .detail-overlay.open { animation: ovF 0.18s ease; }
+.vF .detail-overlay.open .detail-card { animation: late 0.28s ease 0.18s both; }
+@keyframes ovF { from { opacity:0; } to { opacity:1; } }
+@keyframes late { from { transform:translateY(16px); opacity:0; } to { transform:none; opacity:1; } }
+.pane { min-height: 360px; }
+</style>
+</head><body>
+<header class="banner">
+  <div class="banner-kicker">第三轮 · 左侧一律是现网</div>
+  <h1>候选 2 · 每条都跟现网并排</h1>
+  <p>留下 H / E / F。G 过冲已刷（你说僵）。H 从卡片长出单独占一整页对照，见下面链接。</p>
+  <div class="hint">每对先开左侧现网，再开右侧方案。</div>
+  <a class="back" href="./00-点菜.html">← 回点菜页</a>
+</header>
+
+<div class="pair-title">E · 从右侧滑入 <span>方向和现网上滑不同</span></div>
+<div class="pair">
+  <div class="pane now"><div class="pane-h"><span>现网 C</span><span class="nowtag">现状</span></div><div class="pane-b"><div class="now" style="position:relative;min-height:300px"><button class="mini" type="button" data-open="now">打开现网入场</button><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="detail-overlay" id="ovnow"><div class="detail-card">现网：上滑 20px / 300ms<button class="mini" type="button" data-x="now" style="position:absolute;top:12px;right:12px">×</button></div></div></div></div></div>
+  <div class="pane "><div class="pane-h"><span>方案</span><span>对照</span></div><div class="pane-b"><div class="vE" style="position:relative;min-height:300px"><button class="mini" type="button" data-open="E">打开右侧滑入</button><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="detail-overlay" id="ovE"><div class="detail-card">E：从右边来 48px<button class="mini" type="button" data-x="E" style="position:absolute;top:12px;right:12px">×</button></div></div></div></div></div>
+</div>
+<div class="pair-title">F · 先遮罩后卡片 <span>两段节奏，现网是同时动</span></div>
+<div class="pair">
+  <div class="pane now"><div class="pane-h"><span>现网 C</span><span class="nowtag">现状</span></div><div class="pane-b"><div class="now" style="position:relative;min-height:300px"><button class="mini" type="button" data-open="now2">打开现网入场</button><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="detail-overlay" id="ovnow2"><div class="detail-card">现网：上滑 20px / 300ms<button class="mini" type="button" data-x="now2" style="position:absolute;top:12px;right:12px">×</button></div></div></div></div></div>
+  <div class="pane "><div class="pane-h"><span>方案</span><span>对照</span></div><div class="pane-b"><div class="vF" style="position:relative;min-height:300px"><button class="mini" type="button" data-open="F">打开两段式</button><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+</div><div class="detail-overlay" id="ovF"><div class="detail-card">F：先遮罩，再弹出<button class="mini" type="button" data-x="F" style="position:absolute;top:12px;right:12px">×</button></div></div></div></div></div>
+</div><p style="padding:8px 20px 24px;font-size:0.88rem;"><a class="back" href="./detail-enter-H-vs-C.html">H · 从这张卡长出 对照现网 →</a></p>
+
+<script>
+function openK(k){ const ov=document.getElementById('ov'+k); ov.classList.remove('open'); void ov.offsetWidth; ov.classList.add('open'); }
+function closeK(k){ document.getElementById('ov'+k).classList.remove('open'); }
+document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); openK(b.dataset.open); }));
+document.querySelectorAll('[data-x]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); closeK(b.dataset.x); }));
+</script>
+
+</body></html>

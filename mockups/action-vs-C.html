@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>按钮 · 对照现网</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-gradient-hover: linear-gradient(180deg, rgba(46, 40, 74, 0.9) 0%, rgba(32, 28, 54, 0.92) 55%, rgba(24, 20, 40, 0.94) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --warning: #f59e0b; --border: rgba(255, 255, 255, 0.08);
+  --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif); color: var(--text); min-height: 100vh;
+  background: #08060e; background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.banner { position: sticky; top: 0; z-index: 50; background: var(--glass-bg); border-bottom: 1px solid var(--border); padding: 12px 24px 14px; }
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); }
+.hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
+.back:hover { color: var(--accent); }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px 20px 8px; }
+.pair-title { padding: 20px 20px 0; font-size: 0.9rem; font-weight: 700; }
+.pair-title span { font-weight: 500; color: var(--text-muted); font-size: 0.8rem; }
+.pane { border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; background: rgba(20,17,34,0.45); min-height: 220px; position: relative; }
+.pane.now { box-shadow: inset 0 0 0 1px rgba(99,102,241,0.35); }
+.pane-h { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.78rem; display: flex; justify-content: space-between; }
+.pane-h .nowtag { color: var(--accent); font-weight: 700; }
+.pane-b { padding: 12px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 16px; box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  position: relative; overflow: hidden; cursor: pointer; margin-bottom: 12px;
+}
+.card:last-child { margin-bottom: 0; }
+.card-header { display: flex; gap: 10px; margin-bottom: 8px; }
+.avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); }
+.repo-owner { color: var(--text-secondary); font-size: 0.88rem; }
+.repo-name { font-weight: 700; color: var(--accent); font-size: 0.88rem; display: inline-block; }
+.summary {
+  font-size: 0.9rem; font-weight: 700; padding: 6px 10px; margin-bottom: 0;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.feed2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.feed2 .card { margin: 0; }
+
+
+.action-row { display:flex; gap:12px; padding-top:8px; }
+.action-btn {
+  width:52px; height:52px; border-radius:50%; border:1px solid var(--border);
+  color:var(--text-secondary); display:flex; align-items:center; justify-content:center;
+}
+.action-btn svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:2; }
+.now .action-btn { transition: all 0.25s; }
+.now .action-btn:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-light); transform:scale(1.1); }
+.vJ .action-btn { transition: transform 0.18s ease, border-color 0.2s, color 0.2s; }
+.vJ .action-btn:hover { border-color:var(--accent); color:var(--accent); }
+.vJ .action-btn:active { transform: scale(1.08, 0.82); }
+</style>
+</head><body>
+<header class="banner">
+  <div class="banner-kicker">第三轮 · 左侧一律是现网</div>
+  <h1>候选 3 · J 压扁 vs 现网放大</h1>
+  <p>其余按钮方案已刷。只留 J。左侧现网 hover 放到 1.1；右侧按下压扁，松手恢复。</p>
+  <div class="hint">悬停，再按住看。</div>
+  <a class="back" href="./00-点菜.html">← 回点菜页</a>
+</header>
+
+<div class="pair-title">J · 压扁回弹 <span>和现网等比放大不是一类动作</span></div>
+<div class="pair">
+  <div class="pane now"><div class="pane-h"><span>现网 C</span><span class="nowtag">现状</span></div><div class="pane-b"><div class="now"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+<div class="action-row">
+  <button class="action-btn" type="button" aria-label="喜欢"><svg viewBox="0 0 24 24"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg></button>
+  <button class="action-btn" type="button" aria-label="不喜欢"><svg viewBox="0 0 24 24"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22h0a3.13 3.13 0 0 1-3-3.88Z"/></svg></button>
+  <button class="action-btn" type="button" aria-label="收藏"><svg viewBox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></button>
+</div>
+
+</div></div></div></div>
+  <div class="pane "><div class="pane-h"><span>方案</span><span>对照</span></div><div class="pane-b"><div class="vJ"><div class="card" data-name="react">
+  <div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+  </div>
+  <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+  
+<div class="action-row">
+  <button class="action-btn" type="button" aria-label="喜欢"><svg viewBox="0 0 24 24"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg></button>
+  <button class="action-btn" type="button" aria-label="不喜欢"><svg viewBox="0 0 24 24"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22h0a3.13 3.13 0 0 1-3-3.88Z"/></svg></button>
+  <button class="action-btn" type="button" aria-label="收藏"><svg viewBox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></button>
+</div>
+
+</div></div></div></div>
+</div>
+
+</body></html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>刷完空态 · 对比</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  color-scheme: dark;
+  --bg: #08060e;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-gradient-hover: linear-gradient(180deg, rgba(46, 40, 74, 0.9) 0%, rgba(32, 28, 54, 0.92) 55%, rgba(24, 20, 40, 0.94) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --side-group-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.82) 0%, rgba(24, 20, 40, 0.86) 100%);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-glow: rgba(99, 102, 241, 0.4);
+  --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --success: #22c55e; --warning: #f59e0b;
+  --border: rgba(255, 255, 255, 0.08); --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif);
+  background: #08060e;
+  background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+  background-attachment: fixed; color: var(--text); line-height: 1.65; min-height: 100vh;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.banner {
+  position: sticky; top: 0; z-index: 50; background: var(--glass-bg);
+  border-bottom: 1px solid var(--border); padding: 12px 24px 14px;
+}
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); }
+.banner .hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
+.back:hover { color: var(--accent); }
+.feed { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 24px; max-width: 1100px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 20px; box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  position: relative; overflow: hidden; cursor: pointer;
+}
+.card-header { display: flex; gap: 10px; margin-bottom: 10px; }
+.avatar { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); flex-shrink: 0; }
+.repo-owner { color: var(--text-secondary); font-size: 0.92rem; }
+.repo-name { font-weight: 700; color: var(--accent); font-size: 0.92rem; display: inline-block; }
+.card-sub { font-size: 0.74rem; color: var(--text-muted); margin-top: 3px; }
+.summary {
+  font-size: 0.98rem; font-weight: 700; line-height: 1.5; color: var(--text);
+  margin-bottom: 8px; padding: 8px 12px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.reason { font-size: 0.82rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 10px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.meta { font-size: 0.78rem; color: var(--text-secondary); }
+.stars { color: var(--warning); font-weight: 600; }
+.layout { display: flex; align-items: flex-start; }
+.sidebar { width: 192px; flex-shrink: 0; padding: 20px 10px; }
+.side-group-box {
+  background: var(--side-group-bg); border: 1px solid var(--glass-border); border-radius: 18px;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  padding: 14px 12px 8px;
+}
+.side-group { font-size: 0.95rem; font-weight: 700; color: var(--text-secondary); padding: 0 4px 8px; }
+.side-item {
+  display: block; width: 100%; padding: 10px 12px; margin-bottom: 4px; border-radius: var(--radius-sm);
+  color: var(--text-secondary); font-size: 0.92rem; text-align: left;
+}
+.side-item:hover { background: var(--accent-light); color: var(--text); }
+.side-item.active {
+  background: var(--accent-gradient); color: #fff; font-weight: 700;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+}
+.feed-wrap { flex: 1; min-width: 0; }
+.grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 16px; }
+.col { border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; background: rgba(20, 17, 34, 0.5); position: relative; }
+.col-h { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.col-h strong { display: block; font-size: 0.88rem; }
+.col-h span { font-size: 0.74rem; color: var(--text-muted); }
+.col-b { padding: 12px; }
+.col .feed { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 0; max-width: none; }
+
+.vA .empty { text-align: center; padding: 48px 24px; color: var(--text-muted); }.vA .ghost {
+  max-width: 420px; margin: 20px auto 0; height: 120px; border-radius: 18px;
+  border: 1px dashed var(--glass-border); background: transparent; opacity: 0.7;
+}
+.vB .empty { text-align: center; padding: 56px 24px; }.vB .empty h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 10px; }.vB .empty p { color: var(--text-secondary); margin-bottom: 20px; }.vB .go {
+  display: inline-block; padding: 8px 22px; border-radius: 20px;
+  background: var(--accent-gradient); color: #fff; font-weight: 600; font-size: 0.9rem;
+}
+.vC .status { text-align: center; padding: 60px 24px; color: var(--text-muted); }
+
+</style>
+</head>
+<body>
+<header class="banner">
+  <div class="banner-kicker">候选 10 · A/B/C</div>
+  <h1>刷完空态 · 对比</h1>
+  <p>A 虚线残卡 / B 大标题收束 / C 现网小灰字。</p>
+  <div class="hint">三列直接看，不用点。</div>
+  <a class="back" href="./00-点菜.html">← 回点菜页</a>
+</header>
+
+<div class="grid">
+<div class="col vA"><div class="col-h"><strong>A · 虚线残卡</strong></div><div class="col-b"><div class="empty"><p>这一频道暂时刷完了</p><div class="ghost"></div></div></div></div>
+<div class="col vB"><div class="col-h"><strong>B · 大标题收束</strong></div><div class="col-b"><div class="empty"><h2>刷完了</h2><p>今天这一频道的项目都看过了。</p><button class="go" type="button">回推荐</button></div></div></div>
+<div class="col vC"><div class="col-h"><strong>C · 现网小灰字</strong></div><div class="col-b"><div class="status">没有更多了</div></div></div>
+</div>
+
+
+</body>
+</html>

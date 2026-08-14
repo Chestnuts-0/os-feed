@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>卡片悬停 D内敛 · 对照现网</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-gradient-hover: linear-gradient(180deg, rgba(46, 40, 74, 0.9) 0%, rgba(32, 28, 54, 0.92) 55%, rgba(24, 20, 40, 0.94) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --border: rgba(255, 255, 255, 0.08); --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif); color: var(--text); min-height: 100vh;
+  background: #08060e; background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.banner { position: sticky; top: 0; z-index: 40; background: var(--glass-bg); border-bottom: 1px solid var(--border); padding: 12px 24px 14px; }
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); }
+.hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px 20px; }
+.pane { border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; background: rgba(20,17,34,0.45); }
+.pane.now { box-shadow: inset 0 0 0 1px rgba(99,102,241,0.35); }
+.pane-h { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.78rem; display: flex; justify-content: space-between; }
+.nowtag { color: var(--accent); font-weight: 700; }
+.pane-b { padding: 14px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 16px; margin-bottom: 12px; cursor: pointer; position: relative; overflow: hidden;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+}
+.card:last-child { margin-bottom: 0; }
+.card-header { display: flex; gap: 10px; margin-bottom: 8px; }
+.avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); }
+.repo-owner { color: var(--text-secondary); font-size: 0.88rem; }
+.repo-name { font-weight: 700; color: var(--accent); }
+.summary {
+  font-size: 0.9rem; font-weight: 700; padding: 6px 10px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+
+.now .card { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+.now .card::before { content:""; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent-gradient); opacity:0; transition:opacity 0.3s; }
+.now .card:hover {
+  background: var(--glass-gradient-hover);
+  border-color: rgba(184,153,255,0.35);
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow),
+    0 0 0 1px rgba(184,153,255,0.25), 0 0 28px rgba(99,102,241,0.18);
+  transform: translateY(-4px);
+}
+.now .card:hover::before { opacity: 1; }
+.vD .card { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s, background 0.35s; }
+.vD .card:hover {
+  background: var(--glass-gradient-hover);
+  transform: scale(0.992);
+  box-shadow: inset 0 1px 6px rgba(0,0,0,0.22), var(--glass-highlight-bottom), var(--glass-shadow);
+}
+</style>
+</head><body>
+<header class="banner">
+  <div class="banner-kicker">第四轮 · 左侧一律现网</div>
+  <h1>候选 1 · 更收的沉入 vs 现网抬起</h1>
+  <p>F / G 已刷。上一版 D 缩到 0.97，幅度偏大。这一版只缩到 0.992，内阴影也更浅。现网仍是抬 4px + 紫晕。</p>
+  <div class="hint">两列悬停同一张卡。D 往里一点点，C 往上浮。</div>
+  <a class="back" href="./00-点菜.html">← 回点菜页</a>
+</header>
+
+<div class="pair">
+  <div class="pane now"><div class="pane-h"><span>现网 C · 抬 4px + 紫晕</span><span class="nowtag">现状</span></div>
+    <div class="pane-b"><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div></div>
+    <div class="summary">声明式 UI 库，组件化写界面的事实标准</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div></div>
+    <div class="summary">React 全栈框架，路由开箱即用</div></div></div></div>
+  <div class="pane"><div class="pane-h"><span>D 内敛 · 缩 0.8% + 浅内影</span><span>对照</span></div>
+    <div class="pane-b vD"><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div></div>
+    <div class="summary">声明式 UI 库，组件化写界面的事实标准</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div></div>
+    <div class="summary">React 全栈框架，路由开箱即用</div></div></div></div>
+</div>
+
+
+</body></html>

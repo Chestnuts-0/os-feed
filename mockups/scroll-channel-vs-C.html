@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>切频道滚动 · 对照现网</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-gradient-hover: linear-gradient(180deg, rgba(46, 40, 74, 0.9) 0%, rgba(32, 28, 54, 0.92) 55%, rgba(24, 20, 40, 0.94) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --border: rgba(255, 255, 255, 0.08); --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif); color: var(--text); min-height: 100vh;
+  background: #08060e; background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.banner { position: sticky; top: 0; z-index: 40; background: var(--glass-bg); border-bottom: 1px solid var(--border); padding: 12px 24px 14px; }
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); }
+.hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px 20px; }
+.pane { border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; background: rgba(20,17,34,0.45); }
+.pane.now { box-shadow: inset 0 0 0 1px rgba(99,102,241,0.35); }
+.pane-h { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.78rem; display: flex; justify-content: space-between; }
+.nowtag { color: var(--accent); font-weight: 700; }
+.pane-b { padding: 14px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 16px; margin-bottom: 12px; cursor: pointer; position: relative; overflow: hidden;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+}
+.card:last-child { margin-bottom: 0; }
+.card-header { display: flex; gap: 10px; margin-bottom: 8px; }
+.avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); }
+.repo-owner { color: var(--text-secondary); font-size: 0.88rem; }
+.repo-name { font-weight: 700; color: var(--accent); }
+.summary {
+  font-size: 0.9rem; font-weight: 700; padding: 6px 10px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+
+.split { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 120px); }
+.col { display: flex; flex-direction: column; border-right: 1px solid var(--border); min-height: calc(100vh - 120px); }
+.col:last-child { border-right: none; }
+.col-label { padding: 8px 12px; font-size: 0.78rem; color: var(--text-muted); display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.nowtag { color: var(--accent); font-weight: 700; }
+iframe { flex: 1; width: 100%; border: 0; min-height: 70vh; background: transparent; }
+@media (max-width: 700px) {
+  .split { grid-template-columns: 1fr; }
+  .col { border-right: none; border-bottom: 1px solid var(--border); min-height: 80vh; }
+}
+</style>
+</head><body>
+<header class="banner">
+  <div class="banner-kicker">第四轮 · 左侧一律现网</div>
+  <h1>候选 11 · 切频道回顶 vs 现网停在半山腰</h1>
+  <p>上一轮框太小，滚动变化几乎看不见。这一轮左右各是一个独立页面：你在框里滚，等于在滚那个页面。只比你说「可能还不错」的最后一个。</p>
+  <div class="hint">步骤：① 在左框滚到 50% 以上，点热门，看大数字还停在原地 ② 右框同样操作，数字应回到 0%。</div>
+  <a class="back" href="./00-点菜.html">← 回点菜页</a>
+</header>
+
+<div class="split">
+  <div class="col now">
+    <div class="col-label"><span>现网 · 切了还停在原地</span><span class="nowtag">现状</span></div>
+    <iframe src="./_scroll-sim-C.html" title="现网切频道不回顶"></iframe>
+  </div>
+  <div class="col">
+    <div class="col-label"><span>方案 · 切频道滚回顶部</span><span>对照</span></div>
+    <iframe src="./_scroll-sim-S.html" title="切频道回顶"></iframe>
+  </div>
+</div>
+
+
+</body></html>

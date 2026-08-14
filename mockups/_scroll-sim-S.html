@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方案 · 切频道回顶</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  color-scheme: dark;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --glass-gradient-hover: linear-gradient(180deg, rgba(46, 40, 74, 0.9) 0%, rgba(32, 28, 54, 0.92) 55%, rgba(24, 20, 40, 0.94) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --border: rgba(255, 255, 255, 0.08); --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif); color: var(--text); min-height: 100vh;
+  background: #08060e; background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.banner { position: sticky; top: 0; z-index: 40; background: var(--glass-bg); border-bottom: 1px solid var(--border); padding: 12px 24px 14px; }
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); }
+.hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.back { display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); text-decoration: none; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 16px 20px; }
+.pane { border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; background: rgba(20,17,34,0.45); }
+.pane.now { box-shadow: inset 0 0 0 1px rgba(99,102,241,0.35); }
+.pane-h { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.78rem; display: flex; justify-content: space-between; }
+.nowtag { color: var(--accent); font-weight: 700; }
+.pane-b { padding: 14px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 16px; margin-bottom: 12px; cursor: pointer; position: relative; overflow: hidden;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+}
+.card:last-child { margin-bottom: 0; }
+.card-header { display: flex; gap: 10px; margin-bottom: 8px; }
+.avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); }
+.repo-owner { color: var(--text-secondary); font-size: 0.88rem; }
+.repo-name { font-weight: 700; color: var(--accent); }
+.summary {
+  font-size: 0.9rem; font-weight: 700; padding: 6px 10px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.meter {
+  position: sticky; top: 0; z-index: 8; padding: 14px 16px 10px;
+  background: var(--glass-bg); border-bottom: 1px solid var(--border);
+}
+.meter .pct { font-size: 2rem; font-weight: 700; color: var(--accent); letter-spacing: 0.02em; }
+.verdict { margin-top: 4px; font-size: 0.95rem; font-weight: 700; min-height: 1.4em; }
+.ch { display: flex; gap: 8px; padding: 10px 16px; position: sticky; top: 84px; z-index: 7; background: rgba(8,6,14,0.92); }
+.ch button { padding: 6px 14px; border-radius: 12px; border: 1px solid var(--border); font-size: 0.85rem; color: var(--text-secondary); }
+.ch button.on { background: var(--accent-gradient); color: #fff; border: none; font-weight: 700; }
+.feed { padding: 8px 16px 48px; }
+</style>
+</head><body>
+<div class="meter">滚动 <span class="pct" id="pct">0%</span>
+  <div class="verdict" id="verdict">往下滚，数字要过 50%，再点热门</div>
+</div>
+<div class="ch">
+  <button class="on" type="button">推荐</button>
+  <button type="button">热门</button>
+  <button type="button">日报</button>
+</div>
+<div class="feed"><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-1</span></div></div>
+    <div class="summary">第 1 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-2</span></div></div>
+    <div class="summary">第 2 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-3</span></div></div>
+    <div class="summary">第 3 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-4</span></div></div>
+    <div class="summary">第 4 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-5</span></div></div>
+    <div class="summary">第 5 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-6</span></div></div>
+    <div class="summary">第 6 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-7</span></div></div>
+    <div class="summary">第 7 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-8</span></div></div>
+    <div class="summary">第 8 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-9</span></div></div>
+    <div class="summary">第 9 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-10</span></div></div>
+    <div class="summary">第 10 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-11</span></div></div>
+    <div class="summary">第 11 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-12</span></div></div>
+    <div class="summary">第 12 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-13</span></div></div>
+    <div class="summary">第 13 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-14</span></div></div>
+    <div class="summary">第 14 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-15</span></div></div>
+    <div class="summary">第 15 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-16</span></div></div>
+    <div class="summary">第 16 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-17</span></div></div>
+    <div class="summary">第 17 张 · 先滚到下面再点热门</div></div><div class="card"><div class="card-header"><div class="avatar"></div>
+    <div><span class="repo-owner">owner</span> / <span class="repo-name">repo-18</span></div></div>
+    <div class="summary">第 18 张 · 先滚到下面再点热门</div></div></div>
+<script>
+const RESET = true;
+const pctEl = document.getElementById("pct");
+const verdict = document.getElementById("verdict");
+const btns = [...document.querySelectorAll(".ch button")];
+function pct() {
+  const max = document.documentElement.scrollHeight - window.innerHeight || 1;
+  return Math.round(window.scrollY / max * 100);
+}
+function upd() { pctEl.textContent = pct() + "%"; }
+window.addEventListener("scroll", upd, { passive: true });
+btns.forEach(b => b.addEventListener("click", () => {
+  btns.forEach(x => x.classList.toggle("on", x === b));
+  const before = pct();
+  if (RESET) window.scrollTo({ top: 0, behavior: "smooth" });
+  setTimeout(() => {
+    upd();
+    const after = pct();
+    verdict.textContent = RESET
+      ? ("切完回到顶部  " + before + "% → " + after + "%")
+      : ("切完还停在 " + after + "%（现网就是这样卡住）");
+  }, RESET ? 450 : 0);
+}));
+</script>
+</body></html>
