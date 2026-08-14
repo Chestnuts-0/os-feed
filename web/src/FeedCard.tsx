@@ -63,18 +63,18 @@ export type OpenCardHandler = (card: Card, sourceEl?: HTMLElement) => void;
 
 function IgnoreRow({ onUndo }: { onUndo: () => void }) {
   return (
-    <div className="ignore-row">
-      <span>{IGNORE_LABEL}</span>
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          onUndo();
-        }}
-      >
-        {UNDO_LABEL}
-      </button>
-    </div>
+    <button
+      type="button"
+      className="ignore-chip"
+      title={`${IGNORE_LABEL} · ${UNDO_LABEL}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        onUndo();
+      }}
+    >
+      <span className="ignore-chip-label">{IGNORE_LABEL}</span>
+      <span className="ignore-chip-action">{UNDO_LABEL}</span>
+    </button>
   );
 }
 
@@ -361,23 +361,23 @@ export function CardDetail({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (typeof el.animate !== "function") return;
 
-    const dest = el.getBoundingClientRect();
-    if (dest.width < 1 || dest.height < 1) return;
-    const sx = sourceRect.width / dest.width;
-    const sy = sourceRect.height / dest.height;
-    if (!Number.isFinite(sx) || !Number.isFinite(sy)) return;
-    const ratio = Math.max(sx / sy, sy / sx);
-    if (ratio > 2.5) {
-      el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: "ease" });
-      return;
-    }
-    el.style.transformOrigin = "top left";
-    const dx = sourceRect.left - dest.left;
-    const dy = sourceRect.top - dest.top;
-    el.animate(
-      [{ transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` }, { transform: "none" }],
-      { duration: 380, easing: "cubic-bezier(0.4, 0, 0.2, 1)" },
-    );
+    const play = () => {
+      const dest = el.getBoundingClientRect();
+      if (dest.width < 1 || dest.height < 1) return false;
+      const sx = sourceRect.width / dest.width;
+      const sy = sourceRect.height / dest.height;
+      if (!Number.isFinite(sx) || !Number.isFinite(sy) || sx <= 0 || sy <= 0) return false;
+      el.style.transformOrigin = "top left";
+      const dx = sourceRect.left - dest.left;
+      const dy = sourceRect.top - dest.top;
+      el.animate(
+        [{ transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` }, { transform: "none" }],
+        { duration: 380, easing: "cubic-bezier(0.4, 0, 0.2, 1)" },
+      );
+      return true;
+    };
+
+    if (!play()) requestAnimationFrame(() => play());
   }, [sourceRect]);
 
   const inCollections = collections.filter((c) => c.repos.includes(card.repo));

@@ -499,11 +499,11 @@ button {
   z-index: 2;
 }
 
-/* 点踩留卡：绝对定位，不占文档流，卡片高度与邻卡保持一致 */
+/* 点踩留卡：绝对定位芯片按钮，不占文档流，卡片高度与邻卡保持一致 */
 .card-ignore {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 16px;
+  right: 16px;
   z-index: 2;
 }
 .card.ignored .summary,
@@ -515,20 +515,39 @@ button {
 .card.ignored .card-subtitle {
   opacity: 0.55;
 }
-.ignore-row {
-  display: flex;
+.ignore-chip {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.75rem;
+  gap: 8px;
+  height: 32px;
+  padding: 0 5px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--glass-bg);
+  box-shadow: var(--glass-highlight-top);
   color: var(--text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
 }
-.ignore-row button {
+.ignore-chip:hover {
+  border-color: var(--accent);
+}
+.ignore-chip-label {
+  font-weight: 500;
+}
+.ignore-chip-action {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: var(--accent-light);
   color: var(--accent);
   font-size: 0.75rem;
   font-weight: 600;
 }
 .detail-ignore-slot {
-  min-height: 1.5rem;
+  min-height: 32px;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
