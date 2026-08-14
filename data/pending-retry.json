@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "repo": "skypilot-org/skypilot",
+    "desc": "The AI Compute Platform for frontier teams. SkyPilot turns fragmented AI compute into one AI supercomputer, so frontier AI teams build custom intelligence faster.",
+    "stars": 10488,
+    "language": "Python",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 4,
+    "bigbros": [],
+    "ts": "2026-08-14T01:23:41.092Z",
+    "retryCount": 1
+  }
+]
