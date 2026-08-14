@@ -12,10 +12,12 @@ interface CreatorPageProps {
   /** 该创作者的项目（调用方已按 score 降序） */
   projects: FeedCard[];
   likedSet: ReadonlySet<string>;
+  dislikedSet: ReadonlySet<string>;
   isFollowing: boolean;
   onToggleFollow: (owner: string) => void;
   /** 项目卡片打开详情（overlay，与页面栈独立） */
-  onOpen: (card: FeedCard) => void;
+  onOpen: (card: FeedCard, sourceEl?: HTMLElement) => void;
+  onDislike: (repo: string) => void;
   /** 创作者页内项目卡片点其他 owner → 压栈（第二层） */
   onOpenCreator: (owner: string) => void;
   /** 返回（pop 一层） */
@@ -26,9 +28,11 @@ export function CreatorPage({
   owner,
   projects,
   likedSet,
+  dislikedSet,
   isFollowing,
   onToggleFollow,
   onOpen,
+  onDislike,
   onOpenCreator,
   onBack,
 }: CreatorPageProps) {
@@ -85,7 +89,9 @@ export function CreatorPage({
                 key={card.repo}
                 card={card}
                 liked={likedSet.has(card.repo)}
+                ignored={dislikedSet.has(card.repo)}
                 onOpen={onOpen}
+                onDislike={onDislike}
                 onOpenCreator={onOpenCreator}
               />
             ))}

@@ -398,6 +398,26 @@ button {
 .feed-virtual-cell {
   min-width: 0;
 }
+
+/* 频道切换入场：动内层 cell，避免覆盖虚拟行的 translateY */
+.feed-virtual.channel-entering .feed-virtual-cell {
+  animation: channel-enter 0.45s ease-out both;
+}
+@keyframes channel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feed-virtual.channel-entering .feed-virtual-cell {
+    animation: none;
+  }
+}
 .feed-virtual-measure {
   position: absolute;
   visibility: hidden;
@@ -477,6 +497,41 @@ button {
   opacity: 0.75;
   pointer-events: none;
   z-index: 2;
+}
+
+/* 点踩留卡：绝对定位，不占文档流，卡片高度与邻卡保持一致 */
+.card-ignore {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+}
+.card.ignored .summary,
+.card.ignored .reason-clamped,
+.card.ignored .repo-name,
+.card.ignored .repo-owner,
+.card.ignored .card-meta,
+.card.ignored .card-tags,
+.card.ignored .card-subtitle {
+  opacity: 0.55;
+}
+.ignore-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.ignore-row button {
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.detail-ignore-slot {
+  min-height: 1.5rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 
 /* 卡片头部 */
@@ -693,6 +748,10 @@ button {
     0 24px 80px rgba(0, 0, 0, 0.5);
   animation: slideUp 0.3s ease;
   position: relative;
+}
+/* 从卡片 FLIP 长出时关掉 slideUp，避免两套入场叠在一起 */
+.detail-card-from-card {
+  animation: none;
 }
 
 /* 点赞成功：顶条从左 scaleX 扫过一次再淡出（方向2候选7点菜 A） */

@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { FeedCard as Card, Collection } from "./types.ts";
 import {
   ExternalLink,
@@ -53,6 +53,29 @@ function timeAgo(ts: string): string {
 // 清理旧数据中的 ①②③ 序号
 function cleanReason(text: string): string {
   return text.replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "");
+}
+
+/** 点踩后的统一文案（卡片与详情必须同一套词） */
+export const IGNORE_LABEL = "不感兴趣";
+export const UNDO_LABEL = "撤销";
+
+export type OpenCardHandler = (card: Card, sourceEl?: HTMLElement) => void;
+
+function IgnoreRow({ onUndo }: { onUndo: () => void }) {
+  return (
+    <div className="ignore-row">
+      <span>{IGNORE_LABEL}</span>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onUndo();
+        }}
+      >
+        {UNDO_LABEL}
+      </button>
+    </div>
+  );
 }
 
 const LANG_COLORS: Record<string, string> = {
@@ -163,23 +186,43 @@ function channelBadges(card: Card, channel?: string): string[] {
 interface Props {
   card: Card;
   liked: boolean;
+  ignored?: boolean;
   dismissing?: boolean;
-  onOpen: (card: Card) => void;
+  onOpen: OpenCardHandler;
+  onDislike?: (repo: string) => void;
   channel?: string;
   onOpenCreator?: (owner: string) => void;
 }
 
-function FeedCardComponent({ card, liked, dismissing = false, onOpen, channel, onOpenCreator }: Props) {
+function FeedCardComponent({
+  card,
+  liked,
+  ignored = false,
+  dismissing = false,
+  onOpen,
+  onDislike,
+  channel,
+  onOpenCreator,
+}: Props) {
   const langColor = LANG_COLORS[card.language] ?? "#666";
   const reason = cleanReason(card.reasonCn);
   const badges = channelBadges(card, channel);
 
   return (
-    <article className={`card${dismissing ? " dismissing" : ""}`} onClick={() => onOpen(card)}>
-      {liked && (
-        <span className="card-liked" title="已点赞">
-          <Heart size={14} fill="currentColor" />
-        </span>
+    <article
+      className={`card${dismissing ? " dismissing" : ""}${ignored ? " ignored" : ""}`}
+      onClick={(e) => onOpen(card, e.currentTarget)}
+    >
+      {ignored && onDislike ? (
+        <div className="card-ignore">
+          <IgnoreRow onUndo={() => onDislike(card.repo)} />
+        </div>
+      ) : (
+        liked && (
+          <span className="card-liked" title="已点赞">
+            <Heart size={14} fill="currentColor" />
+          </span>
+        )
       )}
       <div className="card-header">
         <GithubAvatar owner={card.owner} size={40} className="avatar" />
@@ -274,6 +317,7 @@ interface DetailProps {
   liked: boolean;
   disliked: boolean;
   collections: Collection[];
+  sourceRect?: DOMRect | null;
   onLike: (repo: string) => void;
   onDislike: (repo: string) => void;
   onUpdateCollections: (collections: Collection[]) => void;
@@ -286,6 +330,7 @@ export function CardDetail({
   liked,
   disliked,
   collections,
+  sourceRect = null,
   onLike,
   onDislike,
   onUpdateCollections,
@@ -306,6 +351,34 @@ export function CardDetail({
     }
     prevLiked.current = liked;
   }, [liked]);
+
+  const panelRef = useRef<HTMLDivElement>(null);
+  const fromCard = Boolean(sourceRect);
+
+  useLayoutEffect(() => {
+    const el = panelRef.current;
+    if (!el || !sourceRect) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (typeof el.animate !== "function") return;
+
+    const dest = el.getBoundingClientRect();
+    if (dest.width < 1 || dest.height < 1) return;
+    const sx = sourceRect.width / dest.width;
+    const sy = sourceRect.height / dest.height;
+    if (!Number.isFinite(sx) || !Number.isFinite(sy)) return;
+    const ratio = Math.max(sx / sy, sy / sx);
+    if (ratio > 2.5) {
+      el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: "ease" });
+      return;
+    }
+    el.style.transformOrigin = "top left";
+    const dx = sourceRect.left - dest.left;
+    const dy = sourceRect.top - dest.top;
+    el.animate(
+      [{ transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` }, { transform: "none" }],
+      { duration: 380, easing: "cubic-bezier(0.4, 0, 0.2, 1)" },
+    );
+  }, [sourceRect]);
 
   const inCollections = collections.filter((c) => c.repos.includes(card.repo));
 
@@ -334,7 +407,11 @@ export function CardDetail({
 
   return (
     <div className="detail-overlay" onClick={onClose}>
-      <div className="detail-card" onClick={(e) => e.stopPropagation()}>
+      <div
+        ref={panelRef}
+        className={`detail-card${fromCard ? " detail-card-from-card" : ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         {likeFlashGen > 0 && <span key={likeFlashGen} className="like-flash-bar" aria-hidden="true" />}
         <button className="detail-close" onClick={onClose}>
           <X size={18} />
@@ -410,6 +487,10 @@ export function CardDetail({
           </div>
         )}
 
+        <div className="detail-ignore-slot" aria-live="polite">
+          {disliked && <IgnoreRow onUndo={() => onDislike(card.repo)} />}
+        </div>
+
         <div className="detail-actions">
           <button
             className={`action-btn like-btn${liked ? " active" : ""}`}
@@ -419,6 +500,8 @@ export function CardDetail({
           </button>
           <button
             className={`action-btn dislike-btn${disliked ? " active" : ""}`}
+            title={disliked ? UNDO_LABEL : IGNORE_LABEL}
+            aria-label={disliked ? UNDO_LABEL : IGNORE_LABEL}
             onClick={() => onDislike(card.repo)}
           >
             <ThumbsDown size={20} />

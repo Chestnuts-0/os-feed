@@ -28,76 +28,31 @@ body {
 .wrap { max-width: 880px; margin: 0 auto; }
 h1 { font-size: 1.35rem; margin-bottom: 8px; }
 .lead { color: var(--text-secondary); margin-bottom: 12px; font-size: 0.92rem; }
-.lock { font-size: 0.82rem; color: var(--success); margin-bottom: 8px; }
-.rule { font-size: 0.82rem; color: var(--accent); margin-bottom: 22px; }
+.lock { font-size: 0.82rem; color: var(--success); margin-bottom: 22px; }
 .card {
   background: var(--side-group-bg); border: 1px solid var(--glass-border); border-radius: 18px;
   box-shadow: var(--glass-hi), var(--glass-shadow); padding: 18px 20px 16px; margin-bottom: 14px;
 }
 .n { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
 h2 { font-size: 1.02rem; margin: 2px 0 6px; }
-.why { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 12px; }
-.links { display: flex; flex-wrap: wrap; gap: 8px; }
-a {
-  display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 16px;
-  border: 1px solid var(--border); color: var(--text-secondary); text-decoration: none; font-size: 0.82rem;
-}
-a:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-a.pri { background: var(--accent-gradient); color: #fff; border: none; font-weight: 700; }
-.dim { opacity: 0.4; }
+.why { font-size: 0.88rem; color: var(--text-secondary); }
+.dim { opacity: 0.55; }
 .note { margin-top: 22px; font-size: 0.8rem; color: var(--text-muted); }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>GitTok 方向 2 · 第四轮点菜</h1>
-  <p class="lead">没点名的已刷。还开着的四条都是<strong>左侧现网、右侧方案</strong>。回复「候选N 方案X」或「候选N 锁现网」。</p>
-  <p class="lock">已锁不改：4 加载 C、5 侧栏 C、9 搜索 C、10 空态 C。已点菜待上线：3 按钮 J、6 频道 B、7 点赞 A。</p>
-  <p class="rule">铁律：后面不管出什么，都会带现网对照。设计偏内敛。</p>
-
-  <article class="card">
-    <div class="n">候选 1 · 卡片悬停</div>
-    <h2>更收的 D 对照现网</h2>
-    <p class="why">F / G 已刷。上一版 D 缩到 0.97，你说幅度偏大、和现网难分高下。这一版只缩约 0.8%，内阴影更浅。分不出就锁现网 C。</p>
-    <div class="links">
-      <a class="pri" href="./card-hover-D-vs-C.html">对照现网</a>
-    </div>
-  </article>
-
-  <article class="card">
-    <div class="n">候选 2 · 弹窗入场</div>
-    <h2>H 全幅对照现网</h2>
-    <p class="why">你倾向 H。上一版对照把 H 塞进小格子，FLIP 被压扁。这一版两列都是整列高度，并写了宽高比 / 软渲染 / 虚拟列表 / 减少动态怎么兜底。E / F 未再提，已刷。</p>
-    <div class="links">
-      <a class="pri" href="./detail-enter-H-vs-C.html">H 对照现网</a>
-    </div>
-  </article>
-
-  <article class="card">
-    <div class="n">候选 8 · 点踩留卡</div>
-    <h2>留卡 + 撤销的观感 对照现网抽走</h2>
-    <p class="why">行为已点留卡。现网抽走补位。方案：卡留原位，正文略收，底下一行「不感兴趣 · 撤销」。不整张变灰、不飞走。详情里再点一次踩也是撤销。</p>
-    <div class="links">
-      <a class="pri" href="./dislike-留卡-vs-C.html">对照现网</a>
-    </div>
-  </article>
-
-  <article class="card">
-    <div class="n">候选 11 · 切频道滚动</div>
-    <h2>只比「切频道回顶」对照现网</h2>
-    <p class="why">上一轮框太小几乎看不出差别。这一轮左右各是独立滚动页，顶上有大号百分比。必须先滚过 50% 再点热门。6 的错开上浮要跟回顶一起上，否则切完还停在半山腰，入场看不见。</p>
-    <div class="links">
-      <a class="pri" href="./scroll-channel-vs-C.html">对照现网</a>
-    </div>
-  </article>
+  <h1>GitTok 方向 2 · 点菜已收口</h1>
+  <p class="lead">第四轮点菜已全部记下。生产正在按点菜上线。</p>
+  <p class="lock">1 悬停 C · 2 弹窗 H · 3 按钮 J · 4/5/9/10 锁现网 · 6 频道 B · 7 点赞 A · 8 留卡+撤销 · 11 切频道回顶</p>
 
   <article class="card dim">
-    <div class="n">已点菜 / 已锁 / 已刷</div>
-    <h2>不再作为选项</h2>
-    <p class="why">3=J、6=B、7=A 已点菜。4/5/9/10 锁现网。1 的 E/F/G/H/J；2 的 D/E/F/G/J；8 的飞走；其余未点名项一律已刷。</p>
+    <div class="n">已点菜，不再开新方案</div>
+    <h2>会话内不重排</h2>
+    <p class="why">点开卡片不再当场改推荐顺序；点踩留在原位。刷新后个性化才生效。</p>
   </article>
 
-  <p class="note">3 与 7 正在改生产。1 / 2 / 8 / 11 点完再上。</p>
+  <p class="note">对照页仍可打开作存档，不再作为点菜入口。</p>
 </div>
 </body>
 </html>

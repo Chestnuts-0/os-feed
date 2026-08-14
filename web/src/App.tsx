@@ -517,11 +517,13 @@ function buildRecommended(
 interface FeedVirtualListProps {
   cards: FeedCard[];
   likedSet: Set<string>;
-  dismissingSet: Set<string>;
-  onOpen: (card: FeedCard) => void;
+  dislikedSet: Set<string>;
+  onOpen: (card: FeedCard, sourceEl?: HTMLElement) => void;
+  onDislike: (repo: string) => void;
   onEndHint?: string;
   channel?: string;
   onOpenCreator?: (owner: string) => void;
+  entering?: boolean;
 }
 
 // 单行组件：IntersectionObserver 精确感知视口（只给真正可见的行开 blur）+ 行高真实测量
@@ -532,11 +534,13 @@ interface FeedVirtualRowProps {
   left: FeedCard;
   right?: FeedCard;
   likedSet: Set<string>;
-  dismissingSet: Set<string>;
-  onOpen: (card: FeedCard) => void;
+  dislikedSet: Set<string>;
+  onOpen: (card: FeedCard, sourceEl?: HTMLElement) => void;
+  onDislike: (repo: string) => void;
   measureRef?: (node: HTMLDivElement | null) => void;
   channel?: string;
   onOpenCreator?: (owner: string) => void;
+  entering?: boolean;
 }
 
 function FeedVirtualRow({
@@ -546,11 +550,13 @@ function FeedVirtualRow({
   left,
   right,
   likedSet,
-  dismissingSet,
+  dislikedSet,
   onOpen,
+  onDislike,
   measureRef,
   channel,
   onOpenCreator,
+  entering = false,
 }: FeedVirtualRowProps) {
   const rowRef = useRef<HTMLDivElement | null>(null);
   const [inViewport, setInViewport] = useState(false);
@@ -587,24 +593,32 @@ function FeedVirtualRow({
     >
       <div className="feed-virtual-grid">
         {left && (
-          <div className="feed-virtual-cell">
+          <div
+            className="feed-virtual-cell"
+            style={entering && rowIndex < 8 ? { animationDelay: `${rowIndex * 0.2}s` } : undefined}
+          >
             <FeedCardMemo
               card={left}
               liked={likedSet.has(left.repo)}
-              dismissing={dismissingSet.has(left.repo)}
+              ignored={dislikedSet.has(left.repo)}
               onOpen={onOpen}
+              onDislike={onDislike}
               channel={channel}
               onOpenCreator={onOpenCreator}
             />
           </div>
         )}
         {right && (
-          <div className="feed-virtual-cell">
+          <div
+            className="feed-virtual-cell"
+            style={entering && rowIndex < 8 ? { animationDelay: `${rowIndex * 0.2 + 0.1}s` } : undefined}
+          >
             <FeedCardMemo
               card={right}
               liked={likedSet.has(right.repo)}
-              dismissing={dismissingSet.has(right.repo)}
+              ignored={dislikedSet.has(right.repo)}
               onOpen={onOpen}
+              onDislike={onDislike}
               channel={channel}
               onOpenCreator={onOpenCreator}
             />
@@ -618,11 +632,13 @@ function FeedVirtualRow({
 function FeedVirtualList({
   cards,
   likedSet,
-  dismissingSet,
+  dislikedSet,
   onOpen,
+  onDislike,
   onEndHint,
   channel,
   onOpenCreator,
+  entering = false,
 }: FeedVirtualListProps) {
   const listRef = useRef<HTMLDivElement>(null);
   // 列表容器相对文档顶部的偏移（前序分区高度变化时会变，需动态测量）
@@ -664,7 +680,7 @@ function FeedVirtualList({
   const virtualRows = rowVirtualizer.getVirtualItems();
 
   return (
-    <div className="feed-virtual" ref={listRef}>
+    <div className={`feed-virtual${entering ? " channel-entering" : ""}`} ref={listRef}>
       <div
         className="feed-virtual-spacer"
         style={{ height: `${rowVirtualizer.getTotalSize()}px`, position: "relative" }}
@@ -682,10 +698,12 @@ function FeedVirtualList({
               left={left}
               right={right}
               likedSet={likedSet}
-              dismissingSet={dismissingSet}
+              dislikedSet={dislikedSet}
               onOpen={onOpen}
+              onDislike={onDislike}
               channel={channel}
               onOpenCreator={onOpenCreator}
+              entering={entering}
               measureRef={rowVirtualizer.measureElement}
             />
           );
@@ -710,6 +728,7 @@ export default function App() {
   const [feedback, setFeedback] = useState<Feedback>(loadFeedback);
   // 已点赞集合（供卡片 ❤️ 标记；点赞不重排，仅此集合驱动小图标）
   const likedSet = useMemo(() => new Set(feedback.likes), [feedback.likes]);
+  const dislikedSet = useMemo(() => new Set(feedback.dislikes), [feedback.dislikes]);
   // 权重/交互只写 localStorage，不触发重渲染（交互零重排核心：点赞/点踩不重算 sections）
   const [preferences] = useState<Preferences>(loadPreferences);
   const prefsRef = useRef(preferences);
@@ -730,16 +749,15 @@ export default function App() {
   // 栈顶即当前创作者页；pop 到空数组回原 tab 原频道——tab/feedChannel 状态不动）
   const [viewStack, setViewStack] = useState<{ owner: string }[]>([]);
   const currentCreator = viewStack.length > 0 ? viewStack[viewStack.length - 1].owner : null;
-  const [seen, setSeen] = useState<Record<string, number>>(loadSeen);
+  const [seen] = useState<Record<string, number>>(loadSeen);
+  const seenRef = useRef(seen);
   const [expandedCols, setExpandedCols] = useState<Record<string, boolean>>({});
   const [searchQuery, setSearchQuery] = useState("");
   const [searchVisible, setSearchVisible] = useState(10);
   const [detailCard, setDetailCard] = useState<FeedCard | null>(null);
-  // 点踩淡出中的卡片（300ms 动画后移除）
-  const [dismissing, setDismissing] = useState<Set<string>>(new Set());
-  // 本次会话已点踩消失的卡片（不再渲染，避免滚动回来复活）
-  const [dismissed, setDismissed] = useState<Set<string>>(new Set());
+  const sourceRectRef = useRef<DOMRect | null>(null);
   const [feedChannel, setFeedChannel] = useState<string>("recommended");
+  const [channelEnter, setChannelEnter] = useState(false);
   // 移动端频道抽屉开关（<768px 由 ☰ 打开；选中频道或点遮罩关闭，桌面无感）
   const [drawerOpen, setDrawerOpen] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -839,33 +857,30 @@ export default function App() {
 
   const handleDislike = useCallback(
     (repo: string) => {
+      let addedDislike = false;
       setFeedback((prev) => {
-        const dislikes = prev.dislikes.includes(repo)
+        const undoing = prev.dislikes.includes(repo);
+        const dislikes = undoing
           ? prev.dislikes.filter((r) => r !== repo)
           : [...prev.dislikes, repo];
         const likes = prev.likes.filter((r) => r !== repo);
+        if (undoing) {
+          const ints = { ...interactionsRef.current };
+          delete ints[repo];
+          interactionsRef.current = ints;
+        } else {
+          addedDislike = true;
+          interactionsRef.current = {
+            ...interactionsRef.current,
+            [repo]: { type: "dislike" as InteractionType, ts: Date.now() },
+          };
+        }
+        saveInteractions(interactionsRef.current);
         const next = { likes, dislikes };
         saveFeedback(next);
         return next;
       });
-      // 记录交互（只写 localStorage + ref，不触发重渲染/重排）
-      interactionsRef.current = {
-        ...interactionsRef.current,
-        [repo]: { type: "dislike" as InteractionType, ts: Date.now() },
-      };
-      saveInteractions(interactionsRef.current);
-      // 权重累加（原逻辑保留），排序在下次页面加载/刷新时生效 —— 不触发 sections 重算
-      updateTagWeights([repo], -0.05);
-      // 点踩：卡片淡出动画后消失（不重排列表）
-      setDismissing((prev) => new Set(prev).add(repo));
-      window.setTimeout(() => {
-        setDismissed((prev) => new Set(prev).add(repo));
-        setDismissing((prev) => {
-          const next = new Set(prev);
-          next.delete(repo);
-          return next;
-        });
-      }, 300);
+      if (addedDislike) updateTagWeights([repo], -0.05);
     },
     [updateTagWeights],
   );
@@ -935,14 +950,12 @@ export default function App() {
     });
   }, []);
 
-  const handleOpenDetail = useCallback((card: FeedCard) => {
+  const handleOpenDetail = useCallback((card: FeedCard, sourceEl?: HTMLElement) => {
+    sourceRectRef.current = sourceEl?.getBoundingClientRect() ?? null;
     setDetailCard(card);
-    // 记录已看
-    setSeen((prev) => {
-      const next = { ...prev, [card.repo]: Date.now() };
-      saveSeen(next);
-      return next;
-    });
+    // 已看只写 localStorage，本会话不重算分区（点开会把卡移出推荐池，顺序会整列跳）
+    seenRef.current = { ...seenRef.current, [card.repo]: Date.now() };
+    saveSeen(seenRef.current);
   }, []);
 
   // 关注/取关（只影响关注频道与我的-关注，不触发 feed 重排）
@@ -1140,8 +1153,8 @@ export default function App() {
     return applyFilter(withContent, seen, interactions, collections);
   }, [cards, tab, seen, interactions, collections]);
 
-  // 分区数据（不重排：展示顺序 = feed.json 后端交错后的顺序；点赞只影响下次加载/推荐分区）
-  // 推荐分区 = 前端个性化生成（初始权重快照，与交互零重排原则一致）
+  // 分区数据（不重排：展示顺序 = feed.json 后端交错后的顺序；点赞/点开/点踩只影响下次加载）
+  // 推荐分区 = 前端个性化生成（用进入页面时的 seen/interactions 快照，会话内零重排）
   // 关注频道豁免空分区过滤：未关注任何人时侧栏仍保留「关注」项，内容区显示引导
   const sections = useMemo(() => {
     const all = ALL_SECTIONS.map((s) => ({
@@ -1157,10 +1170,9 @@ export default function App() {
   // 当前频道内容（单频道独立渲染；点踩消失的卡不再渲染）
   const activeSection = useMemo(() => {
     const sec = sections.find((s) => s.key === feedChannel);
-    if (!sec) return null;
-    const cards = sec.cards.filter((c) => !dismissed.has(c.repo));
-    return cards.length > 0 ? { ...sec, cards } : null;
-  }, [sections, feedChannel, dismissed]);
+    if (!sec || sec.cards.length === 0) return null;
+    return sec;
+  }, [sections, feedChannel]);
 
   // 喜欢的卡片（快照优先，其次匹配当天数据；快照缺失且当天数据也没有的——旧记录无法找回）
   const likedCards = useMemo(() => {
@@ -1243,8 +1255,16 @@ export default function App() {
 
   // 频道切换（侧边栏目的地导航，无取消态）
   const switchFeedChannel = useCallback((key: string) => {
+    if (key !== feedChannel) setChannelEnter(true);
     setFeedChannel(key);
-  }, []);
+    window.scrollTo(0, 0);
+  }, [feedChannel]);
+
+  useEffect(() => {
+    if (!channelEnter) return;
+    const t = window.setTimeout(() => setChannelEnter(false), 2100);
+    return () => window.clearTimeout(t);
+  }, [channelEnter]);
 
   const stats = useMemo(
     () => ({
@@ -1298,9 +1318,11 @@ export default function App() {
             owner={currentCreator}
             projects={creatorCards}
             likedSet={likedSet}
+            dislikedSet={dislikedSet}
             isFollowing={followingSet.has(currentCreator)}
             onToggleFollow={toggleFollow}
             onOpen={handleOpenDetail}
+            onDislike={handleDislike}
             onOpenCreator={openCreator}
             onBack={closeCreator}
           />
@@ -1364,10 +1386,12 @@ export default function App() {
                       <FeedVirtualList
                         cards={activeSection.cards}
                         likedSet={likedSet}
-                        dismissingSet={dismissing}
+                        dislikedSet={dislikedSet}
                         onOpen={handleOpenDetail}
+                        onDislike={handleDislike}
                         channel={feedChannel}
                         onOpenCreator={openCreator}
+                        entering={channelEnter}
                         onEndHint={`已加载全部 ${activeSection.cards.length} 个项目`}
                       />
                     </>
@@ -1457,7 +1481,9 @@ export default function App() {
                               key={card.repo}
                               card={card}
                               liked={true}
+                              ignored={dislikedSet.has(card.repo)}
                               onOpen={handleOpenDetail}
+                              onDislike={handleDislike}
                               onOpenCreator={openCreator}
                             />
                           ))}
@@ -1530,7 +1556,9 @@ export default function App() {
                                         <FeedCardMemo
                                           card={card}
                                           liked={feedback.likes.includes(card.repo)}
+                                          ignored={dislikedSet.has(card.repo)}
                                           onOpen={handleOpenDetail}
+                                          onDislike={handleDislike}
                                           onOpenCreator={openCreator}
                                         />
                                         <button
@@ -1708,7 +1736,7 @@ export default function App() {
                             className="search-cat"
                             onClick={() => {
                               setTab("feed");
-                              setFeedChannel(s.key);
+                              switchFeedChannel(s.key);
                             }}
                           >
                             <span className="cat-icon">
@@ -1728,7 +1756,9 @@ export default function App() {
                             key={card.repo}
                             card={card}
                             liked={feedback.likes.includes(card.repo)}
+                            ignored={dislikedSet.has(card.repo)}
                             onOpen={handleOpenDetail}
+                            onDislike={handleDislike}
                             onOpenCreator={openCreator}
                           />
                         ))}
@@ -1768,7 +1798,9 @@ export default function App() {
                           key={card.repo}
                           card={card}
                           liked={feedback.likes.includes(card.repo)}
+                          ignored={dislikedSet.has(card.repo)}
                           onOpen={handleOpenDetail}
+                          onDislike={handleDislike}
                           onOpenCreator={openCreator}
                         />
                       ))}
@@ -1840,10 +1872,12 @@ export default function App() {
       {/* 详情弹窗 */}
       {detailCard && (
         <CardDetail
+          key={detailCard.repo}
           card={detailCard}
           liked={feedback.likes.includes(detailCard.repo)}
           disliked={feedback.dislikes.includes(detailCard.repo)}
           collections={collections}
+          sourceRect={sourceRectRef.current}
           onLike={handleLike}
           onDislike={handleDislike}
           onUpdateCollections={handleUpdateCollections}
