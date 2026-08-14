@@ -467,9 +467,10 @@ export function CardDetail({
           </button>
           <button
             className={`action-btn dislike-btn${disliked ? " active" : ""}`}
+            aria-pressed={disliked}
             onClick={() => onDislike(card.repo)}
           >
-            <ThumbsDown size={20} />
+            <ThumbsDown size={20} fill={disliked ? "currentColor" : "none"} />
           </button>
           <button
             className={`action-btn bookmark-btn${inCollections.length > 0 ? " active" : ""}`}

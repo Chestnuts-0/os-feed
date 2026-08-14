@@ -951,8 +951,12 @@ button {
   border-color: var(--danger);
   color: var(--danger);
 }
+/* 原：opacity: 0.4（配合抽走，看起来像没点过）。留卡后改成与点赞同结构的按下态，再点一次取消 */
 .dislike-btn.active {
-  opacity: 0.4;
+  background: color-mix(in srgb, var(--text-muted) 28%, transparent);
+  border-color: var(--text-secondary);
+  color: var(--text);
+  opacity: 1;
 }
 .bookmark-btn.active {
   background: rgba(245, 158, 11, 0.15);
