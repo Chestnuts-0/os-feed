@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.233 发布，重点优化 GitLab 集成与安全过滤",
+      "OpenAI Codex 5个 Rust Alpha 版本发布，Windows 系统级 Bug 反馈高发",
+      "OpenCode 因 ID 溢出瘫痪，当前重心在协议层加固",
+      "Gemini CLI v0.56.0-nightly 聚焦 Agent 恢复机制与 PTY 资源修复",
+      "GitHub Copilot CLI v1.0.81-0 因认证机制回归导致大面积故障",
+      "DeepSeek TUI v0.9.8 迁移至 CodeWhale 品牌，活跃度极高"
+    ],
+    "ai-agents": [
+      "OpenClaw 处理 500+ Issues 与 PR，Gateway 内存泄漏修复成热点",
+      "OpenClaw Session 状态管理强化，防止意外重置与静默恢复失败",
+      "OpenClaw 修复 Worker Bundle 缓存无限制增长问题",
+      "OpenClaw Web UI 侧边栏重构，优化会话分组与状态展示",
+      "OpenClaw Codex 集成稳定性与 TUI 启动失败问题修复",
+      "OpenClaw 技术栈持续跟进 pnpm 与 llama-cpp 安全扫描"
+    ],
+    "ai-trending": [
+      "cactus-compute/needle 突破 5.6k Stars，端侧大模型推理引擎普及",
+      "holaboss-ai/holaOS 热度激增，全栈 AI 智能体工作台受关注",
+      "exo-explore/exo 流量攀升，本地前沿模型运行器受青睐",
+      "boundaryml/baml 成为 Agent 编程语言，提供类型安全接口",
+      "hugohe3/ppt-master 热门，AI 幻灯片生成器支持动画与解说",
+      "infiniflow/ragflow 与 volcengine/OpenViking 在 RAG 领域表现亮眼"
+    ],
+    "ai-web": [
+      "Anthropic 为 Claude 引入文本水印，应对欧盟 AI Act 合规要求",
+      "Anthropic 发布经济研究报告，评估 AI 就业再培训计划效果",
+      "Anthropic 从单纯模型竞赛转向合规落地与宏观政策布局",
+      "OpenAI 官网 2026-08-15 无更新，处于静默观察期",
+      "Anthropic 建立负责任 AI 提供商形象，抢占道德高地",
+      "OpenAI 零更新背景下，Anthropic 展现极强的主动性与前瞻性"
+    ],
+    "ai-hn": [
+      "Z.ai GLM-5.3 模型涌现网络战能力，引发 AI 边界激烈辩论",
+      "GLM-5.3 评论区高度两极分化，技术突破与核按钮风险并存",
+      "Anthropic 最新风险报告详细阐述模型失控可能性",
+      "Show HN: Graft 减少 Claude Code Token 消耗 42%",
+      "Show HN: Mole 深度研究代理运行于终端，替代繁琐 GUI 操作",
+      "OpenAI 人才流失事件再次将 AI 安全与公司治理推向风口"
+    ],
+    "ai-arxiv": [
+      "OmniScientist 全模态 AI 科学家系统，解决科研工作流自动化",
+      "SAEVerbalizer 生成稀疏自编码器特征解释，理解模型黑箱",
+      "LittleLearner 构建受控语料库，量化知识暴露对模型学习的影响",
+      "AutoDesign 长时序智能体设计，积累可复用设计经验",
+      "Vero 探讨 AI 智能体能否构建形式化验证软件仓库",
+      "重点论文聚焦安全性与鲁棒性，防御性预测与对抗样本检测"
+    ],
+    "ai-hf": [
+      "MiniMax-H3 流量榜首，多模态视频生成模型下载数破千万",
+      "Kimi-K3 以 10,672 点赞登上多模态榜单，国产模型强劲",
+      "DeepSeek-V4-Flash 凭借高下载量成为 LLM 新爆款",
+      "Qwen3.8-2.4T-A95B 参数巨大，专为高负载文本生成设计",
+      "NVIDIA-NemotronLabs-VoiceChat-11B 专为语音交互设计",
+      "DavidAU/Qwen3.6-27B-Fable... 社区微调版本下载量惊人"
+    ],
+    "ai-community": [
+      "Dev.to 讨论为何向量数据库不足以构建 AI 记忆系统",
+      "Dev.to 揭示 OpenAI 发票审计盲点，强调 FinOps 关键作用",
+      "Dev.to 探讨 OpenAI 安全验证机制在模糊指令下的行为边界",
+      "Dev.to 提出利用 Markdown 和 Git 实现低成本 AI 记忆",
+      "Dev.to 揭示自动化评估套件中的“假阳性”问题",
+      "Lobste.rs 深入剖析 OpenAI 与 Hugging Face 信任危机"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.233 released",
+      "OpenAI Codex Alpha v0.148.x",
+      "Gemini CLI v0.56.0-nightly",
+      "GitHub Copilot CLI stable",
+      "Kimi Code CLI tool",
+      "DeepSeek TUI project"
+    ],
+    "ai-agents": [
+      "500 Issues & 500 PRs today",
+      "OpenClaw high development velocity",
+      "Agent-native infrastructure shift",
+      "Agent OS evolution trend",
+      "Local-first execution focus",
+      "Standardized AI workflows"
+    ],
+    "ai-trending": [
+      "exo local AI models surge",
+      "anomalyco/opencode trending up",
+      "BAML Rust agent language",
+      "Switchyard API compatibility",
+      "AI infrastructure focus",
+      "Scientific agent skills trend"
+    ],
+    "ai-web": [
+      "Claude watermarking EU compliance",
+      "Text watermarking technical deep dive",
+      "Anthropic meta-analysis released",
+      "OpenAI content update absent",
+      "Claude text watermark mechanism",
+      "EU AI Act compliance"
+    ],
+    "ai-hn": [
+      "GLM-5.3 cyber capabilities",
+      "OpenAI IPO speculation",
+      "K8s CPU limits removal",
+      "Claude Code integrations",
+      "Watermarking detection method",
+      "GPU kernel verification"
+    ],
+    "ai-arxiv": [
+      "AI Scientist frameworks",
+      "Intern-S2-Preview agent",
+      "Verifiable code generation",
+      "SAE interpretability methods",
+      "Scientific autonomy trends",
+      "Adaptive probabilistic forecasts"
+    ],
+    "ai-hf": [
+      "MiniMax-H3 video generation",
+      "Qwen3.8-27B multimodal",
+      "DeepSeek-V4 flash model",
+      "Kimi-K3 feature extraction",
+      "Nemotron 3.5 Lightning",
+      "Nemotron VoiceChat 11B"
+    ],
+    "ai-community": [
+      "Durable memory vector DBs",
+      "OpenAI invoice auditing",
+      "DeepSeek ignores token limit",
+      "Reasoning trace security",
+      "Proprietary API safety",
+      "Lightweight open alternatives"
+    ]
+  }
+}
