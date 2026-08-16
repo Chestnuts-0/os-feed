@@ -1,0 +1,61 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code 活跃度领跑生态，Issues/PR均破10",
+      "OpenAI Codex v0.148.0-alpha.20 新版本发布",
+      "社区焦点转向长上下文、桌面端稳定性与MCP集成",
+      "各工具资源泄露与卡顿问题成最大公敌",
+      "会话管理与上下文压缩成核心痛点",
+      "Copilot CLI 与 OpenCode 等工具活跃度并列第一"
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.8.1-beta.2 发布，增强 Secret Egress HTTPS 绑定",
+      "OpenClaw 单日处理 500 Issues/PR，社区活跃度极高",
+      "Silent reply failures 等关键 Bug 引发社区激烈讨论",
+      "Codex 集成与 Workboard 插件崩溃问题获修复",
+      "GPT-5.6 Ultra 支持与运行时切换能力上线",
+      "多智能体协作风险成为 OpenClaw 重点研究方向"
+    ],
+    "ai-trending": [
+      "CodeWhale 等智能体 Harness 项目爆发式增长",
+      "ECC 智能体 Harness 性能优化系统获 2.4万 Star",
+      "MiniMax-H3 文生视频霸主地位确立，下载超 220 万",
+      "Hugging Face Transformers 与 vLLM 仍是基础设施标配",
+      "GraphRAG 系统推动企业级 RAG 应用落地",
+      "Unsloth 本地化 AI 开发工具本周新增 434 Star"
+    ],
+    "ai-web": [
+      "Anthropic 聚焦多智能体系统风险研究",
+      "Claude 文本水印技术实现零干扰合规",
+      "多智能体交互规模或超人类，监管面临挑战",
+      "Anthropic 针对欧盟 AI 法案发布合规方案",
+      "OpenAI 今日无新内容发布",
+      "多智能体协作场景预示下一代 AI 应用演进"
+    ],
+    "ai-hn": [
+      "AI 在药物发现领域的现状与未来路径受热议",
+      "开发者用 $38 LCD 制作 Claude 实时使用 HUD",
+      "Claude 浏览器项目引发开发者两极分化",
+      "AI 素质与工具接纳度讨论热度不减",
+      "AI 素质讨论：工具接纳与排斥情绪交织",
+      "AI 在推荐系统与诊断领域应用获关注"
+    ],
+    "ai-hf": [
+      "Kimi-K3 以 10k+ 点赞领跑热门模型榜单",
+      "Qwen3.8-27B 多模态通用基座热度持续攀升",
+      "DeepSeek-V4-Flash 主打高速度与低延迟",
+      "MiniMax-H3 视频生成霸主，下载量突破 220 万",
+      "NVIDIA 高性能量化模型成为工业界首选",
+      "社区 GGUF 量化版本 Unsloth 版本备受推崇"
+    ],
+    "ai-community": [
+      "AI Agent 信任问题被指出比记忆问题更核心",
+      "大规模 4200 次测试揭示 LLM 代理脆弱性",
+      "欧盟 AI 法案透明度与标识落地受关注",
+      "RAG、记忆机制构建落地智能体成焦点",
+      "企业 AI 文化建设与垂直应用开发热度攀升",
+      "Fine-tuning 与 RAG 适用场景指南发布"
+    ]
+  },
+  "en": {}
+}
