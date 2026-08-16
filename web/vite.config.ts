@@ -1,9 +1,57 @@
-import { defineConfig } from "vite";
+import fs from "node:fs";
+import path from "node:path";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import { splitFeedPayload } from "./src/feed-payload.ts";
+
+/**
+ * 构建前把 data/feed.json 拆成列表 + 详情表。
+ * 列表不携带 detailCn（约 80% 体积），首屏只下载刷卡所需字段。
+ */
+function prepareFeedPlugin(): Plugin {
+  return {
+    name: "prepare-feed",
+    buildStart() {
+      const repoRoot = path.resolve(__dirname, "..");
+      const outDir = path.join(__dirname, "public", "data");
+      fs.mkdirSync(outDir, { recursive: true });
+
+      const srcFeed = path.join(repoRoot, "data", "feed.json");
+      const sampleFeed = path.join(outDir, "feed.sample.json");
+      const fallbackFeed = path.join(outDir, "feed.json");
+      const input = fs.existsSync(srcFeed) ? srcFeed : fs.existsSync(sampleFeed) ? sampleFeed : fallbackFeed;
+      if (!fs.existsSync(input)) {
+        console.warn("[prepare-feed] no feed.json found, skip");
+        return;
+      }
+
+      const raw = fs.readFileSync(input, "utf8");
+      const parsed: unknown = JSON.parse(raw);
+      const cards = Array.isArray(parsed) ? parsed : [];
+      const { list, details } = splitFeedPayload(cards as Array<{ repo: string; detailCn?: string }>);
+
+      const listPath = path.join(outDir, "feed.json");
+      const detailsPath = path.join(outDir, "feed-details.json");
+      fs.writeFileSync(listPath, JSON.stringify(list));
+      fs.writeFileSync(detailsPath, JSON.stringify(details));
+
+      const srcFollowing = path.join(repoRoot, "data", "following.json");
+      if (fs.existsSync(srcFollowing)) {
+        fs.copyFileSync(srcFollowing, path.join(outDir, "following.json"));
+      }
+
+      const listBytes = fs.statSync(listPath).size;
+      const detailsBytes = fs.statSync(detailsPath).size;
+      console.log(
+        `[prepare-feed] ${cards.length} cards: list ${(listBytes / 1024).toFixed(0)}KB, details ${(detailsBytes / 1024).toFixed(0)}KB (source ${(Buffer.byteLength(raw) / 1024).toFixed(0)}KB)`,
+      );
+    },
+  };
+}
 
 // base: "./" 让构建产物用相对路径，适配 GitHub Pages 子路径部署
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), prepareFeedPlugin()],
   base: "./",
   build: {
     outDir: "dist",

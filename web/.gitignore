@@ -1,3 +1,5 @@
 node_modules/
 dist/
 *.local
+public/data/feed-details.json
+public/data/following.json

@@ -3,8 +3,6 @@
    衬线字体 · 两列网格 · 详情弹窗 · 分区导航
    ========================================================================= */
 
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+SC:wght@400;500;600;700&display=swap");
-
 /* --- Reset --- */
 *,
 *::before,
@@ -66,6 +64,8 @@
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--card-border);
   --max-width: 1650px;
   --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+  --feed-card-h: 288px;
+  --feed-row-gap: 16px;
 }
 
 html {
@@ -76,12 +76,20 @@ html {
 body {
   font-family: var(--font-serif);
   background: #08060e;
-  background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
-  background-attachment: fixed;
   color: var(--text);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* 固定渐变底：position:fixed 层替代 background-attachment:fixed，滚动时不整页重绘 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
 }
 
 a {
@@ -369,59 +377,30 @@ button {
 }
 
 /* --- 两列卡片网格 --- */
+.feed-window-pad {
+  pointer-events: none;
+}
 .feed-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: var(--feed-row-gap);
 }
 
-/* --- 虚拟列表（window 虚拟滚动容器，视觉与 .feed-list 一致） --- */
-.feed-virtual {
-  position: relative;
-}
-.feed-virtual-spacer {
-  position: relative;
-}
-.feed-virtual-row {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  /* 行间距由 padding-bottom 承载（含 padding 计入行测量高度，行距精确） */
-  padding-bottom: 16px;
-}
-.feed-virtual-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-.feed-virtual-cell {
-  min-width: 0;
-}
-
-/* 频道切换入场：动内层 cell，避免覆盖虚拟行的 translateY */
-.feed-virtual.channel-entering .feed-virtual-cell {
-  animation: channel-enter 0.45s ease-out both;
+.channel-entering .card {
+  animation: channel-enter 0.28s ease-out both;
 }
 @keyframes channel-enter {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .feed-virtual.channel-entering .feed-virtual-cell {
+  .channel-entering .card {
     animation: none;
   }
-}
-.feed-virtual-measure {
-  position: absolute;
-  visibility: hidden;
-  pointer-events: none;
 }
 
 /* --- 头像骨架屏（预加载占位，静态不闪动 —— 任务书要求，且避免 infinite 动画拖累合成） --- */
@@ -454,11 +433,25 @@ button {
   border: 1px solid var(--glass-border);
   border-radius: 18px;
   padding: 20px;
+  height: var(--feed-card-h);
+  box-sizing: border-box;
   box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.2s ease,
+    background 0.2s ease;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+}
+
+.card.is-open-source,
+.card.is-open-source:hover {
+  opacity: 0;
+  pointer-events: none;
+  transform: none;
+  transition: none;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
 }
 
 .card::before {
@@ -480,8 +473,7 @@ button {
     var(--glass-highlight-top),
     var(--glass-highlight-bottom),
     var(--glass-shadow),
-    0 0 0 1px rgba(184, 153, 255, 0.25),
-    0 0 28px rgba(99, 102, 241, 0.18);
+    0 0 0 1px rgba(184, 153, 255, 0.25);
   transform: translateY(-4px);
 }
 .card:hover::before {
@@ -566,11 +558,13 @@ button {
 .card-subtitle {
   display: flex;
   align-items: center;
-  flex-wrap: wrap; /* P0a：放不下换行而非压缩子项（防移动端文字竖排） */
+  flex-wrap: nowrap;
   gap: 8px;
   margin-top: 3px;
   font-size: 0.74rem;
   color: var(--text-muted);
+  overflow: hidden;
+  max-height: 1.35em;
 }
 /* P0a：subtitle 子项禁收缩（「11个月前」曾被压到 13px 宽竖排 83px 高） */
 .card-subtitle > * {
@@ -688,18 +682,26 @@ button {
 /* --- 详情弹窗 --- */
 .detail-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  inset: 0;
   z-index: 200;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding: 5vh 20px;
-  overflow-y: auto;
-  animation: fadeIn 0.2s ease;
+  overflow: visible;
+  overscroll-behavior: none;
+  background: transparent;
+}
+.detail-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  pointer-events: none;
+  animation: fadeIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.detail-overlay.is-from-card.is-open-playing::before {
+  animation: none;
 }
 
 @keyframes fadeIn {
@@ -711,23 +713,47 @@ button {
   }
 }
 
+.detail-mover {
+  max-width: 1200px;
+  width: 100%;
+  max-height: 90vh;
+  position: relative;
+  z-index: 1;
+}
+.detail-mover.is-from-card {
+  transform-origin: top left;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.detail-mover.is-from-card.is-flying {
+  contain: paint;
+}
+
 .detail-card {
   background: var(--detail-card-bg);
   border-radius: 20px;
   border: 1px solid var(--card-border-hover);
   max-width: 1200px;
   width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
   padding: 32px;
   box-shadow:
     var(--glass-highlight-top),
     var(--glass-highlight-bottom),
     0 24px 80px rgba(0, 0, 0, 0.5);
-  animation: slideUp 0.3s ease;
+  animation: detailEnter 0.34s cubic-bezier(0.22, 0.61, 0.36, 1);
   position: relative;
 }
-/* 从卡片 FLIP 长出时关掉 slideUp，避免两套入场叠在一起 */
-.detail-card-from-card {
+.detail-card.is-from-card {
   animation: none;
+}
+/* 藏飞行中被拉长的滚动条。只许 overflow hidden，槽位靠 gutter 留着。
+   禁止 scrollbar-width:none——会拆掉槽位，飞/落两套折行。 */
+.detail-card.is-from-card.is-flying {
+  overflow-y: hidden;
 }
 
 /* 点赞成功：顶条从左 scaleX 扫过一次再淡出（方向2候选7点菜 A） */
@@ -758,14 +784,20 @@ button {
   }
 }
 
-@keyframes slideUp {
+@keyframes detailEnter {
   from {
-    transform: translateY(20px);
     opacity: 0;
+    transform: translateY(28px) scale(0.92);
   }
   to {
-    transform: translateY(0);
     opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .detail-overlay::before,
+  .detail-card {
+    animation: none;
   }
 }
 
@@ -1526,6 +1558,7 @@ button {
   display: flex;
   justify-content: center;
   padding: 28px 0;
+  overflow-anchor: none;
 }
 .section-end-hint {
   text-align: center;
@@ -1609,7 +1642,7 @@ button {
   }
   .feed-list {
     grid-template-columns: 1fr;
-    gap: 12px;
+    --feed-row-gap: 12px;
   }
   .card {
     padding: 16px;
@@ -1638,13 +1671,6 @@ button {
   }
   .source-badge {
     padding: 1px 6px;
-  }
-  /* T1: 虚拟列表单列（真实容器是 .feed-virtual-grid；.feed-list 规则保留勿删） */
-  .feed-virtual-grid {
-    grid-template-columns: 1fr;
-  }
-  .feed-virtual-row {
-    padding-bottom: 14px;
   }
   /* 侧栏（首页 + 我的页）移入抽屉/me-tabs */
   .sidebar {

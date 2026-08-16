@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>打开卡片 · 对照点菜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --glass-gradient: linear-gradient(180deg, rgba(38, 32, 62, 0.86) 0%, rgba(26, 22, 44, 0.88) 55%, rgba(20, 17, 34, 0.9) 100%);
+  --detail-card-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.97) 0%, rgba(26, 22, 44, 0.97) 55%, rgba(20, 17, 34, 0.97) 100%);
+  --glass-border: rgba(224, 217, 255, 0.13);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --glass-bg: rgba(26, 22, 44, 0.72);
+  --side-group-bg: linear-gradient(180deg, rgba(38, 32, 62, 0.82) 0%, rgba(24, 20, 40, 0.86) 100%);
+  --text: #f0f0f5; --text-secondary: #a0a3b1; --text-muted: #6b6e7f;
+  --accent: #6366f1; --accent-light: rgba(99, 102, 241, 0.12);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --danger: #ef4444; --success: #22c55e; --warning: #f59e0b;
+  --border: rgba(255, 255, 255, 0.08); --radius-sm: 10px;
+  --font-serif: "Lora", "Noto Serif SC", "Times New Roman", "Songti SC", "SimSun", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; }
+body {
+  font-family: var(--font-serif);
+  background: #08060e;
+  background-image: linear-gradient(180deg, #120e1f 0%, #0b0914 45%, #05040a 100%);
+  color: var(--text); line-height: 1.65; min-height: 100vh;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.banner {
+  position: sticky; top: 0; z-index: 50; background: var(--glass-bg);
+  border-bottom: 1px solid var(--border); padding: 12px 24px 14px;
+}
+.banner-kicker { font-size: 0.72rem; color: var(--text-muted); }
+.banner h1 { font-size: 1.05rem; font-weight: 700; margin: 2px 0 4px; }
+.banner p { font-size: 0.85rem; color: var(--text-secondary); max-width: 920px; }
+.hint { margin-top: 6px; font-size: 0.78rem; color: var(--accent); }
+.modes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.mode {
+  padding: 7px 14px; border-radius: 20px; border: 1px solid var(--border);
+  font-size: 0.82rem; color: var(--text-secondary);
+}
+.mode.active {
+  border-color: transparent; color: #fff; font-weight: 700;
+  background: var(--accent-gradient);
+}
+.toolbar { display: flex; align-items: center; gap: 12px; margin: 14px 24px 0; flex-wrap: wrap; }
+.retry, .slow {
+  padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border);
+  color: var(--text-secondary); font-size: 0.82rem;
+}
+.slow.on { border-color: var(--accent); color: var(--accent); }
+.layout { display: flex; align-items: flex-start; }
+.sidebar { width: 192px; flex-shrink: 0; padding: 20px 10px; }
+.side-group-box {
+  background: var(--side-group-bg); border: 1px solid var(--glass-border); border-radius: 18px;
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  padding: 14px 12px 8px;
+}
+.side-group { font-size: 0.95rem; font-weight: 700; color: var(--text-secondary); padding: 0 4px 8px; }
+.side-item {
+  display: block; width: 100%; padding: 10px 12px; margin-bottom: 4px; border-radius: var(--radius-sm);
+  color: var(--text-secondary); font-size: 0.92rem; text-align: left;
+}
+.side-item.active { background: var(--accent-gradient); color: #fff; font-weight: 700; }
+.feed { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 24px; max-width: 1100px; }
+.card {
+  background: var(--glass-gradient); border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 20px; box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), var(--glass-shadow);
+  cursor: pointer;
+}
+.card.ghost { opacity: 0; pointer-events: none; }
+.card-header { display: flex; gap: 10px; margin-bottom: 10px; }
+.avatar { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--border); flex-shrink: 0; }
+.repo-owner { color: var(--text-secondary); font-size: 0.92rem; }
+.repo-name { font-weight: 700; color: var(--accent); }
+.card-sub { font-size: 0.74rem; color: var(--text-muted); margin-top: 3px; }
+.summary {
+  font-size: 0.98rem; font-weight: 700; line-height: 1.5;
+  margin-bottom: 8px; padding: 8px 12px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.reason {
+  font-size: 0.82rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 10px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.stars { color: var(--warning); font-weight: 600; font-size: 0.78rem; }
+
+.overlay {
+  position: fixed; inset: 0; z-index: 200; display: none;
+}
+.overlay.open { display: block; }
+.dim {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.75); opacity: 0;
+  transition: opacity 0.18s ease; pointer-events: none;
+}
+.overlay.open .dim { opacity: 1; }
+
+.clip {
+  position: fixed; overflow: hidden; z-index: 2;
+  background: var(--detail-card-bg);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), 0 24px 80px rgba(0,0,0,0.5);
+  scrollbar-gutter: stable;
+}
+.inner {
+  position: absolute; left: 0; top: 0;
+  padding: 32px;
+  box-sizing: border-box;
+}
+.shell {
+  position: fixed; z-index: 3; pointer-events: none;
+  background: var(--detail-card-bg);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: var(--glass-highlight-top), var(--glass-highlight-bottom), 0 24px 80px rgba(0,0,0,0.5);
+}
+.detail-close {
+  position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent-light); color: var(--text-secondary); z-index: 4;
+}
+.detail-close:hover { background: var(--danger); color: #fff; }
+.d-sum {
+  font-size: 1.05rem; font-weight: 700; line-height: 1.6; margin: 12px 0 16px; padding: 14px 18px;
+  background: linear-gradient(135deg, var(--accent-light), transparent);
+  border-left: 4px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.d-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.06em; margin: 14px 0 6px; }
+.d-body { font-size: 0.95rem; line-height: 1.9; color: var(--text-secondary); white-space: pre-wrap; }
+.probe { background: rgba(245, 158, 11, 0.28); color: #fde68a; padding: 0 2px; border-radius: 3px; }
+.note { font-size: 0.78rem; color: var(--text-muted); padding: 8px 24px 24px; }
+</style>
+</head>
+<body>
+<header class="banner">
+  <div class="banner-kicker">mockup · 生产未改 · 只给点菜</div>
+  <h1>打开卡片 · 三种入场对照</h1>
+  <p>先选一种，再点左边那张卡。看两件事：字会不会被拉扁、结束会不会闪成另一套折行。黄底「按依赖重绘」是探针——过程中它若扭来扭去，就是你看到的那种闪。</p>
+  <div class="hint">建议先开「慢动作」，把 380ms 拉成 1.2 秒，差别一眼能看出来。</div>
+  <div class="modes">
+    <button class="mode active" type="button" data-mode="now">现在 · 整页拉伸</button>
+    <button class="mode" type="button" data-mode="a">A · 从卡片揭开</button>
+    <button class="mode" type="button" data-mode="b">B · 空壳长出再淡入</button>
+  </div>
+</header>
+<div class="toolbar">
+  <button class="retry" id="retry" type="button">再看一次</button>
+  <button class="slow" id="slow" type="button">慢动作</button>
+</div>
+<div class="layout">
+  <aside class="sidebar"><div class="side-group-box">
+    <div class="side-group">发现</div>
+    <button class="side-item active" type="button">推荐</button>
+    <button class="side-item" type="button">热门</button>
+  </div></aside>
+  <div class="feed-wrap">
+    <div class="feed">
+      <article class="card" id="card">
+        <div class="card-header">
+          <div class="avatar"></div>
+          <div>
+            <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+            <div class="card-sub">2小时前 · TypeScript</div>
+          </div>
+        </div>
+        <div class="summary">声明式 UI 库，组件化写界面的事实标准</div>
+        <div class="reason">把页面拆成可组合的组件，状态变了就自动重绘。生态最大、文档最全，从官网到管理后台都在用。适合学前端或要搭中后台的人收藏。</div>
+        <div class="meta"><span class="stars">★ 233.1k</span></div>
+      </article>
+      <article class="card" style="cursor:default;opacity:.45">
+        <div class="card-header">
+          <div class="avatar"></div>
+          <div>
+            <div><span class="repo-owner">vercel</span> / <span class="repo-name">next.js</span></div>
+            <div class="card-sub">对照卡，不点</div>
+          </div>
+        </div>
+        <div class="summary">这张只是陪衬，点左边那张</div>
+        <div class="reason">用来对比「从哪张卡长出来」。入场应对准左边 react 卡，而不是屏幕中央凭空冒出来。</div>
+        <div class="meta"><span class="stars">★ 132.4k</span></div>
+      </article>
+    </div>
+    <p class="note">现在 = 生产里那套非等比 scale（你会看到字被压扁，结束弹回真排版）。A = 正文一次排好，窗口从卡片矩形揭开。B = 没字的玻璃壳先长到终态，再淡入同一份正文。</p>
+  </div>
+</div>
+
+<div class="overlay" id="ov">
+  <div class="dim" id="dim"></div>
+  <div class="shell" id="shell" hidden></div>
+  <div class="clip" id="clip">
+    <button class="detail-close" id="x" type="button">×</button>
+    <div class="inner" id="inner">
+      <div><span class="repo-owner">facebook</span> / <span class="repo-name">react</span></div>
+      <p class="d-sum">声明式 UI 库，组件化写界面的事实标准</p>
+      <div class="d-label">简要介绍</div>
+      <p class="d-body">把页面拆成可组合的组件，状态变了就自动重绘。生态最大、文档最全，从官网到管理后台都在用。</p>
+      <div class="d-label">深度解读</div>
+      <p class="d-body">React 把 UI 拆成组件，状态更新后<span class="probe">按依赖重绘</span>。这一句在正确排版里会稳定折行——如果打开过程把整页横竖不成比例地拉扁，黄底这四个字会扭、会换位置，结束瞬间再弹回。方案 A / B 里它应从头到尾待在同一处。
+
+第二段继续铺开，好让弹窗比卡片高一截：协调、Hook、并发渲染都是后来加上的能力，阅读时你要的是「这张卡变成这篇」而不是「一篇被压扁的纸再弹开」。</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const DUR_N = 380, DUR_S = 1200;
+let mode = "now", slow = false, closing = false;
+const ov = document.getElementById("ov");
+const clip = document.getElementById("clip");
+const inner = document.getElementById("inner");
+const shell = document.getElementById("shell");
+const card = document.getElementById("card");
+const ease = "cubic-bezier(0.4, 0, 0.2, 1)";
+
+function dur() { return slow ? DUR_S : DUR_N; }
+function destBox() {
+  const w = Math.min(720, window.innerWidth - 40);
+  const h = Math.min(Math.round(window.innerHeight * 0.82), 720);
+  return {
+    left: Math.round((window.innerWidth - w) / 2),
+    top: Math.round(window.innerHeight * 0.08),
+    width: w,
+    height: h,
+  };
+}
+function applyBox(el, b, radius) {
+  el.style.left = b.left + "px";
+  el.style.top = b.top + "px";
+  el.style.width = b.width + "px";
+  el.style.height = b.height + "px";
+  el.style.borderRadius = radius;
+}
+function srcBox(el) {
+  const r = el.getBoundingClientRect();
+  return { left: r.left, top: r.top, width: r.width, height: r.height };
+}
+function killAnims(el) {
+  el.getAnimations().forEach((a) => a.cancel());
+  el.style.transition = "none";
+  el.style.transform = "";
+  el.style.opacity = "";
+}
+
+function close() {
+  closing = true;
+  ov.classList.remove("open");
+  card.classList.remove("ghost");
+  shell.hidden = true;
+  killAnims(clip);
+  killAnims(inner);
+  killAnims(shell);
+  clip.style.transform = "";
+  inner.style.opacity = "1";
+  inner.style.transform = "";
+}
+
+function openNow(src) {
+  const d = destBox();
+  inner.style.width = d.width + "px";
+  applyBox(clip, d, "20px");
+  clip.style.overflow = "hidden";
+  inner.style.opacity = "1";
+  const sx = src.width / d.width;
+  const sy = src.height / d.height;
+  const dx = src.left - d.left;
+  const dy = src.top - d.top;
+  const from = "translate(" + dx + "px," + dy + "px) scale(" + sx + "," + sy + ")";
+  clip.style.transformOrigin = "top left";
+  clip.style.transform = from;
+  clip.animate([{ transform: from }, { transform: "none" }], {
+    duration: dur(), easing: ease, fill: "forwards",
+  }).finished.then(() => { clip.style.transform = ""; }).catch(() => {});
+}
+
+function openA(src) {
+  const d = destBox();
+  inner.style.width = d.width + "px";
+  inner.style.opacity = "1";
+  inner.style.transform = "none";
+  clip.style.transform = "none";
+  clip.style.overflow = "hidden";
+  applyBox(clip, src, "18px");
+  clip.animate(
+    [
+      { left: src.left + "px", top: src.top + "px", width: src.width + "px", height: src.height + "px", borderRadius: "18px" },
+      { left: d.left + "px", top: d.top + "px", width: d.width + "px", height: d.height + "px", borderRadius: "20px" },
+    ],
+    { duration: dur(), easing: ease, fill: "forwards" },
+  );
+}
+
+function openB(src) {
+  const d = destBox();
+  inner.style.width = d.width + "px";
+  applyBox(clip, d, "20px");
+  clip.style.transform = "none";
+  clip.style.overflow = "hidden";
+  inner.style.opacity = "0";
+  shell.hidden = false;
+  applyBox(shell, src, "18px");
+  const t = dur();
+  shell.animate(
+    [
+      { left: src.left + "px", top: src.top + "px", width: src.width + "px", height: src.height + "px", borderRadius: "18px", opacity: 1 },
+      { left: d.left + "px", top: d.top + "px", width: d.width + "px", height: d.height + "px", borderRadius: "20px", opacity: 1, offset: 0.72 },
+      { left: d.left + "px", top: d.top + "px", width: d.width + "px", height: d.height + "px", borderRadius: "20px", opacity: 0 },
+    ],
+    { duration: t, easing: ease, fill: "forwards" },
+  );
+  inner.animate(
+    [
+      { opacity: 0 },
+      { opacity: 0, offset: 0.55 },
+      { opacity: 1 },
+    ],
+    { duration: t, easing: "ease", fill: "forwards" },
+  );
+}
+
+function openFrom(el) {
+  close();
+  closing = false;
+  const src = srcBox(el);
+  ov.classList.add("open");
+  card.classList.add("ghost");
+  requestAnimationFrame(() => {
+    if (mode === "now") openNow(src);
+    else if (mode === "a") openA(src);
+    else openB(src);
+  });
+}
+
+document.querySelectorAll(".mode").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".mode").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    mode = btn.dataset.mode;
+    close();
+  });
+});
+document.getElementById("slow").addEventListener("click", (e) => {
+  slow = !slow;
+  e.currentTarget.classList.toggle("on", slow);
+  e.currentTarget.textContent = slow ? "慢动作 · 开" : "慢动作";
+});
+card.addEventListener("click", () => openFrom(card));
+document.getElementById("retry").addEventListener("click", () => openFrom(card));
+document.getElementById("x").addEventListener("click", close);
+ov.addEventListener("click", (e) => { if (e.target.id === "dim" || e.target.id === "ov") close(); });
+</script>
+</body>
+</html>

@@ -8,6 +8,14 @@
     />
     <meta name="description" content="GitTok — 用中文刷 GitHub 好项目 · AI 推荐 · 大牛动态 · 搜索" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="preload" href="./data/feed.json" as="fetch" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- 只拉 Lora（拉丁/数字）。Noto Serif SC 走系统字体：Google CSS 会展开 400+ @font-face，卡首屏 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
     <title>GitTok — 刷 GitHub 好项目</title>
   </head>
   <body>

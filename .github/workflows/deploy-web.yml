@@ -48,15 +48,14 @@ jobs:
         working-directory: web
         run: npm ci || npm install
 
-      - name: Copy feed data to public
+      - name: Copy following snapshot
         run: |
           mkdir -p web/public/data
-          if [ -f data/feed.json ]; then
-            cp data/feed.json web/public/data/feed.json
-            echo "Copied data/feed.json → web/public/data/feed.json"
-          else
-            echo "data/feed.json not found, using sample data"
+          if [ -f data/following.json ]; then
+            cp data/following.json web/public/data/following.json
+            echo "Copied data/following.json"
           fi
+          # feed.json 由 vite prepare-feed 插件从 data/feed.json 剥离 detailCn 后写入 public/data
 
       - name: Build frontend
         working-directory: web

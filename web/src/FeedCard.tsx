@@ -15,6 +15,7 @@ import {
   SOURCE_ICONS,
   SOURCE_LABELS,
 } from "./icons.tsx";
+import { openFromCard, playOpenMotion } from "./detail-open.ts";
 
 // ---------------------------------------------------------------------------
 // 工具函数
@@ -80,56 +81,28 @@ const LANG_COLORS: Record<string, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// 头像预加载组件（IntersectionObserver rootMargin 500px 提前加载 + 骨架屏占位）
+// 头像（原生 lazy + 骨架屏占位）
 // ---------------------------------------------------------------------------
-
-const PRELOAD_MARGIN = "500px";
 
 interface AvatarProps {
   owner: string;
   size: number;
   className: string;
+  eager?: boolean;
 }
 
-export function GithubAvatar({ owner, size, className }: AvatarProps) {
-  const ref = useRef<HTMLImageElement | null>(null);
-  const [loaded, setLoaded] = useState(false);
+export function GithubAvatar({ owner, size, className, eager = false }: AvatarProps) {
   const src = `https://avatars.githubusercontent.com/${owner}?s=${size}&v=4`;
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    // 已加载完成（含失败）无需再观察
-    if (loaded) return;
-    // src 已就绪：浏览器原生 lazy 会自己加载视口内的图；
-    // observer 仅做「提前 500px 预加载」—— 进入 rootMargin 范围就把 src 再设一次触发加载
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          el.src = src;
-          observer.disconnect();
-        }
-      },
-      { rootMargin: PRELOAD_MARGIN },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [src, loaded]);
-
   return (
-    <span className={`avatar-wrap ${className}-wrap`}>
-      {!loaded && <span className="avatar-skeleton" aria-hidden="true" />}
-      <img
-        ref={ref}
-        alt=""
-        className={className}
-        src={src}
-        loading="lazy"
-        decoding="async"
-        onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(true)}
-      />
-    </span>
+    <img
+      alt=""
+      className={className}
+      src={src}
+      width={size}
+      height={size}
+      loading={eager ? "eager" : "lazy"}
+      decoding={eager ? "sync" : "async"}
+    />
   );
 }
 
@@ -323,33 +296,49 @@ export function CardDetail({
     prevLiked.current = liked;
   }, [liked]);
 
+  const overlayRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const fromCard = Boolean(sourceRect);
+  const reduceMotion =
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   useLayoutEffect(() => {
-    const el = panelRef.current;
-    if (!el || !sourceRect) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (typeof el.animate !== "function") return;
+    const panel = panelRef.current;
+    if (!panel || !sourceRect) return;
+    if (reduceMotion || typeof panel.animate !== "function") return;
+    // 终态盒读实测位置。视口估算会偏几像素，飞偏离开卡片。
+    const destRect = panel.getBoundingClientRect();
+    const motion = openFromCard(
+      {
+        left: sourceRect.left,
+        top: sourceRect.top,
+        width: sourceRect.width,
+        height: sourceRect.height,
+      },
+      { left: destRect.left, top: destRect.top, width: destRect.width, height: destRect.height },
+    );
+    if (!motion) return;
 
-    const play = () => {
-      const dest = el.getBoundingClientRect();
-      if (dest.width < 1 || dest.height < 1) return false;
-      const sx = sourceRect.width / dest.width;
-      const sy = sourceRect.height / dest.height;
-      if (!Number.isFinite(sx) || !Number.isFinite(sy) || sx <= 0 || sy <= 0) return false;
-      el.style.transformOrigin = "top left";
-      const dx = sourceRect.left - dest.left;
-      const dy = sourceRect.top - dest.top;
-      el.animate(
-        [{ transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` }, { transform: "none" }],
-        { duration: 380, easing: "cubic-bezier(0.4, 0, 0.2, 1)" },
-      );
-      return true;
+    let cancelled = false;
+    const card = panel.querySelector(".detail-card");
+    panel.classList.add("is-flying");
+    card?.classList.add("is-flying");
+    const { card: anim, dim } = playOpenMotion(panel, overlayRef.current, motion);
+    const done = () => {
+      if (cancelled) return;
+      requestAnimationFrame(() => {
+        if (cancelled) return;
+        panel.classList.remove("is-flying");
+        card?.classList.remove("is-flying");
+      });
     };
-
-    if (!play()) requestAnimationFrame(() => play());
-  }, [sourceRect]);
+    void anim.finished.then(done, done);
+    return () => {
+      cancelled = true;
+      anim.cancel();
+      dim?.cancel();
+    };
+  }, [sourceRect, reduceMotion]);
 
   const inCollections = collections.filter((c) => c.repos.includes(card.repo));
 
@@ -376,165 +365,172 @@ export function CardDetail({
     setNewName("");
   };
 
+  const content = (
+    <>
+      {likeFlashGen > 0 && <span key={likeFlashGen} className="like-flash-bar" aria-hidden="true" />}
+      <button className="detail-close" onClick={onClose}>
+        <X size={18} />
+      </button>
+
+      <div className="detail-header">
+        <GithubAvatar owner={card.owner} size={40} className="detail-avatar" eager />
+        <div>
+          <div className="detail-repo">
+            <span className="repo-owner">{card.owner}</span>
+            <span className="repo-sep"> / </span>
+            <span className="repo-name">{card.name}</span>
+          </div>
+          <div className="detail-subtitle">
+            <SourceBadge src={card.source} />
+            <span>{timeAgo(card.ts)}</span>
+          </div>
+        </div>
+      </div>
+
+      {card.summaryCn && <p className="detail-summary">{card.summaryCn}</p>}
+
+      {reason && (
+        <>
+          <div className="detail-label">简要介绍</div>
+          <p className="detail-reason">{reason}</p>
+        </>
+      )}
+
+      {card.detailCn && (
+        <>
+          <div className="detail-label">深度解读</div>
+          <p className="detail-detail">{card.detailCn}</p>
+        </>
+      )}
+
+      <div className="detail-meta">
+        <span className="meta-item stars" title={`${card.stars} stars`}>
+          <Star size={14} />
+          {formatStars(card.stars)} stars
+        </span>
+        {card.starGrowth > 0 && (
+          <span className="meta-item growth">
+            <TrendingUp size={14} />+{card.starGrowth} 今日增长
+          </span>
+        )}
+        {card.language && (
+          <span className="meta-item">
+            <span className="lang-dot" style={{ background: langColor }} />
+            {card.language}
+          </span>
+        )}
+        <span className="dim-badge">{card.aiDim}</span>
+      </div>
+
+      {card.topics.length > 0 && (
+        <div className="detail-topics">
+          {card.topics.map((t) => (
+            <span key={t} className="topic-tag">
+              {t}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {card.bigbros.length > 0 && (
+        <div className="detail-bigbro">
+          <Users size={16} />
+          <span>
+            <strong style={{ color: "#c4b5fd" }}>{card.bigbros.slice(0, 3).join("、")}</strong>
+            {card.bigbros.length > 3 && ` 等${card.bigbros.length}位`} 关注的大牛 star 了
+          </span>
+        </div>
+      )}
+
+      <div className="detail-actions">
+        <button className={`action-btn like-btn${liked ? " active" : ""}`} onClick={() => onLike(card.repo)}>
+          <ThumbsUp size={20} />
+        </button>
+        <button
+          className={`action-btn dislike-btn${disliked ? " active" : ""}`}
+          onClick={() => onDislike(card.repo)}
+        >
+          <ThumbsDown size={20} />
+        </button>
+        <button
+          className={`action-btn bookmark-btn${inCollections.length > 0 ? " active" : ""}`}
+          onClick={() => setShowPicker(!showPicker)}
+          title={
+            inCollections.length > 0 ? `已收藏到 ${inCollections.map((c) => c.name).join("、")}` : "收藏"
+          }
+        >
+          <Star size={20} />
+        </button>
+        {onOpenCreator && (
+          <button
+            className="action-btn creator-btn"
+            onClick={() => onOpenCreator(card.owner)}
+            title={`查看 ${card.owner} 的创作者页`}
+          >
+            <UserRound size={16} />
+            查看创作者
+          </button>
+        )}
+        <a href={card.url} target="_blank" rel="noopener noreferrer" className="action-btn open-btn">
+          <ExternalLink size={18} />
+          GitHub 主页
+        </a>
+      </div>
+
+      {/* 收藏夹选择器 */}
+      {showPicker && (
+        <div className="collection-picker" onClick={(e) => e.stopPropagation()}>
+          <div className="picker-header">
+            <span>选择收藏夹</span>
+            <button className="picker-close" onClick={() => setShowPicker(false)}>
+              <X size={16} />
+            </button>
+          </div>
+          <div className="picker-list">
+            {collections.length === 0 && <p className="picker-empty">暂无收藏夹，在下方创建</p>}
+            {collections.map((col) => {
+              const checked = col.repos.includes(card.repo);
+              return (
+                <label key={col.id} className="picker-item">
+                  <input type="checkbox" checked={checked} onChange={() => toggleCollection(col.id)} />
+                  <span className="picker-item-name">{col.name}</span>
+                  <span className="picker-item-count">({col.repos.length}个)</span>
+                </label>
+              );
+            })}
+          </div>
+          <div className="picker-create">
+            <input
+              type="text"
+              className="picker-input"
+              placeholder="新建收藏夹…"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") createAndAdd();
+              }}
+            />
+            <button className="picker-create-btn" onClick={createAndAdd} disabled={!newName.trim()}>
+              + 创建
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+
   return (
-    <div className="detail-overlay" onClick={onClose}>
+    <div
+      ref={overlayRef}
+      className={`detail-overlay${fromCard ? " is-from-card" : ""}`}
+      onClick={onClose}
+    >
       <div
         ref={panelRef}
-        className={`detail-card${fromCard ? " detail-card-from-card" : ""}`}
+        className={`detail-mover${fromCard ? " is-from-card" : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {likeFlashGen > 0 && <span key={likeFlashGen} className="like-flash-bar" aria-hidden="true" />}
-        <button className="detail-close" onClick={onClose}>
-          <X size={18} />
-        </button>
-
-        <div className="detail-header">
-          <GithubAvatar owner={card.owner} size={56} className="detail-avatar" />
-          <div>
-            <div className="detail-repo">
-              <span className="repo-owner">{card.owner}</span>
-              <span className="repo-sep"> / </span>
-              <span className="repo-name">{card.name}</span>
-            </div>
-            <div className="detail-subtitle">
-              <SourceBadge src={card.source} />
-              <span>{timeAgo(card.ts)}</span>
-            </div>
-          </div>
-        </div>
-
-        {card.summaryCn && <p className="detail-summary">{card.summaryCn}</p>}
-
-        {reason && (
-          <>
-            <div className="detail-label">简要介绍</div>
-            <p className="detail-reason">{reason}</p>
-          </>
-        )}
-
-        {card.detailCn && (
-          <>
-            <div className="detail-label">深度解读</div>
-            <p className="detail-detail">{card.detailCn}</p>
-          </>
-        )}
-
-        <div className="detail-meta">
-          <span className="meta-item stars" title={`${card.stars} stars`}>
-            <Star size={14} />
-            {formatStars(card.stars)} stars
-          </span>
-          {card.starGrowth > 0 && (
-            <span className="meta-item growth">
-              <TrendingUp size={14} />+{card.starGrowth} 今日增长
-            </span>
-          )}
-          {card.language && (
-            <span className="meta-item">
-              <span className="lang-dot" style={{ background: langColor }} />
-              {card.language}
-            </span>
-          )}
-          <span className="dim-badge">{card.aiDim}</span>
-        </div>
-
-        {card.topics.length > 0 && (
-          <div className="detail-topics">
-            {card.topics.map((t) => (
-              <span key={t} className="topic-tag">
-                {t}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {card.bigbros.length > 0 && (
-          <div className="detail-bigbro">
-            <Users size={16} />
-            <span>
-              <strong style={{ color: "#c4b5fd" }}>{card.bigbros.slice(0, 3).join("、")}</strong>
-              {card.bigbros.length > 3 && ` 等${card.bigbros.length}位`} 关注的大牛 star 了
-            </span>
-          </div>
-        )}
-
-        <div className="detail-actions">
-          <button
-            className={`action-btn like-btn${liked ? " active" : ""}`}
-            onClick={() => onLike(card.repo)}
-          >
-            <ThumbsUp size={20} />
-          </button>
-          <button
-            className={`action-btn dislike-btn${disliked ? " active" : ""}`}
-            onClick={() => onDislike(card.repo)}
-          >
-            <ThumbsDown size={20} />
-          </button>
-          <button
-            className={`action-btn bookmark-btn${inCollections.length > 0 ? " active" : ""}`}
-            onClick={() => setShowPicker(!showPicker)}
-            title={
-              inCollections.length > 0 ? `已收藏到 ${inCollections.map((c) => c.name).join("、")}` : "收藏"
-            }
-          >
-            <Star size={20} />
-          </button>
-          {onOpenCreator && (
-            <button
-              className="action-btn creator-btn"
-              onClick={() => onOpenCreator(card.owner)}
-              title={`查看 ${card.owner} 的创作者页`}
-            >
-              <UserRound size={16} />
-              查看创作者
-            </button>
-          )}
-          <a href={card.url} target="_blank" rel="noopener noreferrer" className="action-btn open-btn">
-            <ExternalLink size={18} />
-            GitHub 主页
-          </a>
-        </div>
-
-        {/* 收藏夹选择器 */}
-        {showPicker && (
-          <div className="collection-picker" onClick={(e) => e.stopPropagation()}>
-            <div className="picker-header">
-              <span>选择收藏夹</span>
-              <button className="picker-close" onClick={() => setShowPicker(false)}>
-                <X size={16} />
-              </button>
-            </div>
-            <div className="picker-list">
-              {collections.length === 0 && <p className="picker-empty">暂无收藏夹，在下方创建</p>}
-              {collections.map((col) => {
-                const checked = col.repos.includes(card.repo);
-                return (
-                  <label key={col.id} className="picker-item">
-                    <input type="checkbox" checked={checked} onChange={() => toggleCollection(col.id)} />
-                    <span className="picker-item-name">{col.name}</span>
-                    <span className="picker-item-count">({col.repos.length}个)</span>
-                  </label>
-                );
-              })}
-            </div>
-            <div className="picker-create">
-              <input
-                type="text"
-                className="picker-input"
-                placeholder="新建收藏夹…"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") createAndAdd();
-                }}
-              />
-              <button className="picker-create-btn" onClick={createAndAdd} disabled={!newName.trim()}>
-                + 创建
-              </button>
-            </div>
-          </div>
-        )}
+        <div className={`detail-card${fromCard ? " is-from-card" : ""}`}>{content}</div>
       </div>
     </div>
   );
