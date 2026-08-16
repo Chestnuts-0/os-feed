@@ -1,5 +1,8 @@
+// @ts-ignore —— node:fs / node:path 类型在仓库根；CI web npm ci 没有 @types/node
 import { readFileSync } from "node:fs";
+// @ts-ignore
 import { resolve } from "node:path";
+// @ts-ignore —— 与 storage.test.ts 相同：根 vitest 跑 web 测试
 import { describe, expect, it } from "vitest";
 
 const cssRaw = readFileSync(resolve("web/src/styles.css"), "utf8");

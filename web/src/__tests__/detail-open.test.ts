@@ -1,3 +1,4 @@
+// @ts-ignore —— 与 storage.test.ts 相同：根 vitest 跑 web 测试
 import { describe, expect, it } from "vitest";
 import {
   OPEN_DURATION,
