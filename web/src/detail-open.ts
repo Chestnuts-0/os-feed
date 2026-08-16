@@ -130,6 +130,26 @@ export function uniformScale(src: Box, dest: Box): number | null {
   return Number.isFinite(s) && s > 0 ? s : null;
 }
 
+/**
+ * 读详情面板的布局终态盒。量之前必须拿掉飞行 transform，
+ * 否则二次 effect（Strict Mode / 清理后再跑）会把「已经缩到源卡上的视觉盒」
+ * 当成终点，openFromCard 变成 identity，看起来像没动画。
+ */
+export function destBoxFromElement(el: {
+  style: { transform: string };
+  getBoundingClientRect: () => { left: number; top: number; width: number; height: number };
+}): Box {
+  const prev = el.style.transform;
+  el.style.transform = "none";
+  const r = el.getBoundingClientRect();
+  el.style.transform = prev;
+  return { left: r.left, top: r.top, width: r.width, height: r.height };
+}
+
+export function isVisibleOpenMotion(motion: { s: number; from: string; to: string }): boolean {
+  return motion.from !== motion.to && Number.isFinite(motion.s) && Math.abs(motion.s - 1) > 0.04;
+}
+
 /** 仅供对照 CSS 合同。动画终态盒必须读 DOM，不能用这个开飞。 */
 export function destBoxFromViewport(viewportWidth: number, viewportHeight: number): Box {
   const width = Math.round(Math.min(1200, viewportWidth - 40));

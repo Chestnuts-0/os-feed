@@ -7,7 +7,9 @@ import {
   OPEN_SPRING_RESPONSE,
   OPEN_SPRING_SAMPLES,
   afterPaint,
+  destBoxFromElement,
   destBoxFromViewport,
+  isVisibleOpenMotion,
   openFromCard,
   sampleLinearEasing,
   springProgress,
@@ -25,6 +27,39 @@ describe("uniformScale", () => {
 
   it("非法宽度返回 null", () => {
     expect(uniformScale(src, { ...dest, width: 0 })).toBeNull();
+  });
+});
+
+describe("destBoxFromElement", () => {
+  it("量终态时忽略飞行 transform，量完还原，避免二次开飞变成 identity", () => {
+    const flying = "translate3d(217px, 56px, 0) scale(0.4)";
+    const el = {
+      style: { transform: flying },
+      getBoundingClientRect() {
+        if (this.style.transform === "none" || this.style.transform === "") {
+          return { left: 31, top: 28, width: 1200, height: 511 };
+        }
+        return { left: 248, top: 84, width: 483, height: 206 };
+      },
+    };
+    expect(destBoxFromElement(el)).toEqual({ left: 31, top: 28, width: 1200, height: 511 });
+    expect(el.style.transform).toBe(flying);
+    const leftover = destBoxFromElement(el);
+    const motion = openFromCard(src, leftover);
+    expect(motion).not.toBeNull();
+    if (!motion) return;
+    expect(isVisibleOpenMotion(motion)).toBe(true);
+    expect(openFromCard(src, { left: 248, top: 84, width: 483, height: 206 })?.from).not.toBe(motion.from);
+  });
+});
+
+describe("isVisibleOpenMotion", () => {
+  it("源终态重合的 identity 飞行动画判为不可见", () => {
+    const same = { left: 120, top: 45, width: 1200, height: 810 };
+    const motion = openFromCard(same, same);
+    expect(motion).not.toBeNull();
+    if (!motion) return;
+    expect(isVisibleOpenMotion(motion)).toBe(false);
   });
 });
 

@@ -9,7 +9,9 @@ import { mergeDetail, prefetchFeedDetails, warmFeedDetails, getFeedDetailsIfRead
 import {
   FEED_MOBILE_MAX_WIDTH,
   feedGridFromMatch,
+  feedViewportOf,
   feedWindow,
+  nearestScrollRoot,
   sameFeedWindow,
   type FeedWindow,
 } from "./feed-layout.ts";
@@ -580,15 +582,19 @@ function FeedVirtualList({
   }
 
   useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const root = nearestScrollRoot(el);
     const update = () => {
-      const el = wrapRef.current;
-      if (!el) return;
+      const list = wrapRef.current;
+      if (!list) return;
+      const { listTop, viewportHeight } = feedViewportOf(list, root);
       const next = feedWindow({
         cardCount: cards.length,
         cols,
         rowGap,
-        listTop: el.getBoundingClientRect().top,
-        viewportHeight: window.innerHeight,
+        listTop,
+        viewportHeight,
       });
       setWin((prev) => (sameFeedWindow(prev, next) ? prev : next));
     };
@@ -601,10 +607,11 @@ function FeedVirtualList({
       });
     };
     update();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    const scrollTarget: EventTarget = root instanceof Window ? window : root;
+    scrollTarget.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      scrollTarget.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
@@ -681,6 +688,7 @@ export default function App() {
   const [detailCard, setDetailCard] = useState<FeedCard | null>(null);
   const sourceRectRef = useRef<DOMRect | null>(null);
   const sourceElRef = useRef<HTMLElement | null>(null);
+  const appBodyRef = useRef<HTMLDivElement>(null);
   const [feedChannel, setFeedChannel] = useState<string>("recommended");
   const [channelEnter, setChannelEnter] = useState(false);
   // 移动端频道抽屉开关（<768px 由 ☰ 打开；选中频道或点遮罩关闭，桌面无感）
@@ -922,6 +930,7 @@ export default function App() {
     closeDetail();
     // push：创作者页内点其他 owner 会叠第二层，返回逐级回退
     setViewStack((prev) => [...prev, { owner }]);
+    appBodyRef.current?.scrollTo(0, 0);
   }, [closeDetail]);
 
   const closeCreator = useCallback(() => {
@@ -1193,7 +1202,7 @@ export default function App() {
     (key: string) => {
       if (key !== feedChannel) setChannelEnter(true);
       setFeedChannel(key);
-      window.scrollTo(0, 0);
+      appBodyRef.current?.scrollTo(0, 0);
     },
     [feedChannel],
   );
@@ -1249,6 +1258,7 @@ export default function App() {
           </div>
         </header>
 
+        <div className="app-body" ref={appBodyRef}>
         <main className={`main${tab === "feed" || tab === "me" ? " main-feed" : ""}`}>
           {/* === 创作者页栈：整页替换（feed/我的/搜索全部让位）；返回逐级 pop 后恢复原 tab 原频道 === */}
           {viewStack.length > 0 && currentCreator ? (
@@ -1754,6 +1764,7 @@ export default function App() {
             <ThumbsDown size={14} className="icon" /> {feedback.dislikes.length}
           </span>
         </footer>
+        </div>
 
         {/* 移动端频道抽屉（<768px；☰ 打开，选中频道或点遮罩关闭；桌面 display:none） */}
         {drawerOpen && <div className="drawer-mask" onClick={() => setDrawerOpen(false)} />}

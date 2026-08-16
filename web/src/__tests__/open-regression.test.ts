@@ -44,8 +44,14 @@ describe("打开动效回归锁（修一项不准把旧伤带回来）", () => {
   });
 
   it("终态盒读 DOM，不用视口估算开飞（会偏几像素）", () => {
-    expect(feedCard).toMatch(/getBoundingClientRect/);
+    expect(feedCard).toMatch(/destBoxFromElement/);
     expect(feedCard).not.toMatch(/destBoxFromViewport/);
+    expect(open).toMatch(/style\.transform = "none"/);
+  });
+
+  it("二次开飞前清飞行 transform，避免 identity 假动画", () => {
+    expect(feedCard).toMatch(/isVisibleOpenMotion/);
+    expect(feedCard).toMatch(/panel\.style\.transform = ""/);
   });
 
   it("源卡隐藏时关掉 transform 过渡，避免悬停抬起还在暗处滑", () => {

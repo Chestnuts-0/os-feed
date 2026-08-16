@@ -15,7 +15,7 @@ import {
   SOURCE_ICONS,
   SOURCE_LABELS,
 } from "./icons.tsx";
-import { openFromCard, playOpenMotion } from "./detail-open.ts";
+import { destBoxFromElement, isVisibleOpenMotion, openFromCard, playOpenMotion } from "./detail-open.ts";
 
 // ---------------------------------------------------------------------------
 // 工具函数
@@ -306,8 +306,8 @@ export function CardDetail({
     const panel = panelRef.current;
     if (!panel || !sourceRect) return;
     if (reduceMotion || typeof panel.animate !== "function") return;
-    // 终态盒读实测位置。视口估算会偏几像素，飞偏离开卡片。
-    const destRect = panel.getBoundingClientRect();
+    // 终态盒读实测布局位。带飞行 transform 再量会把源卡视觉盒当成终点。
+    const destRect = destBoxFromElement(panel);
     const motion = openFromCard(
       {
         left: sourceRect.left,
@@ -315,9 +315,9 @@ export function CardDetail({
         width: sourceRect.width,
         height: sourceRect.height,
       },
-      { left: destRect.left, top: destRect.top, width: destRect.width, height: destRect.height },
+      destRect,
     );
-    if (!motion) return;
+    if (!motion || !isVisibleOpenMotion(motion)) return;
 
     let cancelled = false;
     const card = panel.querySelector(".detail-card");
@@ -337,6 +337,7 @@ export function CardDetail({
       cancelled = true;
       anim.cancel();
       dim?.cancel();
+      panel.style.transform = "";
     };
   }, [sourceRect, reduceMotion]);
 

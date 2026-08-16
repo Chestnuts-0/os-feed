@@ -72,3 +72,44 @@ export function sameFeedWindow(a: FeedWindow, b: FeedWindow): boolean {
     a.bottomPad === b.bottomPad
   );
 }
+
+/** overflow-y:auto/scroll 才是真正的滚动口；visible/hidden 只是裁切。 */
+export function isScrollableOverflow(overflowY: string): boolean {
+  return overflowY === "auto" || overflowY === "scroll";
+}
+
+/** 从列表节点往上找最近的滚动口；找不到就退回 window。 */
+export function nearestScrollRoot(el: Element | null): HTMLElement | Window {
+  let node: HTMLElement | null = el instanceof HTMLElement ? el.parentElement : null;
+  while (node) {
+    if (isScrollableOverflow(getComputedStyle(node).overflowY)) return node;
+    node = node.parentElement;
+  }
+  return window;
+}
+
+type RectTop = { top: number };
+type ListBox = { getBoundingClientRect: () => RectTop };
+type WindowLike = { innerHeight: number; getBoundingClientRect?: undefined };
+type ElementLike = { clientHeight: number; getBoundingClientRect: () => RectTop };
+
+/**
+ * 把列表顶边换成「相对滚动口顶」的坐标。
+ * window 滚：顶边就是视口 y；元素滚：减去滚动口顶，避免把顶栏高度算进已滚距离。
+ */
+export function feedViewportOf(
+  listEl: ListBox,
+  root: WindowLike | ElementLike,
+): { listTop: number; viewportHeight: number } {
+  if (typeof (root as WindowLike).innerHeight === "number" && typeof root.getBoundingClientRect !== "function") {
+    return {
+      listTop: listEl.getBoundingClientRect().top,
+      viewportHeight: (root as WindowLike).innerHeight,
+    };
+  }
+  const box = root as ElementLike;
+  return {
+    listTop: listEl.getBoundingClientRect().top - box.getBoundingClientRect().top,
+    viewportHeight: box.clientHeight,
+  };
+}
