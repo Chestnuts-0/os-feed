@@ -1,20 +1,20 @@
 {
   "zh": {
     "ai-cli": [
-      "Qwen Code 多代理与代码审查双线爆发",
-      "OpenAI Codex Windows 平台与架构优化",
-      "Gemini CLI v0.56.0-nightly 依赖升级",
-      "DeepSeek TUI v0.9.8 架构重构",
-      "Claude Code 会话管理与持久化成核心痛点",
-      "GitHub Copilot CLI 认证与插件生态待完善"
+      "Qwen Code 本周 PR 超 200 条，v0.21.12-preview.5 发布",
+      "Gemini CLI v0.56.0-nightly 持续迭代，Agent 稳定性修复",
+      "OpenCode v1.18.18 发布，Web UI 与 TUI 体验升级",
+      "Claude Code 会话持久化修复，跨平台兼容性改善",
+      "OpenAI Codex v0.148.x-alpha 快速迭代，Windows 优化",
+      "DeepSeek TUI v0.9.8 品牌升级，架构重构完成"
     ],
     "ai-agents": [
-      "OpenClaw 今日 1000 条交互 (Issues+PRs)",
-      "OpenClaw Gateway 稳定性修复与内存优化",
-      "OpenClaw 引入 Gateway profile evidence 性能分析",
-      "OpenRouter 被 Stripe 以 70 亿美元收购",
-      "CLI-Anything 成为 Agent 化 CLI 中心化平台",
-      "Ego-Lite 浏览器自动化工具零配置极速上线"
+      "OpenClaw 本周 500 Issues/PRs 高强度迭代",
+      "OpenClaw 发布 v2026.8.1-beta.2，Gateway 性能优化",
+      "Bug #121058 静默回复失败复发，社区关注超 97 条评论",
+      "Bug #44925 子代理结果静默丢失，无重试机制",
+      "P0 级 Gateway 内存泄漏致 OOM，长期稳定性受威胁",
+      "OpenClaw Gateway 会话恢复修复已合并"
     ],
     "ai-trending": [
       "llmfit 一站式跨模型推理工具增长 187 stars",
@@ -97,6 +97,14 @@
       "Kimi K3: Serving challenges",
       "Dev.to: Production focus",
       "Lobste.rs: Model reliability"
+    ],
+    "ai-weekly": [
+      "Stripe acquires OpenRouter for $7B+",
+      "Z.ai releases GLM-5.3 with emergent cyber capabilities",
+      "Anthropic warns agent volume may exceed supervision",
+      "Claude text watermarking for EU AI Act compliance",
+      "Anthropic releases Claude Sonnet 5",
+      "Claude Code User-Agent email leak surfaces"
     ]
   }
 }
