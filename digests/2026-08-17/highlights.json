@@ -1,0 +1,102 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Qwen Code 多代理与代码审查双线爆发",
+      "OpenAI Codex Windows 平台与架构优化",
+      "Gemini CLI v0.56.0-nightly 依赖升级",
+      "DeepSeek TUI v0.9.8 架构重构",
+      "Claude Code 会话管理与持久化成核心痛点",
+      "GitHub Copilot CLI 认证与插件生态待完善"
+    ],
+    "ai-agents": [
+      "OpenClaw 今日 1000 条交互 (Issues+PRs)",
+      "OpenClaw Gateway 稳定性修复与内存优化",
+      "OpenClaw 引入 Gateway profile evidence 性能分析",
+      "OpenRouter 被 Stripe 以 70 亿美元收购",
+      "CLI-Anything 成为 Agent 化 CLI 中心化平台",
+      "Ego-Lite 浏览器自动化工具零配置极速上线"
+    ],
+    "ai-trending": [
+      "llmfit 一站式跨模型推理工具增长 187 stars",
+      "fff 超快文件搜索 SDK 支持多语言与边缘环境",
+      "yazi Rust 极速终端文件管理器增长 53 stars",
+      "Antigravity-Manager 账号管理工具一键无缝切换",
+      "MoneyPrinterTurbo 一键生成高清短视频工具增长 494 stars",
+      "openpencil 首个 AI 原生矢量设计工具增长 138 stars"
+    ],
+    "ai-hn": [
+      "Anthropic 多智能体系统模式与问题研究",
+      "Little Learner LLM 五年级数据训练引发伦理辩论",
+      "Hacker News 讨论公司是否回归手写代码",
+      "Sib 使用 Git 存储对话替代 SQLite 客户端",
+      "Stripe 以 70 亿美元收购 OpenRouter AI 基础设施",
+      "多智能体系统稳定性与工程落地挑战"
+    ],
+    "ai-hf": [
+      "Qwen3.8-27B 多模态大模型下载量超 26 万",
+      "Kimi-K3 官方模型下载量突破 200 万",
+      "DeepSeek-V4-Flash-0731 推理速度优化版",
+      "MiniMax-H3 视频生成黑马下载量超 230 万",
+      "meta-models Muse-Glimmer-30B 多模态强手",
+      "Comfy-Org MiniMax-H3 适配版本下载惊人"
+    ],
+    "ai-community": [
+      "LLM 如何生成代码而非直接输出图像绕过瓶颈",
+      "AI 工程师 2026 年必读书单 RAG 与部署",
+      "LLM 的“遗忘”本质是外部存储架构问题",
+      "探讨 AI 辅助编程带来的信任危机与代码审查",
+      "LLM 安全调用 API 的防护策略与架构建议",
+      "AI 生成代码的“假设性”可靠性框架"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code: 10 open issues",
+      "Gemini CLI: v0.56.0 Nightly",
+      "OpenAI Codex: Performance focus",
+      "Qwen Code: Rigid security focus",
+      "DeepSeek TUI: Model integration",
+      "Pi: TUI fluidity focus"
+    ],
+    "ai-agents": [
+      "OpenClaw: 500 open issues",
+      "OpenClaw: 500 open PRs",
+      "OpenClaw: Profile evidence release",
+      "OpenClaw: Bounded Gateway rig",
+      "OpenClaw: Event-loop hotspot",
+      "OpenClaw: Enterprise-ready shift"
+    ],
+    "ai-trending": [
+      "Unsloth: Qwen3.8 speedup",
+      "Wasmtime: Isolated AI runtime",
+      "Qdrant: Vector DB backbone",
+      "CLI-Anything: Agent trends",
+      "Rust: AI tooling rise",
+      "RAG: Multi-modal data focus"
+    ],
+    "ai-hn": [
+      "Claude: New system prompts",
+      "Claude: Controversial watermarking",
+      "Stripe: $7B OpenRouter buy",
+      "Nvidia: Infrastructure scaling",
+      "Anthropic: $11.5B Q2 revenue",
+      "Agents: Multi-agent patterns"
+    ],
+    "ai-hf": [
+      "Kimi-K3: Image-text model",
+      "Qwen3.8: 2.4T MOE model",
+      "DeepSeek-V4: Flash optimization",
+      "MiniMax-H3: Video generation",
+      "NVFP4: Quantization format",
+      "MiniMax: H3 high fidelity"
+    ],
+    "ai-community": [
+      "LLMs: Chart drawing guide",
+      "AI Engineer: 2026 reading list",
+      "AI: Storage problem solutions",
+      "Kimi K3: Serving challenges",
+      "Dev.to: Production focus",
+      "Lobste.rs: Model reliability"
+    ]
+  }
+}
