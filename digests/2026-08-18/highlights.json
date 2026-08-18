@@ -1,0 +1,111 @@
+{
+  "zh": {
+    "ai-cli": [
+      "OpenCode & Pi 呼吁支持视频/音频多模态输入",
+      "Gemini CLI & Pi 遭遇长上下文处理卡顿",
+      "OpenCode & Gemini 修复插件加载器安全漏洞",
+      "OpenAI Codex Alpha v0.148.0-alpha.21 发布",
+      "Gemini CLI Nightly v0.56.0 发布",
+      "OpenAI Codex 桌面端/远程协作稳定性优化"
+    ],
+    "ai-agents": [
+      "OpenClaw 今日合并 121 个 PR 修复 Teams/Discord",
+      "OpenClaw 修复多指针手势冲突与 Workboard 侧边栏",
+      "OpenClaw 完成 macOS Codex 入职流程与模型选择器修复",
+      "OpenClaw 修复 MS Teams 出站文本剥离与追踪信息泄露",
+      "OpenClaw 改进安装策略警告与权限继承确认流程",
+      "OpenClaw CLI 修复自动化命令不支持 --port 参数问题"
+    ],
+    "ai-trending": [
+      "mukul975 Anthropic-Cybersecurity-Skills 新增 198 stars",
+      "harry0703 MoneyPrinterTurbo 新增 1,189 stars",
+      "HKUDS CLI-Anything 新增 119 stars",
+      "QwenLM qwen-code 新增 49 stars",
+      "0x4m4 hexstrike-ai 新增 401 stars",
+      "dmtrKovalenko fff 新增 22 stars"
+    ],
+    "ai-web": [
+      "OpenAI 宣布加入 Ports Pike 开源项目",
+      "Ports Pike 致力于建立可信开源生态系统",
+      "Anthropic 今日无新增官方发布内容",
+      "OpenAI 战略重心转向“标准输出”与合规治理",
+      "Anthropic 静默或预示即将发布重大产品更新",
+      "企业混合模型架构合规门槛因 OpenAI 参与而降低"
+    ],
+    "ai-hn": [
+      "GPT 5.6 Sol 视觉能力获 HN 295 分热议",
+      "GPT 5.6 Sol 价格腰斩引发社区关注",
+      "Anthropic 被指正在“围剿”开源 AI",
+      "Llama.cpp v0.1.0 发布推理效率显著提升",
+      "Doberman 工具旨在防止 AI Agent 删除数据库",
+      "社区热议 AI 生成代码带来的软件供应链风险"
+    ],
+    "ai-hf": [
+      "Kimi-K3 下载量突破 216 万位居榜首",
+      "DeepSeek-V4-Flash-0731 下载量达 197 万",
+      "MiniMax-H3 视频生成模型下载量 240 万",
+      "Qwen3.8-27B 下载量 41.5 万表现强劲",
+      "NVIDIA Nemotron-3.5-Lightning 30B 优化推理速度",
+      "MiniMax-Music3 音乐生成模型下载 1 万"
+    ],
+    "ai-community": [
+      "AI 辅助编码演示与实际交付存在巨大鸿沟",
+      "LLM 在处理复杂数据库约束时存在脆弱性",
+      "提供 CI 集成方案捕获 Agent 忽略工具调用失败",
+      "恶意 MCP 服务器测试揭示文档与 API 行为不一致",
+      "5 种 MCP Token 浪费痛点被 50KB CLI 工具解决",
+      "社区关注 AI Agent 运维成本与模型生命周期管理"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "CLI ecosystem bifurcates into frameworks and specialized tools",
+      "Pi sees high PR activity for stability",
+      "DeepSeek TUI issues focus on stability regressions",
+      "Kimi Code CLI joins the active CLI list",
+      "OpenAI Codex listed as active CLI tool",
+      "Claude Code Skills released for agent tools"
+    ],
+    "ai-agents": [
+      "Hermes Agent v0.20.3 stable with active refactoring",
+      "High-velocity projects dominate agent ecosystem",
+      "Agent infrastructure consolidation is a key trend",
+      "OpenClaw and NanoClaw show high velocity",
+      "CoPaw focuses on one-door task delivery",
+      "TinyClaw is in maintenance mode"
+    ],
+    "ai-trending": [
+      "akitaonrails/ai-memory leads Rust memory tools",
+      "fff file search SDK for LLM context windows",
+      "sxyazi/yazi terminal file manager trending",
+      "Blaizzy/mlx-audio speech-to-speech on Apple Silicon",
+      "GPT-5.6 Sol best vision model released",
+      "RAG-native tools surge in popularity"
+    ],
+    "ai-web": [
+      "OpenAI joins Ports Pike maritime infrastructure project",
+      "OpenAI strategic shift into physical logistics",
+      "Anthropic maintains strategic content pause",
+      "OpenAI content crawl returns metadata-only",
+      "New OpenAI article index updated",
+      "Anthropic reports zero new articles today"
+    ],
+    "ai-hn": [
+      "GPT-5.6 Sol slashes vision model costs by 50%",
+      "Israel attempts to influence AI chatbots",
+      "LLMs debate practical utility for AGI",
+      "Anthropic claims agents outcompete rivals",
+      "OpenAI releases best vision model GPT-5.6 Sol",
+      "Math behind OpenAI's sphere packing result",
+      "Llama.cpp v0.1.0 released"
+    ],
+    "ai-hf": [
+      "Qwen3.8-27B leads trending models with 10k likes",
+      "MiniMax-H3 dominates video generation charts",
+      "DeepSeek-V4-Flash model trending for speed",
+      "Kimi-K3 leads multimodal downloads",
+      "Quantization formats GGUF and NVFP4 essential",
+      "MiniMax pipeline drives massive surge"
+    ]
+  }
+}

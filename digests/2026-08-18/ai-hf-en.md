@@ -1,0 +1,60 @@
+# Hugging Face Trending Models Digest 2026-08-18
+
+> Source: [Hugging Face Hub](https://huggingface.co/) | 30 models | Generated: 2026-08-18 00:37 UTC
+
+---
+
+**1. Today's Highlights**
+
+The Hugging Face ecosystem is currently dominated by the Qwen3.8 series and the MiniMax AI pipeline, with the Qwen3.8-27B model leading the chart with over 10,000 likes. Video generation is also seeing a massive surge, driven by the MiniMax-H3 and MiniMax-H3-Turbo models, which have accumulated millions of downloads. Additionally, quantization formats like GGUF and NVFP4 are becoming essential for the community, enabling efficient deployment of these large-scale models.
+
+**2. Trending Models**
+
+**🧠 Language Models (LLMs, chat models, instruction-tuned)**
+*   **Kimi-K3** | Author: moonshotai | Likes: 10,802 | Downloads: 2,163,953
+    *   A powerful image-text-to-text model that is trending due to its high download volume and robust feature extraction capabilities.
+*   **MiniMax-H3** | Author: MiniMaxAI | Likes: 4,087 | Downloads: 2,403,238
+    *   A state-of-the-art text-to-video model that is highly popular for its quality and versatility in generative video tasks.
+*   **DeepSeek-V4-Flash-0731** | Author: deepseek-ai | Likes: 3,497 | Downloads: 1,978,298
+    *   An optimized text-generation model focused on speed and efficiency, making it a favorite for high-throughput inference.
+*   **Qwen3.8-27B** | Author: Qwen | Likes: 10,711 | Downloads: 415,039
+    *   The top-ranking general-purpose image-text-to-text model, setting the benchmark for current multimodal capabilities.
+*   **Muse-Glimmer-30B** | Author: meta-models | Likes: 1,661 | Downloads: 334,099
+    *   A strong contender in the image-text-to-text space, gaining traction for its conversational abilities.
+
+**🎨 Multimodal & Generation (image, video, audio, text-to-X)**
+*   **LTX-2.5** | Author: Lightricks | Likes: 1,108 | Downloads: 465,529
+    *   An image-to-video model that is trending for its ability to generate high-quality, realistic video clips from static images.
+*   **MiniMax-Music3** | Author: MiniMaxAI | Likes: 904 | Downloads: 10,375
+    *   A text-to-music model demonstrating the growing capability of AI in the audio generation domain.
+*   **Anima-2.9B** | Author: Gazingstars123 | Likes: 233 | Downloads: 23,202
+    *   A text-to-image model optimized for ComfyUI workflows, popular among artists for anime-style generation.
+*   **LFM2.5-VL-3B** | Author: LiquidAI | Likes: 162 | Downloads: 6,816
+    *   A vision-language model focusing on multimodal understanding and reasoning.
+
+**🔧 Specialized Models (code, math, medical, embeddings)**
+*   *(Note: No specific specialized models (code/math/medical) were in the top 30, but DeepSeek-V4-Pro and MiniMax-H3 serve as strong conversational/text-generation tools.)*
+
+**📦 Fine-tunes & Quantizations (community fine-tunes, GGUF, AWQ)**
+*   **Qwen3.8-27B-Uncensored-GGUF** | Author: JonathanColetti | Likes: 299 | Downloads: 357,701
+    *   A quantized version of the Qwen model, popular for local deployment where uncensored outputs are preferred.
+*   **Qwen3.8-27B-Uncensored-FP8** | Author: orcarouter | Likes: 436 | Downloads: 15,812
+    *   An FP8 fine-tuned model that balances precision and performance for specific use cases.
+*   **MiniMax-H3-Realism-People-LoRA** | Author: fal | Likes: 243 | Downloads: 18,562
+    *   A LoRA adapter for the MiniMax-H3 model, specifically fine-tuned to improve realism in human-generated video content.
+
+**3. Ecosystem Signal**
+
+The data highlights a clear shift towards multimodal dominance, with the "Qwen" and "MiniMax" families capturing the top spots. The massive popularity of MiniMax-H3 (over 2.4M downloads) and the Qwen3.8-27B series indicates that the industry is moving aggressively toward high-quality video and general-purpose multimodal agents. In terms of accessibility, quantization formats like GGUF and specialized formats like NVFP4 are seeing significant activity, driven by the unsloth community to make these heavy models runnable on consumer hardware. The trend is also moving away from purely text-based models toward "Image-to-Video" and "Audio-to-Music" capabilities, reflecting the maturation of generative media pipelines.
+
+**4. Worth Exploring**
+
+*   **MiniMax-H3** (Author: MiniMaxAI)
+    *   *Reasoning:* With the highest download count in the list, this model represents the current state-of-the-art in open-access video generation, capable of producing impressive results from text prompts.
+*   **Qwen3.8-27B** (Author: Qwen)
+    *   *Reasoning:* As the highest-ranked model by likes, it serves as the primary benchmark for image-text-to-text interactions, essential for anyone building modern AI assistants.
+*   **Qwen3.8-27B-GGUF** (Author: unsloth)
+    *   *Reasoning:* This quantized version allows users to run the flagship Qwen model locally on consumer hardware, democratizing access to high-level multimodal intelligence.
+
+---
+*This digest is auto-generated by [GitTok](https://github.com/Chestnuts-Sisyphus/gittok).*
