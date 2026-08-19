@@ -1,0 +1,134 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Claude Code v2.1.235 修复安全验证与兼容性",
+      "OpenAI Codex v0.148.0 重点支持 IDE 扩展与 MCP",
+      "Qwen Code v0.21.11-nightly 专注多会话协作",
+      "DeepSeek TUI v0.9.9 完成架构重构",
+      "Kimi Code 重点优化 Web UI 与量化交易应用",
+      "Gemini CLI v0.56.0-nightly 强化 Agent 稳定性与沙箱兼容"
+    ],
+    "ai-agents": [
+      "OpenClaw 500 Issues/PR 待合并，修复 Prompt Cache 性能痛点",
+      "OpenClaw 优化 Web UI 稳定性，引入插件安装强制确认",
+      "Claude Mem 今日新增 145 stars，跨会话持久上下文管理",
+      "MoneyPrinterTurbo 登顶趋势榜，AI 视频生成自动化爆发",
+      "Anthropic Cybersecurity Skills 新增 730 stars，映射 MITRE ATT&CK",
+      "Career Ops 新增 1022 stars，开源 AI 求职助手登顶"
+    ],
+    "ai-trending": [
+      "MoneyPrinterTurbo 新增 2304 stars，一键生成高清短视频",
+      "OpenViking 新增 213 stars，AI 智能体自演进上下文数据库",
+      "Claude Mem 新增 145 stars，压缩注入历史上下文",
+      "Farion1231/cc-switch 新增 264 stars，统一入口切换多种编程工具",
+      "LLMfit 新增 570 stars，一键检测本地硬件支持 AI 模型",
+      "Milvus 持续受青睐，高性能 RAG 检索引擎活跃"
+    ],
+    "ai-web": [
+      "Claude 蛋白质设计成功率高达 14/15，介入药物研发",
+      "Claude 化学分析速度提升 10 倍，氢计数与纯度评估高度吻合",
+      "OpenAI 发布 5 篇更新，聚焦青少年产品合规与网络能力",
+      "OpenAI 密集发布安全与合作伙伴关系公告",
+      "Anthropic 展示模型在科学发现中的生产性飞跃",
+      "OpenAI 推进针对青少年人群的产品落地与政策合规"
+    ],
+    "ai-hn": [
+      "Claude 编写 macOS 驱动解决 HP 打印机兼容问题",
+      "Claude 系统出现多模型性能下降故障引发担忧",
+      "GLM-5.3 基准测试结果详细拆解引发技术讨论",
+      "machine0 提供持久化 CPU/GPU 虚拟机简化基础设施管理",
+      "OpenAI 因裁员风险管理与训练放缓引发焦虑",
+      "AI 安全团队解散与开源替代方案呼声高涨"
+    ],
+    "ai-arxiv": [
+      "发现 AI 行为控制“催眠”现象，揭示提示工程安全盲区",
+      "审计合规检测器，揭示内部激活可能泄露隐私数据",
+      "提出“特权价值函数”降低 LLM 强化训练方差",
+      "Don't Drop the BATON：解决长程机器人操作连贯性难题",
+      "提出“状态语义注入”攻击 LLM 驱动具身智能体",
+      "Proteus 提出增量记忆激活机制提升长上下文建模效率"
+    ],
+    "ai-hf": [
+      "Qwen3.8-27B 登顶多模态霸主，点赞 1.1 万",
+      "Kimi-K3 国产之光下载量超 220 万",
+      "DeepSeek-V4-Flash-0731 极致推理，下载超 210 万",
+      "MiniMax-H3 视频生成新贵，下载超 280 万",
+      "LTX-2.5 专注高帧率视频生成",
+      "MiniMax-Music3 基于文本生成高质量音乐"
+    ],
+    "ai-community": [
+      "COSP：LLM 自我评估代码作业的提示技巧",
+      "Why Does Every AI Agent Still Look Like `while (true)`?",
+      "Timeout Is Not Failure：基于状态审计的持久化状态机",
+      "Hermes Bot Mode：多智能体团队协作模式",
+      "14 个 MCP 服务器实测成本与上下文占用",
+      "本地部署 ASR 的隐私、延迟与成本优势"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.235 released today",
+      "OpenAI Codex v0.148.0 RC out now",
+      "Gemini CLI merges security evals",
+      "OpenCode & Pi focus on local LLMs",
+      "CLI ecosystem moves to multi-agent",
+      "GitHub Copilot CLI hits high activity"
+    ],
+    "ai-agents": [
+      "OpenClaw maintains 500+ issues/PRs",
+      "Focus shifts to prompt caching stability",
+      "Fixes for session state and gateway",
+      "IronClaw, NanoClaw gain traction",
+      "PicoClaw, ZeroClaw see updates",
+      "Trend: Autonomous agents gaining ground"
+    ],
+    "ai-trending": [
+      "MoneyPrinterTurbo gains 2,304 stars",
+      "AI Memory tools like OpenViking surge",
+      "Claude Code hits 141,897 stars",
+      "llmfit tool rockets +570 stars",
+      "Omlx server hits +370 stars",
+      "Shift to native creative AI tools"
+    ],
+    "ai-web": [
+      "Anthropic: Claude accelerates protein design",
+      "Claude achieves 14/15 target success",
+      "OpenAI releases 5 new index pages",
+      "Focus: Cyber capability models",
+      "Focus: ChatGPT for Teens",
+      "Focus: National security partnerships"
+    ],
+    "ai-hn": [
+      "Debate: OpenAI shifts from frontier training",
+      "OpenAI dismantling safety teams under scrutiny",
+      "Anthropic nearing massive IPO",
+      "Claude native macOS driver capabilities",
+      "GLM-5.3 benchmarks gain traction",
+      "Discussion: What if OpenAI dies?"
+    ],
+    "ai-arxiv": [
+      "Focus on Embodied AI and RL",
+      "Long-horizon reasoning becomes key",
+      "Interpretability and safety deepen",
+      "AutoSR and UniDot efficiency trends",
+      "Model Hypnosis: Controlling AI behavior",
+      "Proteus: Incremental memory activation"
+    ],
+    "ai-hf": [
+      "Qwen3.8-27B becomes market leader",
+      "Kimi-K3 dominates multilingual space",
+      "DeepSeek-V4-Flash hits 2.1M downloads",
+      "MiniMax-H3 MoE video generation",
+      "Unsloth pushes FP8 compression",
+      "Quantization activity surges"
+    ],
+    "ai-community": [
+      "Govs release joint AI security guidance",
+      "Splyntra: Open-source agent observability",
+      "LLM self-grading technique explained",
+      "Google AI: Designing AI evaluations",
+      "1 Million Token memory engine trend",
+      "Focus on robust AI architecture"
+    ]
+  }
+}
