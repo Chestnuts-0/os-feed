@@ -1,0 +1,22 @@
+{
+  "zh": {
+    "ai-weekly": [
+      "GPT-5.6 Sol Ultrafast发布，推理速度提升14倍",
+      "Stripe70亿美元收购OpenRouter，重塑网关生态",
+      "GLM-5.3被曝网络战能力，HN热度1025分引争议",
+      "Claude Code v2.1.233新增GitLab MR集成与企业安全过滤",
+      "Anthropic Claude蛋白质设计成功率14/15，任务缩至分钟级",
+      "DeepSeek TUI重构为CodeWhale v0.9.7，社区高度关注"
+    ]
+  },
+  "en": {
+    "ai-weekly": [
+      "Claude hits 14/15 protein design success rate",
+      "GPT-5.6 Sol Ultrafast: 14x inference speed",
+      "Stripe nears $7B OpenRouter acquisition",
+      "Anthropic Q2 revenue tops $11.5B",
+      "Claude improves Riemann zeta bound to 67.2%",
+      "MoneyPrinterTurbo passes 108K stars"
+    ]
+  }
+}
