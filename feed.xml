@@ -6,7 +6,651 @@
     <description>AI 开源生态每日简报 · Daily AI ecosystem digest</description>
     <language>zh-CN</language>
     <atom:link href="https://chestnuts-sisyphus.github.io/gittok/feed.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 24 Aug 2026 02:26:07 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2026 06:54:05 +0000</lastBuildDate>
+    <item>
+      <title>AI 工具生态周报 2026-08-31</title>
+      <link>https://chestnuts-sisyphus.github.io/gittok/#2026-08-31/ai-weekly</link>
+      <guid isPermaLink="true">https://chestnuts-sisyphus.github.io/gittok/#2026-08-31/ai-weekly</guid>
+      <pubDate>Mon, 31 Aug 2026 00:00:00 +0000</pubDate>
+      <description>AI 工具生态周报 2026-W36 覆盖日期: 2026-08-14 ~ 2026-08-24 | 生成时间: 2026-08-31 06:52 UTC AI 工具生态周报 | 2026-W36 覆盖周期：2026-08-14 ~ 2026-08-19分析师：AI 开发工具技术分析师 1. 本周要闻 日期 事件 08-19 Anthropic 发布研究：Claude 在蛋白质从头设计任务中成功率达 14/15，单点设计成功率 22%-35%，远超行业均值；化学分析任务从数小时缩短至 20 分钟级 08-18 OpenAI 宣布加入 Ports Pike 项目，参与开源 AI 合规标准制定，战略重心从&amp;quot;模型输出&amp;quot;转向&amp;quot;标准输出&amp;quot; 08-17 Stripe 以超 70 亿美元收购 AI 网关 OpenRouter，金融巨头加速 AI 基础设施整合；DeepSeek TUI 启动品牌迁移至 CodeWhale 08-16 Anthropic 发布重磅研究报告《Multiagent Systems: Patterns and Problems》，首次系...</description>
+      <content:encoded><![CDATA[<h1>AI 工具生态周报 2026-W36</h1>
+<blockquote>
+<p>覆盖日期: 2026-08-14 ~ 2026-08-24 | 生成时间: 2026-08-31 06:52 UTC</p>
+</blockquote>
+<hr>
+<h1>AI 工具生态周报 | 2026-W36</h1>
+<blockquote>
+<p>覆盖周期：2026-08-14 ~ 2026-08-19<br>分析师：AI 开发工具技术分析师</p>
+</blockquote>
+<hr>
+<h2>1. 本周要闻</h2>
+<table>
+<thead>
+<tr>
+<th align="center">日期</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>08-19</strong></td>
+<td>Anthropic 发布研究：Claude 在蛋白质从头设计任务中成功率达 14/15，单点设计成功率 22%-35%，远超行业均值；化学分析任务从数小时缩短至 20 分钟级</td>
+</tr>
+<tr>
+<td align="center"><strong>08-18</strong></td>
+<td>OpenAI 宣布加入 <strong>Ports Pike</strong> 项目，参与开源 AI 合规标准制定，战略重心从&quot;模型输出&quot;转向&quot;标准输出&quot;</td>
+</tr>
+<tr>
+<td align="center"><strong>08-17</strong></td>
+<td>Stripe 以超 70 亿美元收购 AI 网关 OpenRouter，金融巨头加速 AI 基础设施整合；DeepSeek TUI 启动品牌迁移至 CodeWhale</td>
+</tr>
+<tr>
+<td align="center"><strong>08-16</strong></td>
+<td>Anthropic 发布重磅研究报告《Multiagent Systems: Patterns and Problems》，首次系统揭示 AI 智能体协作中的系统性风险；同日推出 <strong>Claude 文本水印技术</strong>，响应欧盟 AI Act 合规</td>
+</tr>
+<tr>
+<td align="center"><strong>08-15</strong></td>
+<td>GLM-5.3 基准测试引发 HN 热议，社区对其&quot;网络战能力&quot;涌现高度两极分化；Anthropic 发布就业政策元分析，再培训计划每名额成本约 1.3 万美元</td>
+</tr>
+<tr>
+<td align="center"><strong>08-14</strong></td>
+<td>OpenAI 发布 GPT-5.6 Sol Ultrafast 预览，基于 Cerebras 芯片实现 <strong>14 倍推理速度</strong>；Anthropic 展示 Claude 在黎曼猜想相关问题上的数学突破，将零点比例下界从 41.6% 提升至 67.2%</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>2. CLI 工具进展</h2>
+<h3>版本发布动态</h3>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>本周版本</th>
+<th>核心更新</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Claude Code</strong></td>
+<td>v2.1.233 → v2.1.235</td>
+<td>安全验证增强、Cowork 虚拟机兼容性优化、IDE 集成稳定性改进</td>
+</tr>
+<tr>
+<td><strong>OpenAI Codex</strong></td>
+<td>v0.148.0-alpha.13 → v0.148.0</td>
+<td>Rust 引擎持续迭代、桌面端/远程协作稳定性提升、多模型治理</td>
+</tr>
+<tr>
+<td><strong>Gemini CLI</strong></td>
+<td>v0.56.0-nightly（持续）</td>
+<td>Agent 生命周期管理、沙箱兼容性修复、依赖升级</td>
+</tr>
+<tr>
+<td><strong>DeepSeek TUI</strong></td>
+<td>v0.9.7 → v0.9.9</td>
+<td><strong>重大品牌重塑</strong>：向 CodeWhale 迁移，架构重构、多语言支持、CI/CD 稳定性</td>
+</tr>
+<tr>
+<td><strong>Qwen Code</strong></td>
+<td>v0.21.11 → v0.21.12-preview.5</td>
+<td>多会话协作、会话持久化、自动化评审、Web Shell 优化</td>
+</tr>
+<tr>
+<td><strong>OpenCode</strong></td>
+<td>v1.18.18</td>
+<td>计费逻辑修复、消息 ID 管理、本地引擎改进</td>
+</tr>
+<tr>
+<td><strong>Pi</strong></td>
+<td>v0.84.1 → v0.84.2</td>
+<td>流式响应优化、TUI 交互改进、Bedrock API 适配</td>
+</tr>
+</tbody></table>
+<h3>共同技术方向</h3>
+<ul>
+<li><strong>Agent 编排能力</strong>：Subagent fork、跨会话消息传递、多 Agent 工作流编排成为各家标配</li>
+<li><strong>沙箱安全机制</strong>：Claude Code、Copilot CLI、OpenAI Codex 均强化进程隔离与权限控制</li>
+<li><strong>长上下文管理</strong>：上下文压缩、Prompt Cache 优化、内存泄漏修复为本周高频痛点</li>
+<li><strong>跨平台稳定性</strong>：Windows GPU 进程崩溃、流式传输挂死、macOS 输入法冲突是共性 Bug</li>
+</ul>
+<hr>
+<h2>3. AI Agent 生态</h2>
+<h3>OpenClaw 项目动态</h3>
+<ul>
+<li><strong>新版本</strong>：v2026.8.1-beta.2，新增 GPT-5.6 Ultra 支持、Secret Egress 绑定增强</li>
+<li><strong>关键修复</strong>：<ul>
+<li>Claude CLI Live Session Prompt Cache 修复（显著提升长对话缓存命中率）</li>
+<li>Gateway 会话&quot;假运行中&quot;状态修复，Stop 按钮恢复正常</li>
+<li>Anthropic 上下文&quot;服务器端压缩&quot;功能新增</li>
+</ul>
+</li>
+<li><strong>严重 Bug（P0/P1）</strong>：<ul>
+<li>#91588：Gateway 内存泄漏，RSS 从 350MB 持续增长至 15.5GB 导致 OOM</li>
+<li>#121058：静默回复失败反复出现，核心消息投递机制存在竞态条件</li>
+<li>#91009：Codex 集成 PreToolUse hook CPU 占用过高</li>
+</ul>
+</li>
+</ul>
+<h3>热门 Agent 框架</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="center">本周 Stars 增长</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>holaboss-ai/holaOS</strong></td>
+<td align="center">+769</td>
+<td>全栈 AI 智能体工作台，跨工具统一管理</td>
+</tr>
+<tr>
+<td><strong>ECC (affaan-m)</strong></td>
+<td align="center">+24,300</td>
+<td>代理 Harness 性能优化系统，技能/记忆/安全一体化</td>
+</tr>
+<tr>
+<td><strong>CodeWhale (Hmbown)</strong></td>
+<td align="center">+45</td>
+<td>开源社区驱动的智能体编排框架</td>
+</tr>
+<tr>
+<td><strong>multica-ai/multica</strong></td>
+<td align="center">+178</td>
+<td>多 Agent 任务分发平台</td>
+</tr>
+<tr>
+<td><strong>exo-explore/exo</strong></td>
+<td align="center">+26</td>
+<td>本地前沿模型运行器</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>4. 开源趋势</h2>
+<h3>技术方向</h3>
+<ol>
+<li><strong>视频生成自动化爆发</strong>：<code>MoneyPrinterTurbo</code> 登顶 GitHub Trending（+2,304 stars），AI 内容创作工具进入实用化爆发期</li>
+<li><strong>Agent 记忆与上下文管理</strong>：<code>OpenViking</code>（字节跳动）、<code>memvid</code> 等项目成为构建企业级 AI 应用的核心基础设施</li>
+<li><strong>端侧/边缘推理</strong>：<code>cactus-compute/needle</code>（14MB 轻量模型）、<code>jundot/omlx</code>（Apple Silicon 推理服务器）推动本地化部署</li>
+<li><strong>AI 安全技能标准化</strong>：<code>Anthropic-Cybersecurity-Skills</code>（817 个结构化技能，映射 MITRE ATT&amp;CK）获 29K+ stars</li>
+<li><strong>RAG 与向量数据库</strong>：<code>infiniflow/ragflow</code>、<code>microsoft/graphrag</code> 持续活跃，成为知识库问答系统核心方案</li>
+</ol>
+<h3>热门项目速览</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">Stars</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://github.com/harry0703/MoneyPrinterTurbo">MoneyPrinterTurbo</a></td>
+<td align="right">108,520</td>
+<td>AI 一键短视频生成工具</td>
+</tr>
+<tr>
+<td><a href="https://github.com/affaan-m/ECC">ECC</a></td>
+<td align="right">240,300</td>
+<td>代理 Harness 性能优化系统</td>
+</tr>
+<tr>
+<td><a href="https://github.com/unslothai/unsloth">unsloth</a></td>
+<td align="right">73,219</td>
+<td>本地 LLM 训练 UI，支持 Qwen3.8/Gemma 4/DeepSeek-V4</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HKUDS/CLI-Anything">CLI-Anything</a></td>
+<td align="right">47,710</td>
+<td>让所有软件 &quot;Agent 原生&quot; 的开源平台</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AlexsJones/llmfit">llmfit</a></td>
+<td align="right">32,727</td>
+<td>一键检测本地硬件支持的 AI 模型与提供商</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5. HN 社区热议</h2>
+<h3>核心话题</h3>
+<table>
+<thead>
+<tr>
+<th>话题</th>
+<th align="center">分数</th>
+<th>情绪</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>GPT-5.6 Sol Ultrafast 14 倍速度</strong></td>
+<td align="center">408</td>
+<td>兴奋与担忧并存，关注硬件瓶颈与成本</td>
+</tr>
+<tr>
+<td><strong>GLM-5.3 &quot;网络战能力&quot;涌现</strong></td>
+<td align="center">1025</td>
+<td>极度两极分化，惊叹与&quot;核按钮&quot;风险担忧激烈交锋</td>
+</tr>
+<tr>
+<td><strong>Claude 写 macOS 驱动修复 HP 打印机</strong></td>
+<td align="center">151</td>
+<td>正面案例，AI 辅助工程实践能力获认可</td>
+</tr>
+<tr>
+<td><strong>Stripe 70 亿美元收购 OpenRouter</strong></td>
+<td align="center">165</td>
+<td>关注金融巨头 AI 基础设施整合</td>
+</tr>
+<tr>
+<td><strong>Anthropic &quot;反开源&quot;争议</strong></td>
+<td align="center">132</td>
+<td>对商业利益与开源精神冲突的激烈辩论</td>
+</tr>
+<tr>
+<td><strong>Doberman：防止 AI 删除数据库</strong></td>
+<td align="center">5</td>
+<td>反映开发者对 Agent 自主性风险的防御实践</td>
+</tr>
+</tbody></table>
+<h3>社区情绪</h3>
+<p>整体情绪在<strong>技术突破的兴奋</strong>与<strong>监管/安全的焦虑</strong>之间剧烈摇摆。GLM-5.3 的网络战能力、Claude 的系统提示透明度、AI 生成代码的&quot;死代码&quot;清理等话题，均显示出开发者对 AI 能力边界与可信度的深度关切。</p>
+<hr>
+<h2>6. 官方动态</h2>
+<h3>Anthropic</h3>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>内容</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>08-19</td>
+<td>Claude 加速蛋白质设计与化学分析研究</td>
+<td>Research</td>
+</tr>
+<tr>
+<td>08-16</td>
+<td>《Multiagent Systems: Patterns and Problems》研究报告</td>
+<td>Research</td>
+</tr>
+<tr>
+<td>08-16</td>
+<td>Claude 文本水印技术详解（欧盟 AI Act 合规）</td>
+<td>News</td>
+</tr>
+<tr>
+<td>08-15</td>
+<td>就业政策元分析：再培训计划的实际效能评估</td>
+<td>Research</td>
+</tr>
+<tr>
+<td>08-14</td>
+<td>Claude 数学能力突破：黎曼猜想相关问题下界改进</td>
+<td>Research</td>
+</tr>
+</tbody></table>
+<p><strong>战略信号</strong>：Anthropic 从&quot;模型能力竞赛&quot;转向&quot;安全研究+合规引领&quot;双轨战略，在多智能体风险、AI 可溯源性、宏观政策影响等维度建立话语权。</p>
+<h3>OpenAI</h3>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>内容</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>08-18</td>
+<td>加入 Ports Pike 开源合规项目</td>
+<td>Index</td>
+</tr>
+<tr>
+<td>08-14</td>
+<td>GPT-5.6 Sol Ultrafast 预览（14 倍速度）</td>
+<td>Index</td>
+</tr>
+<tr>
+<td>08-14</td>
+<td>首席营收官 Dali Rajic 人事变动</td>
+<td>Index</td>
+</tr>
+</tbody></table>
+<p><strong>战略信号</strong>：OpenAI 在保持模型能力领先的同时，开始通过生态合作（Ports Pike）和成本优化（Ultrafast）巩固市场地位，但未发布深度技术研究报告。</p>
+<hr>
+<h2>7. 下周信号</h2>
+<h3>值得关注的趋势</h3>
+<ol>
+<li><strong>多智能体安全研究将持续升温</strong>：Anthropic 的 Multiagent 研究报告已引发行业关注，预计更多厂商将跟进发布类似研究</li>
+<li><strong>AI 合规从呼吁走向强制</strong>：Claude 水印技术落地后，OpenAI 等厂商预计将跟进，企业部署需提前规划合规方案</li>
+<li><strong>端侧推理加速普及</strong>：cactus、omlx 等项目热度上升，Apple Silicon 本地推理体验将持续优化</li>
+<li><strong>DeepSeek/CodeWhale 品牌重塑</strong>：原 DeepSeek TUI 向 CodeWhale 迁移，可能反映国产 AI 工具生态的战略调整，值得跟踪</li>
+<li><strong>视频生成工具进入实用化阶段</strong>：MoneyPrinterTurbo 等工具的高增长表明，AI 内容创作正从实验走向生产</li>
+</ol>
+<h3>潜在风险点</h3>
+<ul>
+<li>OpenClaw Gateway 内存泄漏（P0）若未及时解决，将影响企业级部署稳定性</li>
+<li>GLM-5.3 &quot;网络战能力&quot;引发的监管压力可能波及整个行业</li>
+<li>Anthropic 与 OpenAI 在合规标准制定上的竞争可能加剧生态分化</li>
+</ul>
+<hr>
+<p><em>本日报由 <a href="https://github.com/Chestnuts-Sisyphus/gittok">GitTok</a> 自动生成。</em></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>AI Tools Weekly Digest 2026-08-31</title>
+      <link>https://chestnuts-sisyphus.github.io/gittok/#2026-08-31/ai-weekly-en</link>
+      <guid isPermaLink="true">https://chestnuts-sisyphus.github.io/gittok/#2026-08-31/ai-weekly-en</guid>
+      <pubDate>Mon, 31 Aug 2026 00:00:00 +0000</pubDate>
+      <description>AI Tools Ecosystem Weekly Report 2026-W36 Coverage: 2026-08-14 ~ 2026-08-24 | Generated: 2026-08-31 06:52 UTC AI Tools Ecosystem Weekly Report — 2026-W36 (Aug 14–19) Generated: 2026-08-19 | Data covers Aug 14–19 across CLI tools, OpenClaw ecosystem, GitHub trends, HN, and official channels 1. Week&amp;#39;s Top Stories # Date Story 1 Aug 19 GPT-5.6 Sol Ultrafast launches — OpenAI claims 14× speedup via Cerebras infrastructure; dominates HN (295 pts) 2 Aug 19 GLM-5.3 benchmarks released — Z.ai publis...</description>
+      <content:encoded><![CDATA[<h1>AI Tools Ecosystem Weekly Report 2026-W36</h1>
+<blockquote>
+<p>Coverage: 2026-08-14 ~ 2026-08-24 | Generated: 2026-08-31 06:52 UTC</p>
+</blockquote>
+<hr>
+<h1>AI Tools Ecosystem Weekly Report — 2026-W36 (Aug 14–19)</h1>
+<p><em>Generated: 2026-08-19 | Data covers Aug 14–19 across CLI tools, OpenClaw ecosystem, GitHub trends, HN, and official channels</em></p>
+<hr>
+<h2>1. Week&#39;s Top Stories</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Date</th>
+<th>Story</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Aug 19</td>
+<td><strong>GPT-5.6 Sol Ultrafast launches</strong> — OpenAI claims 14× speedup via Cerebras infrastructure; dominates HN (295 pts)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Aug 19</td>
+<td><strong>GLM-5.3 benchmarks released</strong> — Z.ai publishes Artificial Analysis data; discussion centered on &quot;emergent cyber capabilities&quot; (1025 pts on HN)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Aug 18</td>
+<td><strong>Anthropic research: Claude accelerates protein design</strong> — Myths/Opus achieves 14/15 success rate in de novo protein binding; NMR/LC-MS analysis in minutes vs. hours</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Aug 18</td>
+<td><strong>Stripe acquires OpenRouter for $7B+</strong> — Major infrastructure consolidation move; flagged on HN (165 pts)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Aug 17</td>
+<td><strong>Anthropic risk report + multiagent systems research</strong> — Published findings on systemic risks in agent networks; watermarking compliance tech detailed for EU AI Act</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Aug 16</td>
+<td><strong>Anthropic text watermarking goes public</strong> — Technical whitepaper explains statistical watermarking for EU AI Act compliance with zero UX impact</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Aug 16</td>
+<td><strong>OpenAI joins Ports Pike</strong> — OpenAI enters open-source governance initiative, signaling defensive positioning on compliance standards</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Aug 15</td>
+<td><strong>MoneyPrinterTurbo explodes to 108K+ stars</strong> — AI video generation tool sees massive growth; RAG/agent infra (OpenViking, ECC) also trending</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>2. CLI Tools Progress</h2>
+<h3>Claude Code (anthropics/claude-code)</h3>
+<ul>
+<li><strong>Latest</strong>: v2.1.235 (Aug 19); active in safety verification, Cowork VM compatibility, IDE integration</li>
+<li><strong>Focus</strong>: GitLab MR support, session resumption, multi-account management</li>
+<li><strong>Pain points</strong>: Subagent state loss, Windows GPU crashes, PTY resource leaks, VS Code extension focus-stealing</li>
+</ul>
+<h3>OpenAI Codex (openai/codex)</h3>
+<ul>
+<li><strong>Latest</strong>: v0.148.0-alpha.21 (Aug 18); 11+ PRs, 50 Issues/day</li>
+<li><strong>Focus</strong>: Rust engine refactoring, desktop/remote stability, MCP server integration, multi-model routing</li>
+<li><strong>Pain points</strong>: Long-context performance, Windows 11 process leaks, streaming hang issues</li>
+</ul>
+<h3>Gemini CLI (google-gemini/gemini-cli)</h3>
+<ul>
+<li><strong>Latest</strong>: v0.56.0-nightly (stable); 50 PRs, 50 Issues/day — highest PR volume</li>
+<li><strong>Focus</strong>: Agent lifecycle management, sandbox compatibility, subagent logic, xDG config compliance</li>
+<li><strong>Pain points</strong>: Agent hanging, tool-call loops, context compression in large repos</li>
+</ul>
+<h3>Qwen Code (QwenLM/qwen-code)</h3>
+<ul>
+<li><strong>Latest</strong>: v0.21.12-preview.5 (Aug 17)</li>
+<li><strong>Focus</strong>: Multi-agent collaboration, session persistence, automated code review</li>
+<li><strong>Activity</strong>: Very high — 50 PRs, 29 Issues on Aug 17 alone</li>
+</ul>
+<h3>OpenCode (anomalyco/opencode)</h3>
+<ul>
+<li><strong>Focus</strong>: Billing logic, message ID management, Web UI/TUI stability</li>
+<li><strong>Pain points</strong>: ID overflow causing widespread outages (Aug 15), TUI rendering freezes</li>
+</ul>
+<h3>DeepSeek TUI (Hmbown/DeepSeek-TUI)</h3>
+<ul>
+<li><strong>Latest</strong>: v0.9.9 (Aug 19)</li>
+<li><strong>Focus</strong>: Architecture restructure, brand migration to &quot;CodeWhale&quot;, multi-language CI/CD</li>
+<li><strong>Notable</strong>: Major rebranding effort; IDE integration push</li>
+</ul>
+<h3>Others</h3>
+<ul>
+<li><strong>Pi</strong> (badlogic/pi-mono): Stream response fixes, Bedrock API support, Linux TUI rendering</li>
+<li><strong>GitHub Copilot CLI</strong>: MCP auth fixes, sandbox mechanism refinements</li>
+<li><strong>Kimi Code</strong>: Low activity; web UI rendering and quantitative trading focus</li>
+</ul>
+<p><strong>Cross-cutting themes</strong>: Session persistence, multi-agent coordination, sandbox security, Windows/macOS stability, and MCP ecosystem compatibility are the dominant pain points across all tools.</p>
+<hr>
+<h2>3. AI Agent Ecosystem (OpenClaw &amp; Peers)</h2>
+<h3>OpenClaw</h3>
+<ul>
+<li><strong>Volume</strong>: 500 Issues + 500 PRs daily — consistently the busiest project tracked</li>
+<li><strong>Latest</strong>: v2026.8.1-beta.2 (Aug 16) — added GPT-5.6 Ultra support, enhanced secret egress binding</li>
+<li><strong>Critical Bugs</strong>:<ul>
+<li><strong>#121058</strong> (P1, 97 comments): Silent reply failures persisting despite prior fix — recurring message-loss issue</li>
+<li><strong>#91588</strong> (P0): Gateway OOM — RSS growing from 350MB to 15.5GB over time</li>
+<li><strong>#44925</strong> (P1): Subagent completion results silently dropped with no retry</li>
+<li><strong>#116201</strong> (P1): Realtime voice session state leaking under burst load</li>
+</ul>
+</li>
+<li><strong>Key PRs</strong>: Claude CLI Live Session prompt cache fix (#125972), Anthropic context server-side compression (#123402), i18n pipeline restructure (#123347)</li>
+<li><strong>Pending</strong>: 382+ PRs积压 — significant merge backlog</li>
+</ul>
+<h3>Peer Projects</h3>
+<ul>
+<li><strong>ECC</strong> (affaan-m/ECC): 240K+ stars — agent harness performance optimization system</li>
+<li><strong>CodeWhale</strong> (Hmbown/CodeWhale): 40K+ stars — community-driven agent orchestration</li>
+<li><strong>holaboss-ai/holaOS</strong>: Multi-agent workspace integrating Claude Code, Codex, Gemini</li>
+<li><strong>NanoBot</strong> (HKUDS): Active development in agent-native CLI hub</li>
+<li><strong>CLI-Anything</strong>: 47K+ stars — platform for making any software &quot;agent-native&quot;</li>
+</ul>
+<hr>
+<h2>4. Open Source Trends</h2>
+<h3>Top Trending Projects (Aug 14–19)</h3>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Stars</th>
+<th>Trend</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>MoneyPrinterTurbo</strong></td>
+<td>108,520</td>
+<td>+2,304 — AI video generation automation explosion</td>
+</tr>
+<tr>
+<td><strong>ECC</strong></td>
+<td>240,300</td>
+<td>+24,300 — Agent harness performance framework</td>
+</tr>
+<tr>
+<td><strong>Unsloth</strong></td>
+<td>73,219</td>
+<td>+739 — Local LLM training UI (Qwen3.8, DeepSeek-V4)</td>
+</tr>
+<tr>
+<td><strong>OpenViking</strong> (ByteDance)</td>
+<td>29,370</td>
+<td>Agent self-evolving context/RAG database</td>
+</tr>
+<tr>
+<td><strong>Anthropic-Cybersecurity-Skills</strong></td>
+<td>29,185</td>
+<td>817 structured security skills for agents</td>
+</tr>
+<tr>
+<td><strong>RAGFlow</strong></td>
+<td>88,554</td>
+<td>RAG + Agent fusion engine</td>
+</tr>
+<tr>
+<td><strong>Dify</strong></td>
+<td>152,550</td>
+<td>Collaborative AI workspace</td>
+</tr>
+<tr>
+<td><strong>CLI-Anything</strong></td>
+<td>47,710</td>
+<td>Agent-native CLI hub platform</td>
+</tr>
+<tr>
+<td><strong>cactus-compute/needle</strong></td>
+<td>5,602</td>
+<td>14MB edge/phone model — breaking &quot;GPU required&quot; paradigm</td>
+</tr>
+<tr>
+<td><strong>openpencil</strong></td>
+<td>5,337</td>
+<td>AI-native vector design tool with agent collaboration</td>
+</tr>
+</tbody></table>
+<p><strong>Key Direction</strong>: The ecosystem is splitting into two dominant tracks — <strong>(1) Agent orchestration/harness frameworks</strong> (ECC, CodeWhale, holaOS, Composio) and <strong>(2) Edge/local inference</strong> (needle, Unsloth, omlx). Video generation (MoneyPrinterTurbo) and career-ops automation (career-ops) saw unexpected viral growth.</p>
+<hr>
+<h2>5. HN Community Highlights</h2>
+<h3>Most Discussed Topics</h3>
+<ol>
+<li><strong>GPT-5.6 Sol Ultrafast</strong> (295 pts) — Speed vs. capability trade-off debate; OpenAI-Cerebras partnership scrutiny</li>
+<li><strong>GLM-5.3 &quot;emergent cyber capabilities&quot;</strong> (1025 pts) — Most-discussed post of the week; community split between excitement and alarm about autonomous offensive capabilities</li>
+<li><strong>Anthropic &quot;war on open source&quot;</strong> (132 pts) — Accusations of Anthropic restricting open-source access; sparked debate on commercial vs. open ethics</li>
+<li><strong>Claude macOS driver story</strong> (151 pts) — Viral demo of Claude writing a macOS driver for an obscure Windows-only HP printer</li>
+<li><strong>Stripe acquires OpenRouter</strong> (165 pts) — $7B infrastructure consolidation signals market maturation</li>
+<li><strong>&quot;Do you know any company that went back to hand-written code?&quot;</strong> (90 pts, 109 comments) — Developer anxiety about AI-generated code quality</li>
+<li><strong>OpenAI talent exodus ahead of IPO</strong> — Leadership stability concerns</li>
+<li><strong>Doberman: AI watchdog preventing Claude from deleting databases</strong> — Community appetite for agent safety tools</li>
+</ol>
+<p><strong>Sentiment</strong>: A mix of excitement about capability leaps (GLM-5.3, GPT-5.6 Sol) and deep anxiety about reliability, safety, and open-source access. The &quot;hand-written code&quot; thread reflects growing developer unease with AI-generated output quality in production.</p>
+<hr>
+<h2>6. Official Announcements</h2>
+<h3>Anthropic</h3>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Content</th>
+<th>Significance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Aug 18</td>
+<td><strong>Claude accelerates protein design</strong> (Research)</td>
+<td>Mythos/Opus achieves 14/15 binding design success; 22–35% single-point rate. First major &quot;AI for Science&quot; public proof point.</td>
+</tr>
+<tr>
+<td>Aug 17</td>
+<td><strong>Patterns and problems in multiagent systems</strong> (Research)</td>
+<td>Warns agent-to-agent interactions may outscale human-scale supervision; calls for new safety frameworks</td>
+</tr>
+<tr>
+<td>Aug 16</td>
+<td><strong>How Claude&#39;s text watermarking works</strong> (News)</td>
+<td>EU AI Act compliance tech; statistical watermarking with zero quality/privacy impact</td>
+</tr>
+<tr>
+<td>Aug 15</td>
+<td><strong>Job retraining programs meta-analysis</strong> (Research)</td>
+<td>56 RCTs analyzed; training costs ~$13K per participant with modest employment gains</td>
+</tr>
+<tr>
+<td>Aug 14</td>
+<td><strong>Claude&#39;s mathematical capabilities — Riemann zeta</strong> (Research)</td>
+<td>Claude improved long-standing lower bounds on zero distribution (41.6% → 67.2%); generated formalizable proof</td>
+</tr>
+</tbody></table>
+<h3>OpenAI</h3>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Content</th>
+<th>Significance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Aug 19</td>
+<td><strong>GPT-5.6 Sol Ultrafast</strong> (Index)</td>
+<td>14× speed claim via Cerebras; no technical deep-dive published</td>
+</tr>
+<tr>
+<td>Aug 18</td>
+<td><strong>Partnership with Codeai</strong> (Index)</td>
+<td>Strategic partnership; content restricted</td>
+</tr>
+<tr>
+<td>Aug 18</td>
+<td><strong>Pacing Model Development: Cyber Capabilities</strong> (Index)</td>
+<td>Safety/alignment framing on cyber abilities</td>
+</tr>
+<tr>
+<td>Aug 18</td>
+<td><strong>ChatGPT for Teens</strong> (Index)</td>
+<td>Youth-focused compliance/product layer</td>
+</tr>
+<tr>
+<td>Aug 16</td>
+<td><strong>Joins Ports Pike</strong> (Index)</td>
+<td>Open-source governance initiative entry — defensive compliance positioning</td>
+</tr>
+<tr>
+<td>Aug 14</td>
+<td><strong>Dali Rajic CRO appointment</strong> (Index)</td>
+<td>Leadership restructuring</td>
+</tr>
+</tbody></table>
+<p><strong>Strategic contrast</strong>: Anthropic is publishing deep technical research (math, protein design, multiagent safety), while OpenAI is focused on product launches and organizational signaling. Anthropic is building a &quot;responsible AI&quot; moat; OpenAI is racing on speed and scale.</p>
+<hr>
+<h2>7. Next Week&#39;s Signals</h2>
+<h3>What to Watch</h3>
+<ol>
+<li><strong>Claude Code v2.2 / Codex v0.149</strong> — Both tools are in active beta cycles; expect session persistence and subagent fixes</li>
+<li><strong>GLM-5.3 real-world testing</strong> — After the benchmark reveal, community integration with DeepSeek TUI/CodeWhale will reveal practical capabilities</li>
+<li><strong>OpenClaw message-loss resolution</strong> — Issue #121058 (97+ comments) remains unresolved; a fix will be a major stability milestone</li>
+<li><strong>Anthropic watermarking rollout</strong> — Expected implementation in Claude API; watch for developer tooling that detects/removes watermarks</li>
+<li><strong>MoneyPrinterTurbo competition</strong> — Viral video-gen tools will attract copycats; watch for MCP integrations</li>
+<li><strong>ECC / CodeWhale convergence</strong> — Two competing agent harness frameworks may merge or differentiate sharply</li>
+<li><strong>OpenAI-Cerebras Ultrafast rollout</strong> — If 14× speed holds in production, it could reshape agent latency expectations</li>
+<li><strong>DeepSeek TUI → CodeWhale migration</strong> — Full brand transition and IDE integration status to track</li>
+<li><strong>Qwen Code multi-session collaboration</strong> — High PR velocity suggests imminent feature release</li>
+<li><strong>EU AI Act compliance tooling</strong> — Watermark detection, content provenance, and audit tools will see accelerated development</li>
+</ol>
+<h3>Emerging Patterns</h3>
+<ul>
+<li><strong>Agent orchestration</strong> is the dominant engineering focus across all tools</li>
+<li><strong>Edge/phone inference</strong> (needle, 14MB models) is gaining traction as a counter-trend to cloud-only</li>
+<li><strong>Safety/compliance</strong> is becoming a differentiator, not just a cost center — Anthropic is leading this narrative</li>
+<li><strong>Video generation</strong> and <strong>career ops</strong> are unexpected viral categories worth monitoring for product-market fit signals</li>
+</ul>
+<hr>
+<p><em>Report compiled from daily digests covering 9 CLI tools, 13 OpenClaw-ecosystem projects, GitHub Trending, Hacker News (30 posts/day), and official Anthropic/OpenAI channels. Data range: 2026-08-14 through 2026-08-19.</em></p>
+<hr>
+<p><em>This digest is auto-generated by <a href="https://github.com/Chestnuts-Sisyphus/gittok">GitTok</a>.</em></p>
+]]></content:encoded>
+    </item>
     <item>
       <title>AI 工具生态周报 2026-08-24</title>
       <link>https://chestnuts-sisyphus.github.io/gittok/#2026-08-24/ai-weekly</link>
@@ -10547,279 +11191,6 @@ Finally, the emergence of <strong>AI-native creative tools</strong> like <code>Z
 </ul>
 </li>
 </ol>
-<hr>
-<p><em>This digest is auto-generated by <a href="https://github.com/Chestnuts-Sisyphus/gittok">GitTok</a>.</em></p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Hugging Face 热门模型日报 2026-08-18</title>
-      <link>https://chestnuts-sisyphus.github.io/gittok/#2026-08-18/ai-hf</link>
-      <guid isPermaLink="true">https://chestnuts-sisyphus.github.io/gittok/#2026-08-18/ai-hf</guid>
-      <pubDate>Tue, 18 Aug 2026 00:00:00 +0000</pubDate>
-      <description>Hugging Face 热门模型日报 2026-08-18 数据来源: Hugging Face Hub | 共 30 个模型 | 生成时间: 2026-08-18 00:37 UTC Hugging Face 热门模型日报 日期： 2026-08-18 来源： Hugging Face Hub 1. 今日速览 本周 Hugging Face 生态呈现多模态爆发与量化部署并行的态势。Qwen 系列（Qwen3.8 系列）继续领跑，无论是基础模型还是量化版本下载量均极高。同时，MiniMax 发布的 H3 视频生成模型表现抢眼，Comfy-Org 社区版本下载量突破千万。此外，DeepSeek-V4 和 NVIDIA Nemotron 等高性能推理模型也占据了榜单前列，显示了大模型向“极致性能”与“极致效率”两端发展的趋势。 2. 热门模型 🧠 语言模型（LLM、对话模型、指令微调） Kimi-K3 作者：moonshotai | 点赞：10,802 | 下载：2,163,953 说明：Moonshot AI 发布的多模态大模型，在功能提取和压缩技术上表现优异，是当前对话与多模态任务...</description>
-      <content:encoded><![CDATA[<h1>Hugging Face 热门模型日报 2026-08-18</h1>
-<blockquote>
-<p>数据来源: <a href="https://huggingface.co/">Hugging Face Hub</a> | 共 30 个模型 | 生成时间: 2026-08-18 00:37 UTC</p>
-</blockquote>
-<hr>
-<h1>Hugging Face 热门模型日报</h1>
-<p><strong>日期：</strong> 2026-08-18
-<strong>来源：</strong> Hugging Face Hub</p>
-<hr>
-<h2>1. 今日速览</h2>
-<p>本周 Hugging Face 生态呈现<strong>多模态爆发</strong>与<strong>量化部署</strong>并行的态势。<strong>Qwen 系列</strong>（Qwen3.8 系列）继续领跑，无论是基础模型还是量化版本下载量均极高。同时，<strong>MiniMax</strong> 发布的 H3 视频生成模型表现抢眼，Comfy-Org 社区版本下载量突破千万。此外，<strong>DeepSeek-V4</strong> 和 <strong>NVIDIA Nemotron</strong> 等高性能推理模型也占据了榜单前列，显示了大模型向“极致性能”与“极致效率”两端发展的趋势。</p>
-<hr>
-<h2>2. 热门模型</h2>
-<h3>🧠 语言模型（LLM、对话模型、指令微调）</h3>
-<ul>
-<li><p><strong>Kimi-K3</strong></p>
-<ul>
-<li>作者：moonshotai | 点赞：10,802 | 下载：2,163,953</li>
-<li>说明：Moonshot AI 发布的多模态大模型，在功能提取和压缩技术上表现优异，是当前对话与多模态任务的热门选择。</li>
-<li>链接：<a href="https://huggingface.co/moonshotai/Kimi-K3">https://huggingface.co/moonshotai/Kimi-K3</a></li>
-</ul>
-</li>
-<li><p><strong>Qwen3.8-27B</strong></p>
-<ul>
-<li>作者：Qwen | 点赞：10,711 | 下载：415,039</li>
-<li>说明：Qwen 家族的核心升级版，强大的图像-文本-文本处理能力使其成为通才型模型的首选。</li>
-<li>链接：<a href="https://huggingface.co/Qwen/Qwen3.8-27B">https://huggingface.co/Qwen/Qwen3.8-27B</a></li>
-</ul>
-</li>
-<li><p><strong>DeepSeek-V4-Flash-0731</strong></p>
-<ul>
-<li>作者：deepseek-ai | 点赞：3,497 | 下载：1,978,298</li>
-<li>说明：DeepSeek V4 的轻量化版本，兼顾了推理速度与性能，是本地部署和快速推理的首选。</li>
-<li>链接：<a href="https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731">https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731</a></li>
-</ul>
-</li>
-<li><p><strong>MiniMax-H3</strong></p>
-<ul>
-<li>作者：MiniMaxAI | 点赞：4,087 | 下载：2,403,238</li>
-<li>说明：强大的视频生成模型，支持文生视频、图生视频及视频到视频，生成质量极高。</li>
-<li>链接：<a href="https://huggingface.co/MiniMaxAI/MiniMax-H3">https://huggingface.co/MiniMaxAI/MiniMax-H3</a></li>
-</ul>
-</li>
-<li><p><strong>NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</strong></p>
-<ul>
-<li>作者：nvidia | 点赞：307 | 下载：231,271</li>
-<li>说明：NVIDIA 专门针对 NVIDIA GPU 优化的高性能推理模型，使用 NVFP4 量化格式，速度极快。</li>
-<li>链接：<a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4">https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4</a></li>
-</ul>
-</li>
-</ul>
-<h3>🎨 多模态与生成（图像、视频、音频、文本到X）</h3>
-<ul>
-<li><p><strong>LTX-2.5</strong></p>
-<ul>
-<li>作者：Lightricks | 点赞：1,108 | 下载：465,529</li>
-<li>说明：Lightricks 推出的最新视频生成模型，专注于高质量的视频渲染效果。</li>
-<li>链接：<a href="https://huggingface.co/Lightricks/LTX-2.5">https://huggingface.co/Lightricks/LTX-2.5</a></li>
-</ul>
-</li>
-<li><p><strong>Anima-2.9B</strong></p>
-<ul>
-<li>作者：Gazingstars123 | 点赞：233 | 下载：23,202</li>
-<li>说明：轻量级文生图像模型，适合在消费级显卡上运行。</li>
-<li>链接：<a href="https://huggingface.co/Gazingstars123/Anima-2.9B">https://huggingface.co/Gazingstars123/Anima-2.9B</a></li>
-</ul>
-</li>
-<li><p><strong>MiniMax-Music3</strong></p>
-<ul>
-<li>作者：MiniMaxAI | 点赞：904 | 下载：10,375</li>
-<li>说明：MiniMax 的音乐生成模型，能够根据文本描述创作高质量音频。</li>
-<li>链接：<a href="https://huggingface.co/MiniMaxAI/MiniMax-Music3">https://huggingface.co/MiniMaxAI/MiniMax-Music3</a></li>
-</ul>
-</li>
-<li><p><strong>LFM2.5-VL-3B</strong></p>
-<ul>
-<li>作者：LiquidAI | 点赞：162 | 下载：6,816</li>
-<li>说明：LiquidAI 发布的视觉语言模型，适合视觉与语言结合的复杂任务。</li>
-<li>链接：<a href="https://huggingface.co/LiquidAI/LFM2.5-VL-3B">https://huggingface.co/LiquidAI/LFM2.5-VL-3B</a></li>
-</ul>
-</li>
-</ul>
-<h3>🔧 专用模型（代码、数学、医疗、嵌入）</h3>
-<ul>
-<li><p><strong>LFM2.5-2.6B</strong></p>
-<ul>
-<li>作者：LiquidAI | 点赞：653 | 下载：147,270</li>
-<li>说明：LiquidAI 的基础文本生成模型，专注于通用语言任务的高效推理。</li>
-<li>链接：<a href="https://huggingface.co/LiquidAI/LFM2.5-2.6B">https://huggingface.co/LiquidAI/LFM2.5-2.6B</a></li>
-</ul>
-</li>
-<li><p><strong>Qwen3.8-2.4T-A95B</strong></p>
-<ul>
-<li>作者：Qwen | 点赞：1,041 | 下载：9,465</li>
-<li>说明：Qwen 家族中的超大 MoE（混合专家）模型，具备极高的参数规模和推理能力。</li>
-<li>链接：<a href="https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B">https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B</a></li>
-</ul>
-</li>
-<li><p><strong>Qwen-Fixed-Chat-Templates</strong></p>
-<ul>
-<li>作者：froggeric | 点赞：1,211 | 下载：0</li>
-<li>说明：实用的工具型模型，提供了 Qwen 系列的标准对话模板，方便开发者调用。</li>
-<li>链接：<a href="https://huggingface.co/froggeric/Qwen-Fixed-Chat-Templates">https://huggingface.co/froggeric/Qwen-Fixed-Chat-Templates</a></li>
-</ul>
-</li>
-</ul>
-<h3>📦 微调与量化（社区微调、GGUF、AWQ）</h3>
-<ul>
-<li><p><strong>Qwen3.8-27B-Uncensored-GGUF</strong></p>
-<ul>
-<li>作者：JonathanColetti | 点赞：299 | 下载：357,701</li>
-<li>说明：移除了安全过滤的 Qwen3.8 量化版本，专为本地 LLM 玩家和爱好者提供。</li>
-<li>链接：<a href="https://huggingface.co/JonathanColetti/Qwen3.8-27B-Uncensored-GGUF">https://huggingface.co/JonathanColetti/Qwen3.8-27B-Uncensored-GGUF</a></li>
-</ul>
-</li>
-<li><p><strong>Qwen3.8-27B-GGUF</strong></p>
-<ul>
-<li>作者：unsloth | 点赞：1,628 | 下载：2,727,609</li>
-<li>说明：Unsloth 优化的 Qwen3.8 GGUF 版本，兼容 llama.cpp，是目前下载量最大的量化模型之一。</li>
-<li>链接：<a href="https://huggingface.co/unsloth/Qwen3.8-27B-GGUF">https://huggingface.co/unsloth/Qwen3.8-27B-GGUF</a></li>
-</ul>
-</li>
-<li><p><strong>MiniMax-H3-Turbo-Lora</strong></p>
-<ul>
-<li>作者：larryvrh | 点赞：786 | 下载：0</li>
-<li>说明：基于 MiniMax-H3 的 LoRA 微调模型，用于进一步定制视频生成的特定风格。</li>
-<li>链接：<a href="https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora">https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora</a></li>
-</ul>
-</li>
-<li><p><strong>MiniMax-H3-Realism-People-LoRA</strong></p>
-<ul>
-<li>作者：fal | 点赞：243 | 下载：18,562</li>
-<li>说明：专注于生成逼真人物图像的 LoRA 模型，可叠加在 H3 基础上使用。</li>
-<li>链接：<a href="https://huggingface.co/fal/MiniMax-H3-Realism-People-LoRA">https://huggingface.co/fal/MiniMax-H3-Realism-People-LoRA</a></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2>3. 生态信号</h2>
-<p>当前模型生态呈现出明显的**“头部集中”<strong>与</strong>“格式分化”**特征。</p>
-<ol>
-<li><strong>家族势力：</strong> Qwen 家族（尤其是 Qwen3.8 系列）占据了榜单前列，显示出阿里在开源多模态领域的统治力。MiniMax 作为一个新兴力量，在视频和音频生成领域迅速崛起，尤其是 H3 模型在 ComfyUI 生态中极受欢迎。</li>
-<li><strong>量化繁荣：</strong> GGUF 格式依然是社区下载的主力，Unsloth 对 Qwen 系列的量化优化效果显著。同时，NVIDIA 推出的 NVFP4 格式（如 Nemotron）证明了硬件厂商正在积极推动新型量化方案以提升推理效率。</li>
-<li><strong>工具与微调：</strong> 社区不仅关注基座模型，更关注“可用性”（如 Chat Templates）和“定制化”（如 Uncensored 版本及 LoRA 微调），表明开源生态正从“模型发布”向“应用落地”深化。</li>
-</ol>
-<hr>
-<h2>4. 值得探索</h2>
-<ol>
-<li><p><strong>MiniMax-H3 (Comfy-Org 版本)</strong></p>
-<ul>
-<li><strong>理由：</strong> 这是一个现象级的视频生成模型。Comfy-Org 社区版本拥有超过 <strong>1400 万的下载量</strong>，说明其易用性和生成效果得到了社区的广泛验证。如果你对视频生成感兴趣，这是目前 Hugging Face 上最值得测试的模型之一。</li>
-<li>链接：<a href="https://huggingface.co/Comfy-Org/MiniMax-H3">https://huggingface.co/Comfy-Org/MiniMax-H3</a></li>
-</ul>
-</li>
-<li><p><strong>Qwen3.8-27B-GGUF</strong></p>
-<ul>
-<li><strong>理由：</strong> 对于想要在消费级显卡上运行大模型的开发者来说，这是目前的“圣杯”。由 Unsloth 优化，下载量高达 270 万次，兼容性极好，是本地部署多模态助手的最佳起点。</li>
-<li>链接：<a href="https://huggingface.co/unsloth/Qwen3.8-27B-GGUF">https://huggingface.co/unsloth/Qwen3.8-27B-GGUF</a></li>
-</ul>
-</li>
-<li><p><strong>Qwen-Fixed-Chat-Templates</strong></p>
-<ul>
-<li><strong>理由：</strong> 这是一个常被忽视但至关重要的工具。它解决了 Qwen 模型在 API 调用时的格式兼容问题。无论你使用哪个版本的 Qwen，这个模板都能保证对话的流畅性，是构建 RAG 或 Agent 系统时的必备工具。</li>
-<li>链接：<a href="https://huggingface.co/froggeric/Qwen-Fixed-Chat-Templates">https://huggingface.co/froggeric/Qwen-Fixed-Chat-Templates</a></li>
-</ul>
-</li>
-</ol>
-<hr>
-<p><em>本日报由 <a href="https://github.com/Chestnuts-Sisyphus/gittok">GitTok</a> 自动生成。</em></p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Hugging Face Trending Models Digest 2026-08-18</title>
-      <link>https://chestnuts-sisyphus.github.io/gittok/#2026-08-18/ai-hf-en</link>
-      <guid isPermaLink="true">https://chestnuts-sisyphus.github.io/gittok/#2026-08-18/ai-hf-en</guid>
-      <pubDate>Tue, 18 Aug 2026 00:00:00 +0000</pubDate>
-      <description>Hugging Face Trending Models Digest 2026-08-18 Source: Hugging Face Hub | 30 models | Generated: 2026-08-18 00:37 UTC 1. Today&amp;#39;s Highlights The Hugging Face ecosystem is currently dominated by the Qwen3.8 series and the MiniMax AI pipeline, with the Qwen3.8-27B model leading the chart with over 10,000 likes. Video generation is also seeing a massive surge, driven by the MiniMax-H3 and MiniMax-H3-Turbo models, which have accumulated millions of downloads. Additionally, quantization formats li...</description>
-      <content:encoded><![CDATA[<h1>Hugging Face Trending Models Digest 2026-08-18</h1>
-<blockquote>
-<p>Source: <a href="https://huggingface.co/">Hugging Face Hub</a> | 30 models | Generated: 2026-08-18 00:37 UTC</p>
-</blockquote>
-<hr>
-<p><strong>1. Today&#39;s Highlights</strong></p>
-<p>The Hugging Face ecosystem is currently dominated by the Qwen3.8 series and the MiniMax AI pipeline, with the Qwen3.8-27B model leading the chart with over 10,000 likes. Video generation is also seeing a massive surge, driven by the MiniMax-H3 and MiniMax-H3-Turbo models, which have accumulated millions of downloads. Additionally, quantization formats like GGUF and NVFP4 are becoming essential for the community, enabling efficient deployment of these large-scale models.</p>
-<p><strong>2. Trending Models</strong></p>
-<p><strong>🧠 Language Models (LLMs, chat models, instruction-tuned)</strong></p>
-<ul>
-<li><strong>Kimi-K3</strong> | Author: moonshotai | Likes: 10,802 | Downloads: 2,163,953<ul>
-<li>A powerful image-text-to-text model that is trending due to its high download volume and robust feature extraction capabilities.</li>
-</ul>
-</li>
-<li><strong>MiniMax-H3</strong> | Author: MiniMaxAI | Likes: 4,087 | Downloads: 2,403,238<ul>
-<li>A state-of-the-art text-to-video model that is highly popular for its quality and versatility in generative video tasks.</li>
-</ul>
-</li>
-<li><strong>DeepSeek-V4-Flash-0731</strong> | Author: deepseek-ai | Likes: 3,497 | Downloads: 1,978,298<ul>
-<li>An optimized text-generation model focused on speed and efficiency, making it a favorite for high-throughput inference.</li>
-</ul>
-</li>
-<li><strong>Qwen3.8-27B</strong> | Author: Qwen | Likes: 10,711 | Downloads: 415,039<ul>
-<li>The top-ranking general-purpose image-text-to-text model, setting the benchmark for current multimodal capabilities.</li>
-</ul>
-</li>
-<li><strong>Muse-Glimmer-30B</strong> | Author: meta-models | Likes: 1,661 | Downloads: 334,099<ul>
-<li>A strong contender in the image-text-to-text space, gaining traction for its conversational abilities.</li>
-</ul>
-</li>
-</ul>
-<p><strong>🎨 Multimodal &amp; Generation (image, video, audio, text-to-X)</strong></p>
-<ul>
-<li><strong>LTX-2.5</strong> | Author: Lightricks | Likes: 1,108 | Downloads: 465,529<ul>
-<li>An image-to-video model that is trending for its ability to generate high-quality, realistic video clips from static images.</li>
-</ul>
-</li>
-<li><strong>MiniMax-Music3</strong> | Author: MiniMaxAI | Likes: 904 | Downloads: 10,375<ul>
-<li>A text-to-music model demonstrating the growing capability of AI in the audio generation domain.</li>
-</ul>
-</li>
-<li><strong>Anima-2.9B</strong> | Author: Gazingstars123 | Likes: 233 | Downloads: 23,202<ul>
-<li>A text-to-image model optimized for ComfyUI workflows, popular among artists for anime-style generation.</li>
-</ul>
-</li>
-<li><strong>LFM2.5-VL-3B</strong> | Author: LiquidAI | Likes: 162 | Downloads: 6,816<ul>
-<li>A vision-language model focusing on multimodal understanding and reasoning.</li>
-</ul>
-</li>
-</ul>
-<p><strong>🔧 Specialized Models (code, math, medical, embeddings)</strong></p>
-<ul>
-<li><em>(Note: No specific specialized models (code/math/medical) were in the top 30, but DeepSeek-V4-Pro and MiniMax-H3 serve as strong conversational/text-generation tools.)</em></li>
-</ul>
-<p><strong>📦 Fine-tunes &amp; Quantizations (community fine-tunes, GGUF, AWQ)</strong></p>
-<ul>
-<li><strong>Qwen3.8-27B-Uncensored-GGUF</strong> | Author: JonathanColetti | Likes: 299 | Downloads: 357,701<ul>
-<li>A quantized version of the Qwen model, popular for local deployment where uncensored outputs are preferred.</li>
-</ul>
-</li>
-<li><strong>Qwen3.8-27B-Uncensored-FP8</strong> | Author: orcarouter | Likes: 436 | Downloads: 15,812<ul>
-<li>An FP8 fine-tuned model that balances precision and performance for specific use cases.</li>
-</ul>
-</li>
-<li><strong>MiniMax-H3-Realism-People-LoRA</strong> | Author: fal | Likes: 243 | Downloads: 18,562<ul>
-<li>A LoRA adapter for the MiniMax-H3 model, specifically fine-tuned to improve realism in human-generated video content.</li>
-</ul>
-</li>
-</ul>
-<p><strong>3. Ecosystem Signal</strong></p>
-<p>The data highlights a clear shift towards multimodal dominance, with the &quot;Qwen&quot; and &quot;MiniMax&quot; families capturing the top spots. The massive popularity of MiniMax-H3 (over 2.4M downloads) and the Qwen3.8-27B series indicates that the industry is moving aggressively toward high-quality video and general-purpose multimodal agents. In terms of accessibility, quantization formats like GGUF and specialized formats like NVFP4 are seeing significant activity, driven by the unsloth community to make these heavy models runnable on consumer hardware. The trend is also moving away from purely text-based models toward &quot;Image-to-Video&quot; and &quot;Audio-to-Music&quot; capabilities, reflecting the maturation of generative media pipelines.</p>
-<p><strong>4. Worth Exploring</strong></p>
-<ul>
-<li><strong>MiniMax-H3</strong> (Author: MiniMaxAI)<ul>
-<li><em>Reasoning:</em> With the highest download count in the list, this model represents the current state-of-the-art in open-access video generation, capable of producing impressive results from text prompts.</li>
-</ul>
-</li>
-<li><strong>Qwen3.8-27B</strong> (Author: Qwen)<ul>
-<li><em>Reasoning:</em> As the highest-ranked model by likes, it serves as the primary benchmark for image-text-to-text interactions, essential for anyone building modern AI assistants.</li>
-</ul>
-</li>
-<li><strong>Qwen3.8-27B-GGUF</strong> (Author: unsloth)<ul>
-<li><em>Reasoning:</em> This quantized version allows users to run the flagship Qwen model locally on consumer hardware, democratizing access to high-level multimodal intelligence.</li>
-</ul>
-</li>
-</ul>
 <hr>
 <p><em>This digest is auto-generated by <a href="https://github.com/Chestnuts-Sisyphus/gittok">GitTok</a>.</em></p>
 ]]></content:encoded>
