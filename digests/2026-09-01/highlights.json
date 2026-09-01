@@ -1,0 +1,26 @@
+{
+  "zh": {
+    "ai-monthly": [
+      "Stripe超70亿美元收购OpenRouter，网关商业化确立",
+      "Anthropic发布多智能体协作研究报告，揭示系统性风险",
+      "OpenAI加入Ports Pike，竞争维度转向标准合规",
+      "Claude Auto Mode成为默认，开发者权限模式重大调整",
+      "OpenAI发布GPT-5.6 Sol Ultrafast，推理提速14倍",
+      "GPT-5.6正式发布，开源闭源界限进一步模糊"
+    ]
+  },
+  "en": {
+    "ai-monthly": [
+      "Anthropic backs open-weight models, opposes blanket bans",
+      "Claude identifies encryption algorithm defects via AI research",
+      "GPT-5.6 officially released with price-performance push",
+      "OmniRoute routing tool trends on GitHub with 290+ providers",
+      "Claude security breach exposes network isolation weakness",
+      "ByteDance Deer-Flow debuts at 356 GitHub stars",
+      "Tencent Agent Memory surges to 1,892 stars per day",
+      "AirLLM hits 1,711 stars for single-GPU 70B inference",
+      "Anthropic appoints first Chief Global Affairs Officer",
+      "OpenAI discloses 10 math & CS breakthroughs with GPT-5.6 Sol"
+    ]
+  }
+}
