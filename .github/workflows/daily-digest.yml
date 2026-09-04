@@ -39,11 +39,11 @@ jobs:
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
           # 免费编队并行池（2026-09-04）：key 已配的源自动入池 round-robin 分摊，
           # 未配 key 的源实例化失败自动跳过，不影响运行。新 key 配好后无需改代码。
-          LLM_FALLBACKS: agnes,groq,gemini,siliconflow,cerebras
+          # cerebras 2026 起赠金政策取消（402 付费墙），暂出池；provider 类保留随时可回。
+          LLM_FALLBACKS: agnes,groq,gemini,siliconflow
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
-          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
           # agnès 配置保留（回滚只改 LLM_PROVIDER 一个词）
           AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
           AGNES_MODEL: ${{ secrets.AGNES_MODEL || 'agnes-2.0-flash' }}
