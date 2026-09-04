@@ -456,12 +456,15 @@ function getSectionCards(
     case "hot":
       return cards.filter((c) => c.momentum?.includes("hot"));
     case "daily":
-      return cards.filter((c) => c.momentum?.includes("daily"));
+      // 每日频道按时效热度分排序：涨得快（相对增速）> 涨得多（2026-09-05 拍板）
+      return cards
+        .filter((c) => c.momentum?.includes("daily"))
+        .sort((a, b) => (b.heatScore ?? 0) - (a.heatScore ?? 0));
     case "following":
-      // 关注频道 = 我关注的创作者的项目 ∪ 我关注的大牛 star 的项目（bigbros 背书）
-      return cards.filter(
-        (c) => followingSet.has(c.owner) || (c.bigbros ?? []).some((b) => followingSet.has(b)),
-      );
+      // 关注频道 = 我真正关注的创作者出的项目（2026-09-05：陌生库的自动 star 盖章不再是关注语义）
+      return cards
+        .filter((c) => followingSet.has(c.owner))
+        .sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime());
     default:
       return cards.filter((c) => c.category === sectionKey);
   }
@@ -480,22 +483,25 @@ function buildRecommended(
 ): FeedCard[] {
   const now = Date.now();
   const DAY_MS = 86_400_000;
-  // 排除：点踩过的、7 天内看过未互动的
+  // 排除：点踩过的；沉寂库退场（连续 3 轮无动静=真沉寂，底库搜索仍可见；收藏豁免）
   const pool = cards.filter((c) => {
     const inter = interactions[c.repo];
     if (inter?.type === "dislike") return false;
-    const seenTs = seen[c.repo];
-    if (seenTs && !inter && now - seenTs < 7 * DAY_MS) return false;
+    if ((c.silentRounds ?? 0) >= 3 && inter?.type !== "bookmark") return false;
     return true;
   });
   if (pool.length === 0) return [];
   // 个性化权重分：标签权重匹配 + aiScore 辅助 + 关注轻微抬推荐（2026-09-01 关注解耦）
+  // 已读降权（2026-09-05 拍板：适当降权不一刀切）——7 天内看过未互动的 ×0.7，仍可再次出现
   const weightOf = (c: FeedCard): number => {
     const tagScore = (c.tags || []).reduce((s, t) => s + (tagWeights[t.name] ?? 0.15) * (t.weight ?? 0.5), 0);
     let followBoost = 0;
     if (followingSet.has(c.owner)) followBoost += 0.3;
     if ((c.bigbros ?? []).some((b) => followingSet.has(b))) followBoost += 0.2;
-    return tagScore + (c.aiScore ?? 0) * 0.5 + followBoost;
+    const seenTs = seen[c.repo];
+    const inter = interactions[c.repo];
+    const seenPenalty = seenTs && !inter && now - seenTs < 7 * DAY_MS ? 0.7 : 1;
+    return (tagScore + (c.aiScore ?? 0) * 0.5 + followBoost) * seenPenalty;
   };
   // 按固有分区分组
   const byCat = new Map<string, FeedCard[]>();

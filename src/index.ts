@@ -517,11 +517,11 @@ async function main(): Promise<void> {
 
   // 开源版抖音信息流：生成 feed.json（库内 star 盖章在 generateFeed 内完成；
   // 2026-09-01 关注解耦：不再抓大牛/follow 名单 star 灌新卡；
-  // 2026-09-04 热点提速：传入 HN 数据做 on-hn 提及融合）
+  // 2026-09-05 拍板：外源信号（HN 提及等）不进 feed 算法，hnData 不再传入）
   try {
     console.log("Generating feed...");
     const { generateFeed } = await import("./feed/index.ts");
-    const feedCards = await generateFeed(CONFIG, trendingData, hnData);
+    const feedCards = await generateFeed(CONFIG, trendingData);
     console.log(`  [feed] generated ${feedCards.length} cards`);
   } catch (err) {
     console.error(`[feed] generation failed: ${err}`);

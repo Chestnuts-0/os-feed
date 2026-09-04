@@ -70,19 +70,7 @@ export interface ScoringResult {
 export type FeedCategory = "ai" | "fun" | "tool" | "learning";
 
 /** 动态热度标签（不互斥，可有可无；可同时命中多个） */
-export type FeedMomentum = "hot" | "daily" | "rising" | "on-hn";
-
-/** HN 提及信息（项目被 Hacker News 近 24h 讨论 → 强即时热点信号） */
-export interface HnMention {
-  /** HN story 点数 */
-  points: number;
-  /** HN 评论数 */
-  comments: number;
-  /** story 标题 */
-  title: string;
-  /** HN 讨论页链接 */
-  hnUrl: string;
-}
+export type FeedMomentum = "hot" | "daily" | "rising";
 
 /** 信息流卡片 —— 前端消费的最终格式 */
 export interface FeedCard {
@@ -101,10 +89,12 @@ export interface FeedCard {
   stars: number;
   /** 日均 star 增长（trending 用 todayStars；refresh 用差分÷距上次更新天数，间隔>1 天摊薄防虚高；search 用 0） */
   starGrowth: number;
-  /** 仓库创建时间 ISO（search API / 轮转刷新携带；trending HTML 无此字段）——rising「刚冒头」判定依据 */
+  /** 每日频道时效热度分（相对增速为主轴+绝对增速托底，×建仓加成；越大越靠前，2026-09-05 拍板：涨得快 > 涨得多） */
+  heatScore?: number;
+  /** 静默轮数：刷新时日均涨星<2 且无其他信号则 +1，有信号清零；≥3 = 真沉寂，退出默认推荐流（底库/收藏不受影响） */
+  silentRounds?: number;
+  /** 仓库创建时间 ISO（search API / 轮转刷新携带；trending HTML 无此字段）——rising「新星」判定依据 */
   createdAt?: string;
-  /** HN 近 24h 提及（热点提速刀：最强即时热度信号，参与排序加权 + on-hn 徽章） */
-  hn?: HnMention;
   language: string;
   topics: string[];
   /** LLM 多维度标签（1-3个） */

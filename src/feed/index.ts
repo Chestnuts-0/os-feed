@@ -16,8 +16,6 @@ import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
 import type { TrendingData } from "../trending.ts";
-import type { HnData } from "../hn.ts";
-import { extractGithubMentions } from "../hn.ts";
 import { stampLibraryStars, type StampUserStatus } from "../bigbro-stars.ts";
 import type { RadarConfig } from "../config.ts";
 import { callLlm } from "../report.ts";
@@ -35,7 +33,6 @@ import type {
   FeedCategory,
   FeedMomentum,
   FeedSource,
-  HnMention,
   RepoForScoring,
   ScoringResult,
   Tag,
@@ -106,7 +103,7 @@ const AUTHORITATIVE_ORGS = new Set([
 
 // 学习资源关键词（学英语/学代码等「我自己学习能用」的资源；大模型学习已被 ai 前置判定拿走）
 const LEARNING_KEYWORDS =
-  /awesome|tutorial|learn|course|guide|roadmap|面试|interview|study|educat|english|language|leetcode|algorithms|coding|编程|英语|学习/i;
+  /awesome|tutorial|learn|course|guide|roadmap|面试|interview|study|educat|english|language|leetcode|algorithms|coding|cheatsheet|cheat-sheet|textbook|flashcard|anki|quiz|encyclopedia|math|mathematics|physics|chemistry|biology|编程|英语|学习|教材|数学|物理|化学|生物|百科|速查|题库/i;
 
 /** AI 强特征前缀（命中即归 ai 分区） */
 const AI_PREFIXES = [
@@ -154,16 +151,14 @@ export function classifyCategory(card: Pick<FeedCard, "repo" | "desc" | "topics"
   return "tool";
 }
 
-/** 动态标签判定（不互斥，独立命中） */
-export function classifyMomentum(
-  card: Pick<FeedCard, "owner" | "stars" | "starGrowth" | "createdAt" | "hn">,
-): {
+/** 动态标签判定（不互斥，独立命中）+ 每日频道时效热度分 */
+export function classifyMomentum(card: Pick<FeedCard, "owner" | "stars" | "starGrowth" | "createdAt">): {
   momentum: FeedMomentum[];
   fromOfficial: boolean;
+  heatScore: number;
 } {
   const momentum: FeedMomentum[] = [];
   if (card.stars >= HOT_STAR_THRESHOLD) momentum.push("hot");
-  if (card.starGrowth >= DAILY_GROWTH_THRESHOLD) momentum.push("daily");
   // 「刚冒头」：新库（<90 天）+ 高增速，且还没进 hot（总星门槛）——热点提速刀的核心上浮信号
   const ageDays = card.createdAt
     ? (Date.now() - new Date(card.createdAt).getTime()) / (24 * 3600 * 1000)
@@ -175,11 +170,22 @@ export function classifyMomentum(
   ) {
     momentum.push("rising");
   }
-  // HN 近 24h 提及：最强即时热度信号（热点提速刀）
-  if (card.hn) momentum.push("on-hn");
+  // 每日：真·时效热点门槛（日均涨星达标 或 新星爆发），老库低增速不再进每日
+  const isDaily = card.starGrowth >= DAILY_GROWTH_THRESHOLD || momentum.includes("rising");
+  if (isDaily) momentum.push("daily");
+
+  // 时效热度分（2026-09-05 拍板：涨得快 > 涨得多）：
+  // 主轴=相对增速（日均涨星/总星，1k 涨 100 = 10% 完胜 100k 涨 1k = 1%），
+  // 托底=绝对增速（防超小库占比虚高，基数下限 50），×建仓加成（新项目爆更猛）。
+  const rel = card.starGrowth / Math.max(card.stars, 50);
+  const abs = Math.min(card.starGrowth / 100, 1);
+  const ageBoost = ageDays <= RISING_AGE_DAYS ? 1.5 : ageDays <= 365 ? 1.2 : 1.0;
+  const heatScore = isDaily ? (rel * 3 + abs * 0.3) * ageBoost : 0;
+
   return {
     momentum,
     fromOfficial: AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500,
+    heatScore,
   };
 }
 
@@ -271,6 +277,8 @@ interface MergedRepo {
   starGrowth: number;
   /** 仓库创建时间 ISO（rising 判定；search API/轮转刷新携带，trending HTML 无） */
   createdAt?: string;
+  /** 静默轮数（跨轮累计于 feed.json）：刷新无信号 +1、有信号清零；≥3 退出默认推荐流 */
+  silentRounds?: number;
   bigbros: string[];
   ts: string;
   /** 待补评队列恢复的 repo（评分排序优先） */
@@ -397,6 +405,14 @@ async function refreshStarsRoundRobin(
             if (diff > 0) {
               m.starGrowth = Math.max(m.starGrowth, Math.ceil(diff / intervalDays));
             }
+            // 沉寂判定（2026-09-05 拍板「真的沉寂了才退场」）：日均涨星 <2 且无爆发信号 →
+            // 静默轮数 +1（跨轮累计在 feed.json）；有信号清零。连续 3 轮 ≈ 数周持续无动静。
+            const dailyAvg = Math.ceil(Math.max(diff, 0) / intervalDays);
+            const hasSignal =
+              dailyAvg >= 2 ||
+              m.starGrowth >= DAILY_GROWTH_THRESHOLD ||
+              m.starGrowth >= RISING_GROWTH_THRESHOLD;
+            m.silentRounds = hasSignal ? 0 : (m.silentRounds ?? 0) + 1;
           }
         }
         results.set(item.repo, newStars);
@@ -549,6 +565,7 @@ interface PendingEntry {
   source: FeedSource;
   starGrowth: number;
   createdAt?: string;
+  silentRounds?: number;
   bigbros: string[];
   ts: string;
   retryCount: number;
@@ -575,6 +592,7 @@ function loadPendingRetries(): Map<string, PendingEntry> {
         source: e.source === "trending" || e.source === "bigbro" ? e.source : "search",
         starGrowth: typeof e.starGrowth === "number" ? e.starGrowth : 0,
         createdAt: typeof e.createdAt === "string" ? e.createdAt : undefined,
+        silentRounds: typeof e.silentRounds === "number" ? e.silentRounds : 0,
         bigbros: Array.isArray(e.bigbros)
           ? e.bigbros.filter((b: unknown): b is string => typeof b === "string")
           : [],
@@ -712,7 +730,6 @@ export async function detectRunIntervalDays(): Promise<number> {
 export async function generateFeed(
   config: RadarConfig,
   trendingData: TrendingData,
-  hnData?: HnData,
   opts?: { runIntervalDays?: number },
 ): Promise<FeedCard[]> {
   const now = new Date().toISOString();
@@ -725,12 +742,6 @@ export async function generateFeed(
       `  [feed] last real update was ${runIntervalDays.toFixed(1)} days ago — starGrowth normalized to daily average`,
     );
   }
-
-  // HN 近 24h 提及 → repo 映射（热点提速刀：on-hn 徽章 + 排序加权；fetch 失败/未传时为空）
-  const hnMentions = hnData?.fetchSuccess
-    ? extractGithubMentions(hnData.stories)
-    : new Map<string, HnMention>();
-  if (hnMentions.size > 0) console.log(`  [feed/hn] ${hnMentions.size} github repos mentioned on HN`);
 
   // 1. 合并三路数据（增量模式：baseline = 上次 feed.json，只增不减）
   const repoMap = new Map<string, MergedRepo>();
@@ -751,6 +762,7 @@ export async function generateFeed(
           source: c.source,
           starGrowth: 0, // 跨轮不保留旧增长值：starGrowth=「今日增长」每轮从 0 重算（防历史虚高固化）
           createdAt: c.createdAt,
+          silentRounds: c.silentRounds ?? 0,
           bigbros: c.bigbros,
           ts: c.ts,
         });
@@ -778,6 +790,7 @@ export async function generateFeed(
         source: pe.source,
         starGrowth: 0, // 快照值可能已虚高，从 0 重算（refresh 用真实差值覆盖）
         createdAt: pe.createdAt,
+        silentRounds: pe.silentRounds ?? 0,
         bigbros: pe.bigbros,
         ts: pe.ts,
         pending: true,
@@ -1019,7 +1032,6 @@ export async function generateFeed(
     const [owner = "", ...nameParts] = m.repo.split("/");
     const name = nameParts.join("/") || m.repo;
     llmCount++;
-    const hn = hnMentions.get(m.repo);
     const partialCard = {
       repo: m.repo,
       owner,
@@ -1031,7 +1043,7 @@ export async function generateFeed(
       stars: m.stars,
       starGrowth: m.starGrowth,
       createdAt: m.createdAt,
-      ...(hn ? { hn } : {}),
+      silentRounds: m.silentRounds,
       language: m.language,
       topics: m.topics,
       aiDims: sc.aiDims,
@@ -1074,6 +1086,7 @@ export async function generateFeed(
         source: m.source,
         starGrowth: m.starGrowth,
         createdAt: m.createdAt,
+        silentRounds: m.silentRounds ?? 0,
         bigbros: m.bigbros,
         ts: m.ts,
         retryCount: (prev?.retryCount ?? 0) + 1,

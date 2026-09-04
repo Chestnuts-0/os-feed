@@ -132,7 +132,6 @@ function channelBadges(card: Card, channel?: string): string[] {
     if (card.momentum?.includes("hot")) badges.push("hot");
     if (card.momentum?.includes("daily")) badges.push("daily");
     if (card.momentum?.includes("rising")) badges.push("rising");
-    if (card.momentum?.includes("on-hn")) badges.push("on-hn");
   };
   if (channel === "recommended" || !DYNAMIC_CHANNEL_KEYS.has(channel)) {
     // 推荐流：全部动态徽章；分类频道：显示动态徽章（分类本身就是当前频道，不重复显示）
@@ -214,14 +213,6 @@ function FeedCardComponent({
                 </span>
               );
             })}
-            {/* 大牛 star 徽章：谁 star 了这项目（所有频道统一显示） */}
-            {card.bigbros && card.bigbros.length > 0 && (
-              <span className="card-badge bigbro-badge" title={`${card.bigbros.join("、")} star 了`}>
-                <Star size={12} />
-                {card.bigbros.slice(0, 2).join("、")}
-                {card.bigbros.length > 2 && ` 等${card.bigbros.length}位`} star 了
-              </span>
-            )}
           </div>
         </div>
       </div>

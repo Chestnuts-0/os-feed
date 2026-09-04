@@ -197,15 +197,13 @@ function dimWeight(aiDim: string, interests: UserProfile["interests"]): number {
 // Scoring
 // ---------------------------------------------------------------------------
 
-// ── 热度加权（2026-09-04 热点提速刀）────────────────────────────
-// 三路热点信号归一相加后封顶：涨星速度（50 星/天吃满 +35%）、刚冒头（+60%）、
-// HN 提及（100 points 吃满 +40%），总热度上限 +120%——追热点但不掀翻兴趣排序。
+// ── 热度加权（2026-09-04 热点提速刀；2026-09-05 外源信号剔除）───────
+// 两路站内信号归一相加后封顶：涨星速度（50 星/天吃满 +35%）、刚冒头（+60%），
+// 总热度上限 +95%——追热点但不掀翻兴趣排序。
 const HEAT_GROWTH_NORM = 50;
 const HEAT_GROWTH_WEIGHT = 0.35;
 const HEAT_RISING_WEIGHT = 0.6;
-const HEAT_HN_NORM = 100;
-const HEAT_HN_WEIGHT = 0.4;
-const HEAT_MAX = 1.2;
+const HEAT_MAX = 0.95;
 
 /** 热度系数 = 1 + Σ信号（封顶 1 + HEAT_MAX），starGrowth=0 且无标记的卡恒为 1 */
 export function heatBoost(card: FeedCard): number {
@@ -214,9 +212,6 @@ export function heatBoost(card: FeedCard): number {
     heat += HEAT_GROWTH_WEIGHT * Math.min(card.starGrowth / HEAT_GROWTH_NORM, 1);
   }
   if (card.momentum?.includes("rising")) heat += HEAT_RISING_WEIGHT;
-  if (card.hn) {
-    heat += HEAT_HN_WEIGHT * Math.min(card.hn.points / HEAT_HN_NORM, 1);
-  }
   return 1 + Math.min(heat, HEAT_MAX);
 }
 

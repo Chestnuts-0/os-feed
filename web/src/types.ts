@@ -5,16 +5,8 @@
 
 export type FeedCategory = "ai" | "fun" | "tool" | "learning";
 
-/** 动态热度标签（不互斥，可同时命中多个；rising=刚冒头新库，on-hn=HN 提及） */
-export type FeedMomentum = "hot" | "daily" | "rising" | "on-hn";
-
-/** HN 提及信息（与后端 src/feed/types.ts 的 HnMention 一致） */
-export interface HnMention {
-  points: number;
-  comments: number;
-  title: string;
-  hnUrl: string;
-}
+/** 动态热度标签（不互斥，可同时命中多个；rising=新星） */
+export type FeedMomentum = "hot" | "daily" | "rising";
 
 /** 标签来源 */
 export type TagSource = "llm" | "github" | "language";
@@ -51,10 +43,12 @@ export interface FeedCard {
   detailCn: string;
   stars: number;
   starGrowth: number;
-  /** 仓库创建时间 ISO（rising 判定依据，后端热点提速刀携带） */
+  /** 每日频道时效热度分（相对增速主轴，涨得快>涨得多） */
+  heatScore?: number;
+  /** 静默轮数：≥3 = 真沉寂，默认推荐流退场（底库/收藏不受影响） */
+  silentRounds?: number;
+  /** 仓库创建时间 ISO（建仓时间显示依据） */
   createdAt?: string;
-  /** HN 近 24h 提及（on-hn 徽章 + 详情展示用） */
-  hn?: HnMention;
   language: string;
   topics: string[];
   /** LLM 多维度标签 */

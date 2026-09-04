@@ -1,15 +1,15 @@
 /**
- * 热点提速刀（2026-09-04）单测：
- * 1. classifyMomentum 新增 rising（刚冒头）/ on-hn（HN 提及）判定
- * 2. computeScore 热度加权 heatBoost（涨星速度 / rising / HN 三信号，封顶 1+1.2）
- * 3. extractGithubMentions（HN 外链 → GitHub repo 提及解析）
- * 4. createLlmCaller（主源 429 熔断 → 备源接管；非 429 不切源）
+ * 热点提速刀（2026-09-04/05）单测：
+ * 1. classifyMomentum：rising（新星）判定 + heatScore 时效热度分（涨得快 > 涨得多）
+ * 2. computeScore 热度加权 heatBoost（涨星速度 / rising 两路站内信号，封顶 1+0.95）
+ * 3. createLlmCaller（多源并行分摊 + 429 冷却轮转；非 429 不切源）
+ *
+ * 2026-09-05 拍板：外源网站信号（HN 提及等）不进算法，相关用例随 extractGithubMentions 一并移除。
  */
 
 import { describe, it, expect, vi } from "vitest";
 import { classifyMomentum } from "../feed/index.ts";
 import { computeScore, heatBoost } from "../feed/personalize.ts";
-import { extractGithubMentions, type HnStory } from "../hn.ts";
 import { createLlmCaller } from "../report.ts";
 import type { FeedCard, UserProfile } from "../feed/types.ts";
 import type { LlmProvider } from "../providers/types.ts";
@@ -57,27 +57,13 @@ function mkProfile(): UserProfile {
   };
 }
 
-function mkStory(overrides: Partial<HnStory>): HnStory {
-  return {
-    id: "1",
-    title: "A repo",
-    url: "https://example.com",
-    hnUrl: "https://news.ycombinator.com/item?id=1",
-    points: 10,
-    comments: 5,
-    author: "someone",
-    createdAt: new Date().toISOString(),
-    ...overrides,
-  };
-}
-
 const daysAgo = (n: number): string => new Date(Date.now() - n * 24 * 3600 * 1000).toISOString();
 
 // ---------------------------------------------------------------------------
-// classifyMomentum：rising / on-hn
+// classifyMomentum：rising / daily 门槛 / heatScore
 // ---------------------------------------------------------------------------
 
-describe("classifyMomentum rising（刚冒头）", () => {
+describe("classifyMomentum rising（新星）", () => {
   it("新库（<90天）+ 高增速（>=30）+ 未到 hot 门槛 → rising", () => {
     const r = classifyMomentum(mkCard({ stars: 800, starGrowth: 40, createdAt: daysAgo(30) }));
     expect(r.momentum).toContain("rising");
@@ -108,25 +94,41 @@ describe("classifyMomentum rising（刚冒头）", () => {
   });
 });
 
-describe("classifyMomentum on-hn（HN 提及）", () => {
-  it("带 hn 提及 → on-hn", () => {
-    const r = classifyMomentum(
-      mkCard({
-        stars: 100,
-        hn: { points: 55, comments: 20, title: "t", hnUrl: "https://news.ycombinator.com/item?id=9" },
-      }),
-    );
-    expect(r.momentum).toContain("on-hn");
+describe("heatScore 时效热度分（涨得快 > 涨得多）", () => {
+  it("栗子的例子：1k 涨 100（10%）完胜 100k 涨 1k（1%）", () => {
+    const smallFast = classifyMomentum(mkCard({ stars: 1000, starGrowth: 100 }));
+    const bigSlow = classifyMomentum(mkCard({ stars: 100000, starGrowth: 1000 }));
+    expect(smallFast.heatScore).toBeCloseTo(0.1 * 3 + 1 * 0.3, 5); // rel=0.1, abs 封顶
+    expect(bigSlow.heatScore).toBeCloseTo(0.01 * 3 + 1 * 0.3, 5); // rel=0.01, abs 封顶
+    expect(smallFast.heatScore).toBeGreaterThan(bigSlow.heatScore);
   });
 
-  it("无 hn 提及 → 无 on-hn", () => {
-    const r = classifyMomentum(mkCard({ stars: 3000 }));
-    expect(r.momentum).not.toContain("on-hn");
+  it("建仓加成：90 天内新库 ×1.5，一年内 ×1.2，老库 ×1.0", () => {
+    const young = classifyMomentum(mkCard({ stars: 800, starGrowth: 40, createdAt: daysAgo(30) }));
+    const mid = classifyMomentum(mkCard({ stars: 800, starGrowth: 40, createdAt: daysAgo(200) }));
+    const old = classifyMomentum(mkCard({ stars: 800, starGrowth: 40 }));
+    const base = (40 / 800) * 3 + Math.min(40 / 100, 1) * 0.3;
+    expect(young.heatScore).toBeCloseTo(base * 1.5, 5);
+    expect(mid.heatScore).toBeCloseTo(base * 1.2, 5);
+    expect(old.heatScore).toBeCloseTo(base, 5);
+  });
+
+  it("超小库占比虚高被基数下限 50 压住：15 星涨 5 星排不过 1k 涨 100", () => {
+    const tiny = classifyMomentum(mkCard({ stars: 15, starGrowth: 5 }));
+    const solid = classifyMomentum(mkCard({ stars: 1000, starGrowth: 100 }));
+    expect(tiny.heatScore).toBeCloseTo((5 / 50) * 3 + (5 / 100) * 0.3, 5);
+    expect(tiny.heatScore).toBeLessThan(solid.heatScore);
+  });
+
+  it("门槛外（日均 <5 且非新星）不进每日，heatScore = 0", () => {
+    const r = classifyMomentum(mkCard({ stars: 100, starGrowth: 3 }));
+    expect(r.momentum).not.toContain("daily");
+    expect(r.heatScore).toBe(0);
   });
 });
 
 // ---------------------------------------------------------------------------
-// heatBoost / computeScore：热度加权
+// heatBoost / computeScore：热度加权（站内两路信号）
 // ---------------------------------------------------------------------------
 
 describe("heatBoost 热度加权", () => {
@@ -146,21 +148,8 @@ describe("heatBoost 热度加权", () => {
     );
   });
 
-  it("HN 提及：100 points 吃满 +40%", () => {
-    expect(heatBoost(mkCard({ hn: { points: 100, comments: 50, title: "t", hnUrl: "u" } }))).toBeCloseTo(1.4);
-    expect(heatBoost(mkCard({ hn: { points: 300, comments: 50, title: "t", hnUrl: "u" } }))).toBeCloseTo(1.4); // 封顶
-  });
-
-  it("多信号叠加封顶 +120%", () => {
-    expect(
-      heatBoost(
-        mkCard({
-          starGrowth: 50,
-          momentum: ["rising"],
-          hn: { points: 100, comments: 50, title: "t", hnUrl: "u" },
-        }),
-      ),
-    ).toBeCloseTo(2.2);
+  it("多信号叠加封顶 +95%", () => {
+    expect(heatBoost(mkCard({ starGrowth: 50, momentum: ["rising"] }))).toBeCloseTo(1.95);
   });
 });
 
@@ -177,56 +166,6 @@ describe("computeScore 排序上浮", () => {
     const rising = mkCard({ momentum: ["rising"] });
     const profile = mkProfile();
     expect(computeScore(rising, profile)).toBeGreaterThan(computeScore(plain, profile));
-  });
-
-  it("其他条件相同，HN 提及卡分数严格更高", () => {
-    const plain = mkCard({});
-    const mentioned = mkCard({ hn: { points: 80, comments: 30, title: "t", hnUrl: "u" } });
-    const profile = mkProfile();
-    expect(computeScore(mentioned, profile)).toBeGreaterThan(computeScore(plain, profile));
-  });
-});
-
-// ---------------------------------------------------------------------------
-// extractGithubMentions：HN 外链 → GitHub repo
-// ---------------------------------------------------------------------------
-
-describe("extractGithubMentions", () => {
-  it("github.com 外链解析出 owner/repo", () => {
-    const m = extractGithubMentions([mkStory({ url: "https://github.com/vercel/next.js" })]);
-    expect(m.get("vercel/next.js")).toEqual({
-      points: 10,
-      comments: 5,
-      title: "A repo",
-      hnUrl: "https://news.ycombinator.com/item?id=1",
-    });
-  });
-
-  it("子路径（/tree//blob）与 www、.git 后缀都算提及", () => {
-    const m = extractGithubMentions([
-      mkStory({ url: "https://github.com/owner/repo/tree/main/docs" }),
-      mkStory({ id: "2", url: "https://www.github.com/owner2/repo2.git" }),
-    ]);
-    expect(m.has("owner/repo")).toBe(true);
-    expect(m.has("owner2/repo2")).toBe(true);
-  });
-
-  it("非 GitHub 外链与 HN 站内链接跳过", () => {
-    const m = extractGithubMentions([
-      mkStory({ url: "https://news.ycombinator.com/item?id=1" }),
-      mkStory({ id: "2", url: "https://gitlab.com/owner/repo" }),
-      mkStory({ id: "3", url: "https://github.com/explore" }), // 单段路径不算 repo
-    ]);
-    expect(m.size).toBe(0);
-  });
-
-  it("同一 repo 多条 story 保留 points 最高的一条", () => {
-    const m = extractGithubMentions([
-      mkStory({ url: "https://github.com/owner/repo", points: 10 }),
-      mkStory({ id: "2", url: "https://github.com/owner/repo", points: 99, comments: 80 }),
-    ]);
-    expect(m.get("owner/repo")?.points).toBe(99);
-    expect(m.get("owner/repo")?.comments).toBe(80);
   });
 });
 

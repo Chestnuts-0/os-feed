@@ -303,7 +303,6 @@ describe("starGrowth：间隔摊薄（停摆 N 天 → 日均，防虚高）", (
     const cards = await generateFeed(
       cfg,
       { trendingRepos: [], searchRepos: [], trendingFetchSuccess: true },
-      undefined,
       { runIntervalDays: 15 },
     );
 
@@ -332,10 +331,39 @@ describe("starGrowth：间隔摊薄（停摆 N 天 → 日均，防虚高）", (
     llmMock.impl = () => scoreJson("new/official");
     starsFetch({}); // refresh 不覆盖它
 
-    const cards = await generateFeed(cfg, trendingData, undefined, { runIntervalDays: 15 });
+    const cards = await generateFeed(cfg, trendingData, { runIntervalDays: 15 });
 
     expect(cards).toHaveLength(1);
     expect(cards[0]!.starGrowth).toBe(80); // 官方 todayStars 原样保留
+  });
+});
+
+describe("silentRounds：沉寂判定（真沉寂才退场）", () => {
+  it("刷新时日均涨星 <2 且无爆发信号 → 静默轮数 +1；有信号 → 清零", async () => {
+    memFs.clear();
+    // 两张旧卡：A 已静默 2 轮、B 首轮
+    memFs.set(
+      feedPath(),
+      JSON.stringify([makeOldCard("old/quiet-a", 1000), makeOldCard("old/quiet-b", 1000)]),
+    );
+    const oldA = JSON.parse(memFs.get(feedPath())!);
+    oldA[0]!.silentRounds = 2;
+    memFs.set(feedPath(), JSON.stringify(oldA));
+    llmMock.impl = () => {
+      throw new Error("不应调用 LLM（旧卡缓存命中零重评）");
+    };
+    starsFetch({ "old/quiet-a": 1001, "old/quiet-b": 1300 }); // A 日均 1（<2 静默）；B 日均 300（有信号）
+
+    const cards = await generateFeed(
+      cfg,
+      { trendingRepos: [], searchRepos: [], trendingFetchSuccess: true },
+      { runIntervalDays: 1 },
+    );
+
+    const a = cards.find((c) => c.repo === "old/quiet-a")!;
+    const b = cards.find((c) => c.repo === "old/quiet-b")!;
+    expect(a.silentRounds).toBe(3); // 2+1 → 达到退场线
+    expect(b.silentRounds).toBe(0); // 日均 300 有信号，清零
   });
 });
 
