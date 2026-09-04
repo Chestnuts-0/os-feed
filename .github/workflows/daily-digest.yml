@@ -37,8 +37,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LLM_PROVIDER: zhipu
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
-          # 主源（zhipu）429 熔断后按序接管的备源（LLM 源治理，2026-09-04）
-          LLM_FALLBACKS: agnes
+          # 免费编队并行池（2026-09-04）：key 已配的源自动入池 round-robin 分摊，
+          # 未配 key 的源实例化失败自动跳过，不影响运行。新 key 配好后无需改代码。
+          LLM_FALLBACKS: agnes,groq,gemini,siliconflow,cerebras
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
           # agnès 配置保留（回滚只改 LLM_PROVIDER 一个词）
           AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
           AGNES_MODEL: ${{ secrets.AGNES_MODEL || 'agnes-2.0-flash' }}

@@ -14,6 +14,10 @@ export { OpenRouterProvider } from "./openrouter.ts";
 export { DeepSeekProvider } from "./deepseek.ts";
 export { AgnesProvider } from "./agnes.ts";
 export { ZhipuProvider } from "./zhipu.ts";
+export { GroqProvider } from "./groq.ts";
+export { GeminiProvider } from "./gemini.ts";
+export { CerebrasProvider } from "./cerebras.ts";
+export { SiliconFlowProvider } from "./siliconflow.ts";
 
 import type { LlmProvider, ProviderFactory } from "./types.ts";
 import { AnthropicProvider } from "./anthropic.ts";
@@ -23,6 +27,10 @@ import { OpenRouterProvider } from "./openrouter.ts";
 import { DeepSeekProvider } from "./deepseek.ts";
 import { AgnesProvider } from "./agnes.ts";
 import { ZhipuProvider } from "./zhipu.ts";
+import { GroqProvider } from "./groq.ts";
+import { GeminiProvider } from "./gemini.ts";
+import { CerebrasProvider } from "./cerebras.ts";
+import { SiliconFlowProvider } from "./siliconflow.ts";
 
 // ---------------------------------------------------------------------------
 // Single source of truth — add new providers here only.
@@ -36,6 +44,10 @@ const PROVIDERS = {
   deepseek: () => new DeepSeekProvider(),
   agnes: () => new AgnesProvider(),
   zhipu: () => new ZhipuProvider(),
+  groq: () => new GroqProvider(),
+  gemini: () => new GeminiProvider(),
+  cerebras: () => new CerebrasProvider(),
+  siliconflow: () => new SiliconFlowProvider(),
 } satisfies Record<string, ProviderFactory>;
 
 /** Supported provider name — derived from the PROVIDERS registry. */

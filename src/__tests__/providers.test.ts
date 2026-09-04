@@ -4,6 +4,10 @@ import {
   OpenAIProvider,
   GitHubCopilotProvider,
   OpenRouterProvider,
+  GroqProvider,
+  GeminiProvider,
+  CerebrasProvider,
+  SiliconFlowProvider,
   createProvider,
   VALID_PROVIDER_NAMES,
   type LlmProvider,
@@ -100,6 +104,26 @@ describe("LlmProvider interface", () => {
     expect(p.name).toBe("openrouter");
   });
 
+  it("GroqProvider has correct name", () => {
+    const p = new GroqProvider({ apiKey: "test" });
+    expect(p.name).toBe("groq");
+  });
+
+  it("GeminiProvider has correct name", () => {
+    const p = new GeminiProvider({ apiKey: "test" });
+    expect(p.name).toBe("gemini");
+  });
+
+  it("CerebrasProvider has correct name", () => {
+    const p = new CerebrasProvider({ apiKey: "test" });
+    expect(p.name).toBe("cerebras");
+  });
+
+  it("SiliconFlowProvider has correct name", () => {
+    const p = new SiliconFlowProvider({ apiKey: "test" });
+    expect(p.name).toBe("siliconflow");
+  });
+
   it("all providers implement LlmProvider with call()", () => {
     const providers: LlmProvider[] = [
       new AnthropicProvider(),
@@ -128,6 +152,10 @@ describe("VALID_PROVIDER_NAMES", () => {
       "deepseek",
       "agnes",
       "zhipu",
+      "groq",
+      "gemini",
+      "cerebras",
+      "siliconflow",
     ]);
   });
 });
