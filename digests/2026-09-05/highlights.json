@@ -1,0 +1,126 @@
+{
+  "zh": {
+    "ai-cli": [
+      "skill-creator Bug 爆发：run_eval.py 触发率 0%",
+      "document-typography PR #514 解决 AI 生成文档排版缺陷",
+      "scnet-hpc PR #1615 填补 HPC 集群 SSH/Slurm 技能空白",
+      "Hivemind PR #1628 资源优化：昂贵模型规划，免费模型执行",
+      "self-audit v1.3.0 提供四维推理质量门禁",
+      "testin（标题截断）"
+    ],
+    "ai-agents": [
+      "OpenClaw 项目合并 5 PR，关闭 5 Issue",
+      "转插件默认配置问题引发社区热烈讨论",
+      "21 个新 Bug 报告，需进一步详细讨论解决",
+      "项目合并易难，需减少重复代码，优化处理能力",
+      "合并 5 个 PR 以改进现有功能和修复问题",
+      "项目活跃在 5 个技术 PR，其中 4 个提交，5 个合并"
+    ],
+    "ai-trending": [
+      "anomalyco/opencode 新增 314 stars，成 Agent 领域焦点",
+      "rtk-ai/rtk Rust CLI 代理降低 60-90% token 消耗",
+      "blader/humanizer 新增 1132 stars，Agent 技能库移除 AI 痕迹",
+      "affaan-m/ECC 新增 1139 stars，Agent Harness 性能优化",
+      "stablyai/orca 新增 843 stars，多 Agent 并行编排",
+      "RAG 与向量数据库持续升温，infiniflow/ragflow 稳居热门"
+    ],
+    "ai-web": [
+      "Anthropic 发布印度市场报告，占全球 5.8% 使用量",
+      "印度用户倾向专业场景与高自主度使用 Claude",
+      "Anthropic 收集 100 万条对话构建国家 AI 指数",
+      "India Country Brief 首次披露，进入地区化指数阶段",
+      "Anthropic 将印度定位为 AI+企业数字化试验田",
+      "OpenAI 本日无新增官方内容"
+    ],
+    "ai-hn": [
+      "OpenAI GPT-6 Astra ARC-AGI-3 分数 230 引发 AGI 辩论",
+      "Claude Fable 5.1 成功解码 300 年前密文",
+      "GitHub 推出 Project HydraFusion 多模型编排项目",
+      "TERMy 不用 LLM 的终端助手引发工具化讨论",
+      "AI Agent 安全性受关注，OpenAI 智能体入侵事件",
+      "开源 AI 普及与多模型编排成企业降本关键"
+    ],
+    "ai-arxiv": [
+      "Compile by Training 将自然语言规范编译为神经函数",
+      "Clean Engineering 指出 LLM 评测时间稳定性危机",
+      "ESPO 通过诊断与稳定化提升 Prompt 优化 10%-15%",
+      "FP4 FlashAttention 推动边缘与实时场景落地",
+      "Representational alignment 提供结构化安全解释",
+      "Legibility is Not Interpretability 揭示 CoT 可视化陷阱"
+    ],
+    "ai-community": [
+      "AI Engineering 容易，改变工作方式最难",
+      "AI 生成测试只测 AI 盲区，非代码真实缺陷",
+      "Stop Building Agents，Start Building Systems",
+      "AI Agent 测试陷阱：检测器因数据不足报零",
+      "Stratagems #28：用孙子兵法隐喻 AI 职场崛起",
+      "本地 LLM 老旧电脑部署指南：简单 Home Lab"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.260 active with 10 new issues",
+      "OpenCode v1.18.28 sees 10 PRs in 24h",
+      "Kimi Code CLI hits v0.40.1 with bug fixes",
+      "DeepSeek TUI currently paused or idle",
+      "Ecosystem shifts to extensibility and plugins",
+      "9 major AI CLI tools tracked in digest"
+    ],
+    "ai-agents": [
+      "OpenClaw hits 500 issues and 500 PRs in 24h",
+      "OpenClaw v2026.9.1 released with UI improvements",
+      "Mermaid diagrams now render in every chat",
+      "Progressive Context Control reduces token usage",
+      "417 active issues highlight stability challenges",
+      "13 projects covered in OpenClaw ecosystem digest"
+    ],
+    "ai-trending": [
+      "ECC surges with 248K stars and +1,139 today",
+      "RTK cuts LLM token usage by 60-90% via CLI",
+      "sglang gains 664 stars for LLM serving",
+      "arcbox runs agents in <100ms isolated sandboxes",
+      "context7 hits 61K stars for LLM docs service",
+      "VoiceStudio and niche agents carve verticals"
+    ],
+    "ai-web": [
+      "Anthropic released India AI Economic Index brief",
+      "Report analyzes India's AI adoption trends",
+      "Covers widespread AI tool use among Indian generation",
+      "Calls for more AI infrastructure investment in India",
+      "First major Anthropic regional report released",
+      "OpenAI had zero new blog posts published"
+    ],
+    "ai-hn": [
+      "OpenAI agent message board 'collusion.wiki' discovered",
+      "GPT-6 Astra underperforms on ARC-AGI-3 benchmark",
+      "Claude Fable 5.1 decoded 1653 royalist message",
+      "Wired investigates Claude remote access settings",
+      "NYT covers corporate shift to open-source AI",
+      "Agent security incident reported in Germany"
+    ],
+    "ai-arxiv": [
+      "Compile by Training turns natural lang to functions",
+      "Fast Weights and Sparse Attention in GPT studied",
+      "Multi-agent coordination and decision-making explored",
+      "Safety of minimal edits while keeping model fidelity",
+      "Chain-of-thought interpretation methods compared",
+      "New evaluation frameworks for model performance"
+    ],
+    "ai-hf": [
+      "Qwen3.8-27B leads with 5.7M downloads",
+      "Qwen3.8-27B has 13,920 likes on HF",
+      "Google timesfm-3.0 enters time-series forecasting",
+      "LTX-2.5 drives image-to-video diffusion wave",
+      "GPT-2 remains staple with 14.6M downloads",
+      "Quantized and abliterated GGUF models surge"
+    ],
+    "ai-community": [
+      "AI engineering easy but changing work is hard",
+      "AI-generated tests may reveal model blind spots",
+      "Human-in-the-loop risks becoming 'meatproxy'",
+      "GPT-6 Astra zero-day capabilities discussed",
+      "Local LLM home-lab tutorials gain traction",
+      "Tiny-ML edge inference guides attract readers"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "anthropic": {
-    "lastChecked": "2026-09-04T15:09:02.859Z",
+    "lastChecked": "2026-09-04T18:24:29.980Z",
     "seenUrls": {
       "https://www.anthropic.com/news/responsible-scaling-policy-v3": "2026-02-25T23:57:06.000Z",
       "https://www.anthropic.com/research/deprecation-updates-opus-3": "2026-02-25T20:58:11.000Z",
@@ -13,7 +13,7 @@
       "https://www.anthropic.com/news/claude-code-security": "2026-02-20T17:59:33.000Z",
       "https://www.anthropic.com/research/measuring-agent-autonomy": "2026-06-05T15:49:18.000Z",
       "https://www.anthropic.com/research/anthropic-interviewer": "2026-07-08T18:48:57.000Z",
-      "https://www.anthropic.com/research/india-brief-economic-index": "2026-09-03T21:12:06.000Z",
+      "https://www.anthropic.com/research/india-brief-economic-index": "2026-09-04T18:19:02.000Z",
       "https://www.anthropic.com/news/bengaluru-office-partnerships-across-india": "2026-02-17T15:11:31.000Z",
       "https://www.anthropic.com/news/anthropic-rwanda-mou": "2026-08-27T15:09:47.000Z",
       "https://www.anthropic.com/news/anthropic-infosys": "2026-02-17T09:26:56.000Z",
@@ -453,7 +453,7 @@
     }
   },
   "openai": {
-    "lastChecked": "2026-09-04T15:09:05.321Z",
+    "lastChecked": "2026-09-04T18:24:32.488Z",
     "seenUrls": {
       "https://openai.com/index/arvind-kc-chief-people-officer/": "2026-08-31T19:59:23.196Z",
       "https://openai.com/index/put-ai-to-work-for-your-product-team/": "2026-09-02T00:20:45.696Z",
@@ -1225,10 +1225,10 @@
       "https://openai.com/index/chatgpt-for-teens/": "2026-09-02T15:04:09.972Z",
       "https://openai.com/index/path-to-astra/": "2026-09-04T12:45:00.822Z",
       "https://openai.com/index/chatgpt-ads-expands-across-europe/": "2026-09-04T12:33:09.074Z",
-      "https://openai.com/index/safety-overview-gpt-6-astra/": "2026-09-04T15:04:07.400Z",
+      "https://openai.com/index/safety-overview-gpt-6-astra/": "2026-09-04T18:04:59.009Z",
       "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources/": "2026-09-04T14:01:01.116Z",
       "https://openai.com/index/supporting-california-bill-advance-ai-youth-safety/": "2026-09-04T05:42:35.855Z",
-      "https://openai.com/index/gpt-6-astra/": "2026-09-04T05:30:42.462Z",
+      "https://openai.com/index/gpt-6-astra/": "2026-09-04T18:09:05.364Z",
       "https://openai.com/index/gpt-5-6-in-kiro/": "2026-09-03T21:38:13.822Z",
       "https://openai.com/index/expanding-our-presence-in-brazil/": "2026-09-03T13:23:44.568Z",
       "https://openai.com/index/expanding-access-to-ai-with-chatgpt-ads/": "2026-09-03T12:31:33.294Z",

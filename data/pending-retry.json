@@ -1,62 +1,18 @@
 [
   {
-    "repo": "AllThingsSmitty/css-protips",
-    "desc": "A collection of tips to help take your CSS skills pro. 🕹 ",
-    "stars": 30263,
-    "language": "",
-    "topics": [
-      "frontend"
-    ],
-    "source": "search",
-    "starGrowth": 0,
-    "createdAt": "2015-08-29T12:29:03Z",
-    "bigbros": [],
-    "ts": "2026-08-24T23:08:38Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "apache/maka",
-    "desc": "Apache Maka (Incubating) is a high-performance agent workspace that keeps a complete record of everything it did.",
-    "stars": 4683,
-    "language": "TypeScript",
-    "topics": [
-      "desktop"
-    ],
-    "source": "search",
-    "starGrowth": 0,
-    "createdAt": "2026-05-27T15:46:05Z",
-    "bigbros": [],
-    "ts": "2026-09-04T12:47:19Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "chartbrew/chartbrew",
-    "desc": "Open-source reporting platform to build and share live dashboards from APIs, SQL and NoSQL databases, with powerful AI assistant, scheduling, and embeddable charts 📈📊",
-    "stars": 4053,
-    "language": "JavaScript",
-    "topics": [
-      "data-visualization"
-    ],
-    "source": "search",
-    "starGrowth": 0,
-    "createdAt": "2019-08-29T13:14:17Z",
-    "bigbros": [],
-    "ts": "2026-09-03T03:02:20Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "DLS5-Omics/GEMGen",
-    "desc": "Inverse design of chemical perturbations for desired cellular state transitions with large language models",
-    "stars": 11,
-    "language": "Python",
+    "repo": "chenyumo166/moziAI-35B-A3B-MOE-MTP",
+    "desc": "MoziAI-35B: Local open-source financial AI LLM. 35B MoE model compressed to 15.5GB via MoziSmartBit quantization. 256K context, vision, tool calling, 140+ tok/s on consumer GPU. Based on Qwen3.6-35B-A3B.",
+    "stars": 9,
+    "language": "Jinja",
     "topics": [
       "llm-model"
     ],
     "source": "search",
     "starGrowth": 0,
-    "createdAt": "2025-12-17T04:34:10Z",
+    "createdAt": "2026-08-19T22:29:57Z",
+    "silentRounds": 0,
     "bigbros": [],
-    "ts": "2026-09-01T03:37:15Z",
+    "ts": "2026-09-01T18:27:04Z",
     "retryCount": 1
   },
   {
@@ -70,23 +26,9 @@
     "source": "search",
     "starGrowth": 0,
     "createdAt": "2024-01-14T18:30:55Z",
+    "silentRounds": 0,
     "bigbros": [],
     "ts": "2026-08-28T10:02:44Z",
-    "retryCount": 1
-  },
-  {
-    "repo": "ggez/ggez",
-    "desc": "Rust library to create a Good Game Easily",
-    "stars": 4683,
-    "language": "Rust",
-    "topics": [
-      "game"
-    ],
-    "source": "search",
-    "starGrowth": 0,
-    "createdAt": "2016-01-30T14:29:51Z",
-    "bigbros": [],
-    "ts": "2026-08-24T21:20:24Z",
     "retryCount": 1
   },
   {
@@ -100,6 +42,7 @@
     "source": "search",
     "starGrowth": 0,
     "createdAt": "2012-07-15T15:48:59Z",
+    "silentRounds": 0,
     "bigbros": [],
     "ts": "2026-08-30T13:06:54Z",
     "retryCount": 2
@@ -115,6 +58,7 @@
     "source": "search",
     "starGrowth": 28,
     "createdAt": "2026-06-18T23:03:18Z",
+    "silentRounds": 0,
     "bigbros": [],
     "ts": "2026-09-04T15:07:09Z",
     "retryCount": 2
@@ -130,6 +74,7 @@
     "source": "search",
     "starGrowth": 0,
     "createdAt": "2013-12-18T18:12:03Z",
+    "silentRounds": 0,
     "bigbros": [],
     "ts": "2026-08-19T07:18:08Z",
     "retryCount": 2
