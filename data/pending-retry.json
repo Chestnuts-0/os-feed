@@ -1,5 +1,78 @@
 [
   {
+    "repo": "AllThingsSmitty/css-protips",
+    "desc": "A collection of tips to help take your CSS skills pro. 🕹 ",
+    "stars": 30263,
+    "language": "",
+    "topics": [
+      "frontend"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2015-08-29T12:29:03Z",
+    "bigbros": [],
+    "ts": "2026-08-24T23:08:38Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "ankitects/anki",
+    "desc": "Anki is a smart spaced repetition flashcard program",
+    "stars": 30304,
+    "language": "Rust",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 34,
+    "createdAt": "2012-12-21T08:03:31Z",
+    "bigbros": [],
+    "ts": "2026-09-04T13:03:45.431Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "apache/maka",
+    "desc": "Apache Maka (Incubating) is a high-performance agent workspace that keeps a complete record of everything it did.",
+    "stars": 4683,
+    "language": "TypeScript",
+    "topics": [
+      "desktop"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2026-05-27T15:46:05Z",
+    "bigbros": [],
+    "ts": "2026-09-04T12:47:19Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "bikini/exploitarium",
+    "desc": "A single archive of public exploit PoCs and vulnerability research writeups. At the time I post these, none have been reported. Feel free to report them yourself and take credit for the CVE if handed out lulz. Please do not abuse these. I do this so to allure people into the field, and I've always found this is the most efficient way.",
+    "stars": 4394,
+    "language": "Python",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 68,
+    "createdAt": "2026-06-23T05:14:11Z",
+    "bigbros": [
+      "nikolaydubina"
+    ],
+    "ts": "2026-09-04T13:03:45.431Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "chartbrew/chartbrew",
+    "desc": "Open-source reporting platform to build and share live dashboards from APIs, SQL and NoSQL databases, with powerful AI assistant, scheduling, and embeddable charts 📈📊",
+    "stars": 4053,
+    "language": "JavaScript",
+    "topics": [
+      "data-visualization"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2019-08-29T13:14:17Z",
+    "bigbros": [],
+    "ts": "2026-09-03T03:02:20Z",
+    "retryCount": 1
+  },
+  {
     "repo": "cloudflare/quiche",
     "desc": "🥧 Savoury implementation of the QUIC transport protocol and HTTP/3",
     "stars": 11781,
@@ -9,6 +82,253 @@
     "starGrowth": 9,
     "bigbros": [],
     "ts": "2026-08-19T01:08:47.324Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "confeden/Antigravity",
+    "desc": "Antigravity в России без VPN и смены региона аккаунта Google",
+    "stars": 436,
+    "language": "Rust",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 15,
+    "createdAt": "2026-02-08T19:51:27Z",
+    "bigbros": [],
+    "ts": "2026-09-04T13:03:45.431Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "DLS5-Omics/GEMGen",
+    "desc": "Inverse design of chemical perturbations for desired cellular state transitions with large language models",
+    "stars": 11,
+    "language": "Python",
+    "topics": [
+      "llm-model"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2025-12-17T04:34:10Z",
+    "bigbros": [],
+    "ts": "2026-09-01T03:37:15Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "EFI-training/Prompt-Tips-GenAI",
+    "desc": "This is the Efficient Prompting for Generative AI Tools training course material repository.",
+    "stars": 7,
+    "language": "Python",
+    "topics": [
+      "llm-model"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2024-01-14T18:30:55Z",
+    "bigbros": [],
+    "ts": "2026-08-28T10:02:44Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "eriklindernoren/ML-From-Scratch",
+    "desc": "Machine Learning From Scratch. Bare bones NumPy implementations of machine learning models and algorithms with a focus on accessibility. Aims to cover everything from linear regression to deep learning.",
+    "stars": 32609,
+    "language": "Python",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 32,
+    "createdAt": "2017-02-05T12:11:23Z",
+    "bigbros": [],
+    "ts": "2026-09-04T13:03:45.431Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "fmtlib/fmt",
+    "desc": "A modern formatting library",
+    "stars": 25406,
+    "language": "C++",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 681,
+    "createdAt": "2012-12-07T16:26:46Z",
+    "bigbros": [],
+    "ts": "2026-09-04T13:03:45.431Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "ggez/ggez",
+    "desc": "Rust library to create a Good Game Easily",
+    "stars": 4683,
+    "language": "Rust",
+    "topics": [
+      "game"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2016-01-30T14:29:51Z",
+    "bigbros": [],
+    "ts": "2026-08-24T21:20:24Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "javalite/javalite",
+    "desc": "JavaLite is a cohesive collection of frameworks designed from ground up to add pleasure back to your daily life",
+    "stars": 870,
+    "language": "Java",
+    "topics": [
+      "web-framework"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2013-05-31T07:33:11Z",
+    "bigbros": [],
+    "ts": "2026-09-03T08:07:53Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "jj-vcs/jj",
+    "desc": "A Git-compatible VCS that is both simple and powerful",
+    "stars": 31379,
+    "language": "Rust",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 26,
+    "createdAt": "2020-12-18T04:05:27Z",
+    "bigbros": [
+      "spf13"
+    ],
+    "ts": "2026-09-04T13:03:45.431Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "julienXX/terminal-notifier",
+    "desc": "Send User Notifications on macOS from the command-line.",
+    "stars": 7306,
+    "language": "Objective-C",
+    "topics": [
+      "command-line"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2012-07-15T15:48:59Z",
+    "bigbros": [],
+    "ts": "2026-08-30T13:06:54Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "lidge-jun/opencodex",
+    "desc": "Universal provider proxy for OpenAI Codex & Claude Code — use any LLM (Claude, Gemini, Grok, DeepSeek, Ollama…) with Codex CLI, App, SDK, and Claude Code",
+    "stars": 13268,
+    "language": "TypeScript",
+    "topics": [
+      "developer-tools"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2026-06-18T23:03:18Z",
+    "bigbros": [],
+    "ts": "2026-09-04T12:43:13Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "microsoft/flint-chart",
+    "desc": "🪄 Flint is a visualization language that lets AI agents reliably create expressive, good-looking charts from simple, human-editable chart specs.",
+    "stars": 4128,
+    "language": "TypeScript",
+    "topics": [
+      "data-visualization"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2026-05-13T00:00:28Z",
+    "bigbros": [],
+    "ts": "2026-09-04T00:50:33Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "palxiao/poster-design",
+    "desc": "迅排设计 - 图片编辑器、AI 在线海报设计，仿稿定设计，适用于多种场景：海报生成、电商产品图、文章长图、视频/公众号封面等。A beautiful online image designer, suitable for various scenarios like generate posters, making design easier!",
+    "stars": 4822,
+    "language": "Vue",
+    "topics": [
+      "design"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2022-02-01T04:46:12Z",
+    "bigbros": [],
+    "ts": "2026-09-02T13:19:05Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "reagent-project/reagent",
+    "desc": "A minimalistic ClojureScript interface to React.js",
+    "stars": 4888,
+    "language": "Clojure",
+    "topics": [
+      "frontend"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2013-12-18T18:12:03Z",
+    "bigbros": [],
+    "ts": "2026-08-19T07:18:08Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "shadcn-ui/ui",
+    "desc": "A set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks. Open Source. Open Code.",
+    "stars": 122996,
+    "language": "TypeScript",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 114,
+    "createdAt": "2023-01-04T12:43:27Z",
+    "bigbros": [
+      "affaan-m",
+      "rustdesk",
+      "mostlygeek"
+    ],
+    "ts": "2026-09-04T13:03:45.431Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "sleeepeer/PISanitizer",
+    "desc": "[EMNLP 2026] PISanitizer: Preventing Prompt Injection to Long-Context LLMs via Prompt Sanitization",
+    "stars": 18,
+    "language": "Python",
+    "topics": [
+      "llm-model"
+    ],
+    "source": "search",
+    "starGrowth": 0,
+    "createdAt": "2025-11-12T04:16:58Z",
+    "bigbros": [],
+    "ts": "2026-08-21T18:57:44Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "TechyCSR/OpenCluely",
+    "desc": "OpenCluely is a free, open source Cluely (alternative), built for technical interviews like DSA, OAs, and CP. It offers an invisible overlay, real-time AI help, Smart Image Processing for question capture, and multi-language support : 100% customizable and private.",
+    "stars": 894,
+    "language": "JavaScript",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 10,
+    "createdAt": "2025-08-05T08:20:08Z",
+    "bigbros": [],
+    "ts": "2026-09-04T13:03:45.431Z",
+    "retryCount": 1
+  },
+  {
+    "repo": "TryGhost/Ghost",
+    "desc": "Independent technology for modern publishing, memberships, subscriptions and newsletters.",
+    "stars": 55162,
+    "language": "JavaScript",
+    "topics": [],
+    "source": "trending",
+    "starGrowth": 28,
+    "createdAt": "2013-05-04T11:09:13Z",
+    "bigbros": [],
+    "ts": "2026-09-04T13:03:45.431Z",
     "retryCount": 1
   }
 ]
