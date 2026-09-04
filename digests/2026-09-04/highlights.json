@@ -1,4 +1,126 @@
 {
-  "zh": {},
-  "en": {}
+  "zh": {
+    "ai-cli": [
+      "Claude Code Skills Windows 兼容性与评估缺陷引发社区热议",
+      "document-typography 技能解决 AI 文档排版孤儿行痛点",
+      "ServiceNow 企业级技能填补 PaaS 平台 Skills 生态空白",
+      "skill-security-analyzer 安全审计元技能已加入 Marketplace",
+      "DeepSeek TUI 开源终端界面工具持续更新",
+      "9 款 AI CLI 工具横向对比覆盖主流厂商全产品线"
+    ],
+    "ai-agents": [
+      "CoPaw v2.2.0-beta.7 全面转向企业多租户架构",
+      "LobsterAI 发布 v2026.9.3 产品化体验表现突出",
+      "NanoBot 对上游变更响应极快，可观测性持续巩固",
+      "OpenClaw 生态 13 个项目覆盖轻量级到企业级 Agent",
+      "Prompt 缓存与 MCP 通信安全成全行业核心课题",
+      "Agent 生态从单体对话向生产级复杂任务引擎演进"
+    ],
+    "ai-trending": [
+      "mattpocock/skills 单日增长 2757 star 突破 24.9 万",
+      "anomalyco/opencode 逼近 20.4 万 star 成 Claude Code 最强竞品",
+      "rtk-ai/rtk Rust CLI 代理可减少 60-90% Token 消耗",
+      "shadcn-ui/ui 以 12.3 万 star 成 AI 编程基础设施",
+      "gastownhall/beads 解决 AI Agent 上下文记忆丢失问题",
+      "Agent Harness 与 RAG 知识库成今日开源生态双核心"
+    ],
+    "ai-web": [
+      "Anthropic 发布再培训项目元分析：政府可回收超 50% 支出",
+      "研究基于 56 项 RCT：培训名额提升就业概率 2-3 个百分点",
+      "Anthropic 经济政策研究从框架搭建迈入实证评估阶段",
+      "OpenAI 今日官网零更新，政策沟通采取低频率策略",
+      "Anthropic 构建 AI 治理议题设置能力，引领劳动力转型叙事",
+      "企业可将 1.3 万美元培训成本作为内部 ROI 测算基准"
+    ],
+    "ai-hn": [
+      "GPT-6 Astra 正式发布，HN 斩获 1905 分 1722 条评论",
+      "OpenAI 同步发布 GPT-6 Astra 系统安全卡片披露风险边界",
+      "Claude Codex Cursor 三款 Coding Agent 1.7 万次运行实证对比",
+      "LLM 读取 68000 汇编成功将 1993 年 Amiga 游戏移植到 Godot",
+      "ARC-AGI-3 基准测试成判断 GPT-6 Astra AGI 宣称的关键参考",
+      "Three-LLM 实现浏览器 WebGPU 本地 LLM 推理持续探索"
+    ],
+    "ai-arxiv": [
+      "ESPO 提出诊断多样化稳定化三步 Prompt 优化框架",
+      "研究揭示思维链可读性不等于可解释性挑战 LLM 评判者做法",
+      "预注册实验验证 LLM 黑盒观察者存在可靠性失效问题",
+      "NLI 协议提出 AI Agent 互操作自然语言交互标准",
+      "Terminal-Universe 将 Agent 轨迹转化为可执行终端环境",
+      "Agent 标准化协议与终端环境演化成 2026 新基建热点"
+    ],
+    "ai-hf": [
+      "Qwen3.8-27B 以 574 万下载 1.4 万赞领跑 HF 热门模型",
+      "GLM-5.3 中文 5.3B MoE 模型下载突破 30 万次成社区焦点",
+      "Qwen3.8-Flash-Next 支持图文对话推理速度提升 2 倍",
+      "文本到视频模型 MiniMax-H3 LTX-2.5 下载均破百万",
+      "GGUF AWQ 量化格式累计下载超 2000 万部署需求下沉边缘",
+      "GLM-5.3 Flash FP8 无审查版展示极致压缩下语言能力"
+    ],
+    "ai-community": [
+      "Dev.to 30 篇 AI 文章热议工具使用与开源项目实践",
+      "开发者指出 AI 生成测试程序存在能力盲区需警惕",
+      "AI 编程易改变工作方式难引发工程师深度思考",
+      "AI 游戏谜题线索设计讨论玩家反馈热度上升",
+      "Self-Correcting Systems 探讨 AI 操作失误根因与解决策略",
+      "Lobste.rs 7 条 AI 安全部件讨论社区关注技术治理"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code offers rich plugin ecosystem.",
+      "Gemini CLI targets complex model development.",
+      "OpenAI Codex among top 9 CLI tools listed.",
+      "GitHub Copilot CLI adds native integration.",
+      "Kimi Code CLI joins open-source AI CLI lineup.",
+      "DeepSeek TUI introduces terminal UI for agents."
+    ],
+    "ai-agents": [
+      "OpenClaw v2026.9.1 adds Mermaid diagram rendering.",
+      "500 updates in 24 hrs show high dev velocity.",
+      "421 open issues indicate active community.",
+      "356 open PRs highlight ongoing contributions.",
+      "New agents: NanoBot, Hermes Agent, PicoClaw.",
+      "Critical bugs in 2026.8.x drive stabilization."
+    ],
+    "ai-trending": [
+      "Claude Code dominates with dozens of new skills.",
+      "RTK token‑efficiency tool sees rapid adoption.",
+      "mem0 rises as top memory‑management project.",
+      "Graphiti and LightRAG push graph‑based retrieval.",
+      "Magnitude inference server tops infrastructure list.",
+      "vLLM and Ollama remain popular open‑source servers."
+    ],
+    "ai-web": [
+      "Anthropic releases “How well do job retraining work?”.",
+      "Report analyses 56 U.S. randomized retraining studies.",
+      "Finds 2‑3 pp employment gain per offered slot.",
+      "Average program cost: $13k per participant.",
+      "Published by Anthropic’s Economic Research team.",
+      "No new OpenAI articles posted today."
+    ],
+    "ai-hn": [
+      "GPT Agent Board discovery sparks ethics debate.",
+      "GPT‑6 Astra tool raises security concerns.",
+      "Study compares Claude, Codex, Cursor coding agents.",
+      "Show HN: Context Registry for AI coding tools.",
+      "OpenAI cuts off billion‑dollar client over Musk.",
+      "Discussions focus on AI model releases & benchmarks."
+    ],
+    "ai-hf": [
+      "Qwen3.8 model family dominates trending list.",
+      "GLM-5.3 MoE architecture gains 303k stars.",
+      "MiniMax-H3 leads video generation diffusion surge.",
+      "Spark‑X2.5‑4B targets efficient edge inference.",
+      "Quantized GGUF models flood hub via Unsloth.",
+      "OpenAI gpt2 remains benchmark with 14M downloads."
+    ],
+    "ai-community": [
+      "AI engineering easy; changing work hard debate.",
+      "AI‑generated tests often miss edge cases.",
+      "Self‑improving agent failure seen as breakthrough.",
+      "Security talks on AI finding zero‑day exploits.",
+      "Rise of “Meatproxy” human‑in‑the‑loop roles.",
+      "Community stresses practical AI integration challenges."
+    ]
+  }
 }

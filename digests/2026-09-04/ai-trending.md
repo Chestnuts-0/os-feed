@@ -1,163 +1,69 @@
 # AI 开源趋势日报 2026-09-04
 
-> 数据来源: GitHub Trending + GitHub Search API | 生成时间: 2026-09-04 12:47 UTC
+> 数据来源: GitHub Trending + GitHub Search API | 生成时间: 2026-09-04 15:09 UTC
 
 ---
 
-
-
-# AI 开源趋势日报（2026-09-04）
+# AI 开源趋势日报
 
 ## 1. 今日速览
-
-今日 AI 开源领域焦点集中在 **AI 代理工程（Agent Engineering）** 与 **Agent Skills/记忆基础设施** 的爆发式增长。Anthropic、Google 等大厂正式发布官方 Skills 库，而社区则涌现出大量针对 Claude Code、Codex 等 harness 的第三方可插拔技能、记忆层与上下文优化工具。同时，**本地化、低成本推理与 Token 节约** 成为热门方向，Rust 语言在 AI 基础设施层（向量检索、代理运行时、记忆系统）持续渗透。
-
----
+今日 AI 开源生态热度持续高涨，**Agent 智能体工具链**与 **RAG 知识库**成为绝对核心。以 **Claude Code** 为中心的生态爆发，催生了大量 Agent Harness、Skills 和 MCP 服务器。同时，RAG 相关的基础设施如向量数据库和知识图谱构建工具也迎来了显著增长，标志着 AI 应用正从“对话”向“执行”与“知识深度集成”深化。
 
 ## 2. 各维度热门项目
 
 ### 🔧 AI 基础工具
-| 项目 | Stars | 今日新增 | 简介 |
-|------|-------|----------|------|
-| [sgl-project/sglang](https://github.com/sgl-project/sglang) | 34,425 | +664 | 高性能 LLM 与多模态模型推理服务框架 |
-| [vllm-project/vllm](https://github.com/vllm-project/vllm) | 90,962 | – | 高吞吐、低内存的 LLM 推理引擎 |
-| [unslothai/unsloth](https://github.com/unslothai/unsloth) | 75,596 | – | 本地 UI 运行与训练 LLM/扩散模型，支持 GGUF、MLX 等 |
-| [hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) | 74,575 | – | 统一高效微调 100+ LLM/VLM 的工具 |
-| [BellStones-ai/mcp-router](https://github.com/BellStones-ai/mcp-router) | 7,727 | – | MCP 代理网关，统一管理多模型与路由 |
-| [upstash/context7](https://github.com/upstash/context7) | 61,608 | +47 | LLM 与 AI 代码编辑器的实时代码文档上下文平台 |
-| [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | 78,525 | +146 | CLI 代理，可减少 60‑90% LLM Token 消耗 |
-| [magnitudedev/magnitude](https://github.com/magnitudedev/magnitude) | 2,162 | +395 | 开源本地推理服务器，适配多种 AI 代理 |
+| 项目名 | Stars | 今日增长 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **[shadcn-ui/ui](https://github.com/shadcn-ui/ui)** | 123,004 (+114) | - | 前端组件库平台，虽为通用工具，但因其与 AI 生成 UI 的天然结合，在 AI 编程场景中成为基础设施级存在。 |
+| **[continuedev/continue](https://github.com/continuedev/continue)** | 35,757 | - | 开源编码代理，支持本地模型和 MCP，是开发者进行 AI 辅助编程的核心工具。 |
+| **[mattpocock/skills](https://github.com/mattpocock/skills)** | 249,339 (+2,757) | ⭐ | Skills for Real Engineers，提供生产级工程技能，是 AI 编程工具的“技能库”。 |
+| **[rtk-ai/rtk](https://github.com/rtk-ai/rtk)** | 78,547 (+146) | ⭐ | Rust 编写的 CLI 代理，通过减少 60-90% Token 消耗，解决大模型调用成本痛点。 |
+| **[gastownhall/beads](https://github.com/gastownhall/beads)** | 26,885 (+39) | - | Agent 的记忆升级插件，解决 AI 上下文丢失问题。 |
 
 ### 🤖 AI 智能体/工作流
-| 项目 | Stars | 今日新增 | 简介 |
-|------|-------|----------|------|
-| [anthropics/claude-code](https://github.com/anthropics/claude-code) | 144,021 | +151 | Anthropic 官方终端 AI 编程代理 |
-| [anomalyco/opencode](https://github.com/anomalyco/opencode) | 203,749 | +314 | 开源编码代理 |
-| [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | 241,221 | +721 | “与你共同成长的代理” |
-| [affaan-m/ECC](https://github.com/affaan-m/ECC) | 247,833 | +1,139 | Agent harness 性能优化系统，支持多模型 |
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 248,940 | +2,757 | 真实工程师的 Agent Skills 集合 |
-| [anthropics/skills](https://github.com/anthropics/skills) | 173,916 | +512 | Anthropic 官方公开 Skills 库 |
-| [google/skills](https://github.com/google/skills) | 19,457 | +132 | 针对 Google 产品与技术的 Agent Skills |
-| [add-yosmani/agent-skills](https://github.com/add-yosmani/agent-skills) | 92,196 | +353 | 生产级工程技能，用于 AI 编码代理 |
-| [stablyai/orca](https://github.com/stablyai/orca) | 61,422 | +914 | ADE（代理开发环境），支持并行代理集群 |
-| [openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc) | 32,752 | +46 | 在 Claude Code 中使用 Codex 进行代码审查 |
-| [microsoft/power-platform-skills](https://github.com/microsoft/power-platform-skills) | 822 | +12 | Power Platform 开发插件市场 |
-| [huangruiteng/loopx](https://github.com/huangruiteng/loopx) | 5,595 | +82 | 长周期代理控制平面，支持多 harness |
-| [akitaonrails/ai-memory](https://github.com/akitaonrails/ai-memory) | 5,683 | +99 | 代理长期记忆与跨供应商交接方案 |
-| [pacifio/atlas](https://github.com/pacifio/atlas) | 3,158 | +419 | 代理源代码控制，统一追踪多代理变更 |
-| [garrytan/gstack](https://github.com/garrytan/gstack) | 131,252 | +300 | Garry Tan 的 Claude Code 配置，包含 23 个高管角色工具 |
-| [WorldFlowAI/everything-claude-code](https://github.com/WorldFlowAI/everything-claude-code) | 2,069 | +75 | Claude Code 工具箱 |
-| [Gitlawb/openclaude](https://github.com/Gitlawb/openclaude) | 32,497 | +311 | 跨平台、多模型支持 |
-| [farion1231/cc-switch](https://github.com/farion1231/cc-switch) | 131,036 | +202 | 跨平台桌面助手，整合多个代理 |
-| [citrolabs/ego-lite](https://github.com/citrolabs/ego-lite) | 15,009 | +179 | 为代理提供浏览器自动化，共享登录状态 |
-| [browser-use/browser-use](https://github.com/browser-use/browser-use) | 112,247 | – | 使网站对 AI 代理可访问的自动化库 |
-| [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | 81,351 | – | 开源长周期 SuperAgent harness |
-| [OpenHands/OpenHands](https://github.com/OpenHands/OpenHands) | 86,151 | – | AI 驱动开发平台 |
-| [elizaOS/eliza](https://github.com/elizaOS/eliza) | 19,244 | – | 开源代理操作系统 |
-| [langbot-app/LangBot](https://github.com/langbot-app/LangBot) | 17,651 | – | 多平台智能机器人开发平台 |
-| [zhayujie/CowAgent](https://github.com/zhayujie/CowAgent) | 46,781 | – | 开源超级 AI 助手与 Agent Harness |
-| [AstrBotDevs/AstrBot](https://github.com/AstrBotDevs/AstrBot) | 40,005 | – | 多 IM 平台集成的 AI Agent 框架 |
-| [tinyhumansai/openhuman](https://github.com/tinyhumansai/openhuman) | 39,406 | – | 本地优先的个人 AI 代理 |
-| [CherryHQ/cherry-studio](https://github.com/CherryHQ/cherry-studio) | 51,426 | – | AI 生产力工作室，集成 300+ 助手 |
-| [HKUDS/nanobot](https://github.com/HKUDS/nanobot) | 47,704 | – | 超轻量自托管个人 AI 代理框架 |
-| [siyuan-note/siyuan](https://github.com/siyuan-note/siyuan) | 46,164 | – | 隐私优先的知识工作空间，人机协作 |
-| [CopilotKit/CopilotKit](https://github.com/CopilotKit/CopilotKit) | 37,194 | – | 代理的前端组件库，支持 AG‑UI 协议 |
-| [esengine/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix) | 35,396 | – | 基于 DeepSeek 的终端编码代理 |
-| [agentscope-ai/QwenPaw](https://github.com/agentscope-ai/QwenPaw) | 34,882 | – | 个人 AI 助手，支持多聊天应用 |
-| [iOfficeAI/AionUi](https://github.com/iOfficeAI/AionUi) | 32,560 | – | 24/7 协作应用，支持多代理 |
-| [googleworkspace/cli](https://github.com/googleworkspace/cli) | 30,733 | – | Google Workspace CLI，含 AI 代理技能 |
-| [can1357/oh-my-pi](https://github.com/can1357/oh-my-pi) | 29,415 | – | 接入 IDE 的编码代理 |
-| [QwenLM/qwen-code](https://github.com/QwenLM/qwen-code) | 27,644 | – | 开源终端 AI 编码代理 |
-| [TencentCloud/TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory) | 25,907 | – | 团队级代理记忆中心 |
-| [activepieces/activepieces](https://github.com/activepieces/activepieces) | 24,244 | – | AI 代理与 MCP 工作流自动化 |
-| [nocobase/nocobase](https://github.com/nocobase/nocobase) | 24,027 | – | AI + 低代码平台 |
-| [teableio/teable](https://github.com/teableio/teable) | 21,751 | – | AI 电子表格 |
-| [leon-ai/leon](https://github.com/leon-ai/leon) | 17,482 | – | 开源个人助理 |
-| [browser-use/browser-harness](https://github.com/browser-use/browser-harness) | 17,371 | – | 自我修复的浏览器 harness |
-| [walkinglabs/learn-harness-engineering](https://github.com/walkinglabs/learn-harness-engineering) | 14,786 | – | Harness 工程入门教程 |
-| [NanmiCoder/cc-haha](https://github.com/NanmiCoder/cc-haha) | 14,280 | – | 本地优先的跨平台桌面代理工作区 |
-| [fathah/hermes-desktop](https://github.com/fathah/hermes-desktop) | 14,120 | – | Hermes Agent 桌面伴侣 |
-| [lsdefine/GenericAgent](https://github.com/lsdefine/GenericAgent) | 14,116 | – | 自演化代理，增长技能树 |
-| [waooAI/waoowaoo](https://github.com/waooAI/waoowaoo) | 13,966 | – | 工业级 AI 影视生产平台 |
-| [e2b-dev/E2B](https://github.com/e2b-dev/E2B) | 13,670 | – | 企业级安全代理环境 |
-| [holaboss-ai/holaOS](https://github.com/holaboss-ai/holaOS) | 11,139 | – | 企业可自建的开源代理工作空间 |
-| [EKKOLearnAI/hermes-studio](https://github.com/EKKOLearnAI/hermes-studio) | 10,841 | – | Hermes Agent 网页仪表板 |
-| [presenton/presenton](https://github.com/presenton/presenton) | 10,006 | – | 开源 AI 演示文稿生成器 |
-| [GetBindu/Bindu](https://github.com/GetBindu/Bindu) | 9,733 | – | 代理的身份、通信与支付层 |
-| [omnigent-ai/omnigent](https://github.com/omnigent-ai/omnigent) | 9,681 | – | 开源代理框架与元 harness |
-| [Narcooo/inkos](https://github.com/Narcooo/inkos) | 9,420 | – | 小说/剧本创作 AI 代理 |
-| [Hmbown/Codewhale](https://github.com/Hmbown/Codewhale) | 40,913 | – | 开源 Rust 编码代理 |
-| [Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach) | 77,927 | – | 让代理“看见”整个互联网，跨平台数据抓取 |
-| [thedaviddias/Front-End-Checklist](https://github.com/thedaviddias/Front-End-Checklist) | 74,031 | – | 现代 Web 开发检查清单（面向人与代理） |
-| [career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops) | 70,113 | – | 开源 AI 求职搜索代理 |
-| [hugohe3/ppt-master](https://github.com/hugohe3/ppt-master) | 51,961 | – | AI 生成原生 PowerPoint 演示文稿 |
-| [HKUDS/Vibe-Trading](https://github.com/HKUDS/Vibe-Trading) | 32,424 | – | 个人交易代理 |
-| [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) | 16,155 | – | AI 价值投资研究框架 |
-| [simonlin1212/a-stock-data](https://github.com/simonlin1212/a-stock-data) | 9,556 | – | A 股全栈数据工具包，专为 AI 代理设计 |
+| 项目名 | Stars | 今日增长 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **[anthropics/skills](https://github.com/anthropics/skills)** | 173,968 (+512) | ⭐ | Anthropic 官方 Agent Skills 仓库，定义了技能的标准与最佳实践。 |
+| **[anomalyco/opencode](https://github.com/anomalyco/opencode)** | 203,831 (+314) | ⭐ | 开源编码智能体，支持多种模型，是 Claude Code 的强力竞品。 |
+| **[stablyai/orca](https://github.com/stablyai/orca)** | 61,502 (+914) | ⭐ | ADE (Agent Development Environment) 平台，用于管理和运行多智能体工作流。 |
+| **[affaan-m/ECC](https://github.com/affaan-m/ECC)** | 248,001 (+1,139) | ⭐ | Agent Harness 性能优化系统，提供技能、直觉、安全等增强功能。 |
+| **[DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)** | 124,766 (+1,683) | ⭐ | 让 AI Agent 思考像“最懒的资深开发者”，通过减少代码量提升效率。 |
+| **[NateBJones-Projects/OB1](https://github.com/NateBJones-Projects/OB1)** | 4,554 (+10) | - | AI Gateway 与思考基础设施层，统一不同 AI 模型的接入。 |
 
 ### 📦 AI 应用
-| 项目 | Stars | 今日新增 | 简介 |
-|------|-------|----------|------|
-| [TryGhost/Ghost](https://github.com/TryGhost/Ghost) | 55,162 | +28 | 现代出版、会员订阅与通讯平台 |
-| [langgenius/dify](https://github.com/langgenius/dify) | 154,422 | +117 | 构建代理工作流与 RAG 管道的协作式 AI 平台 |
-| [openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc) | 32,752 | +46 | 在 Claude Code 中使用 Codex 进行代码审查 |
-| [shadcn-ui/ui](https://github.com/shadcn-ui/ui) | 122,996 | +114 | 美观、可访问的组件库 |
-| [ChatGPTNextWeb/NextChat](https://github.com/ChatGPTNextWeb/NextChat) | 88,708 | – | 零配置 AI 聊天助手，支持多模型 |
-| [open-webui/open-webui](https://github.com/open-webui/open-webui) | 150,906 | – | 用户友好的 AI 界面，支持 Ollama 与 OpenAI API |
-| [janhq/jan](https://github.com/janhq/jan) | 44,331 | – | 完全离线运行的开源 ChatGPT 替代方案 |
-| [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm) | 65,608 | – | 本地优先的 AI 代理体验平台 |
-| [FlowiseAI/Flowise](https://github.com/FlowiseAI/Flowise) | 55,414 | – | 可视化构建 AI 代理 |
-| [syncDreamer/animat](https://github.com/syncDreamer/animat) | 65,165 | – | 开源 AI 视频生成平台 |
-| [Anil-matcha/Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI) | 27,701 | +77 | 无内容过滤的 AI 图像/视频生成工作室 |
-| [debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio) | 17,016 | +1,345 | 开源本地 ElevenLabs 替代，支持 646 种语言 |
-| [OpenWhispr/openwhispr](https://github.com/OpenWhispr/openwhispr) | 6,588 | +375 | 本地/云端语音转文字听写应用 |
-| [CapSoftware/Cap](https://github.com/CapSoftware/Cap) | 21,663 | +121 | 开源 Loom 替代，可分享屏幕录制 |
-| [longbridge/gpui-kit](https://github.com/longbridge/gpui-kit) | 13,938 | +199 | 基于 GPUI 的 Rust GUI 组件 |
-| [rust-lang/rust](https://github.com/rust-lang/rust) | 117,431 | +458 | 提升软件开发可靠性与效率 |
-| [fmtlib/fmt](https://github.com/fmtlib/fmt) | 25,405 | +681 | 现代格式化库 |
-| [gchq/CyberChef](https://github.com/gchq/CyberChef) | 35,739 | +16 | 加密/编码/数据处理的瑞士军刀 |
-| [TechyCSR/OpenCluely](https://github.com/TechyCSR/OpenCluely) | 894 | +10 | 开源技术面试辅助工具 |
-| [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | 65,496 | +332 | AI harness 设计语言 |
-| [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | 30,549 | +426 | 38 种编辑图表类型，专为代理设计 |
-| [op7418/guizang-ppt-skill](https://github.com/op7418/guizang-ppt-skill) | 25,615 | – | AI 代理生成 HTML 幻灯片技能 |
-| [titanwings/distilly](https://github.com/titanwings/distilly) | 24,341 | – | 将思维过程蒸馏为可复用技能 |
-| [trycua/cua](https://github.com/trycua/cua) | 22,184 | – | 计算机使用 2.0 开源驱动与基准测试 |
-| [jackwener/OpenCLI](https://github.com/jackwener/OpenCLI) | 28,964 | – | 将任何网站转换为 CLI |
-| [sngyai/Sequoia-X](https://github.com/sngyai/Sequoia-X) | 6,585 | +512 | A 股自动选股系统 |
-| [ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis) | 64,605 | – | LLM 驱动的多市场股票分析系统 |
-| [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) | 102,469 | – | 多代理 LLM 金融交易框架 |
-| [harry0703/MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo) | 120,427 | – | AI 一键生成高清短视频 |
-| [waooAI/waoowaoo](https://github.com/waooAI/waoowaoo) | 13,966 | – | 工业级 AI 影视生产平台 |
+| 项目名 | Stars | 今日增长 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **[debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio)** | 17,153 (+1,345) | ⭐ | 本地语音克隆与视频配音工具，Flux/Kling/Sora 的开源替代方案。 |
+| **[Anil-matcha/Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI)** | 27,710 (+77) | - | 开源 AI 视频生成平台，支持 600+ 模型，无内容过滤。 |
+| **[open-webui/open-webui](https://github.com/open-webui/open-webui)** | 150,916 | - | AI 界面（Chat UI），支持 Ollama 和各类 LLM API，提供多模型管理。 |
+| **[microsoft/power-platform-skills](https://github.com/microsoft/power-platform-skills)** | 822 (+12) | - | Power Platform 开发插件，专门为 Claude Code/GitHub Copilot 设计。 |
+| **[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)** | 46,850 (+167) | - | 面向 AI Agent 的营销技能包，涵盖 CRO、SEO 等。 |
 
 ### 🧠 大模型/训练
-| 项目 | Stars | 今日新增 | 简介 |
-|------|-------|----------|------|
-| [huggingface/transformers](https://github.com/huggingface/transformers) | 164,778 | – | 最先进的 ML 模型定义框架 |
-| [rasbt/LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch) | 104,327 | – | 从零实现类 ChatGPT 的 LLM |
-| [jingyaogong/minimind](https://github.com/jingyaogong/minimind) | 58,422 | +510 | 2 小时内训练 64M 参数 LLM |
-| [ericjlw/ModelWhisper](https://github.com/ericjlw/ModelWhisper) | 1,640 | – | 统一 LLM/VLM 训练推理框架 |
-| [microsoft/qlib](https://github.com/microsoft/qlib) | 48,278 | – | AI 量化投资平台 |
-| [google-research/timesfm](https://github.com/google-research/timesfm) | 30,891 | +340 | 时间序列基础模型 |
-| [radixark/miles](https://github.com/radixark/miles) | 2,468 | +55 | 企业级强化学习框架，用于 LLM/VLM 后训练 |
-| [open-compass/opencompass](https://github.com/open-compass/opencompass) | 7,393 | – | LLM 评估平台 |
-| [Eigenwise/atomic-agents](https://github.com/Eigenwise/atomic-agents) | 6,220 | – | 原子化构建 AI 代理 |
-| [skyzh/tiny-llm](https://github.com/skyzh/tiny-llm) | 4,540 | – | Apple Silicon 上学习 LLM 推理系统 |
-| [genieincodebottle/generative-ai](https://github.com/genieincodebottle/generative-ai) | 2,612 | – | 生成式 AI 资源综合指南 |
-| [zi-yue-1129/DATAGEN](https://github.com/zi-yue-1129/DATAGEN) | 1,797 | – | AI 驱动的多代理研究助手 |
-| [thinkwee/AgentsMeetRL](https://github.com/thinkwee/AgentsMeetRL) | 1,834 | – | Agentic RL 资源列表 |
-| [EasyJailbreak/EasyJailbreak](https://github.com/EasyJailbreak/EasyJailbreak) | 908 | – | 对抗性越狱提示生成框架 |
-| [thinkwee/AwesomeOPD](https://github.com/thinkwee/AwesomeOPD) | 850 | – | 在线策略蒸馏资源列表 |
-| [chrisliu298/awesome-llm-unlearning](https://github.com/chrisliu298/awesome-llm-unlearning) | 623 | – | 模型遗忘资源仓库 |
-| [Picovoice/picollm](https://github.com/Picovoice/picollm) | 317 | – | 端侧 LLM 推理，基于 X‑Bit 量化 |
-| [AarambhDevHub/aarambh-studio](https://github.com/AarambhDevHub/aarambh-studio) | 94 | – | 纯 Rust 从零构建解码器 LLM |
-| [LiberCoders/FeatureBench](https://github.com/LiberCoders/FeatureBench) | 91 | – | ICLR 2026 代理编码基准测试实现 |
-| [Greninja9257/LabLLM](https://github.com/Greninja9257/LabLLM) | 76 | – | macOS 本地微型 LLM 教学实验室 |
-| [ai-glimpse/toyllm](https://github.com/ai-glimpse/toyllm) | 26 | – | ToyLLM 从零学习 LLM |
-| [chenyumo166/moziAI-35B-A3B-MOE-MTP](https://github.com/chenyumo166/moziAI-35B-A3B-MOE-MTP) | 9 | – | 本地开源金融 LLM，35B MoE 压缩至 15.5GB |
+| 项目名 | Stars | 今日增长 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **[google-research/timesfm](https://github.com/google-research/timesfm)** | 30,923 (+340) | ⭐ | Google Research 时间序列基础模型，用于预测分析。 |
+| **[minimind/minimind](https://github.com/minimind/minimind)** | 58,453 (+299) | ⭐ | 2小时训练 64M 参数 LLM，低成本本地微调标杆项目。 |
+| **[google-deepmind/weathernext](https://github.com/google-deepmind/weathernext)** | 7,623 (+13) | - | Google DeepMind 天气预测模型。 |
+| **[sgl-project/sglang](https://github.com/sgl-project/sglang)** | 34,637 (+664) | ⭐ | 高性能 LLM 推理与服务框架。 |
+| **[unslothai/unsloth](https://github.com/unslothai/unsloth)** | 75,601 | - | 本地 UI 工具，用于运行和训练 LLM（支持 Qwen3.8 等）。 |
 
 ### 🔍 RAG/知识库
-| 项目 | Stars | 今日新增 | 简介 |
-|------|-------|----------|------|
-| [langchain-ai/langchain](https://github.com/langchain-ai/langchain) | 145,628 | – | 代理工程平台 |
-| [run-llama/llama_index](https://github.com/run-llama/llama_index) | 52,015 | – | 文档代理与 OCR 平台 |
-| [infiniflow/ragflow](https://github.com/infiniflow
+| 项目名 | Stars | 今日增长 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **[infiniflow/ragflow](https://github.com/infiniflow/ragflow)** | 90,051 | - | 融合 Agent 能力的 RAG 引擎，提供上下文层。 |
+| **[langgenius/dify](https://github.com/langgenius/dify)** | 154,433 (+117) | - | 智能体工作流与 RAG 管道构建平台，支持多模型与工具。 |
+| **[langchain-ai/langchain](https://github.com/langchain-ai/langchain)** | 145,638 | - | Agent 工程平台，构建复杂应用的核心框架。 |
+| **[headroomlabs-ai/headroom](https://github.com/headroomlabs-ai/headroom)** | 68,904 | - | 压缩工具输出以减少 Token 消耗，提升 RAG 效率。 |
+| **[microsoft/graphrag](https://github.com/microsoft/graphrag)** | 35,839 | - | 基于图的 RAG 系统，利用知识图谱增强检索。 |
+
+## 3. 趋势信号分析
+今日榜单最显著的趋势是 **“Agent 生态工具化”**。除了核心的智能体框架外，大量项目围绕 Claude Code 展开，形成了从 **Skills（技能）**、**Harness（宿主）** 到 **MCP（模型上下文协议）** 的完整工具链。这表明社区已从单纯的“使用大模型”转向“构建和管理智能体”。此外，**RAG 基础设施**（向量数据库、知识图谱、上下文压缩）持续高热度，反映出企业级应用对 AI 上下文管理和检索质量的重视。值得注意的是，Rust 语言在性能敏感的 AI 工具（如 CLI 代理、推理引擎）中占据主导地位。
+
+## 4. 社区关注热点
+*   **Agent Skills 标准**：[anthropics/skills](https://github.com/anthropics/skills) 的飙升表明 Anthropic 正在积极推动“技能”作为 Agent 可复用能力的核心概念，开发者正在标准化如何为 AI 添加特定领域知识。
+*   **本地化与成本优化**：[rtk-ai/rtk](https://github.com/rtk-ai/rtk) 和 [gastownhall/beads](https://github.com/gastownhall/beads) 的受关注，体现了在 API 成本高企的背景下，开发者对“本地优化”和“成本控制”工具的迫切需求。
+*   **多模态生成**：[debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio) 的爆发，显示出开源社区在追赶多模态大模型（视频/语音）生成方面的活跃度，用户对无需云端训练的本地解决方案需求强烈。
+
+---
+*本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

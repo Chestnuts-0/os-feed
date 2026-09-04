@@ -1,6 +1,6 @@
 {
   "anthropic": {
-    "lastChecked": "2026-09-04T12:49:32.474Z",
+    "lastChecked": "2026-09-04T15:09:02.859Z",
     "seenUrls": {
       "https://www.anthropic.com/news/responsible-scaling-policy-v3": "2026-02-25T23:57:06.000Z",
       "https://www.anthropic.com/research/deprecation-updates-opus-3": "2026-02-25T20:58:11.000Z",
@@ -438,7 +438,7 @@
       "https://www.anthropic.com/news/tino-cuellar": "2026-08-04T17:40:15.000Z",
       "https://www.anthropic.com/news/improving-fable-5-s-biology-safeguards": "2026-08-24T15:42:06.000Z",
       "https://www.anthropic.com/research/riemann-zeta": "2026-08-13T23:32:23.000Z",
-      "https://www.anthropic.com/research/reviewing-the-evidence-on-worker-retraining-programs": "2026-09-02T15:29:47.000Z",
+      "https://www.anthropic.com/research/reviewing-the-evidence-on-worker-retraining-programs": "2026-09-04T14:19:31.000Z",
       "https://www.anthropic.com/research/multiagent-systems": "2026-08-27T15:38:32.000Z",
       "https://www.anthropic.com/news/claude-text-watermark": "2026-09-01T18:01:14.000Z",
       "https://www.anthropic.com/research/Claude-accelerates-protein-design": "2026-08-24T15:30:22.000Z",
@@ -453,7 +453,7 @@
     }
   },
   "openai": {
-    "lastChecked": "2026-09-04T12:48:03.040Z",
+    "lastChecked": "2026-09-04T15:09:05.321Z",
     "seenUrls": {
       "https://openai.com/index/arvind-kc-chief-people-officer/": "2026-08-31T19:59:23.196Z",
       "https://openai.com/index/put-ai-to-work-for-your-product-team/": "2026-09-02T00:20:45.696Z",
@@ -1225,8 +1225,8 @@
       "https://openai.com/index/chatgpt-for-teens/": "2026-09-02T15:04:09.972Z",
       "https://openai.com/index/path-to-astra/": "2026-09-04T12:45:00.822Z",
       "https://openai.com/index/chatgpt-ads-expands-across-europe/": "2026-09-04T12:33:09.074Z",
-      "https://openai.com/index/safety-overview-gpt-6-astra/": "2026-09-04T12:25:54.123Z",
-      "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources/": "2026-09-04T08:18:03.073Z",
+      "https://openai.com/index/safety-overview-gpt-6-astra/": "2026-09-04T15:04:07.400Z",
+      "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources/": "2026-09-04T14:01:01.116Z",
       "https://openai.com/index/supporting-california-bill-advance-ai-youth-safety/": "2026-09-04T05:42:35.855Z",
       "https://openai.com/index/gpt-6-astra/": "2026-09-04T05:30:42.462Z",
       "https://openai.com/index/gpt-5-6-in-kiro/": "2026-09-03T21:38:13.822Z",
