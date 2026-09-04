@@ -1,0 +1,59 @@
+name: Digest Watchdog
+
+# 看门狗（2026-09-04 digest 复活刀）：daily digest 停摆 13 天无人发现的教训。
+# 每天检查 data/feed.json 的最后 commit 时间，超过 30 小时未更新 =
+# 当天 digest 大概率没跑成 → Telegram 告警 + 开停摆 issue（去重，不重复开）。
+
+on:
+  schedule:
+    # 08:00 UTC = 16:00 CST —— daily digest（00:00 UTC 触发）正常早已完成
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check feed freshness
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          set -eu
+          LAST=$(gh api "repos/${{ github.repository }}/commits?path=data/feed.json&per_page=1" \
+            --jq '.[0].commit.committer.date // empty')
+          if [ -z "$LAST" ]; then
+            echo "data/feed.json has no commits yet — treating as stale"
+            LAST="1970-01-01T00:00:00Z"
+          fi
+          AGE_H=$(( ($(date -u +%s) - $(date -u -d "$LAST" +%s)) / 3600 ))
+          echo "last feed.json commit: $LAST (${AGE_H}h ago)"
+          if [ "$AGE_H" -le 30 ]; then
+            echo "digest is fresh — all good"
+            exit 0
+          fi
+          LAST_HUMAN=$(date -u -d "$LAST" '+%Y-%m-%d %H:%M UTC')
+          MSG="🚨 GitTok daily digest 疑似停摆：data/feed.json 已 ${AGE_H} 小时未更新（上次 ${LAST_HUMAN}）。请查看 daily-digest workflow 的运行日志。"
+          # Telegram 告警（secrets 未配置则跳过，不阻塞）
+          if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              -d chat_id="$TELEGRAM_CHAT_ID" -d text="$MSG" > /dev/null || true
+          else
+            echo "Telegram secrets not configured, skip notification"
+          fi
+          # 开停摆 issue（已有未关的同名 issue 则不重复开）
+          EXISTING=$(gh issue list --repo "${{ github.repository }}" --state open \
+            --search "daily digest 停摆 in:title" --json number --jq 'length' || echo 0)
+          if [ "$EXISTING" = "0" ]; then
+            gh issue create --repo "${{ github.repository }}" \
+              --title "🚨 daily digest 停摆（watchdog 自动检出）" \
+              --body "$MSG" || true
+          else
+            echo "stale-digest issue already open, skip create"
+          fi

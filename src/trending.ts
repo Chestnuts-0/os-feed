@@ -23,6 +23,8 @@ export interface SearchRepo {
   language: string | null;
   stargazersCount: number;
   pushedAt: string;
+  /** 仓库创建时间 ISO（rising「刚冒头」判定依据；search API 自带，trending HTML 无） */
+  createdAt?: string;
   url: string;
   searchQuery: string;
 }
@@ -161,6 +163,7 @@ interface SearchApiItem {
   language: string | null;
   stargazers_count: number;
   pushed_at: string;
+  created_at: string;
   html_url: string;
 }
 
@@ -208,6 +211,7 @@ async function searchAiRepos(
                 language: item.language,
                 stargazersCount: item.stargazers_count,
                 pushedAt: item.pushed_at,
+                createdAt: item.created_at,
                 url: item.html_url,
                 searchQuery: label,
               });

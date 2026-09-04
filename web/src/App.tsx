@@ -476,6 +476,7 @@ function buildRecommended(
   tagWeights: Record<string, number>,
   seen: Record<string, number>,
   interactions: Record<string, InteractionRecord>,
+  followingSet: ReadonlySet<string> = new Set(),
 ): FeedCard[] {
   const now = Date.now();
   const DAY_MS = 86_400_000;
@@ -488,10 +489,13 @@ function buildRecommended(
     return true;
   });
   if (pool.length === 0) return [];
-  // 个性化权重分：标签权重匹配 + aiScore 辅助
+  // 个性化权重分：标签权重匹配 + aiScore 辅助 + 关注轻微抬推荐（2026-09-01 关注解耦）
   const weightOf = (c: FeedCard): number => {
     const tagScore = (c.tags || []).reduce((s, t) => s + (tagWeights[t.name] ?? 0.15) * (t.weight ?? 0.5), 0);
-    return tagScore + (c.aiScore ?? 0) * 0.5;
+    let followBoost = 0;
+    if (followingSet.has(c.owner)) followBoost += 0.3;
+    if ((c.bigbros ?? []).some((b) => followingSet.has(b))) followBoost += 0.2;
+    return tagScore + (c.aiScore ?? 0) * 0.5 + followBoost;
   };
   // 按固有分区分组
   const byCat = new Map<string, FeedCard[]>();
@@ -668,15 +672,10 @@ export default function App() {
   const interactionsRef = useRef(interactions);
   const [collections, setCollections] = useState<Collection[]>(loadCollections);
   // 关注列表（纯前端，localStorage 持久化；只影响关注频道/我的-关注）
+  // 2026-09-01 关注解耦：关注集只认本机 localStorage（不再并入 data/following.json，
+  // 路人打开关注为空）；关注频道匹配用的 bigbros 来自管道库内 star 盖章
   const [following, setFollowing] = useState<string[]>(loadFollowing);
-  // following.json 名单（管道每日生成：GitHub follow 列表 ∪ config bigbros 的快照）
-  const [followingJsonUsers, setFollowingJsonUsers] = useState<string[]>([]);
-  // 关注集并集：localStorage 关注 ∪ following.json 名单（在 GitHub 上关注大牛自动同步）
-  const allFollowing = useMemo(
-    () => [...new Set([...following, ...followingJsonUsers])],
-    [following, followingJsonUsers],
-  );
-  const followingSet = useMemo(() => new Set(allFollowing), [allFollowing]);
+  const followingSet = useMemo(() => new Set(following), [following]);
   // 创作者页栈（整页替换式子页面：push 进入更深层级，pop 逐级返回；
   // 栈顶即当前创作者页；pop 到空数组回原 tab 原频道——tab/feedChannel 状态不动）
   const [viewStack, setViewStack] = useState<{ owner: string }[]>([]);
@@ -723,22 +722,6 @@ export default function App() {
         setError(err instanceof Error ? err.message : String(err));
         setLoading(false);
       });
-  }, []);
-
-  // 加载关注名单快照 data/following.json（与 FEED_URL 同款相对路径；失败/格式错 → 空名单，不挂）
-  useEffect(() => {
-    fetch("./data/following.json")
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<{ users?: unknown }>;
-      })
-      .then((data) => {
-        const users = Array.isArray(data?.users)
-          ? data.users.filter((u): u is string => typeof u === "string")
-          : [];
-        setFollowingJsonUsers(users);
-      })
-      .catch(() => setFollowingJsonUsers([]));
   }, []);
 
   // ESC 立刻关弹窗，不播反向收回
@@ -1118,7 +1101,7 @@ export default function App() {
       ...s,
       cards:
         s.key === "recommended"
-          ? buildRecommended(visibleCards, preferences.tagWeights, seen, interactions)
+          ? buildRecommended(visibleCards, preferences.tagWeights, seen, interactions, followingSet)
           : getSectionCards(visibleCards, s.key, followingSet),
     })).filter((s) => s.key === "following" || s.cards.length > 0);
     return all;
@@ -1177,8 +1160,8 @@ export default function App() {
     return cards.filter((c) => c.owner === currentCreator).sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
   }, [cards, currentCreator]);
 
-  // 我的-关注：关注的创作者（localStorage ∪ following.json 并集）；
-  // count = TA 的项目数；starCount = TA star 的项目数（卡片 bigbros 含 TA 的卡数）
+  // 我的-关注：关注的创作者（只认本机 localStorage）；
+  // count = TA 的项目数；starCount = TA star 的项目数（卡片 bigbros 含 TA 的卡数，盖章数据）
   const followedCreators = useMemo(() => {
     const ownerCount = new Map<string, number>();
     const starCount = new Map<string, number>();
@@ -1188,14 +1171,14 @@ export default function App() {
         starCount.set(b, (starCount.get(b) ?? 0) + 1);
       }
     }
-    return allFollowing
+    return following
       .map((owner) => ({
         owner,
         count: ownerCount.get(owner) ?? 0,
         starCount: starCount.get(owner) ?? 0,
       }))
       .sort((a, b) => b.count + b.starCount - (a.count + a.starCount));
-  }, [allFollowing, cards]);
+  }, [following, cards]);
 
   // 频道切换（侧边栏目的地导航，无取消态）
   const switchFeedChannel = useCallback(
@@ -1312,8 +1295,8 @@ export default function App() {
                           还没有关注任何人
                         </p>
                         <p className="hint">
-                          去项目卡片上点创作者名即可关注；在 GitHub 上关注大牛，TA star
-                          的项目次日随数据更新出现在关注频道
+                          去项目卡片上点创作者名即可关注；关注保存在这台浏览器，TA
+                          的项目和 TA star 过的库内项目会出现在关注频道
                         </p>
                       </div>
                     )}
@@ -1528,15 +1511,15 @@ export default function App() {
                       <>
                         <div className="collections-header">
                           <span className="collections-stats">
-                            <Heart size={14} className="icon" />共 {allFollowing.length} 位关注的创作者
+                            <Heart size={14} className="icon" />共 {following.length} 位关注的创作者
                           </span>
                         </div>
-                        {allFollowing.length === 0 ? (
+                        {following.length === 0 ? (
                           <div className="status">
                             <p>还没有关注任何人</p>
                             <p className="hint">
-                              去项目卡片上点创作者名即可关注；在 GitHub 上关注大牛，TA star
-                              的项目次日随数据更新出现在关注频道
+                              去项目卡片上点创作者名即可关注；关注保存在这台浏览器，TA
+                              的项目和 TA star 过的库内项目会出现在关注频道
                             </p>
                           </div>
                         ) : (

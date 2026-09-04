@@ -1,18 +1,24 @@
 /**
  * 开源版抖音信息流 — 数据管道。
  *
- * 把 trending + search + bigbro 三路数据合并去重 → LLM 批量评分（中文推荐理由）
- * → star 门槛过滤 → 个性化排序（反馈 loop）→ 输出 data/feed.json 供前端刷。
+ * 把 trending + search 两路数据合并去重 → 库内 star 盖章（不建卡不跑 LLM）
+ * → LLM 批量评分（中文推荐理由）→ star 门槛过滤 → 个性化排序（反馈 loop）
+ * → 输出 data/feed.json 供前端刷。
+ *
+ * 关注解耦（2026-09-01）：旧「抓大牛 star 灌新卡」已退役，盖章只给库内已有 repo
+ * 加 bigbros 背书（状态文件 data/stamped-owners.json 增量续跑）。
  *
  * 用法（被 index.ts 主流程调用，或独立运行）：
- *   const cards = await generateFeed(config, trendingData, bigbroStars);
+ *   const cards = await generateFeed(config, trendingData);
  */
 
 import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
 import type { TrendingData } from "../trending.ts";
-import type { BigbroStar } from "../bigbro-stars.ts";
+import type { HnData } from "../hn.ts";
+import { extractGithubMentions } from "../hn.ts";
+import { stampLibraryStars, type StampUserStatus } from "../bigbro-stars.ts";
 import type { RadarConfig } from "../config.ts";
 import { callLlm } from "../report.ts";
 import { buildFeedScoringPrompt, parseScoringResult } from "./prompts.ts";
@@ -29,6 +35,7 @@ import type {
   FeedCategory,
   FeedMomentum,
   FeedSource,
+  HnMention,
   RepoForScoring,
   ScoringResult,
   Tag,
@@ -48,6 +55,10 @@ const MAX_FEED_SIZE = 12000;
 const HOT_STAR_THRESHOLD = 2000;
 /** 每日标签阈值（今日 star 增长） */
 const DAILY_GROWTH_THRESHOLD = 5;
+/** 「刚冒头」库龄上限（天）：创建不足 90 天且增速高的新库 */
+const RISING_AGE_DAYS = 90;
+/** 「刚冒头」日涨星下限（高于 daily 的 5，确保是真实爆发而非缓慢积累） */
+const RISING_GROWTH_THRESHOLD = 30;
 /** stars 轮转刷新：每天最多刷新的库内 repo 数（rate limit 预算：search ~1050 + 轮转 2000 < 5000/h） */
 const REFRESH_BATCH = 2000;
 /** stars 刷新并发 */
@@ -60,10 +71,14 @@ const PENDING_PATH = path.join(DATA_DIR, "pending-retry.json");
 const PENDING_MAX = 300;
 /** 单 repo 最大重试轮数（连败放弃，防僵尸条目长期占位） */
 const PENDING_MAX_RETRIES = 7;
-/** bigbro 源每轮评分配额：防首轮大牛 star 流一次性挤占 search 当日新卡评分名额；超出进待补评队列下轮补评 */
-const MAX_BIGBRO_SCORE = 300;
-/** 关注名单快照输出（前端关注频道 = localStorage 关注 ∪ 此名单并集） */
-const FOLLOWING_PATH = path.join(DATA_DIR, "following.json");
+/** 盖章状态文件：记录已盖章/已跳过的库内 owner（随 digest 入仓，增量续跑防每日重查） */
+const STAMPED_PATH = path.join(DATA_DIR, "stamped-owners.json");
+/** 盖章并发（方案 §9.2：4-8） */
+const STAMP_CONCURRENCY = 6;
+/** 单轮盖章候选上限（防挤占次日搜索配额；状态文件续跑补齐） */
+const STAMP_MAX_USERS = 400;
+/** 盖章配额保留水位（剩余低于此值停盖，留给搜索/轮转刷新） */
+const STAMP_RESERVE_QUOTA = 300;
 
 // 权威组织/官方仓库 owner 前缀
 const AUTHORITATIVE_ORGS = new Set([
@@ -140,13 +155,28 @@ export function classifyCategory(card: Pick<FeedCard, "repo" | "desc" | "topics"
 }
 
 /** 动态标签判定（不互斥，独立命中） */
-export function classifyMomentum(card: Pick<FeedCard, "owner" | "stars" | "starGrowth">): {
+export function classifyMomentum(
+  card: Pick<FeedCard, "owner" | "stars" | "starGrowth" | "createdAt" | "hn">,
+): {
   momentum: FeedMomentum[];
   fromOfficial: boolean;
 } {
   const momentum: FeedMomentum[] = [];
   if (card.stars >= HOT_STAR_THRESHOLD) momentum.push("hot");
   if (card.starGrowth >= DAILY_GROWTH_THRESHOLD) momentum.push("daily");
+  // 「刚冒头」：新库（<90 天）+ 高增速，且还没进 hot（总星门槛）——热点提速刀的核心上浮信号
+  const ageDays = card.createdAt
+    ? (Date.now() - new Date(card.createdAt).getTime()) / (24 * 3600 * 1000)
+    : Infinity;
+  if (
+    card.stars < HOT_STAR_THRESHOLD &&
+    ageDays <= RISING_AGE_DAYS &&
+    card.starGrowth >= RISING_GROWTH_THRESHOLD
+  ) {
+    momentum.push("rising");
+  }
+  // HN 近 24h 提及：最强即时热度信号（热点提速刀）
+  if (card.hn) momentum.push("on-hn");
   return {
     momentum,
     fromOfficial: AUTHORITATIVE_ORGS.has(card.owner) && card.stars >= 500,
@@ -239,6 +269,8 @@ interface MergedRepo {
   topics: string[];
   source: FeedSource;
   starGrowth: number;
+  /** 仓库创建时间 ISO（rising 判定；search API/轮转刷新携带，trending HTML 无） */
+  createdAt?: string;
   bigbros: string[];
   ts: string;
   /** 待补评队列恢复的 repo（评分排序优先） */
@@ -246,44 +278,43 @@ interface MergedRepo {
 }
 
 // ---------------------------------------------------------------------------
-// 拉 bigbro-only repo 的详情（trending/search 已自带，无需拉）
+// 盖章状态文件：data/stamped-owners.json（随 digest 入仓，不给前端当关注名单）
 // ---------------------------------------------------------------------------
 
-interface RepoDetail {
-  stars: number;
-  description: string;
-  language: string;
-  topics: string[];
+interface StampState {
+  updated: string;
+  /** login -> stamped（已盖章）/ org（非 User 跳过）/ not-found（404） */
+  users: Record<string, StampUserStatus>;
 }
 
-async function fetchRepoDetail(repo: string): Promise<RepoDetail | null> {
-  const token = process.env["GITHUB_TOKEN"] ?? "";
-  const headers: Record<string, string> = {
-    Accept: "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-  };
-  if (token) headers["Authorization"] = `Bearer ${token}`;
+/** 加载盖章状态（容错：损坏/缺失一律当空状态，digest 主流程绝不能挂） */
+function loadStampState(): StampState {
   try {
-    const resp = await fetch(`https://api.github.com/repos/${repo}`, { headers });
-    if (!resp.ok) {
-      console.error(`  [feed/detail] ${repo}: HTTP ${resp.status}`);
-      return null;
+    if (!fs.existsSync(STAMPED_PATH)) return { updated: "", users: {} };
+    const raw = JSON.parse(fs.readFileSync(STAMPED_PATH, "utf-8")) as StampState;
+    if (!raw || typeof raw !== "object" || typeof raw.users !== "object" || raw.users === null) {
+      return { updated: "", users: {} };
     }
-    const d = (await resp.json()) as {
-      stargazers_count?: number;
-      description?: string | null;
-      language?: string | null;
-      topics?: string[];
-    };
-    return {
-      stars: d.stargazers_count ?? 0,
-      description: d.description ?? "",
-      language: d.language ?? "",
-      topics: d.topics ?? [],
-    };
+    const users: Record<string, StampUserStatus> = {};
+    for (const [login, status] of Object.entries(raw.users)) {
+      if (status === "stamped" || status === "org" || status === "not-found") {
+        users[login] = status;
+      }
+    }
+    return { updated: typeof raw.updated === "string" ? raw.updated : "", users };
   } catch (err) {
-    console.error(`  [feed/detail] ${repo}: ${err}`);
-    return null;
+    console.error(`  [feed/stamp] state load failed: ${err}, starting with empty state`);
+    return { updated: "", users: {} };
+  }
+}
+
+/** 保存盖章状态（容错：写失败仅日志，不影响主流程；下轮重盖代价只是重查） */
+function saveStampState(state: StampState): void {
+  try {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(STAMPED_PATH, JSON.stringify(state, null, 2), "utf-8");
+  } catch (err) {
+    console.error(`  [feed/stamp] state save failed: ${err}`);
   }
 }
 
@@ -349,11 +380,12 @@ async function refreshStarsRoundRobin(
           }
           continue;
         }
-        const d = (await resp.json()) as { stargazers_count?: number };
+        const d = (await resp.json()) as { stargazers_count?: number; created_at?: string };
         const newStars = d.stargazers_count ?? 0;
         const m = repoMap.get(item.repo);
         if (m) {
           m.stars = newStars;
+          if (d.created_at) m.createdAt = d.created_at;
           // 只对「有增长基准」的 repo 计算今日增长（真实今日信号）：
           // 基准缺失 = 当天新入库的卡，newStars-0 会把总 star 当增长（虚高，见 starGrowth 研讨稿）
           if (baselineStars.has(item.repo)) {
@@ -512,6 +544,7 @@ interface PendingEntry {
   topics: string[];
   source: FeedSource;
   starGrowth: number;
+  createdAt?: string;
   bigbros: string[];
   ts: string;
   retryCount: number;
@@ -537,6 +570,7 @@ function loadPendingRetries(): Map<string, PendingEntry> {
           : [],
         source: e.source === "trending" || e.source === "bigbro" ? e.source : "search",
         starGrowth: typeof e.starGrowth === "number" ? e.starGrowth : 0,
+        createdAt: typeof e.createdAt === "string" ? e.createdAt : undefined,
         bigbros: Array.isArray(e.bigbros)
           ? e.bigbros.filter((b: unknown): b is string => typeof b === "string")
           : [],
@@ -652,12 +686,16 @@ async function retryScoring(
 export async function generateFeed(
   config: RadarConfig,
   trendingData: TrendingData,
-  bigbroStars: BigbroStar[],
-  /** 合并后的大牛名单（GitHub follow ∪ config bigbros），输出 data/following.json 供前端关注频道使用 */
-  followingUsers: string[] = [],
+  hnData?: HnData,
 ): Promise<FeedCard[]> {
   const now = new Date().toISOString();
-  console.log("[feed] merging trending + search + bigbro (incremental)...");
+  console.log("[feed] merging trending + search (incremental, bigbro stamping inside)...");
+
+  // HN 近 24h 提及 → repo 映射（热点提速刀：on-hn 徽章 + 排序加权；fetch 失败/未传时为空）
+  const hnMentions = hnData?.fetchSuccess
+    ? extractGithubMentions(hnData.stories)
+    : new Map<string, HnMention>();
+  if (hnMentions.size > 0) console.log(`  [feed/hn] ${hnMentions.size} github repos mentioned on HN`);
 
   // 1. 合并三路数据（增量模式：baseline = 上次 feed.json，只增不减）
   const repoMap = new Map<string, MergedRepo>();
@@ -677,6 +715,7 @@ export async function generateFeed(
           topics: c.topics,
           source: c.source,
           starGrowth: 0, // 跨轮不保留旧增长值：starGrowth=「今日增长」每轮从 0 重算（防历史虚高固化）
+          createdAt: c.createdAt,
           bigbros: c.bigbros,
           ts: c.ts,
         });
@@ -703,6 +742,7 @@ export async function generateFeed(
         topics: pe.topics,
         source: pe.source,
         starGrowth: 0, // 快照值可能已虚高，从 0 重算（refresh 用真实差值覆盖）
+        createdAt: pe.createdAt,
         bigbros: pe.bigbros,
         ts: pe.ts,
         pending: true,
@@ -736,6 +776,8 @@ export async function generateFeed(
       if (!ex.topics.includes(s.searchQuery)) ex.topics.push(s.searchQuery);
       // 取较新的 ts
       if (s.pushedAt > ex.ts) ex.ts = s.pushedAt;
+      // search API 自带 createdAt：trending 来源缺失时补上（rising 判定用）
+      if (!ex.createdAt && s.createdAt) ex.createdAt = s.createdAt;
     } else {
       repoMap.set(s.fullName, {
         repo: s.fullName,
@@ -745,80 +787,73 @@ export async function generateFeed(
         topics: [s.searchQuery],
         source: "search",
         starGrowth: 0,
+        createdAt: s.createdAt,
         bigbros: [],
         ts: s.pushedAt,
       });
     }
   }
 
-  const needDetail: string[] = [];
-  for (const b of bigbroStars) {
-    const ex = repoMap.get(b.repo);
-    if (ex) {
-      ex.bigbros = b.bigbros;
-      if (b.ts > ex.ts) ex.ts = b.ts;
-    } else {
-      repoMap.set(b.repo, {
-        repo: b.repo,
-        // 抓取器自带详情（Starred API 返回完整 repo 对象）：有则直接用，缺才走 fetchRepoDetail 兜底
-        desc: b.desc ?? "",
-        stars: b.stars ?? 0,
-        language: b.language ?? "",
-        topics: b.topics ?? [],
-        source: "bigbro",
-        starGrowth: 0,
-        bigbros: b.bigbros,
-        ts: b.ts,
-      });
-      // stars/desc 缺失时兜底补详情（stars 影响 star 门槛，desc 是 LLM 评分核心输入）
-      if (b.stars === undefined || b.desc === undefined) needDetail.push(b.repo);
-    }
-  }
-  console.log(`  [feed] merged ${repoMap.size} unique repos (${needDetail.length} bigbro-only need detail)`);
-
   // 2.5 stars 轮转刷新：库内 repo 分批查最新 stars（游标续跑），只增不减数据的每日标签依赖它
   await refreshStarsRoundRobin(repoMap, baselineStars);
   console.log(`  [feed] after refresh: ${repoMap.size} unique repos`);
 
-  // 2. 拉 bigbro-only repo 详情
-  if (needDetail.length > 0) {
-    await Promise.all(
-      needDetail.map(async (repo) => {
-        const d = await fetchRepoDetail(repo);
-        if (d) {
-          const m = repoMap.get(repo);
-          if (m) {
-            m.desc = d.description;
-            m.stars = d.stars;
-            m.language = d.language;
-            m.topics = d.topics;
-          }
-        }
-      }),
+  // 2.7 库内 star 盖章：对库内 User owner 拉最近一页 star，只给库里已有 repo 加 bigbros。
+  //     不新建卡、不跑 LLM；配额不足即停（pendingUsers 下轮续，状态文件增量）。
+  //     盖章失败绝不产生新卡——关注频道的大牛背书全靠这一步（2026-09-01 关注解耦）。
+  const stampState = loadStampState();
+  const repoSet = new Set(repoMap.keys());
+  const ownerSet = new Set<string>();
+  for (const repo of repoSet) {
+    const owner = repo.split("/")[0];
+    if (owner) ownerSet.add(owner);
+  }
+  const stampCandidates = [...ownerSet].filter((o) => !(o in stampState.users));
+  console.log(
+    `  [feed/stamp] candidates ${stampCandidates.length}/${ownerSet.size} owners (state has ${Object.keys(stampState.users).length})`,
+  );
+  if (stampCandidates.length > 0) {
+    const outcome = await stampLibraryStars(stampCandidates, repoSet, {
+      concurrency: STAMP_CONCURRENCY,
+      maxUsers: STAMP_MAX_USERS,
+      reserveQuota: STAMP_RESERVE_QUOTA,
+    });
+    let stampedCards = 0;
+    for (const [repo, bros] of outcome.stamps) {
+      const m = repoMap.get(repo);
+      if (!m) continue; // 理论不可达：stamps 只含 repoSet 成员（防御式跳过）
+      // 与存量 bigbros 取并集：历史卡上旧标签只增不减
+      m.bigbros = [...new Set([...m.bigbros, ...bros])];
+      stampedCards++;
+    }
+    for (const u of outcome.stampedUsers) stampState.users[u] = "stamped";
+    for (const u of outcome.skippedUsers) {
+      if (!stampState.users[u]) stampState.users[u] = "org";
+    }
+    for (const u of outcome.notFoundUsers) {
+      if (!stampState.users[u]) stampState.users[u] = "not-found";
+    }
+    // pendingUsers 不写状态：下轮重查
+    stampState.updated = now;
+    saveStampState(stampState);
+    console.log(
+      `  [feed/stamp] ${stampedCards} cards received stamps (+${outcome.skippedUsers.length} org skipped, ` +
+        `+${outcome.notFoundUsers.length} missing, ${outcome.pendingUsers.length} pending for next round)`,
     );
   }
 
   // 3. LLM 批量评分（增量模式：跳过已有缓存的仓库，只给新仓库评分）
   const { scores: existingScores, detailMap } = loadExistingScores();
-  // 评分队列均衡：trending/bigbro 来源优先（保证今日热门/大牛推荐不被 search 淹没）；
+  // 评分队列均衡：trending 来源优先（保证今日热门不被 search 淹没）；
   // search 组内按领域（searchQuery label = topics[0]）分桶、桶内按 star 降序、桶间轮询合并，
   // 保证每个领域都有代表进入评分队列（否则高星 AI 会挤掉低星非 AI，非 AI 拿不到评分就进不了 feed）
   const notScored = [...repoMap.values()].filter((m) => !existingScores.has(m.repo));
   // 待补评恢复的 repo 排最前（它们已经等了一轮，先补评）
   const pendingFirst = notScored.filter((m) => m.pending);
   const rest = notScored.filter((m) => !m.pending);
-  // bigbro 源评分配额：防首轮大牛 star 流一次性挤占 search 当日新卡评分名额；
-  // 按 stars 降序截断到 MAX_BIGBRO_SCORE（trending 不受限）；超出的自然进待补评队列，下轮优先补评
-  const bigbroNewCards = rest.filter((m) => m.source === "bigbro").sort((a, b) => b.stars - a.stars);
-  const bigbroQuotaSet = new Set(bigbroNewCards.slice(0, MAX_BIGBRO_SCORE).map((m) => m.repo));
-  const nonSearch = rest
-    .filter((m) => m.source !== "search" && (m.source !== "bigbro" || bigbroQuotaSet.has(m.repo)))
-    .sort((a, b) => b.stars - a.stars);
-  if (bigbroNewCards.length > 0) {
-    console.log(
-      `  [feed] bigbro quota: ${bigbroQuotaSet.size}/${bigbroNewCards.length} (cap ${MAX_BIGBRO_SCORE})`,
-    );
-  }
+  // 非 search 新卡（trending；pending 恢复的 source=bigbro 旧快照也在此路径补评）
+  // 2026-09-01 关注解耦：不再有 bigbro 新卡，旧的 MAX_BIGBRO_SCORE 配额随灌卡语义一并退役
+  const nonSearch = rest.filter((m) => m.source !== "search").sort((a, b) => b.stars - a.stars);
   const searchBuckets = new Map<string, MergedRepo[]>();
   for (const m of rest) {
     if (m.source !== "search") continue;
@@ -949,6 +984,7 @@ export async function generateFeed(
     const [owner = "", ...nameParts] = m.repo.split("/");
     const name = nameParts.join("/") || m.repo;
     llmCount++;
+    const hn = hnMentions.get(m.repo);
     const partialCard = {
       repo: m.repo,
       owner,
@@ -959,6 +995,8 @@ export async function generateFeed(
       detailCn: sc.detailCn,
       stars: m.stars,
       starGrowth: m.starGrowth,
+      createdAt: m.createdAt,
+      ...(hn ? { hn } : {}),
       language: m.language,
       topics: m.topics,
       aiDims: sc.aiDims,
@@ -1000,6 +1038,7 @@ export async function generateFeed(
         topics: m.topics,
         source: m.source,
         starGrowth: m.starGrowth,
+        createdAt: m.createdAt,
         bigbros: m.bigbros,
         ts: m.ts,
         retryCount: (prev?.retryCount ?? 0) + 1,
@@ -1080,18 +1119,6 @@ export async function generateFeed(
   fs.writeFileSync(FEED_PATH, JSON.stringify(final, null, 2), "utf-8");
   console.log(`  [feed] saved ${final.length} cards to ${FEED_PATH}`);
 
-  // 8.5 写 data/following.json（关注频道名单快照；空名单也写；写失败仅日志不挂主流程）
-  try {
-    fs.writeFileSync(
-      FOLLOWING_PATH,
-      JSON.stringify({ updated: now, users: followingUsers }, null, 2),
-      "utf-8",
-    );
-    console.log(`  [feed] saved following list (${followingUsers.length} users) to ${FOLLOWING_PATH}`);
-  } catch (err) {
-    console.error(`  [feed] save following.json failed: ${err}`);
-  }
-
   return final;
 }
 
@@ -1103,14 +1130,9 @@ async function main(): Promise<void> {
   if (!process.env["GITHUB_TOKEN"]) throw new Error("GITHUB_TOKEN required");
   const { loadConfig } = await import("../config.ts");
   const { fetchTrendingData } = await import("../trending.ts");
-  const { fetchFollowingUsers, fetchBigbroStars } = await import("../bigbro-stars.ts");
   const config = loadConfig();
-  const followingUsers = await fetchFollowingUsers(config.bigbros);
-  const [trendingData, bigbroStars] = await Promise.all([
-    fetchTrendingData(config.trendingTopics),
-    fetchBigbroStars(followingUsers),
-  ]);
-  await generateFeed(config, trendingData, bigbroStars, followingUsers);
+  const trendingData = await fetchTrendingData(config.trendingTopics);
+  await generateFeed(config, trendingData);
   console.log("Done!");
 }
 

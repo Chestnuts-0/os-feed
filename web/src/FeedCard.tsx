@@ -120,6 +120,8 @@ function channelBadges(card: Card, channel?: string): string[] {
   const pushDynamic = () => {
     if (card.momentum?.includes("hot")) badges.push("hot");
     if (card.momentum?.includes("daily")) badges.push("daily");
+    if (card.momentum?.includes("rising")) badges.push("rising");
+    if (card.momentum?.includes("on-hn")) badges.push("on-hn");
   };
   if (channel === "recommended" || !DYNAMIC_CHANNEL_KEYS.has(channel)) {
     // 推荐流：全部动态徽章；分类频道：显示动态徽章（分类本身就是当前频道，不重复显示）

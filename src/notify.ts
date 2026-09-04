@@ -4,7 +4,7 @@
  *
  * Required env vars:
  *   TELEGRAM_BOT_TOKEN  — bot token from @BotFather
- *   TELEGRAM_CHAT_ID    — channel/group/user chat ID
+ *   TELEGRAM_CHAT_ID    — channel/group/user chat ID（不设则跳过发送，无默认频道）
  * Optional:
  *   PAGES_URL           — GitHub Pages base URL (defaults to the public deployment)
  */
@@ -27,7 +27,8 @@ function escapeHtml(s: string): string {
 
 async function sendTelegram(text: string): Promise<void> {
   const BOT_TOKEN = process.env["TELEGRAM_BOT_TOKEN"] ?? "";
-  const CHAT_ID = process.env["TELEGRAM_CHAT_ID"] || "@agents_radar";
+  // 2026-09-01 开源语义清理：不再默认上游频道 @agents_radar——没配 chat id 就不发
+  const CHAT_ID = process.env["TELEGRAM_CHAT_ID"] ?? "";
   const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
   const res = await fetch(url, {
     method: "POST",
@@ -99,6 +100,12 @@ async function main(): Promise<void> {
   const BOT_TOKEN = process.env["TELEGRAM_BOT_TOKEN"] ?? "";
   if (!BOT_TOKEN) {
     console.log("[notify] TELEGRAM_BOT_TOKEN not set — skipping.");
+    return;
+  }
+
+  const CHAT_ID = process.env["TELEGRAM_CHAT_ID"] ?? "";
+  if (!CHAT_ID) {
+    console.log("[notify] TELEGRAM_CHAT_ID not set — skipping (no default channel).");
     return;
   }
 

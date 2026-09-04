@@ -49,6 +49,8 @@ interface AlgoliaResponse {
   hits: AlgoliaHit[];
 }
 
+import type { HnMention } from "./feed/types.ts";
+
 // ---------------------------------------------------------------------------
 // Fetch
 // ---------------------------------------------------------------------------
@@ -104,4 +106,29 @@ export async function fetchHnData(): Promise<HnData> {
     console.error(`  [hn] fetch failed: ${err}`);
     return { stories: [], fetchSuccess: false };
   }
+}
+
+// ---------------------------------------------------------------------------
+// GitHub 项目提及解析（热点提速刀 2026-09-04）
+// ---------------------------------------------------------------------------
+
+/** github.com/owner/repo 外链 pattern（/tree|/blob 等子路径也算提及，.git 后缀剥掉） */
+const GITHUB_URL_PATTERN = /^https?:\/\/(?:www\.)?github\.com\/([\w.-]+)\/([\w.-]+?)(?:\.git)?(?:[/?#].*)?$/i;
+
+/**
+ * 从 HN stories 外链解析被提及的 GitHub 项目：repo → 提及信息。
+ * 同一 repo 多条 story 只保留 points 最高的一条；外链是 HN 站内链接（无外部 url）的跳过。
+ */
+export function extractGithubMentions(stories: HnStory[]): Map<string, HnMention> {
+  const out = new Map<string, HnMention>();
+  for (const s of stories) {
+    const m = s.url.match(GITHUB_URL_PATTERN);
+    if (!m) continue;
+    const repo = `${m[1]}/${m[2]}`;
+    const prev = out.get(repo);
+    if (!prev || s.points > prev.points) {
+      out.set(repo, { points: s.points, comments: s.comments, title: s.title, hnUrl: s.hnUrl });
+    }
+  }
+  return out;
 }

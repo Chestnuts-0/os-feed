@@ -4,7 +4,7 @@
  * 三件事：
  * 1. 用户画像读写（data/profile.json）—— 标签权重向量 + 兴趣描述
  * 2. 用户反馈读写（data/feedback.json）—— 点赞/不感兴趣/收藏的 repo 列表
- * 3. 推荐排序 —— score = aiScore × tagMatch × freshness × bigbro
+ * 3. 推荐排序 —— score = aiScore × tagMatch × freshness × bigbro × heat（热点提速刀）
  *
  * 反馈 loop：前端点赞/不感兴趣/收藏 → 写 feedback.json → 下次跑批时
  * applyFeedbackToProfile 据此微调标签权重，实现"越刷越准"。
@@ -197,9 +197,32 @@ function dimWeight(aiDim: string, interests: UserProfile["interests"]): number {
 // Scoring
 // ---------------------------------------------------------------------------
 
+// ── 热度加权（2026-09-04 热点提速刀）────────────────────────────
+// 三路热点信号归一相加后封顶：涨星速度（50 星/天吃满 +35%）、刚冒头（+60%）、
+// HN 提及（100 points 吃满 +40%），总热度上限 +120%——追热点但不掀翻兴趣排序。
+const HEAT_GROWTH_NORM = 50;
+const HEAT_GROWTH_WEIGHT = 0.35;
+const HEAT_RISING_WEIGHT = 0.6;
+const HEAT_HN_NORM = 100;
+const HEAT_HN_WEIGHT = 0.4;
+const HEAT_MAX = 1.2;
+
+/** 热度系数 = 1 + Σ信号（封顶 1 + HEAT_MAX），starGrowth=0 且无标记的卡恒为 1 */
+export function heatBoost(card: FeedCard): number {
+  let heat = 0;
+  if (card.starGrowth > 0) {
+    heat += HEAT_GROWTH_WEIGHT * Math.min(card.starGrowth / HEAT_GROWTH_NORM, 1);
+  }
+  if (card.momentum?.includes("rising")) heat += HEAT_RISING_WEIGHT;
+  if (card.hn) {
+    heat += HEAT_HN_WEIGHT * Math.min(card.hn.points / HEAT_HN_NORM, 1);
+  }
+  return 1 + Math.min(heat, HEAT_MAX);
+}
+
 /**
- * 计算单张卡片推荐分（v2 标签权重版）。
- * score = aiScore × tagMatchBoost × freshnessFactor × bigbroBoost
+ * 计算单张卡片推荐分（v2 标签权重版 + 热度加权）。
+ * score = aiScore × tagMatchBoost × freshnessFactor × bigbroBoost × heatBoost
  */
 export function computeScore(card: FeedCard, profile: UserProfile): number {
   const aiScore = card.aiScore;
@@ -220,7 +243,7 @@ export function computeScore(card: FeedCard, profile: UserProfile): number {
   // 大牛背书
   const bigbroBoost = 1 + (card.bigbros.length > 0 ? 0.25 : 0);
 
-  return aiScore * tagMatchBoost * freshnessFactor * bigbroBoost;
+  return aiScore * tagMatchBoost * freshnessFactor * bigbroBoost * heatBoost(card);
 }
 
 /** 批量打分并按 score 降序排序 */

@@ -13,7 +13,8 @@ permissions:
 jobs:
   digest:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    # 90→240：LLM 免费源 429 退避 + 备源接管后全程可能超 90min（08-20 停摆主因）
+    timeout-minutes: 240
 
     steps:
       - name: Checkout
@@ -36,6 +37,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LLM_PROVIDER: zhipu
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
+          # 主源（zhipu）429 熔断后按序接管的备源（LLM 源治理，2026-09-04）
+          LLM_FALLBACKS: agnes
           # agnès 配置保留（回滚只改 LLM_PROVIDER 一个词）
           AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
           AGNES_MODEL: ${{ secrets.AGNES_MODEL || 'agnes-2.0-flash' }}

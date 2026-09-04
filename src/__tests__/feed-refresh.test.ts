@@ -173,7 +173,7 @@ describe("starGrowth：新卡（基准缺失）不虚高", () => {
     // refresh 扫到它并查到最新 stars=5200（若按旧逻辑 newStars-0=5200 虚高）
     starsFetch({ "new/trend": 5200 });
 
-    const cards = await generateFeed(cfg, trendingData, [], []);
+    const cards = await generateFeed(cfg, trendingData);
 
     expect(cards).toHaveLength(1);
     expect(cards[0]!.stars).toBe(5200);
@@ -200,7 +200,7 @@ describe("starGrowth：新卡（基准缺失）不虚高", () => {
     llmMock.impl = () => scoreJson("new/search");
     starsFetch({ "new/search": 3100 });
 
-    const cards = await generateFeed(cfg, trendingData, [], []);
+    const cards = await generateFeed(cfg, trendingData);
 
     expect(cards).toHaveLength(1);
     expect(cards[0]!.stars).toBe(3100);
@@ -220,12 +220,11 @@ describe("starGrowth：旧卡从 0 重算，历史虚高自愈", () => {
     // 今天涨到 1050
     starsFetch({ "old/repo": 1050 });
 
-    const cards = await generateFeed(
-      cfg,
-      { trendingRepos: [], searchRepos: [], trendingFetchSuccess: true },
-      [],
-      [],
-    );
+    const cards = await generateFeed(cfg, {
+      trendingRepos: [],
+      searchRepos: [],
+      trendingFetchSuccess: true,
+    });
 
     expect(cards).toHaveLength(1);
     expect(cards[0]!.stars).toBe(1050);
@@ -256,7 +255,7 @@ describe("starGrowth：旧卡从 0 重算，历史虚高自愈", () => {
     };
     starsFetch({ "old/trend": 1050 });
 
-    const cards = await generateFeed(cfg, trendingData, [], []);
+    const cards = await generateFeed(cfg, trendingData);
 
     expect(cards).toHaveLength(1);
     expect(cards[0]!.starGrowth).toBe(50); // 真实差值胜出，而非 999/30
@@ -271,12 +270,11 @@ describe("starGrowth：旧卡从 0 重算，历史虚高自愈", () => {
     // 异常：stars 从 1000 降到 900（改名/删 star）
     starsFetch({ "old/shrink": 900 });
 
-    const cards = await generateFeed(
-      cfg,
-      { trendingRepos: [], searchRepos: [], trendingFetchSuccess: true },
-      [],
-      [],
-    );
+    const cards = await generateFeed(cfg, {
+      trendingRepos: [],
+      searchRepos: [],
+      trendingFetchSuccess: true,
+    });
 
     expect(cards).toHaveLength(1);
     expect(cards[0]!.stars).toBe(900);
@@ -309,12 +307,11 @@ describe("starGrowth：pending 恢复从 0 起算", () => {
     // 今天实测 2000 → 基准=快照 1500 → 差值 500
     starsFetch({ "pend/repo": 2000 });
 
-    const cards = await generateFeed(
-      cfg,
-      { trendingRepos: [], searchRepos: [], trendingFetchSuccess: true },
-      [],
-      [],
-    );
+    const cards = await generateFeed(cfg, {
+      trendingRepos: [],
+      searchRepos: [],
+      trendingFetchSuccess: true,
+    });
 
     expect(cards).toHaveLength(1);
     expect(cards[0]!.stars).toBe(2000);

@@ -94,7 +94,7 @@ The pipeline has two parts:
 | `src/web.ts` | Sitemap-based web content fetching; state persisted to `digests/web-state.json` |
 | `src/trending.ts` | GitHub Trending HTML scraper + Search API topic queries |
 | `src/hn.ts` | Hacker News top AI stories via Algolia HN Search API |
-| `src/bigbro-stars.ts` | Starred API fetcher for followed users (following channel data) |
+| `src/bigbro-stars.ts` | In-library star stamping fetcher (Starred API; stamps existing cards only, no new cards) |
 | `src/generate-manifest.ts` | Generates `manifest.json` and `feed.xml` (RSS 2.0 feed) |
 
 ## Report outputs
@@ -116,7 +116,7 @@ Files written to `digests/YYYY-MM-DD/`:
 - **CLAUDE_SKILLS_REPO**: anthropics/skills — no date filter, sorted by popularity
 - **Web**: anthropic.com + openai.com via sitemap, state in `digests/web-state.json`
 - **Trending**: github.com/trending (HTML) + GitHub Search API (21 topic queries, 7-day window)
-- **Big bros**: repos starred by followed users (Starred API), merged into feed "Following" channel
+- **In-library star stamping**: the pipeline pulls each in-library GitHub **User** owner's latest starred page and stamps matching existing cards with `bigbros` (no new cards, no LLM); state in `data/stamped-owners.json`
 - **HN**: Algolia HN Search API — 6 parallel queries, top-30 AI stories by points, last 24h
 
 ## Key conventions
@@ -131,7 +131,7 @@ Files written to `digests/YYYY-MM-DD/`:
 - GitHub issue label colors are defined in `LABEL_COLORS` in `src/github.ts`. Add new labels there.
 - `sampleNote(total, sampled)` in `src/prompts.ts` formats the "(共 N 条，展示前 M 条)" note. Reuse it — do not inline the same string format.
 - Web state (`digests/web-state.json`) is committed to git on every run. It is the source of truth for which URLs have been seen. Do NOT gitignore it — CI runs from a clean checkout and an empty state forces a full re-crawl every run.
-- Feed data (`data/feed.json`, `data/pending-retry.json`, `data/following.json`, `digests/web-state.json`) is committed by the digest workflow. Local pipeline runs write `data/` — always `git checkout -- data/` after local runs.
+- Feed data (`data/feed.json`, `data/pending-retry.json`, `data/stamped-owners.json`, `digests/web-state.json`) is committed by the digest workflow. Local pipeline runs write `data/` — always `git checkout -- data/` after local runs. (`data/following.json` is retired — the frontend no longer reads it.)
 
 ## Web UI & RSS Feed
 

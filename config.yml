@@ -97,18 +97,12 @@ openclaw_peers:
 # 开源版抖音信息流 — 扩展配置
 # ════════════════════════════════════════════════════════════════
 
-# ── 关注大牛清单 ───────────────────────────────────────────────
-# 追踪这些 GitHub 用户 star 的项目（像关注博主一样）。
-# 可在此列用户名，也可用环境变量 BIGBROS（逗号分隔）覆盖。
-bigbros:
-  - KKKKhazix
-  - esengine
-
-# ── 关注名单自动同步账号 ───────────────────────────────────────
-# 此账号在 GitHub 上 follow 的人会并入大牛名单（follow ∪ bigbros，去重），
-# 次日 digest 自动生效——在 GitHub 上关注大牛，TA star 的项目就会进你的关注频道。
-# 可用环境变量 FOLLOWING_USER 覆盖。
-following_user: Chestnuts-Sisyphus
+# ── 关注语义（2026-09-01 关注解耦刀）──────────────────────────
+# 旧「关注大牛抓 star 灌新卡」（bigbros 名单 + following_user 自动同步）已整套退役，
+# bigbros / following_user 配置项随之移除（config.ts 保留空值兜底解析）。
+# 现在「关注频道」的大牛背书 = 库内 star 盖章：管道对库内 GitHub User owner 拉最近
+# 一页 star，与库内 repo 求交后给已有卡加 bigbros（不新建卡、不跑 LLM）。
+# 增量状态文件：data/stamped-owners.json（随 digest 入仓，不给前端当关注名单）。
 
 # ── Trending/Search 主题 ───────────────────────────────────────
 # GitHub Search API 查询主题。覆盖 AI/工具/学习/好玩等多个领域。

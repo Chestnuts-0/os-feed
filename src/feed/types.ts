@@ -69,8 +69,20 @@ export interface ScoringResult {
 /** 固有分区标签（互斥，每个项目必有其一；tool 为最宽兜底） */
 export type FeedCategory = "ai" | "fun" | "tool" | "learning";
 
-/** 动态热度标签（不互斥，可有可无；可同时命中 hot+daily） */
-export type FeedMomentum = "hot" | "daily";
+/** 动态热度标签（不互斥，可有可无；可同时命中多个） */
+export type FeedMomentum = "hot" | "daily" | "rising" | "on-hn";
+
+/** HN 提及信息（项目被 Hacker News 近 24h 讨论 → 强即时热点信号） */
+export interface HnMention {
+  /** HN story 点数 */
+  points: number;
+  /** HN 评论数 */
+  comments: number;
+  /** story 标题 */
+  title: string;
+  /** HN 讨论页链接 */
+  hnUrl: string;
+}
 
 /** 信息流卡片 —— 前端消费的最终格式 */
 export interface FeedCard {
@@ -87,8 +99,12 @@ export interface FeedCard {
   /** 详情介绍（长文，兼顾通俗+专业+细致，深度解读） */
   detailCn: string;
   stars: number;
-  /** 近期 star 增长（trending 用 todayStars，search 用 0） */
+  /** 近期 star 增长（trending 用 todayStars，refresh 用「今日 stars−baseline」差分，search 用 0） */
   starGrowth: number;
+  /** 仓库创建时间 ISO（search API / 轮转刷新携带；trending HTML 无此字段）——rising「刚冒头」判定依据 */
+  createdAt?: string;
+  /** HN 近 24h 提及（热点提速刀：最强即时热度信号，参与排序加权 + on-hn 徽章） */
+  hn?: HnMention;
   language: string;
   topics: string[];
   /** LLM 多维度标签（1-3个） */

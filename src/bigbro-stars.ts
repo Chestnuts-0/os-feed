@@ -1,41 +1,49 @@
 /**
- * 关注大牛 star 动态采集。
+ * 库内 star 盖章抓取器（2026-09-01 关注解耦刀重写）。
  *
- * 调 GitHub Starred API（GET /users/{name}/starred?per_page=100&sort=created）
- * 拉每个大牛的完整 star 列表（响应是完整 repo 对象，自带描述/star 数/语言/
- * topics/pushed_at，免单独 fetch repo detail），合并成"哪些大牛 star 了哪些 repo"。
- * 多个大牛 star 同一 repo 会合并成一条，bigbros 数组记录全部背书人。
+ * 旧语义（抓大牛/follow 名单的 star 灌新卡进 feed）已退役。现在只做「库内盖章」：
+ * 对库里已有的 GitHub **User** owner，拉 TA 最近一页 star（per_page=100&sort=created），
+ * 与库内 repo 集合求交，给已有卡的 bigbros 加背书人。不新建卡、不跑 LLM。
+ * 前端关注频道（owner 匹配 ∪ bigbros 匹配）由此获得「TA star 了库内哪个项目」的数据。
  *
- * 名单来源：GitHub follow 列表 ∪ config bigbros（去重）——在 GitHub 上关注大牛，
- * TA star 的项目次日随 digest 自动进入关注频道。
- *
- * Rate limit：GitHub 认证 5000 req/hr。每个大牛一次请求，10 人 = 10 请求可忽略。
+ * 配额：GitHub 认证 5000 req/h。每个 User 候选 2 请求（1 查 type + 1 查 starred）；
+ * 开工先查 GET /rate_limit（不消耗配额）算本轮预算，配额不足即停，剩余候选交还下轮——
+ * 增量靠状态文件 data/stamped-owners.json（随 digest 入仓，generateFeed 读写）。
  */
 
-interface StarredRepo {
-  full_name: string;
-  stargazers_count: number;
-  description: string | null;
-  language: string | null;
-  topics: string[];
-  pushed_at: string;
+/** /users/{login} 的 type 里值得盖章的只有真用户 */
+const STAMPABLE_TYPES = new Set(["User"]);
+
+export type StampUserStatus = "stamped" | "org" | "not-found";
+
+export interface StampOutcome {
+  /** repo -> 本轮新盖章的背书人列表（只含库内已有 repo） */
+  stamps: Map<string, string[]>;
+  /** 本轮成功盖章的 User */
+  stampedUsers: string[];
+  /** 跳过的 Organization/Bot（记状态防重查） */
+  skippedUsers: string[];
+  /** 404 的账号（已注销/不存在，记状态防每日重查） */
+  notFoundUsers: string[];
+  /** 本轮没轮到（预算尽）或临时失败的候选（下轮重试） */
+  pendingUsers: string[];
 }
 
-export interface BigbroStar {
-  /** owner/repo */
-  repo: string;
-  /** star 了该项目的大牛列表 */
-  bigbros: string[];
-  /** 最近一次 star 的 ISO 时间（Starred API 不带 star 时间，用 repo 的 pushed_at 近似） */
-  ts: string;
-  /** 项目描述（Starred API 自带，merge 时免二次 fetch 详情） */
-  desc?: string;
-  /** star 数 */
-  stars?: number;
-  /** 主语言 */
-  language?: string;
-  /** topics */
-  topics?: string[];
+export interface StampOptions {
+  /** 并发数（默认 6，方案 §9.2：4-8） */
+  concurrency?: number;
+  /** 单轮最多处理候选数（默认 400） */
+  maxUsers?: number;
+  /** 配额保留水位：剩余低于此值停盖（留给搜索/刷新等主流程，默认 300） */
+  reserveQuota?: number;
+}
+
+/** 限流（403/429）——stampLibraryStars 捕获后立即停整轮 */
+export class RateLimitedError extends Error {
+  constructor(status: number) {
+    super(`GitHub API rate limited (HTTP ${status})`);
+    this.name = "RateLimitedError";
+  }
 }
 
 function githubHeaders(): Record<string, string> {
@@ -49,99 +57,154 @@ function githubHeaders(): Record<string, string> {
 }
 
 /**
- * 合并大牛名单：GitHub follow 列表 ∪ config bigbros（去重）。
- * followingUser 未配置或抓取失败（网络/限流）→ 降级只用 config 名单，主流程不挂。
- * @param configBigbros config.yml / 环境变量 BIGBROS 解析后的大牛名单
+ * 查账号类型。返回 type（"User"/"Organization"/"Bot"...）；
+ * 404 返回 "MISSING"（账号已注销/不存在，记 not-found 防每日重查）；
+ * 其余失败返回 null（临时错误，下轮重试）。
  */
-export async function fetchFollowingUsers(configBigbros: string[]): Promise<string[]> {
-  const { loadConfig } = await import("./config.ts");
-  const followingUser = loadConfig().followingUser;
-
-  if (!followingUser) {
-    console.log(
-      `  [bigbro] no following_user configured, using config bigbros only (${configBigbros.length} users)`,
-    );
-    return [...new Set(configBigbros)];
-  }
-
+export async function fetchUserType(login: string): Promise<string | null> {
   try {
-    const url = `https://api.github.com/users/${encodeURIComponent(followingUser)}/following?per_page=100`;
+    const url = `https://api.github.com/users/${encodeURIComponent(login)}`;
     const resp = await fetch(url, { headers: githubHeaders() });
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const users = (await resp.json()) as { login?: string }[];
-    const logins = users.map((u) => u.login).filter((l): l is string => Boolean(l));
-    const merged = [...new Set([...logins, ...configBigbros])];
-    console.log(
-      `  [bigbro] following list (${followingUser}): ${logins.length} followed + ${configBigbros.length} config = ${merged.length} users`,
-    );
-    return merged;
+    if (resp.status === 404) return "MISSING";
+    if (!resp.ok) {
+      if (resp.status === 403 || resp.status === 429) throw new RateLimitedError(resp.status);
+      console.error(`  [stamp/type/${login}] HTTP ${resp.status}`);
+      return null;
+    }
+    const d = (await resp.json()) as { type?: string };
+    return d.type ?? null;
   } catch (err) {
-    console.error(`  [bigbro] fetch following list failed: ${err} — fallback to config bigbros only`);
-    return [...new Set(configBigbros)];
+    if (err instanceof RateLimitedError) throw err;
+    console.error(`  [stamp/type/${login}] fetch failed: ${err}`);
+    return null;
   }
 }
 
 /**
- * 采集大牛 star 动态。
- * @param users 大牛 GitHub 用户名列表（fetchFollowingUsers 合并后的名单）
+ * 拉某用户最近一页 star 的 repo 全名（Starred API，稳定按 star 时间倒序）。
+ * 单用户失败抛错（403/429 抛 RateLimitedError），由上层决定跳过/停轮。
  */
-export async function fetchBigbroStars(users: string[]): Promise<BigbroStar[]> {
-  if (users.length === 0) {
-    console.log("  [bigbro] No users configured, skipping");
-    return [];
+export async function fetchUserStarredRepos(login: string): Promise<string[]> {
+  const url = `https://api.github.com/users/${encodeURIComponent(login)}/starred?per_page=100&sort=created`;
+  const resp = await fetch(url, { headers: githubHeaders() });
+  if (!resp.ok) {
+    if (resp.status === 403 || resp.status === 429) throw new RateLimitedError(resp.status);
+    throw new Error(`HTTP ${resp.status}`);
+  }
+  const repos = (await resp.json()) as { full_name?: string }[];
+  return repos.map((r) => r.full_name).filter((n): n is string => typeof n === "string" && n.includes("/"));
+}
+
+/**
+ * 查核心配额剩余。GET /rate_limit 不消耗配额；查询失败返回 -1（上层按零预算处理）。
+ */
+export async function fetchCoreQuotaRemaining(): Promise<number> {
+  try {
+    const resp = await fetch("https://api.github.com/rate_limit", { headers: githubHeaders() });
+    if (!resp.ok) return -1;
+    const d = (await resp.json()) as { resources?: { core?: { remaining?: number } } };
+    return d.resources?.core?.remaining ?? -1;
+  } catch (err) {
+    console.error(`  [stamp/quota] fetch failed: ${err}`);
+    return -1;
+  }
+}
+
+/**
+ * 库内盖章主流程：候选 owner 逐个（type 检查 → 拉最近 star → 与库内求交）。
+ * - 只产出库内已有 repo 的盖章（repoSet 之外的 star 直接忽略，永不建卡）
+ * - Organization/Bot 跳过、404 记 not-found，都写状态文件防每日重查
+ * - 预算 = min(maxUsers, (剩余配额 - reserveQuota) / 2)；预算尽或中途限流即停，
+ *   没轮到的候选进 pendingUsers（不写状态，下轮重试）
+ * - 单用户临时失败跳过主流程不挂
+ */
+export async function stampLibraryStars(
+  candidates: string[],
+  repoSet: ReadonlySet<string>,
+  opts: StampOptions = {},
+): Promise<StampOutcome> {
+  const { concurrency = 6, maxUsers = 400, reserveQuota = 300 } = opts;
+  const outcome: StampOutcome = {
+    stamps: new Map(),
+    stampedUsers: [],
+    skippedUsers: [],
+    notFoundUsers: [],
+    pendingUsers: [],
+  };
+  if (candidates.length === 0) return outcome;
+
+  const remaining = await fetchCoreQuotaRemaining();
+  let budget = remaining >= 0 ? Math.min(maxUsers, Math.floor((remaining - reserveQuota) / 2)) : 0;
+  console.log(
+    `  [stamp] candidates ${candidates.length}, quota remaining ${remaining}, budget ${budget} users`,
+  );
+  if (budget <= 0) {
+    outcome.pendingUsers = [...candidates];
+    return outcome;
   }
 
-  // repo -> { bigbros: Set, ts: pushed_at, 自带详情字段 }
-  const map = new Map<
-    string,
-    { bigbros: Set<string>; ts: string; desc?: string; stars?: number; language?: string; topics?: string[] }
-  >();
+  const queue = [...candidates];
+  let stopped = false;
 
-  await Promise.all(
-    users.map(async (user) => {
-      try {
-        const url = `https://api.github.com/users/${encodeURIComponent(user)}/starred?per_page=100&sort=created`;
-        const resp = await fetch(url, { headers: githubHeaders() });
-        if (!resp.ok) {
-          // 单大牛失败跳过（限流/账号不存在等），每日重抓天然重试
-          console.error(`  [bigbro/${user}] HTTP ${resp.status} — skipped (daily rerun retries naturally)`);
-          return;
-        }
-        const repos = (await resp.json()) as StarredRepo[];
-        let added = 0;
-        for (const r of repos) {
-          if (!r.full_name) continue;
-          const existing = map.get(r.full_name);
-          if (existing) {
-            existing.bigbros.add(user);
-          } else {
-            map.set(r.full_name, {
-              bigbros: new Set([user]),
-              ts: r.pushed_at ?? "",
-              desc: r.description ?? undefined,
-              stars: r.stargazers_count,
-              language: r.language ?? undefined,
-              topics: r.topics ?? [],
-            });
-          }
-          added++;
-        }
-        console.log(`  [bigbro/${user}] ${added} starred repos`);
-      } catch (err) {
-        console.error(`  [bigbro/${user}] fetch failed: ${err} — skipped (daily rerun retries naturally)`);
+  const worker = async (): Promise<void> => {
+    while (!stopped) {
+      const login = queue.shift();
+      if (login === undefined) return;
+      if (budget <= 0) {
+        outcome.pendingUsers.push(login);
+        continue;
       }
-    }),
-  );
+      budget--;
+      try {
+        const type = await fetchUserType(login);
+        if (type === null) {
+          outcome.pendingUsers.push(login);
+          continue;
+        }
+        if (type === "MISSING") {
+          outcome.notFoundUsers.push(login);
+          continue;
+        }
+        if (!STAMPABLE_TYPES.has(type)) {
+          outcome.skippedUsers.push(login);
+          continue;
+        }
+        const starred = await fetchUserStarredRepos(login);
+        let hits = 0;
+        for (const repo of starred) {
+          if (!repoSet.has(repo)) continue; // 库外 star 忽略——盖章永不建卡
+          hits++;
+          const list = outcome.stamps.get(repo);
+          if (list) {
+            if (!list.includes(login)) list.push(login);
+          } else {
+            outcome.stamps.set(repo, [login]);
+          }
+        }
+        outcome.stampedUsers.push(login);
+        console.log(`  [stamp/${login}] ${hits}/${starred.length} starred repos in library`);
+      } catch (err) {
+        if (err instanceof RateLimitedError) {
+          // 限流：立即停整轮，没跑的候选全部留待下轮
+          console.error(`  [stamp] rate limited at ${login}, stopping for this round`);
+          stopped = true;
+          outcome.pendingUsers.push(login);
+          break;
+        }
+        console.error(`  [stamp/${login}] failed: ${err} — skipped (next round retries)`);
+        outcome.pendingUsers.push(login);
+      }
+    }
+  };
 
-  const result: BigbroStar[] = [...map.entries()].map(([repo, v]) => ({
-    repo,
-    bigbros: [...v.bigbros],
-    ts: v.ts,
-    ...(v.desc !== undefined ? { desc: v.desc } : {}),
-    ...(v.stars !== undefined ? { stars: v.stars } : {}),
-    ...(v.language !== undefined ? { language: v.language } : {}),
-    ...(v.topics !== undefined ? { topics: v.topics } : {}),
-  }));
-  console.log(`  [bigbro] aggregated ${result.length} unique repos from ${users.length} users`);
-  return result;
+  await Promise.all(Array.from({ length: Math.min(concurrency, queue.length) }, () => worker()));
+
+  // 队列里没消费完的（预算尽/停轮后残留）全部 pending
+  for (const rest of queue) outcome.pendingUsers.push(rest);
+  console.log(
+    `  [stamp] stamped ${outcome.stampedUsers.length}, skipped ${outcome.skippedUsers.length} org, ` +
+      `${outcome.notFoundUsers.length} missing, ${outcome.pendingUsers.length} pending; ` +
+      `${outcome.stamps.size} library repos received stamps`,
+  );
+  return outcome;
 }

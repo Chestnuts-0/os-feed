@@ -34,7 +34,7 @@ export function CreatorPage({
   onOpenCreator,
   onBack,
 }: CreatorPageProps) {
-  // 关注提示：isFollowing 变化时显示/隐藏（关注 → 提示次日生效；取关 → 隐藏）
+  // 关注提示：isFollowing 变化时显示/隐藏（关注 → 显示提示；取关 → 隐藏）
   const [followHint, setFollowHint] = useState(false);
   useEffect(() => {
     setFollowHint(isFollowing);
@@ -69,7 +69,7 @@ export function CreatorPage({
           </button>
           {followHint && (
             <div className="hint creator-follow-hint">
-              已关注。TA 的 star 项目流次日随数据更新（在 GitHub 上关注 TA 效果相同）
+              已关注。TA 的项目和 TA star 过的库内项目会出现在关注频道（数据随每日更新）
             </div>
           )}
           <div className="creator-count">{projects.length} 个项目</div>

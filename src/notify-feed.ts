@@ -213,7 +213,12 @@ async function sendTelegram(text: string): Promise<void> {
     return;
   }
 
-  const chatId = process.env["TELEGRAM_CHAT_ID"] ?? "@agents_radar";
+  // 2026-09-01 开源语义清理：不再默认上游频道 @agents_radar——没配 chat id 就不发
+  const chatId = process.env["TELEGRAM_CHAT_ID"] ?? "";
+  if (!chatId) {
+    console.log("[notify-feed] TELEGRAM_CHAT_ID not set — skipping Telegram (no default channel).");
+    return;
+  }
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
   const res = await fetch(url, {
     method: "POST",

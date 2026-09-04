@@ -63,7 +63,6 @@ const {
   openclaw: OPENCLAW,
   openclawPeers: OPENCLAW_PEERS,
   trendingTopics: TRENDING_TOPICS,
-  bigbros: BIGBROS,
 } = CONFIG;
 
 // ---------------------------------------------------------------------------
@@ -74,6 +73,20 @@ function requireEnv(name: string): string {
   const value = process.env[name];
   if (!value) throw new Error(`Missing required environment variable: ${name}`);
   return value;
+}
+
+/**
+ * digest 分段 LLM 兜底（2026-09-04 复活刀）：单段失败只降级该段（返回空串），
+ * 不炸整个 job——09-01 一次 LLM 抛错导致 exit 1、全部产物不 commit 的教训。
+ * 只用于「失败可接受」的增强段（对比分析/issue 等）；评分等核心路径不走此兜底。
+ */
+async function safeLlm<T>(p: Promise<T>, label: string): Promise<T | string> {
+  try {
+    return await p;
+  } catch (err) {
+    console.error(`  [llm-safe] ${label} failed, degrade to empty: ${err}`);
+    return "";
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -342,10 +355,16 @@ async function main(): Promise<void> {
   });
 
   const [zhComparison, zhPeersComparison, enComparison, enPeersComparison] = await Promise.all([
-    callLlm(buildComparisonPrompt(zhSummaries.cliDigests, dateStr, "zh")),
-    callLlm(buildPeersComparisonPrompt(makeOpenclawDigest("zh"), zhSummaries.peerDigests, dateStr, "zh")),
-    callLlm(buildComparisonPrompt(enSummaries.cliDigests, dateStr, "en")),
-    callLlm(buildPeersComparisonPrompt(makeOpenclawDigest("en"), enSummaries.peerDigests, dateStr, "en")),
+    safeLlm(callLlm(buildComparisonPrompt(zhSummaries.cliDigests, dateStr, "zh")), "zh comparison"),
+    safeLlm(
+      callLlm(buildPeersComparisonPrompt(makeOpenclawDigest("zh"), zhSummaries.peerDigests, dateStr, "zh")),
+      "zh peers comparison",
+    ),
+    safeLlm(callLlm(buildComparisonPrompt(enSummaries.cliDigests, dateStr, "en")), "en comparison"),
+    safeLlm(
+      callLlm(buildPeersComparisonPrompt(makeOpenclawDigest("en"), enSummaries.peerDigests, dateStr, "en")),
+      "en peers comparison",
+    ),
   ]);
 
   const comparisonByLang = { zh: zhComparison, en: enComparison };
@@ -387,9 +406,12 @@ async function main(): Promise<void> {
     console.log(`  Saved ${saveFile(openclawContent[lang], dateStr, `ai-agents${suffix}.md`)}`);
   }
 
-  // Web report: zh saves state, en skips state save
+  // Web report: zh saves state, en skips state save（safeLlm 兜底：web 汇总 LLM 挂了不炸 job）
   for (const lang of ["zh", "en"] as const) {
-    await saveWebReport(webResults, webState, utcStr, dateStr, digestRepo, autoGenFooter(lang), lang);
+    await safeLlm(
+      saveWebReport(webResults, webState, utcStr, dateStr, digestRepo, autoGenFooter(lang), lang),
+      `${lang} web report`,
+    );
   }
 
   await Promise.all([
@@ -472,33 +494,34 @@ async function main(): Promise<void> {
   const highlightsPath = saveFile(JSON.stringify(highlights, null, 2), dateStr, "highlights.json");
   console.log(`  Saved ${highlightsPath}`);
 
-  // 6. Create GitHub issues for CLI + OpenClaw (zh + en)
+  // 6. Create GitHub issues for CLI + OpenClaw (zh + en)（safeLlm 兜底：issue 挂了不影响后续 feed 生成）
   if (digestRepo) {
     for (const lang of ["zh", "en"] as const) {
-      const cliUrl = await createGitHubIssue(
-        CLI_ISSUE_TITLE(dateStr, lang),
-        cliContent[lang],
-        ISSUE_LABELS.cli[lang],
+      const cliUrl = await safeLlm(
+        createGitHubIssue(CLI_ISSUE_TITLE(dateStr, lang), cliContent[lang], ISSUE_LABELS.cli[lang]),
+        `cli issue (${lang})`,
       );
       console.log(`  Created CLI issue (${lang}): ${cliUrl}`);
 
-      const ocUrl = await createGitHubIssue(
-        OPENCLAW_ISSUE_TITLE(dateStr, lang),
-        openclawContent[lang],
-        ISSUE_LABELS.openclaw[lang],
+      const ocUrl = await safeLlm(
+        createGitHubIssue(
+          OPENCLAW_ISSUE_TITLE(dateStr, lang),
+          openclawContent[lang],
+          ISSUE_LABELS.openclaw[lang],
+        ),
+        `openclaw issue (${lang})`,
       );
       console.log(`  Created OpenClaw issue (${lang}): ${ocUrl}`);
     }
   }
 
-  // 开源版抖音信息流：采集大牛 star 动态 + 生成 feed.json
+  // 开源版抖音信息流：生成 feed.json（库内 star 盖章在 generateFeed 内完成；
+  // 2026-09-01 关注解耦：不再抓大牛/follow 名单 star 灌新卡；
+  // 2026-09-04 热点提速：传入 HN 数据做 on-hn 提及融合）
   try {
     console.log("Generating feed...");
-    const { fetchFollowingUsers, fetchBigbroStars } = await import("./bigbro-stars.ts");
     const { generateFeed } = await import("./feed/index.ts");
-    const followingUsers = await fetchFollowingUsers(BIGBROS);
-    const bigbroStars = await fetchBigbroStars(followingUsers);
-    const feedCards = await generateFeed(CONFIG, trendingData, bigbroStars, followingUsers);
+    const feedCards = await generateFeed(CONFIG, trendingData, hnData);
     console.log(`  [feed] generated ${feedCards.length} cards`);
   } catch (err) {
     console.error(`[feed] generation failed: ${err}`);

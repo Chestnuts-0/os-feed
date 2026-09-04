@@ -169,7 +169,7 @@ describe("feed pending-retry 队列", () => {
     };
     const trending = makeTrendingData(["new/fail"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     // feed 只含旧卡（新卡评分失败被跳过，符合既有行为）
     expect(cards.map((c) => c.repo)).toEqual(["old/one"]);
@@ -213,7 +213,7 @@ describe("feed pending-retry 队列", () => {
     };
     const trending = makeTrendingData(["new/ok"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     const repos = cards.map((c) => c.repo);
     // 幽灵卡被恢复并补评成功，进了 feed（只增不减 + 不依赖再被抓取）
@@ -260,7 +260,7 @@ describe("feed pending-retry 队列", () => {
     };
     const trending = makeTrendingData([]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     expect(cards.map((c) => c.repo)).toContain("ghost/a");
     expect(cards.map((c) => c.repo)).not.toContain("ghost/b");
@@ -275,7 +275,7 @@ describe("feed pending-retry 队列", () => {
     llmMock.impl = () => scoreJson("new/ok");
     const trending = makeTrendingData(["new/ok"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     expect(cards.map((c) => c.repo)).toContain("new/ok");
   });
@@ -302,7 +302,7 @@ describe("feed pending-retry 队列", () => {
     llmMock.impl = () => scoreJson("ghost/zombie");
     const trending = makeTrendingData([]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     expect(cards.map((c) => c.repo)).not.toContain("ghost/zombie");
     // 队列里也没有它了
@@ -317,7 +317,7 @@ describe("feed pending-retry 队列", () => {
     };
     const trending = makeTrendingData(many);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     expect(cards.length).toBe(0);
     const arr = readJson<Record<string, unknown>[]>(pendingPath());
@@ -349,7 +349,7 @@ describe("feed pending-retry 队列", () => {
     llmMock.impl = () => scoreJson("new/ok");
     const trending = makeTrendingData(["new/ok"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     expect(cards.map((c) => c.repo)).toContain("ghost/solved");
     // 队列被清空（条目已解决，不残留）
@@ -380,7 +380,7 @@ describe("feed pending-retry 队列", () => {
     const trending = makeTrendingData(["again/repo"]);
     llmMock.impl = () => scoreJson("again/repo");
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     const card = cards.find((c) => c.repo === "again/repo");
     expect(card).toBeDefined();

@@ -157,7 +157,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     };
     const trending = makeTrendingData(["new/short"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     const card = cards.find((c) => c.repo === "new/short");
     expect(card).toBeDefined();
@@ -173,7 +173,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     };
     const trending = makeTrendingData(["new/replace"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     const card = cards.find((c) => c.repo === "new/replace");
     expect(card).toBeDefined();
@@ -193,7 +193,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     llmMock.impl = () => scoreJson("new/fallback", SHORT_REASON, GOOD_SUMMARY, detail);
     const trending = makeTrendingData(["new/fallback"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     const card = cards.find((c) => c.repo === "new/fallback");
     expect(card).toBeDefined();
@@ -212,7 +212,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     };
     const trending = makeTrendingData(["new/nodetail"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     expect(cards.map((c) => c.repo)).not.toContain("new/nodetail");
     const arr = readJson<Record<string, unknown>[]>(pendingPath());
@@ -228,7 +228,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     };
     const trending = makeTrendingData(["new/longsum"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     const card = cards.find((c) => c.repo === "new/longsum");
     expect(card).toBeDefined();
@@ -241,7 +241,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     llmMock.impl = () => scoreJson("new/ok");
     const trending = makeTrendingData(["new/ok"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     const card = cards.find((c) => c.repo === "new/ok");
     expect(card).toBeDefined();
@@ -280,7 +280,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     ];
     memFs.set(path.join("data", "feed.json"), JSON.stringify(prevFeed));
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     const card = cards.find((c) => c.repo === "new/fallback-sum");
     expect(card).toBeDefined();
@@ -302,7 +302,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     llmMock.impl = () => scoreJson("new/fallback-shortsum", SHORT_REASON, SHORT_SUMMARY, detail);
     const trending = makeTrendingData(["new/fallback-shortsum"]);
 
-    const cards = await generateFeed(cfg, trending, []);
+    const cards = await generateFeed(cfg, trending);
 
     const card = cards.find((c) => c.repo === "new/fallback-shortsum");
     expect(card).toBeDefined();

@@ -10,7 +10,7 @@
 - 🧠 **AI Chinese recommendations**: LLM scoring (Zhipu GLM-4.7-Flash, free) writes a Chinese summary for every project
 - 🗂️ **Smart sections**: Dynamic (Recommended / Hot / Daily / Following) + Categories (AI / Fun / Tools / Learning)
 - 👤 **Personalization**: your likes and dislikes train a personal feed (localStorage, no account needed)
-- ⭐ **Following**: follow GitHub users — the repos they star automatically land in your Following channel (synced from your GitHub follow list)
+- ⭐ **Following**: follow creators you like — their projects and in-library repos they starred land in your Following channel (stored in your browser, no account needed)
 - 🔍 **Search**: full-library search with weighted ranking
 - 📱 **Mobile-ready**: bottom navigation + channel drawer on small screens
 - 🌍 **Multi-source**: GitHub Trending + Search, Hacker News, Product Hunt, ArXiv, Hugging Face, Dev.to, Lobsters, Anthropic/OpenAI
@@ -67,8 +67,6 @@ cd web && pnpm install && pnpm dev
 | `ZHIPU_MODEL` | No | Default `glm-4.7-flash` |
 | `GITHUB_TOKEN` | No | GitHub token (raises API rate limits) |
 | `DIGEST_REPO` | No | Repo receiving digest reports (default: this repo) |
-| `BIGBROS` | No | Comma-separated GitHub usernames whose starred repos get followed |
-| `FOLLOWING_USER` | No | GitHub user whose follow list is auto-synced into the big-bro list |
 
 ## 📄 Data sources
 
@@ -76,7 +74,7 @@ cd web && pnpm install && pnpm dev
 |------|------|------|
 | [GitHub Search](https://github.com/search) | REST API | 21 topic queries (AI + games / database / security / devops / ...) |
 | [GitHub Trending](https://github.com/trending) | HTML | Daily trending repositories |
-| [GitHub Stars](https://docs.github.com/rest/activity/starring) | REST API | Repos starred by followed users |
+| [GitHub Stars](https://docs.github.com/rest/activity/starring) | REST API | In-library creators' starred repos stamp existing cards (endorsements, no new cards) |
 | [Hacker News](https://news.ycombinator.com) | Algolia API | Top AI stories |
 | [Product Hunt](https://www.producthunt.com) | GraphQL API | Yesterday's AI products |
 | [ArXiv](https://arxiv.org) | ArXiv API | Latest cs.AI / cs.CL / cs.LG papers |

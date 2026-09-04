@@ -10,7 +10,7 @@
 - 🧠 **AI 中文推荐**：LLM 自动评分（智谱 GLM-4.7-Flash，免费），为每个项目写中文总结
 - 🗂️ **智能分区**：动态（推荐 / 热门 / 每日 / 关注）+ 分类（AI / 兴趣 / 工具 / 学习）
 - 👤 **个性化**：你的点赞点踩会训练专属推荐（localStorage，无需账号）
-- ⭐ **关注大牛**：关注 GitHub 用户，TA star 的项目自动进你的「关注」频道（随 GitHub 关注列表自动同步）
+- ⭐ **关注**：关注你感兴趣的创作者，TA 的项目和 TA star 过的库内项目进你的「关注」频道（关注保存在本机浏览器，无需账号）
 - 🔍 **搜索**：全库搜索，加权排序
 - 📱 **移动端适配**：小屏底栏导航 + 频道抽屉
 - 🌍 **多数据源**：GitHub Trending + Search、Hacker News、Product Hunt、ArXiv、Hugging Face、Dev.to、Lobsters、Anthropic/OpenAI
@@ -67,8 +67,6 @@ cd web && pnpm install && pnpm dev
 | `ZHIPU_MODEL` | 否 | 默认 `glm-4.7-flash` |
 | `GITHUB_TOKEN` | 否 | GitHub Token（提高 API 限额） |
 | `DIGEST_REPO` | 否 | 日报推送的仓库（默认本仓库） |
-| `BIGBROS` | 否 | 逗号分隔的 GitHub 用户名（TA star 的项目会进关注频道） |
-| `FOLLOWING_USER` | 否 | 自动同步其 GitHub 关注列表的用户名 |
 
 ## 📄 数据源
 
@@ -76,7 +74,7 @@ cd web && pnpm install && pnpm dev
 |------|------|------|
 | [GitHub Search](https://github.com/search) | REST API | 21 个主题查询（AI + 游戏/数据库/安全/DevOps/...） |
 | [GitHub Trending](https://github.com/trending) | HTML | 每日热门仓库 |
-| [GitHub Stars](https://docs.github.com/rest/activity/starring) | REST API | 关注用户 star 的仓库 |
+| [GitHub Stars](https://docs.github.com/rest/activity/starring) | REST API | 库内创作者的 star 盖章（给已有卡片加背书，不新增卡片） |
 | [Hacker News](https://news.ycombinator.com) | Algolia API | Top AI 热帖 |
 | [Product Hunt](https://www.producthunt.com) | GraphQL API | 昨日 AI 产品 |
 | [ArXiv](https://arxiv.org) | ArXiv API | cs.AI/cs.CL/cs.LG 最新论文 |

@@ -1,20 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-
-// ---------------------------------------------------------------------------
-// loadConfig mock：控制 followingUser / bigbros，避免读真实 config.yml
-// ---------------------------------------------------------------------------
-const { configMock } = vi.hoisted(() => ({
-  configMock: {
-    followingUser: "",
-    bigbros: [] as string[],
-  },
-}));
-
-vi.mock("../config.ts", () => ({
-  loadConfig: () => ({ followingUser: configMock.followingUser, bigbros: configMock.bigbros }),
-}));
-
-import { fetchBigbroStars, fetchFollowingUsers } from "../bigbro-stars.ts";
+import {
+  fetchUserType,
+  fetchUserStarredRepos,
+  fetchCoreQuotaRemaining,
+  stampLibraryStars,
+  RateLimitedError,
+} from "../bigbro-stars.ts";
 
 const mockFetch = vi.fn();
 
@@ -30,174 +21,232 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
-  configMock.followingUser = "";
 });
 
 // ---------------------------------------------------------------------------
-// fetchBigbroStars：Starred API 响应解析
+// fetchUserType / fetchUserStarredRepos / fetchCoreQuotaRemaining
 // ---------------------------------------------------------------------------
 
-describe("fetchBigbroStars", () => {
-  it("parses starred response into BigbroStar with full repo fields", async () => {
-    mockFetch.mockResolvedValueOnce(
-      okJson([
-        {
-          full_name: "openai/whisper",
-          stargazers_count: 68000,
-          description: "Robust Speech Recognition via Large-Scale Weak Supervision",
-          language: "Python",
-          topics: ["speech-recognition", "deep-learning"],
-          pushed_at: "2024-05-01T10:00:00Z",
-        },
-      ]),
-    );
-
-    const result = await fetchBigbroStars(["KKKKhazix"]);
-    expect(result).toHaveLength(1);
-    const star = result[0]!;
-    expect(star.repo).toBe("openai/whisper");
-    expect(star.bigbros).toEqual(["KKKKhazix"]);
-    expect(star.desc).toBe("Robust Speech Recognition via Large-Scale Weak Supervision");
-    expect(star.stars).toBe(68000);
-    expect(star.language).toBe("Python");
-    expect(star.topics).toEqual(["speech-recognition", "deep-learning"]);
-    // ts 取自 pushed_at（Starred API 不带 star 时间）
-    expect(star.ts).toBe("2024-05-01T10:00:00Z");
+describe("fetchUserType", () => {
+  it("returns type for a normal user", async () => {
+    mockFetch.mockResolvedValueOnce(okJson({ login: "alice", type: "User" }));
+    expect(await fetchUserType("alice")).toBe("User");
+    expect(mockFetch).toHaveBeenCalledWith("https://api.github.com/users/alice", expect.anything());
   });
 
-  it("tolerates missing fields (null description/language, undefined topics)", async () => {
-    mockFetch.mockResolvedValueOnce(
-      okJson([
-        {
-          full_name: "torvalds/linux",
-          stargazers_count: 170000,
-          description: null,
-          language: null,
-          topics: undefined,
-          pushed_at: "2024-06-01T00:00:00Z",
-        },
-      ]),
-    );
-
-    const result = await fetchBigbroStars(["esengine"]);
-    expect(result).toHaveLength(1);
-    expect(result[0]!.repo).toBe("torvalds/linux");
-    expect(result[0]!.desc).toBeUndefined();
-    expect(result[0]!.language).toBeUndefined();
-    expect(result[0]!.topics).toEqual([]);
-    expect(result[0]!.stars).toBe(170000);
-    expect(result[0]!.ts).toBe("2024-06-01T00:00:00Z");
+  it("returns Organization type untouched (caller decides skip)", async () => {
+    mockFetch.mockResolvedValueOnce(okJson({ login: "microsoft", type: "Organization" }));
+    expect(await fetchUserType("microsoft")).toBe("Organization");
   });
 
-  it("merges bigbros when multiple users star the same repo", async () => {
-    const repo = {
-      full_name: "openai/whisper",
-      stargazers_count: 1,
-      description: null,
-      language: null,
-      topics: [],
-      pushed_at: "2024-01-01T00:00:00Z",
-    };
-    mockFetch.mockResolvedValueOnce(okJson([repo])).mockResolvedValueOnce(okJson([repo]));
-
-    const result = await fetchBigbroStars(["KKKKhazix", "esengine"]);
-    expect(result).toHaveLength(1);
-    expect([...result[0]!.bigbros].sort()).toEqual(["KKKKhazix", "esengine"]);
+  it("returns MISSING on 404 (dead account, recorded to state)", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 404 });
+    expect(await fetchUserType("ghost-user")).toBe("MISSING");
   });
 
-  it("skips a failing user and keeps the others (daily rerun retries naturally)", async () => {
-    mockFetch.mockResolvedValueOnce({ ok: false, status: 404 }).mockResolvedValueOnce(
-      okJson([
-        {
-          full_name: "foo/bar",
-          stargazers_count: 42,
-          description: "desc",
-          language: "Go",
-          topics: [],
-          pushed_at: "2024-02-02T00:00:00Z",
-        },
-      ]),
-    );
-
-    const result = await fetchBigbroStars(["ghost-user", "esengine"]);
-    expect(result).toHaveLength(1);
-    expect(result[0]!.repo).toBe("foo/bar");
-    expect(result[0]!.bigbros).toEqual(["esengine"]);
+  it("returns null on transient server error (retry next round)", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 500 });
+    expect(await fetchUserType("flaky")).toBeNull();
   });
 
-  it("accepts starred repos without any event-type filtering (WatchEvent logic removed)", async () => {
-    // Starred API 响应元素没有 type 字段——全部 repo 都应被接受，不再按事件类型过滤
-    mockFetch.mockResolvedValueOnce(
-      okJson([
-        {
-          full_name: "a/b",
-          stargazers_count: 10,
-          description: null,
-          language: null,
-          topics: [],
-          pushed_at: "2024-03-03T00:00:00Z",
-        },
-      ]),
-    );
-
-    const result = await fetchBigbroStars(["KKKKhazix"]);
-    expect(result).toHaveLength(1);
-    expect(result[0]!.repo).toBe("a/b");
+  it("throws RateLimitedError on 403/429", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 403 });
+    await expect(fetchUserType("anyone")).rejects.toBeInstanceOf(RateLimitedError);
   });
 
-  it("returns empty when no users configured", async () => {
-    const result = await fetchBigbroStars([]);
-    expect(result).toEqual([]);
-    expect(mockFetch).not.toHaveBeenCalled();
+  it("returns null on network rejection", async () => {
+    mockFetch.mockRejectedValueOnce(new Error("network down"));
+    expect(await fetchUserType("anyone")).toBeNull();
   });
 });
 
-// ---------------------------------------------------------------------------
-// fetchFollowingUsers：follow 列表 ∪ config bigbros
-// ---------------------------------------------------------------------------
-
-describe("fetchFollowingUsers", () => {
-  it("merges follow list with config bigbros and dedupes", async () => {
-    configMock.followingUser = "Chestnuts-Sisyphus";
+describe("fetchUserStarredRepos", () => {
+  it("fetches one page sorted by created and returns full names", async () => {
     mockFetch.mockResolvedValueOnce(
-      okJson([{ login: "KKKKhazix" }, { login: "torvalds" }, { login: "sindresorhus" }]),
+      okJson([
+        { full_name: "openai/whisper" },
+        { full_name: "torvalds/linux" },
+        { full_name: "no-full-name" }, // 无 owner/repo 形态的条目被过滤
+      ]),
     );
-
-    const users = await fetchFollowingUsers(["KKKKhazix", "esengine"]);
-    expect(users).toHaveLength(4); // torvalds/sindresorhus/esengine + KKKKhazix 去重
-    expect(users).toEqual(expect.arrayContaining(["KKKKhazix", "esengine", "torvalds", "sindresorhus"]));
+    const repos = await fetchUserStarredRepos("alice");
+    expect(repos).toEqual(["openai/whisper", "torvalds/linux"]);
     expect(mockFetch).toHaveBeenCalledWith(
-      "https://api.github.com/users/Chestnuts-Sisyphus/following?per_page=100",
+      "https://api.github.com/users/alice/starred?per_page=100&sort=created",
       expect.anything(),
     );
   });
 
-  it("falls back to config bigbros when follow fetch fails (rate limit / network)", async () => {
-    configMock.followingUser = "Chestnuts-Sisyphus";
-    mockFetch.mockResolvedValueOnce({ ok: false, status: 403 });
-
-    const users = await fetchFollowingUsers(["KKKKhazix", "esengine"]);
-    expect(users).toEqual(["KKKKhazix", "esengine"]);
+  it("throws RateLimitedError on 429", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 429 });
+    await expect(fetchUserStarredRepos("alice")).rejects.toBeInstanceOf(RateLimitedError);
   });
 
-  it("falls back to config bigbros when follow fetch rejects", async () => {
-    configMock.followingUser = "Chestnuts-Sisyphus";
+  it("throws plain error on other HTTP failures", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 500 });
+    await expect(fetchUserStarredRepos("alice")).rejects.toThrow("HTTP 500");
+  });
+});
+
+describe("fetchCoreQuotaRemaining", () => {
+  it("parses resources.core.remaining", async () => {
+    mockFetch.mockResolvedValueOnce(okJson({ resources: { core: { remaining: 4321 } } }));
+    expect(await fetchCoreQuotaRemaining()).toBe(4321);
+  });
+
+  it("returns -1 on failure (caller treats as zero budget)", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 500 });
+    expect(await fetchCoreQuotaRemaining()).toBe(-1);
     mockFetch.mockRejectedValueOnce(new Error("network down"));
-
-    const users = await fetchFollowingUsers(["esengine"]);
-    expect(users).toEqual(["esengine"]);
+    expect(await fetchCoreQuotaRemaining()).toBe(-1);
   });
+});
 
-  it("returns config bigbros only when followingUser is empty", async () => {
-    configMock.followingUser = "";
-    const users = await fetchFollowingUsers(["KKKKhazix", "esengine"]);
-    expect(users).toEqual(["KKKKhazix", "esengine"]);
+// ---------------------------------------------------------------------------
+// stampLibraryStars：库内盖章主流程
+// ---------------------------------------------------------------------------
+
+describe("stampLibraryStars", () => {
+  const repoSet = new Set(["old/card1", "old/card2", "microsoft/vscode"]);
+
+  it("returns empty outcome without any request when no candidates", async () => {
+    const outcome = await stampLibraryStars([], repoSet);
+    expect(outcome.stamps.size).toBe(0);
+    expect(outcome.stampedUsers).toEqual([]);
     expect(mockFetch).not.toHaveBeenCalled();
   });
 
-  it("dedupes config list itself", async () => {
-    configMock.followingUser = "";
-    const users = await fetchFollowingUsers(["KKKKhazix", "KKKKhazix"]);
-    expect(users).toEqual(["KKKKhazix"]);
+  it("stamps only library repos and ignores out-of-library stars", async () => {
+    mockFetch
+      .mockResolvedValueOnce(okJson({ resources: { core: { remaining: 5000 } } }))
+      .mockResolvedValueOnce(okJson({ type: "User" }))
+      .mockResolvedValueOnce(okJson([{ full_name: "old/card1" }, { full_name: "outside/repo" }]));
+
+    const outcome = await stampLibraryStars(["alice"], repoSet);
+
+    expect(outcome.stampedUsers).toEqual(["alice"]);
+    expect(outcome.pendingUsers).toEqual([]);
+    // 库外 star 不产生任何盖章（盖章永不建卡）
+    expect([...outcome.stamps.keys()]).toEqual(["old/card1"]);
+    expect(outcome.stamps.get("old/card1")).toEqual(["alice"]);
+  });
+
+  it("skips organizations without fetching their stars", async () => {
+    mockFetch
+      .mockResolvedValueOnce(okJson({ resources: { core: { remaining: 5000 } } }))
+      .mockResolvedValueOnce(okJson({ type: "Organization" }));
+
+    const outcome = await stampLibraryStars(["microsoft"], repoSet);
+
+    expect(outcome.skippedUsers).toEqual(["microsoft"]);
+    expect(outcome.stampedUsers).toEqual([]);
+    // 只查了 rate_limit + type 两次，没查 starred
+    expect(mockFetch).toHaveBeenCalledTimes(2);
+  });
+
+  it("records 404 accounts as not-found without fetching stars", async () => {
+    mockFetch
+      .mockResolvedValueOnce(okJson({ resources: { core: { remaining: 5000 } } }))
+      .mockResolvedValueOnce({ ok: false, status: 404 });
+
+    const outcome = await stampLibraryStars(["ghost"], repoSet);
+
+    expect(outcome.notFoundUsers).toEqual(["ghost"]);
+    expect(mockFetch).toHaveBeenCalledTimes(2);
+  });
+
+  it("pends everything when quota is below the reserve", async () => {
+    mockFetch.mockResolvedValueOnce(okJson({ resources: { core: { remaining: 100 } } }));
+
+    const outcome = await stampLibraryStars(["alice", "bob"], repoSet);
+
+    // (100 - 300) / 2 < 0 → 预算 0：全部留待下轮，不打用户接口
+    expect(outcome.pendingUsers).toEqual(["alice", "bob"]);
+    expect(outcome.stampedUsers).toEqual([]);
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("pends everything when quota check itself fails", async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 500 });
+
+    const outcome = await stampLibraryStars(["alice"], repoSet);
+
+    expect(outcome.pendingUsers).toEqual(["alice"]);
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("respects maxUsers budget and pends the rest", async () => {
+    mockFetch
+      .mockResolvedValueOnce(okJson({ resources: { core: { remaining: 5000 } } }))
+      // alice：type + starred
+      .mockResolvedValueOnce(okJson({ type: "User" }))
+      .mockResolvedValueOnce(okJson([]))
+      // bob：type + starred
+      .mockResolvedValueOnce(okJson({ type: "User" }))
+      .mockResolvedValueOnce(okJson([]))
+      // carol 不应被查询
+      .mockResolvedValueOnce(okJson({ type: "User" }))
+      .mockResolvedValueOnce(okJson([]));
+
+    const outcome = await stampLibraryStars(["alice", "bob", "carol"], repoSet, {
+      maxUsers: 2,
+      concurrency: 1,
+    });
+
+    expect(outcome.stampedUsers).toEqual(["alice", "bob"]);
+    expect(outcome.pendingUsers).toEqual(["carol"]);
+    expect(mockFetch).toHaveBeenCalledTimes(5); // quota + 2 用户 × 2 请求
+  });
+
+  it("stops the whole round on rate limit and pends the unprocessed", async () => {
+    mockFetch
+      .mockResolvedValueOnce(okJson({ resources: { core: { remaining: 5000 } } }))
+      // alice：正常盖章
+      .mockResolvedValueOnce(okJson({ type: "User" }))
+      .mockResolvedValueOnce(okJson([{ full_name: "old/card2" }]))
+      // bob：starred 撞限流
+      .mockResolvedValueOnce(okJson({ type: "User" }))
+      .mockResolvedValueOnce({ ok: false, status: 403 });
+
+    const outcome = await stampLibraryStars(["alice", "bob"], repoSet, { concurrency: 1 });
+
+    expect(outcome.stamps.get("old/card2")).toEqual(["alice"]);
+    expect(outcome.pendingUsers).toContain("bob");
+    // 限流后停轮：quota + alice 2 请求 + bob type 1 + bob starred 1 = 5，无更多重试
+    expect(mockFetch).toHaveBeenCalledTimes(5);
+  });
+
+  it("pends users whose type check fails transiently", async () => {
+    mockFetch
+      .mockResolvedValueOnce(okJson({ resources: { core: { remaining: 5000 } } }))
+      .mockResolvedValueOnce({ ok: false, status: 500 });
+
+    const outcome = await stampLibraryStars(["flaky"], repoSet);
+
+    expect(outcome.pendingUsers).toEqual(["flaky"]);
+    expect(outcome.stampedUsers).toEqual([]);
+  });
+
+  it("merges multiple starrers of the same repo", async () => {
+    // 并发下调用顺序交叉（alice type → bob type → alice starred → bob starred），
+    // mock 按 URL 路由，不依赖 once 队列顺序
+    mockFetch.mockImplementation(async (url: unknown) => {
+      const u = String(url);
+      if (u.includes("/rate_limit")) {
+        return okJson({ resources: { core: { remaining: 5000 } } });
+      }
+      if (u.endsWith("/users/alice") || u.endsWith("/users/bob")) {
+        return okJson({ type: "User" });
+      }
+      if (u.includes("/users/alice/starred") || u.includes("/users/bob/starred")) {
+        return okJson([{ full_name: "old/card1" }]);
+      }
+      return { ok: false, status: 404 };
+    });
+
+    const outcome = await stampLibraryStars(["alice", "bob"], repoSet);
+
+    expect(outcome.stampedUsers).toEqual(["alice", "bob"]);
+    expect(outcome.stamps.get("old/card1")).toEqual(["alice", "bob"]);
   });
 });
