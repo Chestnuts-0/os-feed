@@ -48,7 +48,18 @@ function timeAgo(ts: string): string {
   if (h < 24) return `${h}小时前`;
   const d = Math.floor(h / 24);
   if (d < 30) return `${d}天前`;
-  return `${Math.floor(d / 30)}个月前`;
+  if (d < 365) return `${Math.floor(d / 30)}个月前`;
+  return `${Math.floor(d / 365)}年前`;
+}
+
+/** 建仓时间显示：优先 createdAt（仓库真实创建时间，追热点语义），旧数据缺失回退 ts */
+function buildAgeText(card: Card): string {
+  return timeAgo(card.createdAt ?? card.ts);
+}
+
+/** 悬停提示：有建仓时间才显示准确日期 */
+function buildAgeTitle(card: Card): string | undefined {
+  return card.createdAt ? `建仓于 ${card.createdAt.slice(0, 10)}` : undefined;
 }
 
 // 清理旧数据中的 ①②③ 序号
@@ -193,7 +204,7 @@ function FeedCardComponent({
           </span>
           <div className="card-subtitle">
             <SourceBadge src={card.source} />
-            <span>{timeAgo(card.ts)}</span>
+            <span title={buildAgeTitle(card)}>{buildAgeText(card)}</span>
             {badges.map((b) => {
               const BI = BADGE_ICONS[b];
               return (
@@ -385,7 +396,7 @@ export function CardDetail({
           </div>
           <div className="detail-subtitle">
             <SourceBadge src={card.source} />
-            <span>{timeAgo(card.ts)}</span>
+            <span title={buildAgeTitle(card)}>建仓 {buildAgeText(card)}</span>
           </div>
         </div>
       </div>
