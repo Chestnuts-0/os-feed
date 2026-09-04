@@ -238,38 +238,56 @@ function mkProvider(name: string, impl: (prompt: string, maxTokens: number) => P
   return { name, call: vi.fn(impl) };
 }
 
-describe("createLlmCaller 备源熔断", () => {
-  it("主源 429 重试拉满 → 切备源成功返回，余下调用全走备源", async () => {
+describe("createLlmCaller 多源并行池", () => {
+  it("主源 429 重试拉满 → 冷却主源，请求落到备源；冷却期内不再碰主源", async () => {
     const err429 = Object.assign(new Error("429 too many requests"), { status: 429 });
     const primary = mkProvider("primary", () => Promise.reject(err429));
     const fallback = mkProvider("fallback", () => Promise.resolve("ok"));
-    const call = createLlmCaller(primary, [() => fallback], { retryBaseMs: 1, maxRetries: 2 });
+    const call = createLlmCaller(primary, [() => fallback], {
+      retryBaseMs: 1,
+      maxRetries: 2,
+      cooldownMs: 10 * 60_000, // 冷却期长于测试时长 → 期间主源不回归
+    });
 
     await expect(call("hi")).resolves.toBe("ok");
     expect(primary.call).toHaveBeenCalledTimes(3); // 首次 + 2 次重试
     expect(fallback.call).toHaveBeenCalledTimes(1);
 
-    // 第二次调用直接走备源（本轮不再回切主源）
+    // 第二次调用走备源（主源仍在冷却期）
     await expect(call("again")).resolves.toBe("ok");
     expect(primary.call).toHaveBeenCalledTimes(3);
     expect(fallback.call).toHaveBeenCalledTimes(2);
   });
 
-  it("备源初始化失败（如 key 缺失）自动跳到下一个备源", async () => {
+  it("多源健康时并发请求轮转分摊到所有 worker（吞吐翻倍）", async () => {
+    const a = mkProvider("a", (p) => Promise.resolve(`a:${p}`));
+    const b = mkProvider("b", (p) => Promise.resolve(`b:${p}`));
+    const call = createLlmCaller(a, [() => b], { retryBaseMs: 1, maxRetries: 1 });
+
+    const results = await Promise.all(Array.from({ length: 6 }, (_, i) => call(`p${i}`)));
+    expect(a.call).toHaveBeenCalledTimes(3);
+    expect(b.call).toHaveBeenCalledTimes(3);
+    expect(results).toContain("a:p0");
+    expect(results).toContain("b:p1");
+  });
+
+  it("备源初始化失败（如 key 缺失）自动跳过，主源冷却到期后恢复服务", async () => {
     const err429 = Object.assign(new Error("429"), { status: 429 });
-    const primary = mkProvider("primary", () => Promise.reject(err429));
+    const primary = mkProvider("primary", (p) =>
+      p === "hi" ? Promise.reject(err429) : Promise.resolve("ok"),
+    );
     const deadFactory = vi.fn(() => {
       throw new Error("missing api key");
     });
-    const fallback = mkProvider("fallback", () => Promise.resolve("ok"));
-    const call = createLlmCaller(primary, [deadFactory, () => fallback], { retryBaseMs: 1, maxRetries: 1 });
+    const call = createLlmCaller(primary, [deadFactory], { retryBaseMs: 1, maxRetries: 1, cooldownMs: 1 });
 
-    await expect(call("hi")).resolves.toBe("ok");
-    expect(deadFactory).toHaveBeenCalled();
-    expect(fallback.call).toHaveBeenCalledTimes(1);
+    // 首调 429 → 主源冷却 1ms 并抛错；冷却到期后主源恢复轮转照常服务
+    await expect(call("hi")).rejects.toThrow("429");
+    await expect(call("later")).resolves.toBe("ok");
+    expect(deadFactory).toHaveBeenCalled(); // 工厂被尝试实例化
   });
 
-  it("非 429 错误不切源，直接抛给调用方（分段兜底负责降级）", async () => {
+  it("非 429 错误不冷却不切源，直接抛给调用方（分段兜底负责降级）", async () => {
     const primary = mkProvider("primary", () => Promise.reject(new Error("empty response")));
     const fallback = mkProvider("fallback", () => Promise.resolve("ok"));
     const call = createLlmCaller(primary, [() => fallback], { retryBaseMs: 1, maxRetries: 2 });
@@ -281,7 +299,7 @@ describe("createLlmCaller 备源熔断", () => {
   it("无备源时 429 拉满按原逻辑抛错", async () => {
     const err429 = Object.assign(new Error("429"), { status: 429 });
     const primary = mkProvider("primary", () => Promise.reject(err429));
-    const call = createLlmCaller(primary, [], { retryBaseMs: 1, maxRetries: 1 });
+    const call = createLlmCaller(primary, [], { retryBaseMs: 1, maxRetries: 1, cooldownMs: 1 });
 
     await expect(call("hi")).rejects.toThrow("429");
     expect(primary.call).toHaveBeenCalledTimes(2);

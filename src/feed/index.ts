@@ -320,12 +320,14 @@ function saveStampState(state: StampState): void {
 
 /**
  * stars 轮转刷新：每天对库内 repo 分批查 GitHub API（游标续跑，4-6 天全覆盖）。
- * starGrowth = 今日 stars - baseline stars；只对「今天刷新到」的 repo 计算每日标签。
+ * starGrowth = 「日均涨星」：(今日 stars − baseline stars) ÷ 距上次真实更新的天数；
+ * 间隔 >1 天时摊薄（防停摆 N 天后增量全算到一天头上虚高，2026-09-04）。
  * 返回刷新成功的 repo → 新 stars 映射。
  */
 async function refreshStarsRoundRobin(
   repoMap: Map<string, MergedRepo>,
   baselineStars: Map<string, number>,
+  intervalDays = 1,
 ): Promise<Map<string, number>> {
   const repos = [...repoMap.values()];
   if (repos.length === 0) return new Map();
@@ -386,13 +388,15 @@ async function refreshStarsRoundRobin(
         if (m) {
           m.stars = newStars;
           if (d.created_at) m.createdAt = d.created_at;
-          // 只对「有增长基准」的 repo 计算今日增长（真实今日信号）：
+          // 只对「有增长基准」的 repo 计算日均涨星（真实增速信号）：
           // 基准缺失 = 当天新入库的卡，newStars-0 会把总 star 当增长（虚高，见 starGrowth 研讨稿）
           if (baselineStars.has(item.repo)) {
             const oldStars = baselineStars.get(item.repo)!;
             const diff = newStars - oldStars;
             // 同轮内多数据源取大；stars 减少/持平（diff<=0）→ 不动（保留 merge 的 todayStars 或 0）
-            if (diff > 0) m.starGrowth = Math.max(m.starGrowth, diff);
+            if (diff > 0) {
+              m.starGrowth = Math.max(m.starGrowth, Math.ceil(diff / intervalDays));
+            }
           }
         }
         results.set(item.repo, newStars);
@@ -683,13 +687,44 @@ async function retryScoring(
 // 主管道
 // ---------------------------------------------------------------------------
 
+/**
+ * 距上次管道真实更新的天数：git log 查 data/feed.json 最后一次 commit 时间。
+ * （文件 mtime 会被 checkout 刷新不可靠；git commit 日期才是数据的真实更新时间。）
+ * 用于 starGrowth 差分归一：间隔 >1 天时把增量摊薄成日均，防停摆后虚高。
+ * 失败（无 git/异常）回退 1 天（= 原「今日增长」语义）。clamp 到 [1, 30] 天。
+ */
+export async function detectRunIntervalDays(): Promise<number> {
+  try {
+    const { execFile } = await import("node:child_process");
+    const { promisify } = await import("node:util");
+    const out = await promisify(execFile)("git", ["log", "-1", "--format=%cI", "--", "data/feed.json"], {
+      timeout: 10_000,
+    });
+    const lastCommit = new Date(out.stdout.trim()).getTime();
+    if (Number.isNaN(lastCommit)) return 1;
+    const days = (Date.now() - lastCommit) / (24 * 3600 * 1000);
+    return Math.min(Math.max(days, 1), 30);
+  } catch {
+    return 1;
+  }
+}
+
 export async function generateFeed(
   config: RadarConfig,
   trendingData: TrendingData,
   hnData?: HnData,
+  opts?: { runIntervalDays?: number },
 ): Promise<FeedCard[]> {
   const now = new Date().toISOString();
   console.log("[feed] merging trending + search (incremental, bigbro stamping inside)...");
+
+  // 增长差分的摊薄间隔：默认按 git 历史自动探测（停摆 N 天 → 增量摊成日均），测试可注入固定值
+  const runIntervalDays = opts?.runIntervalDays ?? (await detectRunIntervalDays());
+  if (runIntervalDays > 1) {
+    console.log(
+      `  [feed] last real update was ${runIntervalDays.toFixed(1)} days ago — starGrowth normalized to daily average`,
+    );
+  }
 
   // HN 近 24h 提及 → repo 映射（热点提速刀：on-hn 徽章 + 排序加权；fetch 失败/未传时为空）
   const hnMentions = hnData?.fetchSuccess
@@ -795,7 +830,7 @@ export async function generateFeed(
   }
 
   // 2.5 stars 轮转刷新：库内 repo 分批查最新 stars（游标续跑），只增不减数据的每日标签依赖它
-  await refreshStarsRoundRobin(repoMap, baselineStars);
+  await refreshStarsRoundRobin(repoMap, baselineStars, runIntervalDays);
   console.log(`  [feed] after refresh: ${repoMap.size} unique repos`);
 
   // 2.7 库内 star 盖章：对库内 User owner 拉最近一页 star，只给库里已有 repo 加 bigbros。

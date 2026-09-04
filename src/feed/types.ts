@@ -99,7 +99,7 @@ export interface FeedCard {
   /** 详情介绍（长文，兼顾通俗+专业+细致，深度解读） */
   detailCn: string;
   stars: number;
-  /** 近期 star 增长（trending 用 todayStars，refresh 用「今日 stars−baseline」差分，search 用 0） */
+  /** 日均 star 增长（trending 用 todayStars；refresh 用差分÷距上次更新天数，间隔>1 天摊薄防虚高；search 用 0） */
   starGrowth: number;
   /** 仓库创建时间 ISO（search API / 轮转刷新携带；trending HTML 无此字段）——rising「刚冒头」判定依据 */
   createdAt?: string;

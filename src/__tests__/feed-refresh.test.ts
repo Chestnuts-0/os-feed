@@ -48,6 +48,15 @@ vi.mock("../report.ts", async (importOriginal) => {
 });
 
 // fetch mock：默认全失败；测试内按 URL 返回 stargazers_count
+
+// starGrowth 摊薄间隔探测依赖 git log 查真实仓库——测试固定走 fallback（1 天），
+// 间隔 >1 天的摊薄行为由显式传 runIntervalDays 的用例覆盖
+vi.mock("node:child_process", () => {
+  const thrower = () => {
+    throw new Error("mocked: no git in tests");
+  };
+  return { execFile: thrower, default: { execFile: thrower } };
+});
 const { fetchMock } = vi.hoisted(() => ({
   fetchMock: { impl: null as null | ((url: string) => Promise<unknown>) },
 }));
@@ -279,6 +288,54 @@ describe("starGrowth：旧卡从 0 重算，历史虚高自愈", () => {
     expect(cards).toHaveLength(1);
     expect(cards[0]!.stars).toBe(900);
     expect(cards[0]!.starGrowth).toBe(0); // 不出现负数/虚高
+  });
+});
+
+describe("starGrowth：间隔摊薄（停摆 N 天 → 日均，防虚高）", () => {
+  it("距上次更新 15 天：差分摊薄成日均（150/15=10），不再全额算一天", async () => {
+    memFs.clear();
+    memFs.set(feedPath(), JSON.stringify([makeOldCard("old/stale", 1000)]));
+    llmMock.impl = () => {
+      throw new Error("不应调用 LLM（旧卡缓存命中零重评）");
+    };
+    starsFetch({ "old/stale": 1150 }); // 15 天共涨 150 → 日均 10
+
+    const cards = await generateFeed(
+      cfg,
+      { trendingRepos: [], searchRepos: [], trendingFetchSuccess: true },
+      undefined,
+      { runIntervalDays: 15 },
+    );
+
+    expect(cards).toHaveLength(1);
+    expect(cards[0]!.stars).toBe(1150);
+    expect(cards[0]!.starGrowth).toBe(10); // ceil(150/15)，而非 150
+  });
+
+  it("trending 的 todayStars 是官方真实今日值，不参与摊薄", async () => {
+    memFs.clear();
+    const trendingData: TrendingData = {
+      trendingRepos: [
+        {
+          fullName: "new/official",
+          description: "官方 today-stars 项目",
+          language: "Rust",
+          todayStars: 80,
+          totalStars: 900,
+          forks: 5,
+          url: "https://github.com/new/official",
+        },
+      ],
+      searchRepos: [],
+      trendingFetchSuccess: true,
+    };
+    llmMock.impl = () => scoreJson("new/official");
+    starsFetch({}); // refresh 不覆盖它
+
+    const cards = await generateFeed(cfg, trendingData, undefined, { runIntervalDays: 15 });
+
+    expect(cards).toHaveLength(1);
+    expect(cards[0]!.starGrowth).toBe(80); // 官方 todayStars 原样保留
   });
 });
 

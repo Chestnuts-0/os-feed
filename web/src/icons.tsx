@@ -65,8 +65,8 @@ export const BADGE_ICONS: Record<string, LucideIcon> = {
 export const BADGE_LABELS: Record<string, string> = {
   hot: "热门",
   daily: "每日",
-  rising: "刚冒头",
-  "on-hn": "HN热议",
+  rising: "新星",
+  "on-hn": "HN",
   ai: "AI",
   fun: "兴趣",
   tool: "工具",

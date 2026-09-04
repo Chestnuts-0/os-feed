@@ -18,43 +18,17 @@ export const LLM_TOKENS_ROLLUP = 8192;
 import { type LlmProvider, type ProviderName, createProvider } from "./providers/index.ts";
 
 // ---------------------------------------------------------------------------
-// Concurrency limiter — prevents rate-limit (429) errors when many LLM calls
-// are fired in parallel. At most LLM_CONCURRENCY requests are in-flight at
-// any given time; the rest queue and run as slots free up.
-// ---------------------------------------------------------------------------
-
-const LLM_CONCURRENCY = 1; // 智谱免费档限流紧（账户速率限制+模型级高峰），串行最稳
-let llmSlots = LLM_CONCURRENCY;
-const llmQueue: Array<() => void> = [];
-
-function acquireSlot(): Promise<void> {
-  if (llmSlots > 0) {
-    llmSlots--;
-    return Promise.resolve();
-  }
-  return new Promise((resolve) => llmQueue.push(resolve));
-}
-
-function releaseSlot(): void {
-  const next = llmQueue.shift();
-  if (next) {
-    next();
-  } else {
-    llmSlots++;
-  }
-}
-
-// ---------------------------------------------------------------------------
-// LLM
+// LLM worker pool — 多免费源并行分摊（2026-09-04 栗子拍板）
 // ---------------------------------------------------------------------------
 
 const MAX_RETRIES = 3;
 const RETRY_BASE_MS = 30_000; // 30 s, 60 s, 120 s — 免费模型限流为分钟级窗口（智谱 1305 实测），15s 级退避盖不住
+const COOLDOWN_MS = 5 * 60_000; // 429 重试拉满后该源冷却 5 分钟，期间请求分摊给其余源，到期自动回归轮转
 
-/** 备源环境变量名：逗号分隔 provider 名单，主源 429 熔断后按序接管（CI 配 LLM_FALLBACKS=agnes） */
+/** 备源环境变量名：逗号分隔 provider 名单，与主源一起并行分摊负载（CI 配 LLM_FALLBACKS=agnes） */
 const FALLBACK_ENV = "LLM_FALLBACKS";
 
-/** 解析备源名单（惰性实例化：备源 key 缺失只在真正切换时才报错，不影响无备源的本地运行） */
+/** 解析备源名单为工厂数组（实例化在 createLlmCaller 内做，失败自动跳过该源） */
 function parseFallbackFactories(): Array<() => LlmProvider> {
   return (process.env[FALLBACK_ENV] ?? "")
     .split(",")
@@ -67,63 +41,116 @@ export function is429(err: unknown): boolean {
   return (err as { status?: number })?.status === 429 || String(err).includes("429");
 }
 
+/** 单个 LLM worker：一条串行调用链（免费源各自限流，源内不并发）+ 429 冷却截止时间 */
+interface LlmWorker {
+  name: string;
+  call: (prompt: string, maxTokens: number) => Promise<string>;
+  queue: Promise<unknown>;
+  cooldownUntil: number;
+}
+
+function makeWorker(provider: LlmProvider): LlmWorker {
+  return {
+    name: provider.name,
+    call: (prompt, maxTokens) => provider.call(prompt, maxTokens),
+    queue: Promise.resolve(),
+    cooldownUntil: 0,
+  };
+}
+
 /**
- * 带主源熔断 + 备源接管的 LLM 调用器（2026-09-04 digest 复活刀）。
+ * 多源并行 LLM 调用器（2026-09-04 升级：备源从「故障接管」升级为「全程并行分摊」）。
  *
- * 背景：智谱免费档高峰 429 code 1305 为分钟级窗口，重试拉满仍失败会把整个
- * digest job 拖到超时（08-20 起停摆根因）。主源 429 重试耗尽 → 熔断主源，
- * 本轮余下调用全部切下一备源（不回切，下轮运行重新从主源开始）；备源初始化
- * 失败（如 key 缺失）自动跳到再下一个。并发槽位全局共享，切源不影响串行限流。
+ * 背景：智谱免费档高峰 429 code 1305 为分钟级窗口，单源串行（LLM_CONCURRENCY=1）
+ * 是 08-20 停摆的根因之一。现在主源 + LLM_FALLBACKS 备源组成 worker 池：
+ * 请求轮转分摊到所有健康 worker（吞吐 ≈ N×单源），每个 worker 内部串行 +
+ * 429 指数退避，重试拉满仍 429 → 该源冷却 5 分钟（期间负载自动落到其余源，
+ * 到期回归轮转）；非 429 错误直接抛给调用方（由 safeLlm/scoreBatched 降级重试）。
  */
 export function createLlmCaller(
   primary: LlmProvider,
   fallbackFactories: Array<() => LlmProvider>,
-  opts?: { retryBaseMs?: number; maxRetries?: number },
+  opts?: { retryBaseMs?: number; maxRetries?: number; cooldownMs?: number },
 ): (prompt: string, maxTokens?: number) => Promise<string> {
   const retryBaseMs = opts?.retryBaseMs ?? RETRY_BASE_MS;
   const maxRetries = opts?.maxRetries ?? MAX_RETRIES;
-  const pool = [...fallbackFactories];
-  let provider = primary;
+  const cooldownMs = opts?.cooldownMs ?? COOLDOWN_MS;
 
-  return async function callLlm(prompt: string, maxTokens = LLM_TOKENS_DEFAULT): Promise<string> {
+  // 主源立即入池；备源实例化失败（如 key 缺失）跳过该源，不影响其余 worker
+  const workers: LlmWorker[] = [];
+  try {
+    workers.push(makeWorker(primary));
+  } catch (err) {
+    console.error(`[llm] primary init failed: ${err}`);
+  }
+  for (const factory of fallbackFactories) {
+    try {
+      workers.push(makeWorker(factory()));
+    } catch (err) {
+      console.error(`[llm] fallback init failed, skipping: ${err}`);
+    }
+  }
+
+  if (workers.length === 0) throw new Error("no usable LLM provider");
+
+  let rrCursor = 0; // 轮转游标：健康源之间 round-robin 分摊
+
+  /** 选 worker：优先健康源轮转；全冷却时选冷却最早结束的（乐观重试，冷却只是调度偏好非硬墙） */
+  const pickWorker = (): LlmWorker => {
+    for (let i = 0; i < workers.length; i++) {
+      const w = workers[(rrCursor + i) % workers.length]!;
+      if (w.cooldownUntil <= Date.now()) {
+        rrCursor = (rrCursor + i + 1) % workers.length;
+        return w;
+      }
+    }
+    let best = workers[0]!;
+    for (const w of workers) if (w.cooldownUntil < best.cooldownUntil) best = w;
+    return best;
+  };
+
+  /** 单 worker 内执行一次调用：源内指数退避重试，拉满 429 → 冷却并抛出 */
+  const runOnWorker = async (w: LlmWorker, prompt: string, maxTokens: number): Promise<string> => {
     for (let attempt = 0; ; attempt++) {
-      await acquireSlot();
-      let released = false;
       try {
-        return await provider.call(prompt, maxTokens);
+        return await w.call(prompt, maxTokens);
       } catch (err) {
         if (attempt < maxRetries && is429(err)) {
-          releaseSlot();
-          released = true;
           const wait = retryBaseMs * 2 ** attempt;
-          console.error(
-            `[llm] ${provider.name} 429 — retry ${attempt + 1}/${maxRetries} in ${wait / 1000}s...`,
-          );
+          console.error(`[llm] ${w.name} 429 — retry ${attempt + 1}/${maxRetries} in ${wait / 1000}s...`);
           await sleep(wait);
           continue;
         }
-        // 429 重试拉满仍失败 → 熔断当前源切备源（重试计数对新源重新开始）
-        if (is429(err) && pool.length > 0) {
-          let switched = false;
-          while (pool.length > 0 && !switched) {
-            try {
-              provider = pool.shift()!();
-              switched = true;
-              console.error(
-                `[llm] primary exhausted by 429 — switching to ${provider.name} for the rest of this run`,
-              );
-            } catch (initErr) {
-              console.error(`[llm] fallback init failed, trying next: ${initErr}`);
-            }
-          }
-          if (switched) {
-            attempt = -1;
-            continue;
-          }
+        if (is429(err)) {
+          w.cooldownUntil = Date.now() + cooldownMs;
+          console.error(
+            `[llm] ${w.name} 429 exhausted — cooling down ${cooldownMs / 1000}s, load shifts to other providers`,
+          );
         }
         throw err;
-      } finally {
-        if (!released) releaseSlot();
+      }
+    }
+  };
+
+  return async function callLlm(prompt: string, maxTokens = LLM_TOKENS_DEFAULT): Promise<string> {
+    let lastErr: unknown;
+    const tried = new Set<LlmWorker>();
+    for (;;) {
+      const w = pickWorker();
+      if (tried.has(w)) throw lastErr; // 所有 worker 都试过仍 429 → 抛给上层（safeLlm/scoreBatched 兜底）
+      tried.add(w);
+      const task = w.queue.then(() => runOnWorker(w, prompt, maxTokens));
+      // 链上吞掉 rejection 让串行链不断（错误由返回的 task 交给调用方）
+      w.queue = task.then(
+        () => undefined,
+        () => undefined,
+      );
+      try {
+        return await task;
+      } catch (err) {
+        lastErr = err;
+        if (!is429(err)) throw err; // 非 429 不换源，直接抛
+        // 429：该 worker 已被 runOnWorker 冷却，下一轮换其余 worker
       }
     }
   };
@@ -131,7 +158,7 @@ export function createLlmCaller(
 
 const callLlmImpl = createLlmCaller(createProvider(), parseFallbackFactories());
 
-/** digest 全管道统一 LLM 入口（主源 + LLM_FALLBACKS 备源熔断接管） */
+/** digest 全管道统一 LLM 入口（主源 + LLM_FALLBACKS 并行分摊 + 429 冷却轮转） */
 export async function callLlm(prompt: string, maxTokens = LLM_TOKENS_DEFAULT): Promise<string> {
   return callLlmImpl(prompt, maxTokens);
 }
