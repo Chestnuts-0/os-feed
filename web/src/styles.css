@@ -1102,21 +1102,39 @@ button {
 }
 
 /* --- 收藏夹选择器 Popover --- */
+/* 收藏夹选择器遮罩：全屏半透明 + 居中（替代原挂在动作条上的 absolute 乱飘定位） */
+.picker-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 210;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: picker-in 0.18s ease;
+}
+
+@keyframes picker-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .collection-picker {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 8px;
-  width: 320px;
-  max-height: 360px;
+  position: static;
+  width: min(360px, 92vw);
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
   background: var(--glass-gradient);
   border: 1px solid var(--card-border-hover);
   border-radius: var(--radius);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-  z-index: 10;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  transform: none;
 }
 
 .picker-header {
@@ -1965,6 +1983,38 @@ button {
   cursor: pointer;
   transition: all 0.2s;
   width: fit-content;
+  /* 「+ 关注」⇄「已关注」宽度一致：切换状态不再引起 header 抖动 */
+  min-width: 112px;
+  text-align: center;
+}
+
+/* 关注成功 toast：fixed 顶部悬浮 2.5s 自动消失，不占文档流（修复内容下移闪现） */
+.creator-follow-toast {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 220;
+  padding: 10px 22px;
+  border-radius: 20px;
+  background: var(--glass-gradient);
+  border: 1px solid var(--card-border-hover);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  color: var(--text);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  animation: toast-in 0.25s ease;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 .creator-follow-btn.following {
   background: var(--accent-gradient);

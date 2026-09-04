@@ -482,42 +482,44 @@ export function CardDetail({
         </a>
       </div>
 
-      {/* 收藏夹选择器 */}
+      {/* 收藏夹选择器：居中小模态（遮罩+居中卡片，不再挂在动作条附近乱飘） */}
       {showPicker && (
-        <div className="collection-picker" onClick={(e) => e.stopPropagation()}>
-          <div className="picker-header">
-            <span>选择收藏夹</span>
-            <button className="picker-close" onClick={() => setShowPicker(false)}>
-              <X size={16} />
-            </button>
-          </div>
-          <div className="picker-list">
-            {collections.length === 0 && <p className="picker-empty">暂无收藏夹，在下方创建</p>}
-            {collections.map((col) => {
-              const checked = col.repos.includes(card.repo);
-              return (
-                <label key={col.id} className="picker-item">
-                  <input type="checkbox" checked={checked} onChange={() => toggleCollection(col.id)} />
-                  <span className="picker-item-name">{col.name}</span>
-                  <span className="picker-item-count">({col.repos.length}个)</span>
-                </label>
-              );
-            })}
-          </div>
-          <div className="picker-create">
-            <input
-              type="text"
-              className="picker-input"
-              placeholder="新建收藏夹…"
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") createAndAdd();
-              }}
-            />
-            <button className="picker-create-btn" onClick={createAndAdd} disabled={!newName.trim()}>
-              + 创建
-            </button>
+        <div className="picker-backdrop" onClick={() => setShowPicker(false)}>
+          <div className="collection-picker" onClick={(e) => e.stopPropagation()}>
+            <div className="picker-header">
+              <span>选择收藏夹</span>
+              <button className="picker-close" onClick={() => setShowPicker(false)}>
+                <X size={16} />
+              </button>
+            </div>
+            <div className="picker-list">
+              {collections.length === 0 && <p className="picker-empty">暂无收藏夹，在下方创建</p>}
+              {collections.map((col) => {
+                const checked = col.repos.includes(card.repo);
+                return (
+                  <label key={col.id} className="picker-item">
+                    <input type="checkbox" checked={checked} onChange={() => toggleCollection(col.id)} />
+                    <span className="picker-item-name">{col.name}</span>
+                    <span className="picker-item-count">({col.repos.length}个)</span>
+                  </label>
+                );
+              })}
+            </div>
+            <div className="picker-create">
+              <input
+                type="text"
+                className="picker-input"
+                placeholder="新建收藏夹…"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") createAndAdd();
+                }}
+              />
+              <button className="picker-create-btn" onClick={createAndAdd} disabled={!newName.trim()}>
+                + 创建
+              </button>
+            </div>
           </div>
         </div>
       )}

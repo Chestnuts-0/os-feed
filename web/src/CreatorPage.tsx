@@ -34,10 +34,16 @@ export function CreatorPage({
   onOpenCreator,
   onBack,
 }: CreatorPageProps) {
-  // 关注提示：isFollowing 变化时显示/隐藏（关注 → 显示提示；取关 → 隐藏）
+  // 关注提示：关注成功 → toast 2.5s 自动消失（fixed 悬浮，不推挤页面内容——修复内容下移闪现）
   const [followHint, setFollowHint] = useState(false);
   useEffect(() => {
-    setFollowHint(isFollowing);
+    if (!isFollowing) {
+      setFollowHint(false);
+      return;
+    }
+    setFollowHint(true);
+    const timer = setTimeout(() => setFollowHint(false), 2500);
+    return () => clearTimeout(timer);
   }, [isFollowing]);
 
   return (
@@ -67,14 +73,12 @@ export function CreatorPage({
           >
             {isFollowing ? "已关注" : "+ 关注"}
           </button>
-          {followHint && (
-            <div className="hint creator-follow-hint">
-              已关注。TA 的项目和 TA star 过的库内项目会出现在关注频道（数据随每日更新）
-            </div>
-          )}
           <div className="creator-count">{projects.length} 个项目</div>
         </div>
       </div>
+      {followHint && (
+        <div className="creator-follow-toast">已关注，TA 的新项目会出现在关注频道（数据随每日更新）</div>
+      )}
       <div className="creator-projects">
         {projects.length === 0 ? (
           <div className="status">
