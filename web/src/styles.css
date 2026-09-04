@@ -2059,6 +2059,23 @@ button {
   border-color: var(--accent);
 }
 
+/* 搜索创作者折叠开关（默认只展开前 4 位，防创作者霸屏挤掉项目卡） */
+.creator-toggle {
+  margin-top: 8px;
+  padding: 6px 14px;
+  border-radius: 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.creator-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .creator-item-unfollow {
   padding: 6px 12px;
   border-radius: 14px;

@@ -447,6 +447,30 @@ function normalizeCard(card: FeedCard): FeedCard {
 // 分区卡片选取
 // ---------------------------------------------------------------------------
 
+/** 确定性抖动：hash(repo+seed) → [0,1)，同会话内稳定、跨会话不同 */
+function jitterRank(repo: string, seed: number): number {
+  let h = 2166136261;
+  const s = `${repo}:${seed}`;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return ((h >>> 0) % 10000) / 10000;
+}
+
+/**
+ * 会话洗牌（2026-09-05 拍板：刷新不能每次一模一样，TikTok 式新鲜感）：
+ * 在相关性骨架（score/heatScore）上按会话种子做 ±strength/2 的乘性抖动——
+ * 大秩序不破坏（高分卡大概率还在前面），但相邻次序每次进来都不同。
+ * 每日频道（客观热度）与关注频道（动态时间序）不抖。
+ */
+function applyJitter(cards: FeedCard[], seed: number, strength: number): FeedCard[] {
+  return cards
+    .map((c) => ({ c, j: (c.score ?? 0) * (1 + strength * (jitterRank(c.repo, seed) - 0.5)) }))
+    .sort((a, b) => b.j - a.j)
+    .map((x) => x.c);
+}
+
 function getSectionCards(
   cards: FeedCard[],
   sectionKey: string,
@@ -696,6 +720,14 @@ export default function App() {
   const appBodyRef = useRef<HTMLDivElement>(null);
   const [feedChannel, setFeedChannel] = useState<string>("recommended");
   const [channelEnter, setChannelEnter] = useState(false);
+  // 会话随机种子：每次打开应用重新生成——同一次会话内各卡相对顺序稳定（滚动不跳变），
+  // 刷新/重开后顺序在相关性骨架内重新洗牌（TikTok 式新鲜感，2026-09-05 拍板：刷新不能每次都一模一样）
+  const sessionSeedRef = useRef<number>(Math.floor(Math.random() * 2 ** 31));
+  // 搜索结果创作者折叠：默认只展开前 4 位，防几十个创作者把项目卡挤没（2026-09-05）
+  const [showAllCreators, setShowAllCreators] = useState(false);
+  useEffect(() => {
+    setShowAllCreators(false);
+  }, [searchQuery]);
   // 移动端频道抽屉开关（<768px 由 ☰ 打开；选中频道或点遮罩关闭，桌面无感）
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -1099,16 +1131,23 @@ export default function App() {
     return applyFilter(withContent, seen, interactions, collections);
   }, [cards, tab, seen, interactions, collections]);
 
-  // 分区数据（不重排：展示顺序 = feed.json 后端交错后的顺序；点赞/点开/点踩只影响下次加载）
-  // 推荐分区 = 前端个性化生成（用进入页面时的 seen/interactions 快照，会话内零重排）
+  // 分区数据：推荐 = 前端个性化生成；其余频道按各自语义排序后套会话洗牌
+  // （每日=客观热度不抖；关注=动态时间序不抖；推荐/热门/分类在相关性骨架内 ±15%/±10% 抖动）
   // 关注频道豁免空分区过滤：未关注任何人时侧栏仍保留「关注」项，内容区显示引导
   const sections = useMemo(() => {
+    const seed = sessionSeedRef.current;
     const all = ALL_SECTIONS.map((s) => ({
       ...s,
       cards:
         s.key === "recommended"
-          ? buildRecommended(visibleCards, preferences.tagWeights, seen, interactions, followingSet)
-          : getSectionCards(visibleCards, s.key, followingSet),
+          ? applyJitter(
+              buildRecommended(visibleCards, preferences.tagWeights, seen, interactions, followingSet),
+              seed,
+              0.15,
+            )
+          : s.key === "daily" || s.key === "following"
+            ? getSectionCards(visibleCards, s.key, followingSet)
+            : applyJitter(getSectionCards(visibleCards, s.key, followingSet), seed, 0.1),
     })).filter((s) => s.key === "following" || s.cards.length > 0);
     return all;
   }, [visibleCards, preferences, seen, interactions, followingSet]);
@@ -1695,24 +1734,36 @@ export default function App() {
                     </div>
                   )}
 
-                  {/* 创作者分组（结果顶部；点卡片打开创作者页） */}
+                  {/* 创作者分组（结果顶部；默认只展开前 4 位防霸屏，点卡片打开创作者页） */}
                   {searchQuery && searchCreators.length > 0 && (
                     <div className="search-creators">
                       <div className="search-group-title">创作者</div>
                       <div className="creator-list">
-                        {searchCreators.map(({ owner, count }) => (
-                          <div
-                            key={owner}
-                            className="creator-item"
-                            title={`查看 ${owner} 的创作者页`}
-                            onClick={() => openCreator(owner)}
-                          >
-                            <GithubAvatar owner={owner} size={56} className="creator-item-avatar" />
-                            <span className="creator-item-name">{owner}</span>
-                            <span className="creator-item-count">{count} 个项目</span>
-                          </div>
-                        ))}
+                        {(showAllCreators ? searchCreators : searchCreators.slice(0, 4)).map(
+                          ({ owner, count }) => (
+                            <div
+                              key={owner}
+                              className="creator-item"
+                              title={`查看 ${owner} 的创作者页`}
+                              onClick={() => openCreator(owner)}
+                            >
+                              <GithubAvatar owner={owner} size={56} className="creator-item-avatar" />
+                              <span className="creator-item-name">{owner}</span>
+                              <span className="creator-item-count">{count} 个项目</span>
+                            </div>
+                          ),
+                        )}
                       </div>
+                      {searchCreators.length > 4 && (
+                        <button
+                          className="creator-toggle"
+                          onClick={() => setShowAllCreators((v) => !v)}
+                        >
+                          {showAllCreators
+                            ? "收起创作者"
+                            : `展开其余 ${searchCreators.length - 4} 位创作者`}
+                        </button>
+                      )}
                     </div>
                   )}
 
