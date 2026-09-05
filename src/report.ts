@@ -28,13 +28,21 @@ const COOLDOWN_MS = 5 * 60_000; // 429 重试拉满后该源冷却 5 分钟，�
 /** 备源环境变量名：逗号分隔 provider 名单，与主源一起并行分摊负载（CI 配 LLM_FALLBACKS=agnes） */
 const FALLBACK_ENV = "LLM_FALLBACKS";
 
-/** 解析备源名单为工厂数组（实例化在 createLlmCaller 内做，失败自动跳过该源） */
+/** 解析备源名单为工厂数组（实例化在 createLlmCaller 内做，失败自动跳过该源）。
+ *  支持 `源@模型` 语法覆盖默认模型：免费层按模型计配额的源（groq/gemini/siliconflow/
+ *  openrouter），同 key 写多个 `源@模型` 即多 worker 并行，吞吐 ×N（2026-09-05）。 */
 function parseFallbackFactories(): Array<() => LlmProvider> {
   return (process.env[FALLBACK_ENV] ?? "")
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean)
-    .map((name) => () => createProvider(name as ProviderName));
+    .map((entry) => {
+      const at = entry.indexOf("@");
+      if (at <= 0) return () => createProvider(entry as ProviderName);
+      const name = entry.slice(0, at) as ProviderName;
+      const model = entry.slice(at + 1);
+      return () => createProvider(name, model);
+    });
 }
 
 export function is429(err: unknown): boolean {

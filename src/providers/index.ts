@@ -41,19 +41,19 @@ import { MistralProvider } from "./mistral.ts";
 // ---------------------------------------------------------------------------
 
 const PROVIDERS = {
-  anthropic: () => new AnthropicProvider(),
-  openai: () => new OpenAIProvider(),
-  "github-copilot": () => new GitHubCopilotProvider(),
-  openrouter: () => new OpenRouterProvider(),
-  deepseek: () => new DeepSeekProvider(),
-  agnes: () => new AgnesProvider(),
-  zhipu: () => new ZhipuProvider(),
-  groq: () => new GroqProvider(),
-  gemini: () => new GeminiProvider(),
-  cerebras: () => new CerebrasProvider(),
-  siliconflow: () => new SiliconFlowProvider(),
-  "github-models": () => new GithubModelsProvider(),
-  mistral: () => new MistralProvider(),
+  anthropic: (model) => new AnthropicProvider(model),
+  openai: (model) => new OpenAIProvider({ model }),
+  "github-copilot": (model) => new GitHubCopilotProvider({ model }),
+  openrouter: (model) => new OpenRouterProvider({ model }),
+  deepseek: (model) => new DeepSeekProvider({ model }),
+  agnes: (model) => new AgnesProvider({ model }),
+  zhipu: (model) => new ZhipuProvider({ model }),
+  groq: (model) => new GroqProvider({ model }),
+  gemini: (model) => new GeminiProvider({ model }),
+  cerebras: (model) => new CerebrasProvider({ model }),
+  siliconflow: (model) => new SiliconFlowProvider({ model }),
+  "github-models": (model) => new GithubModelsProvider({ model }),
+  mistral: (model) => new MistralProvider({ model }),
 } satisfies Record<string, ProviderFactory>;
 
 /** Supported provider name — derived from the PROVIDERS registry. */
@@ -66,12 +66,13 @@ export const VALID_PROVIDER_NAMES = Object.keys(PROVIDERS) as ProviderName[];
  * Create an LLM provider by name.
  *
  * Reads `LLM_PROVIDER` env var when no explicit name is given.
+ * `model` 覆盖该源的默认模型（免费编队同 key 多模型多 worker 用，2026-09-05）。
  * Throws a descriptive error if the provider name is invalid.
  *
  * Log safety: only the provider *name* is logged — never API keys or
  * endpoint URLs.
  */
-export function createProvider(name?: ProviderName): LlmProvider {
+export function createProvider(name?: ProviderName, model?: string): LlmProvider {
   const providerName = name ?? (process.env["LLM_PROVIDER"] as ProviderName | undefined) ?? "anthropic";
 
   const factory = (PROVIDERS as Record<string, ProviderFactory | undefined>)[providerName];
@@ -83,6 +84,6 @@ export function createProvider(name?: ProviderName): LlmProvider {
     );
   }
 
-  console.log(`[providers] Using LLM provider: ${providerName}`);
-  return factory();
+  console.log(`[providers] Using LLM provider: ${providerName}${model ? ` (model: ${model})` : ""}`);
+  return factory(model);
 }

@@ -42,10 +42,10 @@ const DATA_DIR = "data";
 const FEED_PATH = path.join(DATA_DIR, "feed.json");
 const BATCH_SIZE = 5;
 /** LLM 评分的新仓库上限（已有缓存的仓库不占额度）。
- *  1000→3000（2026-09-05 取材十倍扩容配套）：免费编队 6 源并行分摊
- *  （zhipu 主源 + agnes/groq/gemini/siliconflow/github-models/mistral），
- *  3000 张纯调用 ≈ 25-40 分钟，240min 超时内余量充足；嫌慢继续提额。 */
-const MAX_LLM_SCORE_REPOS = 3000;
+ *  1000→3000→5000（2026-09-05 取材十倍扩容配套）：免费编队多模型 worker 池
+ *  （groq×3/gemini×2/siliconflow×2/agnes/zhipu/github-models/mistral ≈12 worker），
+ *  5000 张纯调用 ≈ 30 分钟，240min 超时内余量充足；嫌慢继续提额。 */
+const MAX_LLM_SCORE_REPOS = 5000;
 /** LLM 并发批次数 */
 const SCORE_CONCURRENCY = 5;
 /** feed.json 最大保留条目数（超出淘汰最老 + 未收藏；前端互动过的靠本地快照兜底） */

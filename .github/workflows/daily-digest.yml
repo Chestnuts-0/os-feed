@@ -37,12 +37,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LLM_PROVIDER: zhipu
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
-          # 免费编队并行池（2026-09-04 起；2026-09-05 扩容）：key 已配的源自动入池
+          # 免费编队并行池（2026-09-04 起；2026-09-05 多模型扩编）：key 已配的源自动入池
           # round-robin 分摊，未配 key 的源实例化失败自动跳过，不影响运行。
-          # 新 key 配好后无需改代码。cerebras 2026 起赠金政策取消（402 付费墙）暂出池。
-          # github-models 复用上方 GITHUB_TOKEN（免费层 ≈15 RPM/150 RPD）；
-          # mistral 免费层 1 RPS（secrets.MISTRAL_API_KEY 配好即入池）。
-          LLM_FALLBACKS: agnes,groq,gemini,siliconflow,github-models,mistral
+          # `源@模型` 语法=同 key 多模型多 worker（按模型计配额的源配额叠加，吞吐 ×N）。
+          # cerebras 2026 起赠金政策取消（402 付费墙）暂出池；provider 类保留随时可回。
+          # github-models 复用上方 GITHUB_TOKEN（账号级限速单 worker）；mistral 免费层
+          # 1 RPS（secrets.MISTRAL_API_KEY 配好即入池）。≈12 worker 并行。
+          LLM_FALLBACKS: agnes,groq,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,gemini,gemini@gemini-2.5-flash-lite,siliconflow,siliconflow@THUDM/glm-4-9b-chat,github-models,mistral
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
