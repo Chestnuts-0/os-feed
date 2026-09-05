@@ -10,10 +10,10 @@
     "source": "search",
     "starGrowth": 0,
     "createdAt": "2026-08-19T22:29:57Z",
-    "silentRounds": 0,
+    "silentRounds": 1,
     "bigbros": [],
     "ts": "2026-09-01T18:27:04Z",
-    "retryCount": 1
+    "retryCount": 2
   },
   {
     "repo": "EFI-training/Prompt-Tips-GenAI",
@@ -32,51 +32,21 @@
     "retryCount": 1
   },
   {
-    "repo": "julienXX/terminal-notifier",
-    "desc": "Send User Notifications on macOS from the command-line.",
-    "stars": 7306,
-    "language": "Objective-C",
+    "repo": "weaviate/recipes",
+    "desc": "This repository shares end-to-end notebooks on how to use various Weaviate features and integrations!",
+    "stars": 947,
+    "language": "Jupyter Notebook",
     "topics": [
-      "command-line"
+      "vector-db"
     ],
     "source": "search",
     "starGrowth": 0,
-    "createdAt": "2012-07-15T15:48:59Z",
+    "createdAt": "2023-05-16T15:19:31Z",
     "silentRounds": 0,
-    "bigbros": [],
-    "ts": "2026-08-30T13:06:54Z",
-    "retryCount": 2
-  },
-  {
-    "repo": "lidge-jun/opencodex",
-    "desc": "Universal provider proxy for OpenAI Codex & Claude Code — use any LLM (Claude, Gemini, Grok, DeepSeek, Ollama…) with Codex CLI, App, SDK, and Claude Code",
-    "stars": 13296,
-    "language": "TypeScript",
-    "topics": [
-      "developer-tools"
+    "bigbros": [
+      "SuperBruceJia"
     ],
-    "source": "search",
-    "starGrowth": 28,
-    "createdAt": "2026-06-18T23:03:18Z",
-    "silentRounds": 0,
-    "bigbros": [],
-    "ts": "2026-09-04T15:07:09Z",
-    "retryCount": 2
-  },
-  {
-    "repo": "reagent-project/reagent",
-    "desc": "A minimalistic ClojureScript interface to React.js",
-    "stars": 4888,
-    "language": "Clojure",
-    "topics": [
-      "frontend"
-    ],
-    "source": "search",
-    "starGrowth": 0,
-    "createdAt": "2013-12-18T18:12:03Z",
-    "silentRounds": 0,
-    "bigbros": [],
-    "ts": "2026-08-19T07:18:08Z",
-    "retryCount": 2
+    "ts": "2026-08-27T18:00:42Z",
+    "retryCount": 1
   }
 ]

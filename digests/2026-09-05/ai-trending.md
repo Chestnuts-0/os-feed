@@ -1,106 +1,73 @@
 # AI 开源趋势日报 2026-09-05
 
-> 数据来源: GitHub Trending + GitHub Search API | 生成时间: 2026-09-04 18:24 UTC
+> 数据来源: GitHub Trending + GitHub Search API | 生成时间: 2026-09-05 01:58 UTC
 
 ---
 
-# AI 开源趋势日报
 
-**日期**：2026-09-05  
-**数据来源**：GitHub Trending & AI 主题搜索
 
----
-
-## 1. 今日速览
-
-今日 AI 开源生态呈现出 **"智能体基础设施爆发"** 的特征。以 `anomalyco/opencode`（开源编码智能体）为代表的项目今日新增 314 stars，成为 Agent 领域的绝对焦点。同时，**RAG 与向量数据库**领域持续升温，`infiniflow/ragflow` 和 `qdrant/qdrant` 等项目稳居热门榜，反映出企业级知识管理需求的激增。此外，**模型推理与微调工具**（如 `rtk-ai/rtk`、`unslothai/unsloth`）也获得了大量关注，显示社区正从模型开发向高效部署与应用落地加速迁移。
+# 🤖 AI 开源趋势日报
+**日期：2026-09-05 | 分析师：Agnes**
 
 ---
 
-## 2. 各维度热门项目
+## 一、今日速览
+
+今日 GitHub AI 开源生态呈现三大爆发性趋势：**Agent Skills 生态**成为绝对热点，Anthropic、Google、Microsoft 等巨头纷纷布局，社区衍生项目超 20 个；**Claude Code 周边工具链**持续升温，从性能优化、安全扫描到桌面客户端形成完整生态；**本地化推理与内存基础设施**崛起，sglang、rtk、magnitude 等项目解决 Token 成本与上下文持久化痛点。同时，浏览器自动化与多模态工具（VoiceStudio、openwhispr）值得关注。
+
+---
+
+## 二、各维度热门项目
 
 ### 🔧 AI 基础工具
 
 | 项目 | Stars | 今日新增 | 说明 |
 |------|-------|----------|------|
-| [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | 78,560 (+139) | 60-90% | Rust 编写的 CLI 代理工具，大幅降低 LLM token 消耗，支持零依赖单二进制部署 |
-| [blader/humanizer](https://github.com/blader/humanizer) | 42,499 (+1,132) | 1132 | Agent 技能库，移除 AI 生成文本的痕迹，提升内容自然度，今日热度飙升 |
-| [shadcn-ui/ui](https://github.com/shadcn-ui/ui) | 123,020 (+114) | 114 | 开源设计组件库，与 AI 编码工具深度集成，提升 Agent 生成 UI 的一致性与美观度 |
-| [microsoft/terminal](https://github.com/microsoft/terminal) | 104,797 (+26) | 26 | Windows 终端工具，支持 AI 代码补全与命令行交互，成为 Agent 运行的重要终端环境 |
-| [microsoft/Web-Dev-For-Beginners](https://github.com/microsoft/Web-Dev-For-Beginners) | 96,606 (+25) | 25 | 微软 Web 开发入门课程，被广泛用于 AI 辅助编程教学，今日热度稳定 |
+| [sgl-project/sglang](https://github.com/sgl-project/sglang) | ⭐35,483 | +836 | SGLang 高性能 LLM 推理框架，支持 MoE 架构优化，今日热度爆发 |
+| [BerriAI/litellm](https://github.com/BerriAI/litellm) | ⭐58,059 | — | 统一 LLM Gateway，支持 100+ 模型 API 适配，企业级必备 |
+| [ollama/ollama](https://github.com/ollama/ollama) | ⭐180,169 | — | 本地运行 LLM 首选方案，新增 Kimi-K2.6、GLM-5.2 等模型 |
+| [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | ⭐78,600 | +142 | Rust 编写的 CLI 代理，可减少 60-90% Token 消耗，开发者刚需 |
+| [magnitudedev/magnitude](https://github.com/magnitudedev/magnitude) | ⭐2,510 | +391 | 开源本地推理服务器，适配 Pi/OpenCode/Hermes 等 Agent 框架 |
+| [chroma-core/chroma](https://github.com/chroma-core/chroma) | ⭐29,227 | — | AI 原生嵌入式向量数据库，零配置启动 |
 
 ### 🤖 AI 智能体/工作流
 
 | 项目 | Stars | 今日新增 | 说明 |
 |------|-------|----------|------|
-| [anomalyco/opencode](https://github.com/anomalyco/opencode) | 203,949 (+314) | 314 | 开源编码智能体，支持多模型与多工具，今日成为 Trending 榜首，反映 Agent 编码能力的普及 |
-| [stablyai/orca](https://github.com/stablyai/orca) | 61,595 (+843) | 843 | 并行智能体 ADE 平台，支持多 Agent 协同工作，今日新增大幅领先，聚焦多智能体编排 |
-| [affaan-m/ECC](https://github.com/affaan-m/ECC) | 248,202 (+1,139) | 1139 | Agent Harness 性能优化系统，整合技能、记忆、安全与研究能力，今日新增 1139，位列第二 |
-| [langgenius/dify](https://github.com/langgenius/dify) | 154,449 (+117) | 117 | Agentic workflows 与 RAG 管道平台，支持多模型与工具集成，今日热度稳定在 15w+ |
-| [DataDog/datadog-agent](https://github.com/DataDog/datadog-agent) | 3,715 | - | Datadog 代理，支持 AI Agent 监控与日志追踪，今日因 Agent 运维需求被纳入热门 |
-| [cilium/cilium](https://github.com/cilium/cilium) | 25,067 (+11) | 11 | eBPF 网络与安全工具，支持 AI Agent 网络流量分析与隔离，今日因 Agent 安全需求被提及 |
+| [anthropics/claude-code](https://github.com/anthropics/claude-code) | ⭐144,095 | +157 | Anthropic 官方终端编码 Agent，持续迭代中 |
+| [anomalyco/opencode](https://github.com/anomalyco/opencode) | ⭐204,147 | +345 | 开源编码 Agent，挑战 Claude Code 地位 |
+| [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | ⭐241,505 | +720 | 自我进化的 AI Agent，支持多模型与工具链 |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | ⭐248,543 | +1135 | Agent Harness 性能优化系统，聚焦 Skills/Memory/Security |
+| [browser-use/browser-use](https://github.com/browser-use/browser-use) | ⭐112,294 | — | LLM 驱动浏览器自动化框架，支持 Computer Use |
+| [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | ⭐81,366 | — | 字节开源长周期 SuperAgent，支持沙箱与多 Agent 协作 |
+| [stablyai/orca](https://github.com/stablyai/orca) | ⭐61,755 | +831 | 并行 Agent fleet 管理桌面应用，支持多平台部署 |
+| [multica-ai/multica](https://github.com/multica-ai/multica) | ⭐48,912 | +118 | 人机协同开源平台，支持自托管 |
+| [NVIDIA/SkillSpector](https://github.com/NVIDIA/SkillSpector) | ⭐16,162 | +254 | NVIDIA 出品 AI Agent Skill 安全扫描器，检测注入与供应链风险 |
 
 ### 📦 AI 应用
 
 | 项目 | Stars | 今日新增 | 说明 |
 |------|-------|----------|------|
-| [upstash/context7](https://github.com/upstash/context7) | 61,621 (+47) | 47 | 上下文管理平台，为 LLM 与 AI 编辑器提供最新代码文档，今日热度稳定 |
-| [google-research/timesfm](https://github.com/google-research/timesfm) | 30,976 (+340) | 340 | Google 时间序列基础模型，今日新增 340，反映时间序列 AI 应用的兴起 |
-| [debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio) | 17,527 (+1,345) | 1345 | 开源语音克隆与视频配音工具，今日新增 1345，位列第三，聚焦语音 AI 应用 |
-| [microsoft/power-platform-skills](https://github.com/microsoft/power-platform-skills) | 823 (+12) | 12 | Power Platform 开发技能库，今日因 MCP 插件支持被社区关注 |
-| [open-webui/open-webui](https://github.com/open-webui/open-webui) | 150,935 | - | AI 界面工具，支持 Ollama 与 OpenAI API，今日因 AI 交互需求被纳入热门 |
-| [openai/codex-plugin-cc](https://github.com/openai/codex-plugin-cc) | 32,770 (+46) | 46 | Codex 插件，支持在 Claude Code 中调用 Codex 进行代码审查与任务委托，今日新增 46 |
-| [TryGhost/Ghost](https://github.com/TryGhost/Ghost) | 55,161 (+28) | 28 | 现代出版平台，今日因 AI 内容生成与自动化发布被社区提及 |
+| [langgenius/dify](https://github.com/langgenius/dify) | ⭐154,473 | +109 | Agentic Workflow + RAG 平台，支持私有化部署 |
+| [open-webui/open-webui](https://github.com/open-webui/open-webui) | ⭐150,960 | — | 本地优先的 AI Chat 界面，支持 Ollama/OpenAI |
+| [janhq/jan](https://github.com/janhq/jan) | ⭐44,339 | — | 100% 离线 ChatGPT 替代品，支持多模型 |
+| [debpalash/VoiceStudio](https://github.com/debpalash/VoiceStudio) | ⭐18,035 | +1345 | 开源版 ElevenLabs，支持 646 种语言语音克隆与视频配音 |
+| [OpenWhispr/openwhispr](https://github.com/OpenWhispr/openwhispr) | ⭐6,775 | +262 | 本地优先语音转文字应用，支持 Whisper/Parakeet |
+| [anil-matcha/Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI) | ⭐27,729 | +64 | 开源 AI 图像/视频生成平台，集成 600+ 模型 |
+| [hkuds/vibe-trading](https://github.com/HKUDS/Vibe-Trading) | ⭐32,453 | — | AI 个人交易助手，支持多模型与多平台 |
+| [zhayujie/CowAgent](https://github.com/zhayujie/CowAgent) | ⭐46,785 | — | 开源超级 AI 助手，支持多模型/多通道/技能树自进化 |
 
 ### 🧠 大模型/训练
 
 | 项目 | Stars | 今日新增 | 说明 |
 |------|-------|----------|------|
-| [jy95/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix) | 35,396 | - | DeepSeek 原生 AI 编码智能体，今日因 DeepSeek 模型热度被纳入热门 |
-| [google-deepmind/weathernext](https://github.com/google-deepmind/weathernext) | 7,623 (+13) | 13 | Google 时间序列预测模型，今日新增 13，反映时间序列 AI 的研究进展 |
-| [google/skills](https://github.com/google/skills) | 19,487 (+132) | 132 | Google 产品与技术的 Agent Skills 库，今日新增 132，聚焦 AI 技能标准化 |
-| [google-research/google-research](https://github.com/google-research/google-research) | 38,690 | - | Google 研究仓库，今日因时间序列模型与 Agent 技能被提及 |
-| [google-ai-edge/mediapipe](https://github.com/google-ai-edge/mediapipe) | 36,838 | - | Google 多模态 ML 解决方案，今日因计算机视觉 AI 应用被纳入热门 |
-| [google-research/timesfm](https://github.com/google-research/timesfm) | 30,976 (+340) | 340 | 时间序列基础模型，今日新增 340，反映时间序列 AI 的研究进展 |
-| [open-compass/opencompass](https://github.com/open-compass/opencompass) | 7,394 | - | LLM 评估平台，今日因 LLM 评测需求被社区关注 |
-
-### 🔍 RAG/知识库
-
-| 项目 | Stars | 今日新增 | 说明 |
-|------|-------|----------|------|
-| [infiniflow/ragflow](https://github.com/infiniflow/ragflow) | 90,053 | - | RAG 引擎，融合 Agent 能力，今日因企业级知识库需求被纳入热门 |
-| [qdrant/qdrant](https://github.com/qdrant/qdrant) | 34,387 | - | 向量数据库，今日因 AI 检索需求被提及 |
-| [milvus-io/milvus](https://github.com/milvus-io/milvus) | 45,972 | - | 向量数据库，今日因 AI 检索需求被提及 |
-| [WeKnora](https://github.com/Tencent/WeKnora) | 21,338 (+75) | 75 | 开源 LLM 知识平台，今日新增 75，聚焦 RAG 与知识管理 |
-| [langchain-ai/langchain](https://github.com/langchain-ai/langchain) | 145,645 | - | Agent 工程平台，今日因 Agent 工程热度被提及 |
-| [topoteretes/cognee](https://github.com/topoteretes/cognee) | 30,465 | - | AI 记忆平台，今日因 Agent 记忆需求被提及 |
-| [ScrapeGraphAI/Scrapegraph-ai](https://github.com/ScrapeGraphAI/Scrapegraph-ai) | 30,525 | - | Python 爬虫库，今日因 AI 爬取与 RAG 数据准备被提及 |
-| [microsoft/graphrag](https://github.com/microsoft/graphrag) | 35,840 | - | 图谱 RAG 系统，今日因 AI 知识图谱需求被提及 |
-| [langchain4j/langchain4j](https://github.com/langchain4j/langchain4j) | 13,018 | - | Java LLM 框架，今日因 Java Agent 开发被提及 |
-
----
-
-## 3. 趋势信号分析
-
-今日 AI 开源热榜呈现出明显的 **"智能体基础设施化"** 与 **"企业级知识库需求激增"** 双轮驱动特征：
-
-1. **智能体框架爆发**：`anomalyco/opencode` 与 `affaan-m/ECC` 今日新增分别达到 314 和 1139，显示出 Agent 编码框架已成为开发者关注的焦点。这反映出从单点工具向 **多智能体编排平台** 的演进，社区开始关注如何让多个 Agent 协同工作、共享记忆与工具。
-
-2. **RAG 与向量数据库持续升温**：`infiniflow/ragflow`、`qdrant/qdrant`、`milvus-io/milvus` 等项目稳居热门榜，表明企业级知识管理与检索增强生成（RAG）正成为 AI 应用的核心基础设施。尤其是 `WeKnora` 今日新增 75，聚焦 RAG 与知识管理。
-
-3. **新兴技术栈首次登榜**：`rtk-ai/rtk`（Rust CLI 代理）与 `blader/humanizer`（AI 内容去伪）今日新增显著，显示出 **Rust 在 AI 基础设施** 与 **内容生成优化** 领域的崛起。同时，`google-research/timesfm`（时间序列模型）今日新增 340，反映出 **时间序列 AI** 正成为新的研究热点。
-
-4. **与大模型发布/行业事件的关联**：今日热榜与近期大模型发布（如 DeepSeek、GPT-5 系列）及行业事件（如 AI Agent 编码工具普及）高度关联，尤其是 `anomalyco/opencode`（开源编码智能体）与 `blader/humanizer`（AI 内容去伪）的爆发，直接反映了社区对 **AI 编码能力** 与 **内容真实性** 的迫切需求。
-
----
-
-## 4. 社区关注热点
-
-- **智能体编码平台**：`anomalyco/opencode` 今日新增 314 stars，成为 Agent 领域的绝对焦点，反映开源编码智能体的普及趋势。
-- **内容真实性工具**：`blader/humanizer` 今日新增 1,132，聚焦移除 AI 生成文本痕迹，提升内容自然度，是 AI 内容审核的重要工具。
-- **RAG 与向量数据库**：`infiniflow/ragflow`、`qdrant/qdrant` 等项目稳居热门榜，反映企业级知识管理与检索增强生成（RAG）需求的激增。
-- **Rust 在 AI 基础设施的应用**：`rtk-ai/rtk` 今日新增 139，展示 Rust 在 AI 推理与部署中的高效性。
-- **时间序列 AI**：`google-research/timesfm` 今日新增 340，反映时间序列预测模型的研究进展与产业落地。
+| [hiyouga/LlamaFactory](https://github.com/hiyouga/LlamaFactory) | ⭐74,579 | — | 100+ 大模型高效微调框架，ACL 2024 收录 |
+| [unslothai/unsloth](https://github.com/unslothai/unsloth) | ⭐75,631 | — | 本地 UI 训练 LLM 与扩散模型，支持 GGUF/MLX |
+| [vllm-project/vllm](https://github.com/vllm-project/vllm) | ⭐90,981 | — | 高吞吐 LLM 推理引擎，PagedAttention 技术领先 |
+| [jingyaogong/minimind](https://github.com/jingyaogong/minimind) | ⭐58,545 | +297 | 2 小时从 0 训练 64M 参数 LLM，入门级教学项目 |
+| [google-research/timesfm](https://github.com/google-research/timesfm) | ⭐31,064 | +342 | Google 时序基础模型，时间序列预测 SOTA |
+| [rasbt/LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch) | ⭐104,345 | — | 从零实现 ChatGPT 风格 LLM 教程，PyTorch |
+| [radixark/miles](https://github.com/radixark/miles
 
 ---
 *本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*

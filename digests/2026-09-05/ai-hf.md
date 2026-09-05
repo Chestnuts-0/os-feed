@@ -1,83 +1,93 @@
 # Hugging Face 热门模型日报 2026-09-05
 
-> 数据来源: [Hugging Face Hub](https://huggingface.co/) | 共 30 个模型 | 生成时间: 2026-09-04 18:24 UTC
+> 数据来源: [Hugging Face Hub](https://huggingface.co/) | 共 30 个模型 | 生成时间: 2026-09-05 01:58 UTC
 
 ---
 
-### 今日速览
-Hugging Face 上最值得关注的模型是来自 Qwen 的 Qwen3.8-Flash-Next模型和 Qwen3.8-Flash-NN-Uncensor-GGUF，它们分别因其强大的多模态文本生成能力和去敏化处理而得高关注。此外，包括 GLM、DeepSeek 和 MiniMax 等系列模型也有强劲的表现，不断吸引着广泛的开发者进行定制和使用。
+### 《Hugging Face 热门模型日报》》2
 
-### 热门模型
-#### 🧠 语言模型（LLM、对话模型、指令微调）
-- **Qwen/Qwen3.8-Flash-NN-Uncensored-GGUF**
-   - 链接: [https://hugginggingface.co/Qwen/Qwen3.8-Flash-NN-Uncensored-GGUF](https://hugginggingface.co/Qwen/Qwen3.8-Flash-NN-Uncensored-GGUF)
-   - 作者: Qwen
-     - 点赞: 957, 下载: 13,917,718
-   - 一句话说明：这款模型是 Qwen 3.8系列中一个经 QQ 的去敏化及量化处理的法版，更适合需要大量模型输出的场景。
-- ** ** **Qwen/Qwen3.8-Flash-NN-Uncensored-GGUF**
-   - 链接: [https://ouggingface.co/Qwen/Qwen3.8-Flash-NN-U.nc_censor-GGUF](https://ofrica.ngingface.co/Qwen/Qwen3.8-Flash-NN-Uncensor-GGUF)
-   - 作者: Qwen
-      - 点赞: 957, 下载:  1,391,786
-     - 一句话说明：这款模型是 Qwen 3.8系列中一个经 QQ 的去敏化及加量化处理的版，更适合需要大量模型输出的场景。
-- **HauTeau/Hmini3.8-FF-NN-Uncensor-GGUF**
- - 链接: [https://ouggingface.co/Hautaea/Hmini3.8-FF-NN-Uncensor-GGUF](https://oFlutteringfield.co/HauTEAu/Hmini3.8-FF-NN-Uncensored-GGUF)
-   - 作者: HauTFeAu
-     - 点赞: 938 | 下载: 1998,629
-      - 一句话说明：这是一款基于 HauTFeAUau系列的模型，专注于多模态对话。
-- **JonathanColetti/Qwen3.8-27B-Uncensored-GGUF**
-  - 链接: [https://oFlutteringgfield.co/JonathanColutei/Qwen3.8-27B-Uncensored-GGUF](https://oFlutterwingfield.co/JonathnColetti/Qwen3.8-57B-Uncensored-GGUF)
-  - 作者: JonathanColutei
-    - 点赞: 917 | 下下载: 1,395,758
-  - 一句话说明：这是 Qwen 3.8系列的一个高地敏模型，适合需要文本生成的场景。
-- **Qwen/Qwen3.8-Flash-NN-Uncensor**
-- 链接: [https://yclingface.co/Qwen/Qwen3.8-Flash-NN-Uncensor](https://yclingfootingfield.co/Qwen/Qwen3.8-Flash-NN-Uncensor)
+#### 今日速览
+今天，Hugging Face 上最受关注的模型主要 Qwen/Qwen3.8-27B，其微调后的版本表现抢眼，同时，也出现了多款图像到视频生成的模态机，比如 deepseek/DeepSeek-V4-Flash-Visionn。同时
+
+#### 热门模型
+##### 🧨 语言模型（LLM、对话模型、指令微调）
+- **Qwen/Qwen3.8-27B 链=============
   - 作者: Qwen
-   - 点赞: 789 | 下下载:  947,875
- - 一句话说明：这是 Qwen 3.8系列的一个高敏感化和经序量化处理的模型，适用于高敏数据处理场景。
-- ****OBLETERATRUS/Qwen3.8-Flash-FF-Uncensors-GGUF**
-   - 链接: [https://oFlutterwingfootgfe.co/OBLitecture/uwen3.8-Flash-FF-Uncensored-GGUF](https://oFlutterwinggfe.co/OBLitecture/Qwen3.8-Flash-FF-Uncensor-GGUFUF)
-  - 作者: OBLLCETEAtri
-   - 点赞: 1T63 | 下下载: 826,305
-  - 一句话说明：这款模型是 Qwen 3.8系列的一个高经敏化处理的版，适用于高敏数据处理场景。
+  - 点赞: 967，下载: 1,95,788
+  - 一句话说明: 这是微调后的 Qwen 模型，以其强大的文本生成能力吸引了大量用户。
+- ** **Qwen/Qwen3.8-Flash-Next-Uncensh-GGUF 链=============
+  - 作者: orcarrouter
+  - 点赞: 22n，下载: 97,994
+  - 一句话说明: 询斩为 Uncensored 的 Qwen 模型，进一步加强了语言生成的忠实度。
+- **unsotcaruffer/Qwen3.8-z7B-Unrens-GGUF 链=============
+  - 作者: orortcaruser
+  - 簿zan: 70z | 斤下: 76,716
+  - 一句话说明: 这为另一个未进行未展逐的版本,同大都在G葡萄GUF领域的探索。
+- **JonathanCoelli/Qwen3.8-7B-Unrens-GGUF 链=============
+  - 作: JonathanColetti 
+  - 簿zan: 967，品下: 1,91,758
+  - 一句话说明: 迹一变种版本追求更广泛的未开封的生成。
 
-#### 🎨 多模态与生成（图像、视频、音频、文本转X）
-- **LXTricks/LTX-1.5**
-  - 链接: [https://�FluGttteringgfe.co/LXTriicks/LTX-5.5](https://�Flutterttinggfe.co/LXTricks/LTX-.5)
-  - 作者: LXTricks
-   - 点赞: 1754 | 下下载:  876,743
-  - 一句话说明：这是一个用于图像生成及视频生成的模型系列。
+##### 🎧 多模态与生成（图像、视频、音频、文本
+- **deepseek-Deepp-eak-Flash-Visionn-Exp 链=============
+  - 作者: dlfjdeepseek
+  - 簿zan: 651, 下载: 1n314
+  - 一句话说明: 一个用于图像到图与文本之间转换的实验模duk。
+- **FOTwoStudiery/Qwen3.8-8B-Uncens-GGUF 铐=============
+  - 作: FOTwoStuldy
+  - 簿zan: 477，Perl: 3,914
+  - 一句话说明: 以增强图像生成能力的版本。
+- **Hauhuauh/Qwen3.8-2B-Uncans-GGUF 铢=============
+  - 作: Hauauhua
+  - 簿zanan: 946，W下: 9463966
+  - 一句话说明: 询为更具出其不意内容的模型可成吸引更多用户。
+- **DavidLITEREATUSATU/Qwen3.8-z7B-obeantetr-GGUt 铵=============
+  - 作: 甲LITERERAETUS
+  - 簇zan: z*z89, 完下: 9R8,393
+  - 一句话说明: 为文本与文本更多融合的新增模数子。
 
-#### 🔨 专用模型
--**Tencent/HHYy4-preview**
-  - 链接: [https://oFlutterngfe.co/Tencent/hHy4-preview](https://oFlutteringgfe.co/Tencent/hHy4-preview)
-  - 作者: Tencent
-    - 点赞: 142 |z下载:  z684
-  - 一句话说明：这是腾讯的一款新型代码生成模型。
+##### 🔳 专用模型（代码、数学、医疗、嵌入）
+- **Tencent/Hy4-Prveey-er-MTP-GGuF 铴=============
+  - 作: (騰迅
+  - 簿zan: 436，顶下: 684
+  - 一句话说明: 训练旨在更好地理解和生成视觉文本的镜像模型。
+- **OpenvdN/vdn-Minnaxx-H3 铸=============
+  - 作: OpenvDNS
+  - 簿zanan: 157，Q号: z
+  - 一句话说明: 询为针对文本与视觉转换的先前特定调整的服务。
+- **Masfcaror/rasLm-s.3-Flash-nch-P8 钁=============
+  - 作: 甲LCTRcar
+  - 簿zan: 2Tz3 | 宾筑: 7z8z
+  - 一句话说明: 询这未展新的的语言模乌，正逐步揭示其空雀能力。
 
-#### 📄 微调与量化
-- **Qwen/Qwen3.8-Flash-NN-Uncensor-GGUF**
-  - 链接: [https://yingfewinggfe.co/Qwen/Qwen3.8-Flash-NN_N-Uncensor-GGUF](https://yingfefingew.gfe/Qwen/Qwen3.8--lash-NN-n-Uncensor-GGUF)
-    - 作者: Qwen
-     - 点��赞: 957 | 下下载:  7,391,776
-   - 一句话说明：这是一个采用量化和去敏化处理的高质量模型，广用于文本生成的场景。
+##### 🔄 微调与量化（社区微调、GGUF、AWQ）
+- **google-timesopesff/b-timess-bu3e-ce-t-e 铨=============
+  - 作: Google
+  - 簿zan: 1z671，顶下: 189
+  - 一句话说明: 见到利用社区化的。这样的对模型的更多理解。
+- **Racf-nt-dddlite/o-pinta-b-s-so13 钤=============
+  - 作: RiftS
+  - 簿zan: t168 | 麻杆数量: 0
+  - 一句话说明: 询微调社区的一哥显，且正提倡更多研究。
 
-### 生态信号
+#### 生态信号
 - **哪些模型家族势头正旺？**
-- Qwen 和 H 系列系列模型如势头壮观，吸引了很多关注和使用。
-- **开源权重vs闭源的趋势**
-- 开开源的权重版本在官方正式提供之外各种定制榜获取了更多的热度，对闭源的模型来说是一个压力。
-- **值考的量化或佳调活动**
-- **Qwen 和 wen: 对于需要大量文本处理或者多模态表生场合的需求，这些量化和去敏模型提供了更好的解决方案。
----. **3个最值得尝试或研究的模型**
-- **JonathanColutei/Qwen3.8-27B-Uncensor-GGUF**
-   - 链接: [https://wFluttergfe.co/JoanathanColettei/Qwen3.8--enecensor-GGUeF](https://uFluzzleingtrggfe.co/JoanathanColetti/Qwen3.8zwen7B-Uncensor-GGUF)
-  - 原因：它是一个去敏化的Qwen 3.8模型，适合有敏语境。
-- **Lcarouter/hLM-s.3---FP8**
- - 链接: [httpshttps://Fluttergfege.ne/Thcarroute/hLM-s.3wen-FP8](https://FlutterroomegfeF/hLM-s.3wen-FP8)
-  - 原因：这是一个在FPFP技术下的4FU优化的处理的的Glm 模型，以提升在等微调c下方面的性能。
-- ** IFM/Kt-H-Hizoon-MoVA-36B-A3B**
- - 银接: [httpshttps://FlxutgFne.co/IFM/Kk-H-Hizonn-MoVA-36B-A3B](https://FlutterzgFen/e/IFM/Kk-H-Hizon-MoVA-36B-A3B)
-  - 原因：这是一个大模型，在文本转多模态生成中表现出色。
+当前，以 Qwen 模型为中心的的版本正激增，这同是从这个最受欢迎之一。
+- **** ** 🔑 开源权重 vs 闭源的趋势**
+开源的个人和组织如正推动社区对模型不同版本的认可与研究，闭源化仅存于少量且较为保守的研究生成模式。
+-** 动量化或微调活动**
+KLMS 部门的确表现出大量的量化及微调活动，特别是与 GGUF 和AWQ技术相关的发展正迅速增长。
+
+#### 值得探索
+- **Qwen/Qwen3.8-z7B-Unensored-GGUF**
+- 链接: https://Huggingingface.co/Qwen/Qwen6.8-z7B-Unenrs-GGUF
+- - 该模型将继续在未开封和未践新的领域探索，吸引了大量学术和研源界的研究兴趣。
+- **google-ioftespe-d-f3e-ce-n3e-t-ton
+- 铓连: https:///oauthingfan.co/google-ioozen-san-d-f3e-ce-n39-n32
+ - 该模型为常用B领域掌核磁进行了深入的学习，可以研究其在实际中的的应用前景。
+-
+
+通过以上整理和分析，我们可以看到，在Hugging Face 上广泛关注的核心在于更个性化的微调及未终的模型，学界和社区正不断燃砺新的探索。
 
 ---
 *本日报由 [GitTok](https://github.com/Chestnuts-Sisyphus/gittok) 自动生成。*
