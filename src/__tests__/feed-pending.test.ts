@@ -20,6 +20,9 @@ vi.mock("node:fs", () => ({
       memFs.set(String(p), String(data));
     },
     mkdirSync: () => {},
+    unlinkSync: (p: string) => {
+      memFs.delete(String(p));
+    },
   },
   existsSync: (p: string) => memFs.has(String(p)),
   readFileSync: (p: string, _enc?: string) => {
@@ -31,6 +34,9 @@ vi.mock("node:fs", () => ({
     memFs.set(String(p), String(data));
   },
   mkdirSync: () => {},
+  unlinkSync: (p: string) => {
+    memFs.delete(String(p));
+  },
 }));
 
 // LLM 调用 mock：失败/成功可控
@@ -390,5 +396,50 @@ describe("feed pending-retry 队列", () => {
     // 评分成功 → 出队
     const arr = readJson<Record<string, unknown>[]>(pendingPath());
     expect(arr).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 评分增量落盘（2026-09-05）：撞超时墙被杀时已评部分不丢，下轮缓存命中零成本续跑
+// ---------------------------------------------------------------------------
+
+describe("评分增量落盘", () => {
+  function partialPath(): string {
+    return path.join("data", "partial-scores.json");
+  }
+
+  it("被杀轮次的 partial 缓存 → 下轮缓存命中零重评直接组装（无 baseline 也有效）", async () => {
+    // 模拟上一轮被杀：partial-scores.json 留着成功评分，feed.json（baseline）缺失
+    memFs.set(
+      partialPath(),
+      JSON.stringify({
+        "a/scored": {
+          repo: "a/scored",
+          aiDims: ["AI Agent"],
+          aiDim: "AI Agent",
+          aiScore: 0.8,
+          summaryCn: "这是一个二十到三十五个字的测试摘要",
+          reasonCn:
+            "这是一段超过八十个字的推荐理由内容，用来满足长度要求所以需要写长一点，继续补充一些内容让这段文字变得足够长，达到八十个字以上才算合格的长度。",
+          detailCn: "详情内容",
+        },
+      }),
+    );
+    llmMock.impl = () => {
+      throw new Error("不应调用 LLM（partial 缓存命中应零成本续跑）");
+    };
+
+    const cards = await generateFeed(cfg, makeTrendingData(["a/scored"]));
+
+    expect(cards.map((c) => c.repo)).toContain("a/scored");
+  });
+
+  it("管道完整落盘成功 → partial 缓存清空（防残留累积，历史已并入 feed.json）", async () => {
+    llmMock.impl = () => scoreJson("fresh/ok");
+
+    const cards = await generateFeed(cfg, makeTrendingData(["fresh/ok"]));
+
+    expect(cards.length).toBe(1);
+    expect(memFs.has(partialPath())).toBe(false);
   });
 });

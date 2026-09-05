@@ -74,6 +74,49 @@ const PENDING_PATH = path.join(DATA_DIR, "pending-retry.json");
 const PENDING_MAX = 1000; // 300→1000（2026-09-05 放量：候选池万级后失败队列水位同步抬）
 /** 单 repo 最大重试轮数（连败放弃，防僵尸条目长期占位） */
 const PENDING_MAX_RETRIES = 7;
+/** 评分增量落盘文件（2026-09-05）：scoreBatched 每批成功评分即写这里，
+ *  digest 撞超时墙被杀时已评部分不丢（下轮 loadExistingScores 合并续跑）；
+ *  管道末尾完整落盘 feed.json 成功后清空。 */
+const PARTIAL_SCORES_PATH = path.join(DATA_DIR, "partial-scores.json");
+
+/** 读评分增量缓存（容错：损坏/缺失一律当空）。 */
+function loadPartialScores(): Map<string, ScoringResult> {
+  const map = new Map<string, ScoringResult>();
+  try {
+    if (!fs.existsSync(PARTIAL_SCORES_PATH)) return map;
+    const raw = JSON.parse(fs.readFileSync(PARTIAL_SCORES_PATH, "utf-8")) as Record<string, ScoringResult>;
+    for (const [repo, sc] of Object.entries(raw)) {
+      if (sc && sc.repo && sc.reasonCn) map.set(repo, sc);
+    }
+  } catch (err) {
+    console.error(`  [feed/partial] load failed: ${err}`);
+  }
+  return map;
+}
+
+/** 追加评分到增量缓存并立即写盘（每批一次，量小；写失败仅日志）。 */
+function appendPartialScores(results: ScoringResult[]): void {
+  if (results.length === 0) return;
+  try {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    const existing = loadPartialScores();
+    for (const sc of results) existing.set(sc.repo, sc);
+    const obj: Record<string, ScoringResult> = {};
+    for (const [repo, sc] of existing) obj[repo] = sc;
+    fs.writeFileSync(PARTIAL_SCORES_PATH, JSON.stringify(obj), "utf-8");
+  } catch (err) {
+    console.error(`  [feed/partial] save failed: ${err}`);
+  }
+}
+
+/** 清空评分增量缓存（完整 feed.json 已落盘后调用）。 */
+function clearPartialScores(): void {
+  try {
+    if (fs.existsSync(PARTIAL_SCORES_PATH)) fs.unlinkSync(PARTIAL_SCORES_PATH);
+  } catch (err) {
+    console.error(`  [feed/partial] clear failed: ${err}`);
+  }
+}
 // 盖章状态文件与 STAMP_* 常量已随「bigbros 全出口退役」（2026-09-05）移除；盖章调用停跑见 generateFeed 2.7 注释。
 
 // 权威组织/官方仓库 owner 前缀
@@ -492,7 +535,15 @@ export function summaryFromDetailFirstPara(detailCn: string): string {
 
 function loadExistingScores(): { scores: Map<string, ScoringResult>; detailMap: Map<string, string> } {
   try {
-    if (!fs.existsSync(FEED_PATH)) return { scores: new Map(), detailMap: new Map() };
+    if (!fs.existsSync(FEED_PATH)) {
+      // 无 baseline（首次/被杀轮次）时增量缓存仍有效——已评部分不能丢
+      const partial = loadPartialScores();
+      if (partial.size > 0) {
+        console.log(`  [feed/cache] recovered ${partial.size} partial scores (no baseline)`);
+        return { scores: partial, detailMap: new Map() };
+      }
+      return { scores: new Map(), detailMap: new Map() };
+    }
     const raw = fs.readFileSync(FEED_PATH, "utf-8");
     const cards = JSON.parse(raw) as FeedCard[];
     const map = new Map<string, ScoringResult>();
@@ -513,9 +564,21 @@ function loadExistingScores(): { scores: Map<string, ScoringResult>; detailMap: 
       }
     }
     console.log(`  [feed/cache] loaded ${map.size} existing scores from ${FEED_PATH}`);
+    // 合并评分增量缓存（partial 优先：它是最近一轮可能未完整落盘的新评分）
+    const partial = loadPartialScores();
+    if (partial.size > 0) {
+      for (const [repo, sc] of partial) map.set(repo, sc);
+      console.log(`  [feed/cache] merged ${partial.size} partial scores from ${PARTIAL_SCORES_PATH}`);
+    }
     return { scores: map, detailMap };
   } catch {
     console.log(`  [feed/cache] no existing feed.json, scoring all repos`);
+    // feed.json 缺失/损坏时增量缓存仍有效（被杀轮次的评分不能丢）
+    const partial = loadPartialScores();
+    if (partial.size > 0) {
+      console.log(`  [feed/cache] recovered ${partial.size} partial scores (no baseline)`);
+      return { scores: partial, detailMap: new Map() };
+    }
     return { scores: new Map(), detailMap: new Map() };
   }
 }
@@ -633,6 +696,9 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
       }),
     );
     for (const r of chunkResults) results.push(...r);
+    // 评分增量落盘：每 chunk 成功评分立即写缓存——digest 撞超时墙被杀时
+    // 已评部分下轮直接命中缓存零成本续跑（2026-09-05 两轮撞墙零产出之鉴）
+    appendPartialScores(chunkResults.flat());
   }
   return results;
 }
@@ -1095,6 +1161,8 @@ export async function generateFeed(
   fs.mkdirSync(DATA_DIR, { recursive: true });
   fs.writeFileSync(FEED_PATH, JSON.stringify(final, null, 2), "utf-8");
   console.log(`  [feed] saved ${final.length} cards to ${FEED_PATH}`);
+  // 完整落盘成功 → 评分增量缓存已完成历史使命，清空（下轮从干净状态开始）
+  clearPartialScores();
 
   return final;
 }
