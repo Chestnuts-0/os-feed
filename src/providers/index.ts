@@ -18,6 +18,8 @@ export { GroqProvider } from "./groq.ts";
 export { GeminiProvider } from "./gemini.ts";
 export { CerebrasProvider } from "./cerebras.ts";
 export { SiliconFlowProvider } from "./siliconflow.ts";
+export { GithubModelsProvider } from "./github-models.ts";
+export { MistralProvider } from "./mistral.ts";
 
 import type { LlmProvider, ProviderFactory } from "./types.ts";
 import { AnthropicProvider } from "./anthropic.ts";
@@ -31,6 +33,8 @@ import { GroqProvider } from "./groq.ts";
 import { GeminiProvider } from "./gemini.ts";
 import { CerebrasProvider } from "./cerebras.ts";
 import { SiliconFlowProvider } from "./siliconflow.ts";
+import { GithubModelsProvider } from "./github-models.ts";
+import { MistralProvider } from "./mistral.ts";
 
 // ---------------------------------------------------------------------------
 // Single source of truth — add new providers here only.
@@ -48,6 +52,8 @@ const PROVIDERS = {
   gemini: () => new GeminiProvider(),
   cerebras: () => new CerebrasProvider(),
   siliconflow: () => new SiliconFlowProvider(),
+  "github-models": () => new GithubModelsProvider(),
+  mistral: () => new MistralProvider(),
 } satisfies Record<string, ProviderFactory>;
 
 /** Supported provider name — derived from the PROVIDERS registry. */

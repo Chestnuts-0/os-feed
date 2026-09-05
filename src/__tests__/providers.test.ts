@@ -156,6 +156,8 @@ describe("VALID_PROVIDER_NAMES", () => {
       "gemini",
       "cerebras",
       "siliconflow",
+      "github-models",
+      "mistral",
     ]);
   });
 });

@@ -6,7 +6,7 @@ import { CreatorPage } from "./CreatorPage.tsx";
 import { weightedSearch } from "./search.ts";
 import { loadSafe, saveDual, migrateLegacyKeys } from "./storage.ts";
 import { mergeDetail, prefetchFeedDetails, warmFeedDetails, getFeedDetailsIfReady } from "./feed-payload.ts";
-import { loadCachedFeedText, saveCachedFeedText } from "./feed-cache.ts";
+import { loadCachedText, saveCachedText } from "./feed-cache.ts";
 import {
   FEED_MOBILE_MAX_WIDTH,
   feedGridFromMatch,
@@ -460,46 +460,54 @@ function jitterRank(repo: string, seed: number): number {
 }
 
 /**
- * 会话洗牌 v2（2026-09-05 二次拍板：刷新「还是老看到同样的项目」）。
- * 旧版乘性抖动拿 c.score 当骨架——存量卡 score=0（feed.json 组装时写死），0×随机=0，
- * 分类频道抖动完全失效、顺序恒定，这是「刷不出新鲜感」的真根因。
- * 新版骨架=位次衰减分（第 1 名 2.0 线性降到末尾 1.0，与任何数据字段无关，对全频道恒有效）：
- * ±strength/2 的乘性抖动让头部成员每次刷新真实轮换（第一屏必出新面孔），
- * 同时大秩序不破坏（骨架单调，排名越靠前越大概率还在前排）。
- * 每日频道（客观热度）与关注频道（动态时间序）不抖。
+ * 会话洗牌 v4（2026-09-05 四次拍板；v2 教训：乘性抖动拿 c.score 当骨架，存量卡 score=0
+ * →抖动完全失效恒序。骨架必须与数据字段无关）：
+ * 骨架=位次衰减分（第 1 名 2.0 线性降到末尾 1.0）
+ * × 新鲜度降权（seenPenaltyOf：看过的平滑衰减不排除）× 会话种子抖动（±strength/2）。
+ * 三力合成：大秩序不破坏、看过的自然让位、每次刷新头部成员真实轮换。
+ * 每日频道（热度语义）与关注频道（动态时间序）不走抖动，每日单乘降权。
  */
-function applyJitter(cards: FeedCard[], seed: number, strength = 0.18): FeedCard[] {
+function applyJitter(
+  cards: FeedCard[],
+  seed: number,
+  seen: Record<string, number>,
+  now: number,
+  strength = 0.18,
+): FeedCard[] {
   const n = cards.length;
   if (n <= 1) return cards;
   return cards
     .map((c, idx) => ({
       c,
-      j: (2 - idx / n) * (1 + strength * (jitterRank(c.repo, seed) - 0.5)),
+      j: (2 - idx / n) * seenPenaltyOf(c, seen, now) * (1 + strength * (jitterRank(c.repo, seed) - 0.5)),
     }))
     .sort((a, b) => b.j - a.j)
     .map((x) => x.c);
 }
 
 /**
- * TikTok 单调流 v3（2026-09-05 三次拍板：「第三次刷新主页依旧是见过的项目」）。
- * 洗牌只解决「顺序变」，不解决「翻来覆去那几张」——看过的卡必须沉底：
- * 7 天内曝光/打开过的卡整体排到流尾（组内保持频道语义序不变），
- * 每次刷新前段都是没看过的卡；没看过的刷完了尾部旧卡自然回流，流永不空。
+ * 新鲜度降权 v4（2026-09-05 四次拍板：沉底太极端，「我连点开看的卡片都没让他彻底消失」）。
+ * GitTok 是策展流不是消耗流：任何内容都不被排除，看过的只降权——
+ * 按看过的久远程度平滑衰减（当天 ×0.45 / 3 天内 ×0.65 / 7 天内 ×0.85），
+ * 让没看过的自然排前面，看过的仍在流中随时可能回来。
  * seen 的写入点=卡片进入渲染窗口（曝光即看过）+打开详情，跨会话持久化。
  */
-function sinkSeen(cards: FeedCard[], seen: Record<string, number>, now: number): FeedCard[] {
-  const DAY_MS = 86_400_000;
-  const isStale = (c: FeedCard): number => {
-    const ts = seen[c.repo];
-    return ts && now - ts < 7 * DAY_MS ? 1 : 0;
-  };
-  return [...cards].sort((a, b) => isStale(a) - isStale(b));
+function seenPenaltyOf(c: FeedCard, seen: Record<string, number>, now: number): number {
+  const ts = seen[c.repo];
+  if (!ts) return 1;
+  const days = (now - ts) / 86_400_000;
+  if (days < 1) return 0.45;
+  if (days < 3) return 0.65;
+  if (days < 7) return 0.85;
+  return 1;
 }
 
 function getSectionCards(
   cards: FeedCard[],
   sectionKey: string,
   followingSet: Set<string> = new Set(),
+  seen: Record<string, number> = {},
+  now = Date.now(),
 ): FeedCard[] {
   switch (sectionKey) {
     case "hot":
@@ -509,12 +517,18 @@ function getSectionCards(
         .filter((c) => c.momentum?.includes("hot"))
         .sort((a, b) => (b.starGrowth ?? 0) - (a.starGrowth ?? 0) || b.stars - a.stars);
     case "daily":
-      // 每日频道按时效热度分排序：涨得快（相对增速）> 涨得多（2026-09-05 拍板）
+      // 每日频道按时效热度分排序：涨得快（相对增速）> 涨得多（2026-09-05 拍板）；
+      // 乘新鲜度降权（看过的平滑衰减不排除，2026-09-05 四次拍板）
       return cards
         .filter((c) => c.momentum?.includes("daily"))
-        .sort((a, b) => (b.heatScore ?? 0) - (a.heatScore ?? 0));
+        .sort(
+          (a, b) =>
+            (b.heatScore ?? 0) * seenPenaltyOf(b, seen, now) -
+            (a.heatScore ?? 0) * seenPenaltyOf(a, seen, now),
+        );
     case "following":
-      // 关注频道 = 我真正关注的创作者出的项目（2026-09-05：陌生库的自动 star 盖章不再是关注语义）
+      // 关注频道 = 我真正关注的创作者出的项目（2026-09-05：陌生库的自动 star 盖章不再是关注语义）；
+      // 动态时间序语义，不掺降权
       return cards
         .filter((c) => followingSet.has(c.owner))
         .sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime());
@@ -610,7 +624,7 @@ interface FeedVirtualListProps {
   channel?: string;
   onOpenCreator?: (owner: string) => void;
   entering?: boolean;
-  /** 曝光回调：进入渲染窗口的卡视为「已刷过」（TikTok 单调流沉底依据），由父组件持久化 */
+  /** 曝光回调：进入渲染窗口的卡视为「已刷过」（新鲜度降权依据），由父组件持久化 */
   onExpose?: (repos: string[]) => void;
 }
 
@@ -689,7 +703,7 @@ function FeedVirtualList({
 
   const visible = cards.slice(win.startIdx, win.endIdx);
 
-  // 曝光即看过（TikTok 单调流）：渲染窗口内的卡上报父组件记 seen（沉底依据）。
+  // 曝光即看过：渲染窗口内的卡上报父组件记 seen（降权依据）。
   // key=窗口位次+频道+首卡：滚动/切频道/数据变化时增量触发，不依赖 onExpose 引用稳定。
   const exposedKey = `${channel ?? ""}:${cards[0]?.repo ?? ""}:${cards.length}:${win.startIdx}:${win.endIdx}`;
   const onExposeRef = useRef(onExpose);
@@ -805,7 +819,7 @@ export default function App() {
       });
     };
     (async () => {
-      const cachedText = await loadCachedFeedText();
+      const cachedText = await loadCachedText("feed");
       if (cancelled) return;
       if (cachedText) {
         try {
@@ -821,7 +835,7 @@ export default function App() {
         const text = await r.text();
         if (cancelled) return;
         if (text !== cachedText) {
-          void saveCachedFeedText(text);
+          void saveCachedText("feed", text);
           applyData(JSON.parse(text) as FeedCard[]);
           warmDetails();
         }
@@ -951,8 +965,8 @@ export default function App() {
     [collections, detailCard, updateTagWeights],
   );
 
-  // 曝光即看过（TikTok 单调流，2026-09-05）：渲染窗口内的卡记 seen 并持久化（idle 节流）。
-  // seen 是不可变 state——本会话流不重排，下次刷新这些卡沉底：「刷过的不回头」。
+  // 曝光即看过（2026-09-05）：渲染窗口内的卡记 seen 并持久化（idle 节流）。
+  // seen 是不可变 state——本会话流不重排，下次刷新这些卡按新鲜度降权（不排除）。
   const handleExpose = useCallback((repos: string[]) => {
     let changed = false;
     for (const repo of repos) {
@@ -1229,28 +1243,28 @@ export default function App() {
     return applyFilter(withContent, seen, interactions, collections);
   }, [cards, tab, seen, interactions, collections]);
 
-  // 分区数据：推荐 = 前端个性化生成；其余频道按各自语义排序后套会话洗牌，
-  // 全频道出口统一「看过的沉底」（TikTok 单调流：刷过的不回头，前段永远是没看过的卡）
-  // （每日/关注不抖靠沉底换血；推荐 ±10%、热门/分类 ±9% 头部轮换）
+  // 分区数据：推荐 = 前端个性化生成；其余频道按各自语义排序后套会话洗牌。
+  // 新鲜度=温和降权不排除（2026-09-05 四次拍板，策展流理念）：看过的卡乘
+  // seenPenaltyOf 平滑衰减（当天 ×0.45/3 天 ×0.65/7 天 ×0.85），自然让位给没看过的，
+  // 但仍在流中随时可能回来——推荐/热门/分类乘在抖动骨架上，每日乘在热度分上，关注纯时间序不掺
   // 关注频道豁免空分区过滤：未关注任何人时侧栏仍保留「关注」项，内容区显示引导
   const sections = useMemo(() => {
     const seed = sessionSeedRef.current;
     const now = Date.now();
     const all = ALL_SECTIONS.map((s) => ({
       ...s,
-      cards: sinkSeen(
+      cards:
         s.key === "recommended"
           ? applyJitter(
               buildRecommended(visibleCards, preferences.tagWeights, seen, interactions, followingSet),
               seed,
+              seen,
+              now,
               0.2,
             )
           : s.key === "daily" || s.key === "following"
-            ? getSectionCards(visibleCards, s.key, followingSet)
-            : applyJitter(getSectionCards(visibleCards, s.key, followingSet), seed, 0.18),
-        seen,
-        now,
-      ),
+            ? getSectionCards(visibleCards, s.key, followingSet, seen, now)
+            : applyJitter(getSectionCards(visibleCards, s.key, followingSet), seed, seen, now, 0.18),
     })).filter((s) => s.key === "following" || s.cards.length > 0);
     return all;
   }, [visibleCards, preferences, seen, interactions, followingSet]);

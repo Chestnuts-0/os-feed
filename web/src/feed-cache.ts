@@ -12,7 +12,6 @@
 
 const DB_NAME = "gittok-feed-cache";
 const STORE = "feed";
-const KEY = "daily";
 
 function openDb(): Promise<IDBDatabase | null> {
   return new Promise((resolve) => {
@@ -30,14 +29,15 @@ function todayStamp(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-/** 当日缓存的原始文本；无缓存/非当日/IDB 不可用 → null（调用方走网络路径）。 */
-export async function loadCachedFeedText(): Promise<string | null> {
+/** 当日缓存的原始文本；无缓存/非当日/IDB 不可用 → null（调用方走网络路径）。
+ *  key：'feed'=列表（首屏）、'details'=详情表（弹窗内容），各自独立缓存同日生效。 */
+export async function loadCachedText(key: "feed" | "details"): Promise<string | null> {
   try {
     const db = await openDb();
     if (!db) return null;
     return await new Promise<string | null>((resolve) => {
       const tx = db.transaction(STORE, "readonly");
-      const req = tx.objectStore(STORE).get(KEY);
+      const req = tx.objectStore(STORE).get(key);
       req.onsuccess = () => {
         const row = req.result as { date?: string; text?: string } | undefined;
         resolve(row && row.date === todayStamp() && typeof row.text === "string" ? row.text : null);
@@ -50,13 +50,13 @@ export async function loadCachedFeedText(): Promise<string | null> {
 }
 
 /** 存当日缓存；失败静默（缓存缺失只影响下次刷新速度，不影响功能）。 */
-export async function saveCachedFeedText(text: string): Promise<void> {
+export async function saveCachedText(key: "feed" | "details", text: string): Promise<void> {
   try {
     const db = await openDb();
     if (!db) return;
     await new Promise<void>((resolve) => {
       const tx = db.transaction(STORE, "readwrite");
-      tx.objectStore(STORE).put({ date: todayStamp(), text }, KEY);
+      tx.objectStore(STORE).put({ date: todayStamp(), text }, key);
       tx.oncomplete = () => resolve();
       tx.onerror = () => resolve();
       tx.onabort = () => resolve();

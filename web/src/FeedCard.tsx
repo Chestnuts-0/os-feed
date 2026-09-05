@@ -102,16 +102,38 @@ interface AvatarProps {
 }
 
 export function GithubAvatar({ owner, size, className, eager = false }: AvatarProps) {
-  const src = `https://avatars.githubusercontent.com/${owner}?s=${size}&v=4`;
+  // GitHub 头像 CDN 国内偶发加载失败/长时间 pending：onError 后退化为
+  // 首字母色块（色相由 owner 哈希决定，同一人恒同色），不出现破图与无限占位
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    let h = 0;
+    for (let i = 0; i < owner.length; i++) h = (h * 31 + owner.charCodeAt(i)) % 360;
+    return (
+      <span
+        className={`avatar-fallback ${className}`}
+        style={{
+          width: size,
+          height: size,
+          background: `hsl(${h} 35% 32%)`,
+          fontSize: size * 0.42,
+          lineHeight: `${size}px`,
+        }}
+        aria-hidden="true"
+      >
+        {owner.slice(0, 1).toUpperCase()}
+      </span>
+    );
+  }
   return (
     <img
       alt=""
       className={className}
-      src={src}
+      src={`https://avatars.githubusercontent.com/${owner}?s=${size}&v=4`}
       width={size}
       height={size}
       loading={eager ? "eager" : "lazy"}
       decoding={eager ? "sync" : "async"}
+      onError={() => setFailed(true)}
     />
   );
 }

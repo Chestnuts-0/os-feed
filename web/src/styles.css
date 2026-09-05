@@ -540,6 +540,17 @@ button {
   border: 1px solid var(--border);
 }
 
+/* 头像加载失败兜底：首字母色块（GithubAvatar onError 渲染），同一 owner 色相恒定 */
+.avatar-fallback {
+  display: inline-block;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  user-select: none;
+}
+
 .card-title {
   flex: 1;
   min-width: 0;

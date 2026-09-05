@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-import { splitFeedPayload } from "./src/feed-payload.ts";
+import { splitFeedPayload } from "./src/payload-split.ts";
 
 /**
  * 构建前把 data/feed.json 拆成列表 + 详情表。
