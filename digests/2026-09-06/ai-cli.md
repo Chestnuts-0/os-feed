@@ -1,6 +1,6 @@
 # AI CLI 工具社区动态日报 2026-09-06
 
-> 生成时间: 2026-09-05 16:16 UTC | 覆盖工具: 9 个
+> 生成时间: 2026-09-05 16:44 UTC | 覆盖工具: 9 个
 
 - [Claude Code](https://github.com/anthropics/claude-code)
 - [OpenAI Codex](https://github.com/openai/codex)
@@ -35,32 +35,61 @@
 ---
 
 ### 今日速览
-GitHub 文档过去222066-4-**D 一天内，主要涉及了几个重要的 Issue 和 Pull Request。社区成员们继续维持了对功能优化和 Bug 修复的热情，特别是在模型支持、IDE 集成和性能改进方面。
+今天的重要动态包括新增了“Organization policy"线功能与增强的Bash和Bash输出处理。同时还有一些重要的问题-任务与特性修复，详见以下更新内容。
 
 ### 版本发布
-无新版本发布。
+- ****新版本**** v.11. .61.发布
+  - 增加了“Organization policy"line到 "claude doctor”，包含错误加载提示。
+  -bashOutputMaxChars" "与"tkshMaxChars" 设置用于控制。
 
-### 社社区热点 Issues
-1 个最值得关注的 Issue:
-1
-1 、Issue #4776 [OPEN] [invalid] [BUG] Claude Code Desktop fails 起引导问题 错误 [ #https/g/github/com/anthropics/claoed-code/issues/D4777 ] ]
- - 作者: RonnatD 创建: 2226-04-3 说明: 该 Issue 涉及了关于模型加载和 UI 引导方面的的问题，对于 Windows 用户来说问题，这 4776 问题 次反馈后社区成员们对该问题非常关心，许多用户都 主要在此问题 夾行 铓链接: [查看 Issue 详情](https://github.com/anthropics/clauded-code/issues/4777)
+代码长度。
 
-2 、Issue #81atD [OPEN] [enhancement ] [area:hooks, arrea:plugins] Function Hooks -增强插件功能] [ https/g/github/content/com/anthropomp/c lachte-code/issues/D1888 ] ]
- - 作者: t  | 创建:  D226-0 onn 1 说明: 社区成员提此 关 提议，希望大家能够能通过 Fnunction Hooks 实现插件的功能可展开 扏细, 创建更强大而、更可控的 切合插件功能自定义。该提que 参数要 批注了许多使用者反馈, 铓链接: [查看 Issue 详情](https://github.com/an thropipes/c ladcode/issues/80atD)
+### 社区热点 Issues
+1从活动期内更新的的 Issues 中中，挑选出最值得关注的 以下5个热点话题：
 
-### 重要 PR 进展
-1 个重要的 PR:
- 1、PR #77779 [fix(security]: 改进全局路径匹配 [ #https/g/github.com/anthropopops/cl ade-code/pulls/D77779 ]
-  - 作者: andsmsam [ 创建:  " " 22 -1 - i - 说明: 该 PR 结 先 决了全局路径匹配符在特定条件下的 下下误的 问题， 解段 使用避免了误匹配的问题。该改进对于提升安全性 线路得 有重要的意义。 铌 铌 铏链接: [查看 PR 详情详情](https://github.com/anthropspl/c let/o-e-code/pulls/7D7"))
+ 11 **#4 776** [OPEN] [invalid] [BUG]Claudee Code Desktop 敾启 windows 资源包/重启动确 ]
+  - 铓接: [anthropolis///clauded code #uue/#4 776]( 问题重要的因为各它影响了用户的基本功能恢复，社区需要迅速对解决这个问题。
+  - 开 作者 RonRonGamzu，创建丂 ... "222--- "-4-4isue期间，更新最后一次访问为丌 *[2is8is5 *66”。
 
-### 功能需求趋势
-从所有 Issue 中 战扰出，社区最关 注 的 功能 方 向 主 ：
-1 、OIde 集成: 许多使用者反馈对能更好的 IDE 集成能带来更高效的工作流程。如 铌 说明: 提开发支持与第三方开发工具如内 能更能最好用户环境 。
- 2 、性能优化: 用户连续提 建议 出了关于可性能上的重点实，以提高启动时间响应 间性能为主与。 . 铌 说明: 高效性件能降低开发者工作 的6 提高了整体使用体验。
-  3 、新模型支持: 礱区持续 绅 绚 了 掭 模 新 哧 恐 最受 关 注，过 特别 是 些新 恿 官 的 术 合要 ** 确保代码能有效又精准地的 输出 和 感 昖 。’ 铌 说明: 新模型支持能提升开发者的创新能力，且能满足不同项目 的 术 术需求 。
+  - ** #  **#11887is. **[OPEN] [enhancement" is'[ unction Hooks �`」is是拓展脚本编写功能的关键一击，允许自定义深化功能。
+  - 铓 割: [anthroproplesis/cLAISed/is#is11181is 本钱该因为其重要的扩展性'capacity"，是社区开发者关心的重点。
+  - 作者: Faliseat，根据日期为 ***is *76*6is 期，更新最后一次访问为丌 ** * 6/**68 ** 。
 
-### 铓链接: [查看更多 Issue](https://github.com/anthropipspcs/c /dcode-de-core%issues)
+  -  **#**73428t [OPEN] [bug] [BUG]会上终端出现 . % [S essionX8脱 敃在修复终端批量处理问题导致的多个目录输入锁死
+  - 铏 掉: [anthropplcode/cLAISdeissiisis#77s4is
+  - 钑 从该 ISssX的在Int多个目录锁死和上 重要迹象可以看出，该问题影响一个很重要的 本地功能处理。社区迫切需要解决。
+
+### **重要 PR 进展
+-is  **#7777s [OPEN] fix(security-guide):改进 ** glob 路thag 处理
+  - 铓 拢: [anthropifips scLAIS 毡# 77j77
+  - 修志内容: 该 P)ici 死处理了 G)bl Bv 宠icide中的 * 及实际路径的问题，增加了 bn)amat 路法适处理。
+  -作者: Anislsam,a，创建日期:  ** * 0 1 6  7i
+
+  -  [IS_DEMO � 环境变量关闭工作台提示 提示
+  - 鑡 臓: [anthropp?/cLAIS s# 37877
+  - 修志内容: 尩DEMO 环境变量正确关闭界面提示提示，同时不会影响工作台与 Hook 实现。
+  - 作者: Peters,，创建日期:  0 ** 5 1  2。
+
+  is **功能需求趋势
+  -从收录的所有 Issues 凗归纳出血调最关注的功能方向是扩展性、性能优化与新模型支持。
+  -例如:
+  - 叩 # **IDE 集成**
+  - 铟 拎: [anthropposCK/clAUIS # #3 9  。
+  - 介绍内容: 开IDE 集成请求说明扩展了
+ is 作者: ***，创建日期:  。
+
+  - 攩 **性能优化**
+  - 镗 剋: [anthropps/cLAIs #2  "  。
+  -  巏程内容: 提出对改�算处理步骤减少日耗。
+  - 作者: ***，创建日期:  。
+
+### **开发呙关注点
+  -开发者反馈最积如的可的问题集中在终端输入卡死、功能展示期问题以及代码长度控制。这些问题可以预示下一缓的dev的重点。
+明确:
+
+  - 铥 作者: *** ，创建日期:  ** 両
+
+  - 铓 割: [anthropplisis/clgaeis/ # 1  。
 
 </details>
 
@@ -70,44 +99,46 @@ GitHub 文档过去222066-4-**D 一天内，主要涉及了几个重要的 Issue
 
 
 # OpenAI Codex 社区动态日报
-**日期：2026-09-06** | 数据来源：github.com/openai/codex
+**日期：2026-09-06** | 数据源：github.com/openai/codex
 
 ---
 
 ## 1. 今日速览
 
-过去24小时，OpenAI Codex 发布了 `rust-v0.153.3` 和 `v0.153.4` 两个版本，重点更新 GPT-6-Astra 模型支持及修复 Astra 可见性问题。Windows 桌面端的会话管理、自动压缩和 Computer Use 功能成为社区反馈集中点，共新增50条 Issue 和47条 PR。
+过去24小时Codex社区活跃度较高，**Windows桌面端**相关Issues集中爆发，涵盖安装包需求、Computer Use截图故障、启动卡顿等核心体验问题。官方持续推进**GPT-6-Astra**模型集成，并在TUI异步问答交互和Guardian V2安全指标方面取得多项PR进展。
 
 ---
 
 ## 2. 版本发布
 
-### rust-v0.153.4（最新）
-- **Bug 修复**：修复 Astra 在捆绑模型选择器中的可见性问题，未配置模型时默认使用 Astra
-- **Bug 修复**：更新 Astra 指导，异步问题仅在会话中可用工具时才触发
-- 链接：[Changelog](https://github.com/openai/codex)
+### rust-v0.153.4（2026-09-05）
+**Bug Fixes：**
+- 修复Astra在打包模型选择器中的可见性问题，未配置模型时默认选中Astra
+- 更新Astra指导逻辑，异步提问仅在工具可用时触发
 
-### rust-v0.153.3
-- **新功能**：GPT-6-Astra 新增至 Amazon Bedrock 模型选择器（Mantle 和 Runtime 全局/US 路由）
-- **Bug 修复**：修正 GPT-6-Astra 异步澄清问题的指导，使用支持的工具并识别仅接受文本
-- 链接：[Changelog](https://github.com/openai/codex)
+### rust-v0.153.3（2026-09-05）
+**New Features：**
+- 为Amazon Bedrock Mantle和Runtime全局/US路由添加GPT-6-Astra到模型选择器
+
+**Bug Fixes：**
+- 修正GPT-6-Astra异步澄清提问的指导逻辑，使用支持的工具并识别仅接受文本输入
 
 ---
 
 ## 3. 社区热点 Issues
 
-| 优先级 | Issue | 热度 | 摘要 |
-|--------|-------|------|------|
-| 🔥 | [#20951](https://github.com/openai/codex/issues/20951) | 👍47 · 💬18 | **VS Code 扩展支持以完整编辑器标签打开 Codex 会话** — 长期功能请求，对标 Claude Code 体验，社区呼声最高 |
-| 🔥 | [#41513](https://github.com/openai/codex/issues/41513) | 👍10 · 💬25 | **Windows Pets 点击穿透** — 内置和自定义浮动宠物无法点击/拖拽，影响桌面用户体验 |
-| 🔥 | [#41079](https://github.com/openai/codex/issues/41079) | 👍2 · 💬26 | **Windows 分页线程历史停滞** — 本地历史快照卡住，rollout JSONL 完整但 UI 未同步 |
-| 🔥 | [#40968](https://github.com/openai/codex/issues/40968) | 👍4 · 💬24 | **发送按钮无限旋转** — Windows 桌面端后续提示提交后按钮一直 spinning，无法发送 |
-| 🔥 | [#39989](https://github.com/openai/codex/issues/39989) | 👍1 · 💬20 | **已删除对话保留在 Recents** — Windows 桌面重启后已删除会话仍出现在最近列表中 |
-| ⚡ | [#35032](https://github.com/openai/codex/issues/35032) | 👍0 · 💬16 | **自动压缩后上下文仍占用80%** — 压缩完成但上下文计量器未释放，导致重复压缩和资源浪费 |
-| ⚡ | [#40014](https://github.com/openai/codex/issues/40014) | 👍3 · 💬15 | **子回合 UI 可见但 read_thread 返回空** — 完成子回合在界面可见，API 查询却无内容 |
-| ⚡ | [#26536](https://github.com/openai/codex/issues/26536) | 👍3 · 💬11 | **Computer Use 插件不可用** — Windows 端设置显示插件不可用，与文档宣称的 Windows 支持矛盾 |
-| ⚡ | [#41520](https://github.com/openai/codex/issues/41520) | 👍2 · 💬8 | **gpt-reserve 命令无法使用** — CLI 层面模型预留功能异常 |
-| ⚡ | [#41434](https://github.com/openai/codex/issues/41434) | 👍0 · 💬8 | **macOS OAuth 令牌交换失败** — 浏览器认证成功但 OAuth token 请求报错，curl 正常 |
+| 排名 | Issue | 热度 | 摘要 |
+|------|-------|------|------|
+| 1 | [#13993] 支持Windows独立安装程序 | 👍190/83评论 | 大量Windows用户无法通过Microsoft Store安装，请求提供传统`codex-setup.exe`安装包 |
+| 2 | [#25178] Windows Computer Use截图失败 | 👍20/43评论 | Windows 10 22H2上`get_window_state`调用报错`SetIsBorderRequired failed: 不支持此接口` |
+| 3 | [#20951] VS Code扩展支持完整编辑器标签页 | 👍47/18评论 | 请求类似Claude Code，将Codex会话以普通编辑器标签页形式打开 |
+| 4 | [#40968] 发送按钮一直旋转、提示无法提交 | 👍4/24评论 | Windows 11上Pro X5订阅用户反馈，发送后续问题后按钮无限旋转 |
+| 5 | [#39989] 已删除会话仍显示在最近记录中 | 👍1/20评论 | Windows桌面重启后，已删除的ChatGPT会话仍停留在Recents列表 |
+| 6 | [#29639] WSL工作区Browser Use Node REPL失败 | 👍7/19评论 | Windows Desktop配合WSL时，自动生成的`node_repl.exe`路径与Linux WSL不匹配 |
+| 7 | [#35032] 自动压缩后上下文仍占80% | 👍0/16评论 | 长运行任务中，压缩报告成功但上下文仍维持在80%，导致重复触发压缩和资源浪费 |
+| 8 | [#41339] AppX转型后启动被更新策略阻塞5+分钟 | 👍0/14评论 | Windows 11版本26.825.4187.0启动时等待in-app更新策略，导致严重卡顿 |
+| 9 | [#26536] Computer Use插件不可用 | 👍3/11评论 | Windows桌面设置页显示"Computer Use plugins unavailable"，但文档称已支持 |
+| 10 | [#43038] Astra更新后压缩耗时增加5倍 | 👍0/3评论 | 版本26.901.41600上自动/手动压缩性能显著下降 |
 
 ---
 
@@ -115,51 +146,47 @@ GitHub 文档过去222066-4-**D 一天内，主要涉及了几个重要的 Issue
 
 | PR | 状态 | 摘要 |
 |----|------|------|
-| [#42931](https://github.com/openai/codex/pull/42931) | ✅ Closed | **更新 OpenAI Docs 技能指导以支持 GPT-6 Astra** — 替换 GPT-5.6 Sol 迁移指南，更新模型元数据和兼容性检查 |
-| [#42879](https://github.com/openai/codex/pull/42879) | ✅ Closed | **模型选择器中列出 GPT-6-Astra** — 设置捆绑可见性为 `list`，优先展示 |
-| [#43002](https://github.com/openai/codex/pull/43002) | ✅ Closed | **用父响应 ID 替换 Guardian 票据** — 改进安全审查元数据传递机制 |
-| [#43005](https://github.com/openai/codex/pull/43005) | ✅ Closed | **添加 Guardian V2 失败原因和连接计时指标** — 分类指标增加 `failure_reason` 标签，WebSocket 连接增加耗时指标 |
-| [#42903](https://github.com/openai/codex/pull/42903) | ✅ Closed | **保留 TUI 问题状态并集成历史和队列导航** — 跨线程恢复保留草稿和选中状态 |
-| [#42891](https://github.com/openai/codex/pull/42891) | ✅ Closed | **异步问题集成到 TUI** — 支持显示、导航、回答和排队异步问题 |
-| [#42894](https://github.com/openai/codex/pull/42894) | ✅ Closed | **异步 TUI 问题支持可选答案** — 渲染编号 wrapped 选项，提交前需完全可见 |
-| [#42990](https://github.com/openai/codex/pull/42990) | ✅ Closed | **外部插件更新后刷新会话钩子** — 解决跨进程插件更新后钩子运行时过时问题 |
-| [#43043](https://github.com/openai/codex/pull/43043) | ✅ Closed | ** seeding agents overview 时避免文件系统扫描** — 使用 `use_state_db_only` 减少启动开销 |
-| [#42878](https://github.com/openai/codex/pull/42878) | ✅ Closed | **按工具可用性限定 Astra 异步问题指导** — 0.153 hotfix，防止在不可用会话中触发 |
+| [#43055] | OPEN | 允许`/copy`命令复制状态输出和单独字段，扩展了复制内容的可用性 |
+| [#43043] | CLOSED | 种子agents overview时跳过文件系统扫描，使用`use_state_db_only`加速启动 |
+| [#43039] | CLOSED | 通过`app/installed`刷新live thread工具，确保后续turns使用最新工具配置 |
+| [#43031] | CLOSED | 刷新后的MCP工具目录与客户端绑定，防止连接复用期间工具丢失 |
+| [#43005] | CLOSED | Guardian V2新增`failure_reason`标签和WebSocket连接耗时指标，提升可观测性 |
+| [#43002] | CLOSED | 用父响应ID替换Guardian票据，避免工具审查继承失败响应的ID |
+| [#42931] | CLOSED | 更新OpenAI Docs技能指导，将GPT-5.6 Sol迁移指南替换为GPT-6 Astra |
+| [#42904] | CLOSED | 为Default协作模式使用静态指令，移除模板渲染依赖 |
+| [#42891] | CLOSED | 将异步问题完整集成到TUI，支持导航、回答、队列和跳过 |
+| [#42879] | CLOSED | 在模型选择器中列出GPT-6-Astra，设置`list`可见性并更新快照 |
 
 ---
 
 ## 5. 功能需求趋势
 
-从 Issue 和 PR 中提取的社区关注方向：
-
-| 方向 | 热度 | 说明 |
-|------|------|------|
-| **新模型支持** | 🔥🔥🔥 | GPT-6-Astra 快速落地，模型选择器集成、文档更新、Bedrock 路由支持同步推进 |
-| **IDE 深度集成** | 🔥🔥🔥 | VS Code 扩展功能请求（#20951）获47👍，开发者期待类似 Claude Code 的完整标签页体验 |
-| **上下文管理优化** | 🔥🔥🔥 | 自动压缩效率、上下文计量准确性是高频痛点，多处 Issue 反映压缩后资源未释放 |
-| **跨平台一致性** | 🔥🔥 | Windows/macOS 行为差异明显，删除会话同步、OAuth 认证、Computer Use 支持等问题集中 |
-| **异步交互体验** | 🔥🔥 | TUI 异步问题支持、可选中答案、状态保持等 PR 密集合并，显示官方正在快速迭代该方向 |
-| **安全审查可观测性** | 🔥 | Guardian V2 指标和失败原因追踪增强，反映对可调试性的重视 |
+| 趋势方向 | 关注度 | 说明 |
+|----------|--------|------|
+| **Windows桌面体验优化** | 🔥🔥🔥 | 独立安装包、启动性能、Computer Use稳定性、会话同步等高频问题 |
+| **新模型支持** | 🔥🔥🔥 | GPT-6-Astra集成推进中，Amazon Bedrock路由适配和模型选择器可见性持续优化 |
+| **TUI交互增强** | 🔥🔥 | 异步问题支持、状态保留、导航集成等TUI功能持续迭代 |
+| **IDE集成深化** | 🔥🔥 | VS Code扩展作为完整标签页的功能需求强烈（#20951） |
+| **性能与资源管理** | 🔥 | 上下文压缩效率、启动扫描优化、Guardian指标完善 |
+| **多平台/W** | 🔥 | WSL兼容、路径映射、remote模式问题 |
 
 ---
 
 ## 6. 开发者关注点
 
-**高频痛点：**
+1. **Windows安装体验**：大量用户受限于企业策略或离线环境，独立安装包（.exe）需求强烈，#13993获190👍高票支持。
 
-1. **Windows 桌面端稳定性** — 发送按钮卡死、线程历史停滞、已删会话残留、Computer Use 插件缺失等多重问题集中在 Windows 平台，跨平台适配仍是薄弱环节。
+2. **Computer Use稳定性**：Windows端截图、插件可用性、浏览器标签页关闭崩溃等问题集中，影响自动化工作流可靠性。
 
-2. **上下文压缩效率** — 自动压缩后上下文仍占80%、重复触发压缩、压缩耗时增加5倍（#43038），直接影响长时间 Agent 会话的可用性和成本。
+3. **会话状态同步**：已删除会话在本地缓存中残留、远程会话重启后状态陈旧等问题影响用户体验一致性。
 
-3. **会话状态同步** — UI 显示与 API 返回不一致（#40014 read_thread 返回空）、本地历史快照与 rollout 不同步（#41079），影响开发者调试和工具链集成。
+4. **长任务性能**：自动压缩效率下降、上下文占用率异常、启动卡顿等性能问题在长运行场景中暴露明显。
 
-4. **认证与连接** — macOS OAuth 令牌交换失败（#41434）、gpt-reserve 命令异常（#41520），连接层问题阻碍 CLI 工作流程。
-
-5. **多代理协作可观测性** — 父代理无法确认子代理消息投递状态（#37744），缺乏确认/拒绝反馈，MultiAgentV2 的调试体验待改善。
+5. **多代理/工具链**：MCP工具目录刷新、多代理版本保留、async question提交等高级功能需求持续涌现。
 
 ---
 
-*报告生成时间：2026-09-06 | 分析师：Agnes (Sapiens AI)*
+*本报告基于2026-09-05至09-06期间的GitHub数据生成，仅供参考。*
 
 </details>
 
@@ -168,43 +195,103 @@ GitHub 文档过去222066-4-**D 一天内，主要涉及了几个重要的 Issue
 
 
 
-# Gemini CLI 社区动态日报 | 2026-09-06
+# Gemini CLI 社区动态日报
+
+**日期：2026-09-06**  
+**数据周期：过去24小时**
+
+---
 
 ## 1. 今日速览
-2026年9月6日，Gemini CLI 发布 `v0.60.0-nightly`，重点强化扩展环境变更的权限确认与沙箱路径边界检查。社区高度聚焦 Subagent 状态恢复、Shell 执行阻塞及 Agent 挂起等可靠性问题，多项安全与容器隔离 PR 进入核心审查，整体演进明确指向企业级安全加固与 Agent 执行稳定性优化。
+
+今日 Gemini CLI 发布 v0.60.0-nightly，重点修复了 extensions 环境变量安全拦截及工作空间路径边界检查问题。社区热点集中在 Agent 子代理挂起、浏览器 Agent 在 Wayland 下异常、以及 Auto Memory 系统的多项稳定性改进。安全团队持续推进沙箱隔离强化与 MCP 策略一致性修复。
+
+---
 
 ## 2. 版本发布
-**v0.60.0-nightly.20260905.g85aca163f**
-- 🔐 **扩展安全**：环境变更时强制弹出权限确认，并对可能篡改运行时的环境变量进行过滤（[#28863](https://github.com/google-gemini/gemini-cli/pull/28863)）
-- 🛡️ **核心安全**：增强工作区路径边界检查与符号链接解析，补齐命令执行层的安全校验（配套 [#29214](https://github.com/google-gemini/gemini-cli/pull/29214)）
 
-## 3. 社区热点 Issues（Top 10）
-1. **#22323** [P1/Bug] Subagent 达到 MAX_TURNS 后误报 GOAL success，掩盖实际中断状态（13 评论｜2 👍）—— 影响多步推理链的可靠性
-2. **#21409** [P1/Bug] Generalist agent 永久挂起，简单任务（如建文件夹）也无法完成（8 评论｜8 👍）—— 社区反馈最强烈的阻塞性问题
-3. **#19873** [P2/Enhancement] 基于 Zero-Dependency OS Sandboxing 发挥模型原生 Bash 能力（9 评论）—— 探索更安全、更符合模型训练偏好的执行路径
-4. **#22745** [P2/Enhancement] AST-aware 文件读取与搜索方案评估（7 评论）—— 旨在减少 token 浪费与工具调用轮次
-5. **#26525** [P2/Security] Auto Memory 日志确定性脱敏与日志量控制（5 评论）—— 解决敏感上下文过早进入模型的问题
-6. **#25166** [P1/Bug] Shell 命令执行结束后仍显示 `Waiting input`（4 评论｜3 👍）—— 核心交互体验痛点
-7. **#21983** [P1/Bug] Wayland 环境下 Browser subagent 启动失败（4 评论）—— 新兴桌面生态兼容缺口
-8. **#24246** [P2/Bug] 工具集 >128 个时触发 400 错误（3 评论）—— 规模化部署时的边界限制
-9. **#22672** [P2/Feature] 要求 Agent 主动抑制 `git reset --force` 等高风险操作（3 评论｜1 👍）—— 企业落地关键安全诉求
-10. **#22232** [P2/Feature] Browser agent 会话接管与锁恢复机制（4 评论）—— 提升长周期浏览器任务容错能力
+### v0.60.0-nightly.20260905.g85aca163f
 
-## 4. 重要 PR 进展（Top 10）
-1. [#29211](https://github.com/google-gemini/gemini-cli/pull/29211) `fix(cli)`：修复 React state updater 内嵌套调度状态更新导致的潜在竞态问题
-2. [#29200](https://github.com/google-gemini/gemini-cli/pull/29200) `fix(core)`：统一 MCP 运行时策略校验，支持大小写不敏感匹配与空白名单 fail-closed
-3. [#29116](https://github.com/google-gemini/gemini-cli/pull/29116) `fix(core)`：兼容 NTFS 8.3 短文件名（如 `git~1`），修复 Windows 路径遍历拦截误判
-4. [#29114](https://github.com/google-gemini/gemini-cli/pull/29114) `fix(core)`：为 `shellExecutionService` 添加重入锁，防止 spawn 失败时 `handleExit` 重复执行
-5. [#29215](https://github.com/google-gemini/gemini-cli/pull/29215) `fix(core)`：强制外部工具/MCP 输出信封元数据溯源，防止模型被伪造来源误导
-6. [#29110](https://github.com/google-gemini/gemini-cli/pull/29110) `fix(core)`：将 `read_file` 路由至 `FileSystemService`，补齐与 `write_file` 的架构一致性
-7. [#29216](https://github.com/google-gemini/gemini-cli/pull/29216) `fix(cli)`：容器沙箱内隔离 `~/.gemini` 配置目录，防止 OAuth Token 等凭证泄漏至宿主机
-8. [#29217](https://github.com/google-gemini/gemini-cli/pull/29217) `fix(config)`：修复 `--model gemini-2.5-flash` 被误识别并静默升版为 3.5 Flash 的配置覆盖问题
-9. [#29214](https://github.com/google-gemini/gemini-cli/pull/29214) `fix(sandbox)`：沙箱文件系统边界加固，解耦容器环境与宿主运行时状态
-10. [#29118](https://github.com/google-gemini/gemini-cli/pull/29118) `fix(extensions)`：仅剥离仓库名末尾的 `.git` 后缀，修复含 `.git` 字样的合法仓库解析失败
+**核心修复：**
+- **安全加固**：环境变更时提示用户确认，并清理可能篡改运行时的环境变量（#28863）
+- **路径安全**：增强工作空间路径边界检查与符号链接解析，防止路径遍历风险
+
+**关联 PR：**
+- [#29218](https://github.com/google-gemini/gemini-cli/pull/29218) - 自动版本 bump
+- [#28863](https://github.com/google-gemini/gemini-cli/pull/28863) - 环境变量安全修复
+
+---
+
+## 3. 社区热点 Issues
+
+| 优先级 | Issue | 热度 | 摘要 |
+|--------|-------|------|------|
+| P1 | [#22323](https://github.com/google-gemini/gemini-cli/issues/22323) | 13评论/2👍 | `codebase_investigator` 子代理在达到 MAX_TURNS 后仍报告 `GOAL success`，掩盖了实际中断情况 |
+| P1 | [#21409](https://github.com/google-gemini/gemini-cli/issues/21409) | 8评论/8👍 | Generalist Agent 调用子代理时永久挂起，简单操作（如文件夹创建）也会触发 |
+| P2 | [#22745](https://github.com/google-gemini/gemini-cli/issues/22745) | 7评论/1👍 | 评估 AST 感知文件读取/搜索的价值，减少 token 浪费并提升代码理解精度 |
+| P2 | [#21968](https://github.com/google-gemini/gemini-cli/issues/21968) | 6评论 | Gemini 自身不会主动使用自定义 Skills 和 Sub-agents，需用户显式指令 |
+| P2 | [#26525](https://github.com/google-gemini/gemini-cli/issues/26525) | 5评论 | Auto Memory 后台提取 agent 在模型处理前已读取本地传输内容，存在敏感信息泄露风险 |
+| P1 | [#25166](https://github.com/google-gemini/gemini-cli/issues/25166) | 4评论/3👍 | Shell 命令执行完成后仍显示 "Awaiting user input"，导致 CLI 假死 |
+| P3 | [#22232](https://github.com/google-gemini/gemini-cli/issues/22232) | 4评论 | Browser Agent 在遇到锁定浏览器 profile 时缺乏恢复机制，建议增加自动接管功能 |
+| P1 | [#21983](https://github.com/google-gemini/gemini-cli/issues/21983) | 4评论/1👍 | Browser Subagent 在 Wayland 环境下执行失败 |
+| P2 | [#28962](https://github.com/google-gemini/gemini-cli/issues/28962) | 3评论 | 扩展文档推荐的 `excludeTools` 格式实际无法匹配，导致危险命令未被拦截 |
+| P2 | [#26523](https://github.com/google-gemini/gemini-cli/issues/26523) | 3评论 | Auto Memory inbox 静默跳过无效 patch，缺乏可见性反馈 |
+
+---
+
+## 4. 重要 PR 进展
+
+| 状态 | PR | 类型 | 摘要 |
+|------|-----|------|------|
+| OPEN | [#29211](https://github.com/google-gemini/gemini-cli/pull/29211) | Bugfix | 修复 React state updater 嵌套调用导致的调度冲突问题 |
+| OPEN | [#29200](https://github.com/google-gemini/gemini-cli/pull/29200) | Security | 统一 MCP 策略运行时检查，空 allowlist 改为 fail-closed 模式 |
+| OPEN | [#29116](https://github.com/google-gemini/gemini-cli/pull/29116) | Bugfix | 修复 NTFS 8.3 短路径名（如 `git~1`）导致的权限检查绕过 |
+| OPEN | [#29114](https://github.com/google-gemini/gemini-cli/pull/29114) | Bugfix | 防止子进程 spawn 失败时 `handleExit` 被重复执行 |
+| OPEN | [#29215](https://github.com/google-gemini/gemini-cli/pull/29215) | Security | 强制外部工具输出使用信封元数据溯源，防止伪造作者身份 |
+| OPEN | [#29110](https://github.com/google-gemini/gemini-cli/pull/29110) | Bugfix | 将 `read_file` 通过 FileSystemService 路由，与 `write_file` 行为一致 |
+| OPEN | [#29216](https://github.com/google-gemini/gemini-cli/pull/29216) | Security | 沙箱容器内隔离 settings 目录，防止宿主 OAuth Token 等敏感信息泄露 |
+| OPEN | [#29217](https://github.com/google-gemini/gemini-cli/pull/29217) | Bugfix | 修复 `--model gemini-2.5-flash` 被错误自动升级到 3.5 Flash 的问题 |
+| OPEN | [#29214](https://github.com/google-gemini/gemini-cli/pull/29214) | Security | 强化沙箱文件系统边界，解析符号链接并隔离运行时状态 |
+| CLOSED | [#28951](https://github.com/google-gemini/gemini-cli/pull/28951) | Feature | PR 生成流水线：Cloud Run Job + Workflow 编排 + 部署自动化（已合并） |
+
+---
 
 ## 5. 功能需求趋势
-- **Agent 可靠性与自愈**：Subagent 挂起恢复、max turns 状态透传、浏览器会话接管成为近期迭代重心。
-- **执行安全与企业合规**：MCP 策略强制校验、环境变量过滤、容器配置
+
+从 Issues 和 PRs 中提炼出以下社区核心关注方向：
+
+| 方向 | 热度 | 说明 |
+|------|------|------|
+| **Agent 可靠性** | 🔥🔥🔥 | 子代理挂起、MAX_TURNS 恢复、Wayland 兼容性、Interactive prompt 卡死 |
+| **安全与沙箱** | 🔥🔥🔥 | MCP 策略一致性、环境变量安全、文件系统边界、符号链接防护 |
+| **Auto Memory 稳定性** | 🔥🔥 | 无效 patch 可见性、低信号 session 重试限制、敏感信息脱敏 |
+| **扩展系统** | 🔥 | Skills/Subagent 自动触发、excludeTools 文档修复、GitHub 仓库名解析 |
+| **性能与体验** | 🔥 | 终端 resize 性能优化、状态更新调度优化 |
+| **评估体系** | 🔥 | PR 生成评估流水线、LLM-as-Judge 打分、Diff 可视化对比 |
+
+---
+
+## 6. 开发者关注点
+
+**高频痛点：**
+
+1. **Agent 挂起问题频发**：Generalist Agent 和 Browser Agent 在多种场景下出现不可恢复挂起，用户被迫手动取消，严重影响使用体验（#21409, #21983, #22465）
+
+2. **子代理状态追踪不完善**：达到 MAX_TURNS 后错误报告成功状态，bugreport 不包含子代理上下文，调试困难（#22323, #21763）
+
+3. **Shell 执行假死**：简单命令执行后 CLI 持续显示 "Awaiting user input"，需反复验证是否为已知问题（#25166）
+
+4. **安全配置文档与实现不符**：`excludeTools` 文档示例格式无法匹配，扩展安全策略形同虚设（#28962）
+
+5. **NTFS/Windows 路径兼容**：8.3 短路径名绕过安全检查，Windows 开发者反馈较多（#29116）
+
+6. **自定义 Skills 未被自动调用**：用户配置了相关 skills，但 Agent 不会主动使用，需显式指令（#21968）
+
+**待改进方向：**
+- 增强 Agent 自我感知与上下文恢复能力
+- 完善沙箱隔离与敏感信息保护
+- 修复扩展系统的安全策略一致性
+- 提升对非 Linux 环境的兼容性测试覆盖
 
 </details>
 
@@ -212,163 +299,143 @@ GitHub 文档过去222066-4-**D 一天内，主要涉及了几个重要的 Issue
 <summary><strong>GitHub Copilot CLI</strong> — <a href="https://github.com/github/copilot-cli">github/copilot-cli</a></summary>
 
 # GitHub Copilot CLI 社区动态日报
-**日期**: 2026-09-06  
-**来源**: github.com/github/copilot-cli
+**日期**: 2026-09-06
+**分析师**: AI 开发工具技术分析团队
 
 ---
 
 ## 1. 今日速览
-- **新模型支持**：v1.0.84-1 版本新增了 GPT-6 Astra 模型支持，标志着 CLI 对最新生成式 AI 模型的集成迈出重要一步。
-- **环境兼容性**：Windows 25H2 环境下沙箱功能出现兼容性警告，Linux 环境下频繁出现内存溢出问题，社区反馈强烈。
-- **功能优化**：键盘快捷键、会话管理和模型上下文管理成为社区讨论最集中的方向，涉及输入体验、远程会话和性能优化。
+今日 Copilot CLI 发布了 **v1.0.84** 版本，主要引入了对 **GPT-6 Astra** 模型的支持，并修复了沙箱会话管理和凭证存储相关的关键问题。与此同时，社区活跃度保持高位，共更新了 **22 个 Issues**，主要集中在 **MCP (Model Context Protocol)** 生态兼容性、会话上下文管理以及 Windows 平台上的沙箱稳定性问题上。
 
 ---
 
 ## 2. 版本发布
+### v1.0.84 (2026-09-05)
+**新增功能**：
+- **GPT-6 Astra 支持**：CLI 现在原生支持最新的 GPT-6 Astra 模型，提升推理能力。
+- **沙箱会话禁用**：管理员现在可以通过批准的绕过提示，在会话期间禁用托管沙箱会话。
 
-### v1.0.84-1
-- **新增**: 支持 GPT-6 Astra 模型
-- **新增**: 支持从审批的绕过提示中禁用托管沙箱会话
-
-### v1.0.84-0
-- **新增**: 支持从审批的绕过提示中禁用托管沙箱会话
-- **修复**: 修复 PowerShell 中沙箱块在尝试运行外部命令时的问题
-- **修复**: 当凭据存储中有多个 GitHub 账户时，沙箱化 `gh` 命令的兼容性问题
-
----
-
-## 3. 社区热点 Issues（Top 10）
-
-| # | 标题 | 作者 | 摘要 | 反应 |
-|---|------|------|------|------|
-| **1857** | [键盘] 允许取消或移除排队中的消息 | dorlugasigal | 用户无法在代理忙碌或 `/compact` 时取消已通过 `Ctrl+Q` 排队的消息。 | 👍 28 |
-| **4328** | [键盘] WSL2 下 Ctrl+H 误识别为 Ctrl+Backspace | dimbleby | WSL2 环境下 Ctrl+H 行为异常，删除单个字符而非前一个单词。 | 👍 0 |
-| **4322** | [认证] 允许链接到 "Cyber program Trusted Access" | nmisch | 使用 Claude Opus 5 时遇到安全内容拦截，建议添加可信访问程序支持。 | 👍 0 |
-| **4652** | [沙箱] Windows 25H2 构建不支持沙箱 | JohannesZahn | 最新 Windows 版本启用沙箱时报错 "not supported on this host"。 | 👍 0 |
-| **3498** | [移动端] Android 远程会话 UI 无法渲染 | Jean-Aymeric | GitHub Mobile App 收到 WebSocket 数据但 UI 不显示内容。 | 👍 3 |
-| **4551** | [SSH] macOS 远程 SSH 会话复制功能失效 | Mariushrek | SSH 会话报告复制成功但剪贴板实际为空。 | 👍 1 |
-| **4725** | [Linux] 频繁 JavaScript 堆内存溢出 | jbulow | CLI 每几分钟崩溃，堆内存分配失败。 | 👍 0 |
-| **4722** | [渲染] Markdown 解析导致前导下划线丢失 | YiyaoZhangSGM | 输入 `_test` 时前导下划线被 Markdown 解析器剥离。 | 👍 0 |
-| **4721** | [MCP] Canvas 扩展参数序列化损坏 | arisng | JSON-RPC 序列化错误导致 `open_canvas` 参数被截断。 | 👍 0 |
-| **4724** | [上下文] 闲置时自动压缩对齐模型 TTL | travisbader | 建议在模型提示缓存 TTL 期间触发压缩，减少上下文重读开销。 | 👍 0 |
+**修复内容**：
+- **凭证存储**：解决在凭证存储中拥有多个 GitHub 账户时，沙箱环境无法正常识别的问题。
+- **PowerShell 兼容性**：修复了 PowerShell 中沙箱拦截命令执行的逻辑错误。
 
 ---
 
-## 4. 重要 PR 进展（Top 10）
-*注：过去24小时内无新 PR 更新，但以下为近期活跃或高价值 PR 梳理*
+## 3. 社区热点 Issues (Top 10)
 
-1. **[MCP] 工具取消后阻塞后续刷新** (Issue #4731)
-   - 问题：取消的 stdio MCP 服务器调用导致后续 `tools/list` 刷新超时，永久移除该服务器工具。
+1.  **[OPEN] MCP 工具列表刷新被取消的调用阻塞** (#4731)
+    *   **重要性**: 🔴 严重
+    *   **内容**: 当一个 stdio MCP 服务器的工具调用因超时被取消时，CLI 会错误地向同一个服务器发起 `tools/list` 刷新请求，导致该服务器工具在进程生命周期内永久失效。
+    *   **链接**: [github.com/github/copilot-cli/issues/4731](https://github.com/github/copilot-cli/issues/4731)
 
-2. **[研究代理] 内置研究代理调用不可用工具** (Issue #4729)
-   - 问题：`research` 子代理尝试调用 `github/get_me` 工具，但该工具未暴露。
+2.  **[OPEN] 内置研究代理调用不存在的 github/get_me 工具** (#4729)
+    *   **重要性**: 🟡 高
+    *   **内容**: `research` 子代理的提示词中包含了调用 `github/get_me` 的指令，但当前会话中提供的 GitHub MCP 服务器并不暴露该工具，导致推理过程混乱并泄露内部逻辑。
+    *   **链接**: [github.com/github/copilot-cli/issues/4729](https://github.com/github/copilot-cli/issues/4729)
 
-3. **[会话] 重载后缺少输入消息** (Issue #4726)
-   - 问题：VS Code 窗口重载后恢复会话时，`invoke_agent` 根事件缺少 `gen_ai.input.messages`。
+3.  **[OPEN] Canvas 工具参数被 JSON-RPC 序列化 Bug 损坏** (#4721)
+    *   **重要性**: 🟡 高
+    *   **内容**: 调用 canvas 扩展工具时，CLI 错误地在参数末尾拼接了 `}{}`，导致 JSON 解析失败，功能完全不可用。
+    *   **链接**: [github.com/github/copilot-cli/issues/4721](https://github.com/github/copilot-cli/issues/4721)
 
-4. **[本地插件] 交互式启动提示被忽略** (Issue #4723)
-   - 问题：使用本地插件自定义代理时，`-i/--interactive` 提示被静默丢弃。
+4.  **[OPEN] 自动更新覆盖原 `copilot.exe`，破坏桌面端应用** (#4728)
+    *   **重要性**: 🔴 严重
+    *   **内容**: 在终端运行 CLI 触发自动更新时，会重写启动时的 `copilot.exe`，导致已打开的 GitHub Copilot 桌面端应用无法恢复会话（报错 "Session unavailable"）。
+    *   **链接**: [github.com/github/copilot-cli/issues/4728](https://github.com/github/copilot-cli/issues/4728)
 
-5. **[会话] 持久化会话忽略模型参数** (Issue #4645)
-   - 问题：`session.resume` 请求的 `model` 参数被忽略，使用持久化模型。
+5.  **[OPEN] WSL2 下 Ctrl+H 被误读为 Ctrl+Backspace** (#4328)
+    *   **重要性**: 🟡 高
+    *   **内容**: Windows Terminal 的环境变量泄漏导致快捷键冲突，删除字符功能失效。
+    *   **链接**: [github.com/github/copilot-cli/issues/4328](https://github.com/github/copilot-cli/issues/4328)
 
-6. **[模型] 最大输出 Token 触发时事件丢失** (Issue #4733)
-   - 问题：BYOK 使用下，输出被截断后后续请求丢失。
+6.  **[OPEN] 远程 SSH 会话在 macOS 上剪贴板功能失效** (#4551)
+    *   **重要性**: 🟡 中
+    *   **内容**: 远程会话报告复制成功，但 macOS 剪贴板内容实际为空。
+    *   **链接**: [github.com/github/copilot-cli/issues/4551](https://github.com/github/copilot-cli/issues/4551)
 
-7. **[桌面应用] 合并后变更标签页不更新** (Issue #4727)
-   - 问题：桌面应用会话 PR 合并后，变更标签页仍显示旧状态。
+7.  **[OPEN] 输入框不支持 Shift+箭头和 Ctrl+A 选择文本** (#2644)
+    *   **重要性**: 🟢 体验优化
+    *   **内容**: 请求支持标准文本选择快捷键，提升长文本编辑体验。
+    *   **链接**: [github.com/github/copilot-cli/issues/2644](https://github.com/github/copilot-cli/issues/2644)
 
-8. **[移动端] Android 会话渲染静态文本** (Issue #3498)
-   - 问题：Android 端仅显示静态确认文本，内容不渲染。
+8.  **[OPEN] 会话中断后 `invoke_agent` 事件缺少输入消息** (#4726)
+    *   **重要性**: 🟡 中
+    *   **内容**: VS Code 窗口重载导致 Agent Host 重连后，事件追踪数据不完整，缺少 `gen_ai.input.messages`。
+    *   **链接**: [github.com/github/copilot-cli/issues/4726](https://github.com/github/copilot-cli/issues/4726)
 
-9. **[键盘] Shift+箭头和 Ctrl+A 选择支持** (Issue #2644)
-   - 问题：输入框不支持标准 GUI 文本选择快捷键。
+9.  **[OPEN] 输入内容前导下划线在 Markdown 解析中被丢弃** (#4722)
+    *   **重要性**: 🟢 体验优化
+    *   **内容**: 以 `_test` 开头的文本在气泡中显示时丢失下划线，影响 Markdown 渲染准确性。
+    *   **链接**: [github.com/github/copilot-cli/issues/4722](https://github.com/github/copilot-cli/issues/4722)
 
-10. **[配置] 可配置自动压缩阈值** (Issue #1688)
-    - 问题：建议允许配置 `config.json` 中的自动压缩阈值以优化大模型性能。
+10. **[OPEN] 模型输出被截断后，后续事件丢失** (#4733)
+    *   **重要性**: 🟡 中
+    *   **内容**: 当输出超过 `max_output_tokens` 时，当前响应和后续的 "continue" 请求都会丢失。
+    *   **链接**: [github.com/github/copilot-cli/issues/4733](https://github.com/github/copilot-cli/issues/4733)
+
+---
+
+## 4. 重要 PR 进展
+*注：过去24小时内无新的 PR 更新。*
 
 ---
 
 ## 5. 功能需求趋势
+从今日更新的 Issues 中，社区关注点呈现以下趋势：
 
-### 🚀 核心技术方向
-1. **新模型集成**：GPT-6 Astra、Claude Opus 5、GPT-5 mini 等新模型支持及安全策略（Cyber program Trusted Access）。
-2. **MCP 工具生态**：工具列表刷新、取消机制、Canvas 扩展参数序列化成为高频问题。
-3. **上下文管理优化**：自动压缩、提示缓存 TTL 对齐、大模型性能瓶颈解决方案。
-
-### 🛠️ 开发者体验
-1. **输入交互**：键盘快捷键（Ctrl+H、Shift+箭头）、消息队列取消、Markdown 解析。
-2. **跨平台兼容性**：WSL2、Windows 25H2、macOS SSH 会话、Linux 内存管理。
-3. **远程会话**：GitHub Mobile App、SSH 会话、桌面应用状态同步。
+1.  **MCP 生态稳定性**：多个 Issue (#4731, #4721, #4729) 反映了 MCP (Model Context Protocol) 工具调用的稳定性问题，包括序列化错误、资源竞争和工具定义不匹配。这是 Copilot CLI 向插件化生态扩展的关键瓶颈。
+2.  **上下文管理与会话恢复**：大量 Issue (#4726, #4724, #4645) 聚焦于会话中断后的状态恢复和上下文记忆。开发者急需更健壮的会话持久化和上下文压缩机制。
+3.  **跨平台兼容性**：Windows (WSL2, 25H2) 和 macOS (SSH, 剪贴板) 平台的兼容性问题依然突出，特别是沙箱功能的稳定性。
 
 ---
 
 ## 6. 开发者关注点
-
-### 🔴 高频痛点
-- **内存溢出**：Linux 环境下频繁崩溃，影响开发连续性。
-- **安全拦截**：Cyber program 安全策略限制 Claude Opus 5 使用。
-- **沙箱兼容性**：Windows 25H2 构建不支持沙箱功能。
-- **工具序列化**：Canvas 扩展参数损坏导致功能失效。
-
-### 🟢 热门需求
-- **交互优化**：支持消息队列取消、文本选择快捷键、Markdown 渲染修复。
-- **模型配置**：允许动态切换会话模型、配置自动压缩阈值。
-- **跨平台修复**：WSL2 键盘行为、SSH 复制功能、Android UI 渲染。
-
----
-
-**链接汇总**:
-- [GitHub Copilot CLI](https://github.com/github/copilot-cli)
+*   **性能瓶颈**：频繁出现的 JavaScript 堆内存溢出 (#4725) 表明 CLI 在处理大量上下文或长任务时存在资源管理问题。
+*   **输入体验**：标准文本选择功能缺失 (#2644) 和键盘快捷键冲突 (#4328) 虽然属于体验优化，但在高频使用场景下显著影响效率。
+*   **桌面端集成**：CLI 更新破坏桌面端应用 (#4728) 和桌面端变更标签页不刷新 (#4727) 暴示了桌面应用与 CLI 客户端之间版本同步机制的脆弱性。
 
 </details>
 
 <details>
 <summary><strong>Kimi Code CLI</strong> — <a href="https://github.com/MoonshotAI/kimi-cli">MoonshotAI/kimi-cli</a></summary>
 
-**日报日期**：2026-09-06
-**关注项目**：MoonshotAI/kimi-cli
+**Kimi Code CLI 社区动态日报**
+**日期**: 2026-09-06
+**来源**: MoonshotAI/kimi-cli
 
 ---
 
 ### 1. 今日速览
-过去 24 小时内，Kimi Code CLI 项目保持稳定，无新版本发布。社区主要聚焦于 **IDE 集成体验优化** 和 **文档完善**。其中，VS Code 扩展的流式文本渲染丢失字符的 Bug 获得关注，而关于第三方 Coding Agent 集成的文档需求也引发了讨论。
+今日社区动态主要集中在 **IDE 扩展体验优化** 与 **文档完善** 上。开发者反馈 VS Code 扩展在流式渲染过程中存在字符丢失问题，同时呼吁在第三方 Coding Agent（如 Claude Code）中的集成文档更加详尽，以降低使用门槛。
 
 ### 2. 版本发布
-*暂无新版本发布*
+无新版本发布。
 
 ### 3. 社区热点 Issues
 
-1.  **[IDE集成] VS Code 扩展流式文本渲染字符丢失** (Issue #2635)
-    *   **重要性**：高 - 影响用户体验和工具的可靠性。
-    *   **详情**：用户反馈在 Kimi Code VS Code 扩展的聊天面板中，助手回复的文本偶尔会丢失单个字符。经验证，模型输出完整，问题出在渲染或复制层。
-    *   [查看 Issue #2635](https://github.com/MoonshotAI/kimi-cli/issues/2635)
+1.  **[Feature Request] 在第三方 Coding Agent 中使用文档不够完善**
+    *   **重要性**: 核心功能集成体验
+    *   **摘要**: 用户在 Claude Code 中使用 Kimi K2 Thinking 模型时，关于 Tab 切换模型的说明过少。同时，用户希望能改进 `export` 变量的繁琐方式，参考智谱 AI 的文档提供更便捷的配置方案。
+    *   **链接**: [GitHub Issue #1210](https://github.com/MoonshotAI/kimi-cli/issues/1210)
 
-2.  **[文档/增强] Claude Code 中使用 Kimi K2 Thinking 的集成指南缺失** (Issue #1210)
-    *   **重要性**：中 - 影响第三方工具的采纳率。
-    *   **详情**：用户希望在文档中补充关于如何在 Claude Code 中使用 Tab 键切换 Kimi K2 Thinking 模型的详细说明，并建议参考智谱 AI 的文档格式来优化环境变量配置的说明，使其更便捷。
-    *   [查看 Issue #1210](https://github.com/MoonshotAI/kimi-cli/issues/1210)
+2.  **[Bug Report] VS Code 扩展流式渲染字符丢失**
+    *   **重要性**: 核心稳定性与体验
+    *   **摘要**: Kimi Code VS Code 扩展的聊天面板中，助手的回复文本偶尔会出现单个字符丢失的情况。经确认，模型底层输出是完整的，问题出在渲染层或复制层。
+    *   **链接**: [GitHub Issue #2635](https://github.com/MoonshotAI/kimi-cli/issues/2635)
 
 ### 4. 重要 PR 进展
 
-1.  **[修复] 修复 StrReplaceFile 在链式编辑中的替换计数错误** (PR #2524)
-    *   **详情**：该 PR 修正了 `StrReplaceFile` 工具的行为。之前它基于*原始*文件内容计算替换计数，导致无法正确识别由前序编辑生成的 `old` 字符串（链式编辑）的替换情况。现在它会根据运行时的当前内容进行计算。
-    *   [查看 PR #2524](https://github.com/MoonshotAI/kimi-cli/pull/2524)
+1.  **[Fix] 修复 StrReplaceFile 对链式编辑的计数错误**
+    *   **内容**: `StrReplaceFile` 工具按顺序应用编辑，但之前的逻辑是针对*原始文件内容*计算替换计数。这导致当后续编辑依赖于前一次编辑产生的旧文本时，计数不准确。PR 修复了该逻辑，确保计数基于运行时内容。
+    *   **链接**: [GitHub PR #2524](https://github.com/MoonshotAI/kimi-cli/pull/2524)
 
 ### 5. 功能需求趋势
-
-根据今日更新的 Issues，社区关注点主要集中在以下方向：
-
-*   **第三方 IDE/Agent 集成**：
-    *   社区对将 Kimi Code CLI 嵌入到其他 Coding Agent（如 Claude Code）中的需求日益增长。
-    *   **痛点**：缺乏标准化的环境变量配置指南和详细的集成文档，导致开发者上手门槛较高。
-*   **IDE 扩展稳定性**：
-    *   VS Code 扩展的渲染层存在偶发性 Bug，影响了开发者的信心。
+*   **IDE 集成与配置简化**: 社区强烈关注如何在主流 IDE（如 VS Code）及第三方 Coding Agent 中无缝切换和使用 Kimi 模型，并要求文档提供标准化的配置指南（如环境变量导出）。
+*   **渲染稳定性**: 流式文本渲染的准确性（字符不丢失）成为开发者最迫切的功能需求之一。
 
 ### 6. 开发者关注点
-
-*   **文档标准化**：开发者希望核心功能（特别是第三方集成）的文档能更加详尽，提供参考模板（如智谱 AI 的文档结构）。
-*   **工具健壮性**：文件替换工具在处理复杂编辑链时的计数逻辑需要更加精确，以确保开发者能获得准确的反馈。
+*   **配置繁琐**: 目前在第三方 Agent 中使用 Kimi 需要手动导出变量，操作不便，急需提供一键集成方案。
+*   **UI 渲染 Bug**: VS Code 扩展的流式输出在渲染层存在数据丢失，影响阅读体验，需优先修复。
 
 </details>
 

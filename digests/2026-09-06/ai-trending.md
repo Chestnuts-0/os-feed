@@ -1,6 +1,6 @@
 # AI 开源趋势日报 2026-09-06
 
-> 数据来源: GitHub Trending + GitHub Search API | 生成时间: 2026-09-05 16:16 UTC
+> 数据来源: GitHub Trending + GitHub Search API | 生成时间: 2026-09-05 16:44 UTC
 
 ---
 

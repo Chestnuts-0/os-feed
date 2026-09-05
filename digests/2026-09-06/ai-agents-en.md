@@ -1,6 +1,6 @@
 # OpenClaw Ecosystem Digest 2026-09-06
 
-> Issues: 500 | PRs: 500 | Projects covered: 13 | Generated: 2026-09-05 16:16 UTC
+> Issues: 500 | PRs: 500 | Projects covered: 13 | Generated: 2026-09-05 16:44 UTC
 
 - [OpenClaw](https://github.com/openclaw/openclaw)
 - [NanoBot](https://github.com/HKUDS/nanobot)
@@ -20,69 +20,7 @@
 
 ## OpenClaw Deep Dive
 
-### OpenClaw Project Digest - 2026-09-06
-
-#### Today's Overview
-OpenClaw continues to be an actively maintained and evolving project, with 500 issues and 500 pull requests updated in the last 24 hours. The community remains highly engaged, with multiple active discussions and ongoing contributions. Notably, there are 458 open issues and 381 open pull requests, reflecting the project's complexity and the ongoing efforts to enhance and stabilize the platform.
-
-#### Releases
-No new releases were published today. The project is currently in a development phase, focusing on addressing existing issues and implementing new features.
-
-#### Project Progress
-- **PR Merges/Closures**:
-  - **Performance**: PR #136073, which optimizes log redaction and approval-display masking by avoiding temporary arrays, has been updated and is ready for maintainer review.
-  - **Fixes**:
-    - PR #139125, addressing SDK consumer timeout events, is now ready for maintainer look.
-    - PR #136158, which rejects unknown proxy query presets, is also ready for review.
-    - PR #137351, fixing the bootstrap size report to include files added by the `bootstrap-extra-files` hook, has been updated and is ready for review.
-
-#### Community Hot Topics
-- **[P1] Steer mode does not inject messages mid-turn for main sessions (20 comments)**: Issue #48003 highlights a critical bug where `messages.queue.mode: "steer"` fails to inject user messages into the active main session turn. This is causing significant user frustration and has been linked to a recent commit.
-  - [GitHub Issue #48003](https://github.com/openclaw/openclaw/issues/48003)
-- **[P2] Tiered bootstrap file loading for progressive context control (17 comments)**: Issue #22438 proposes a feature to reduce token waste by tiering bootstrap file loading based on context relevance.
-  - [GitHub Issue #22438](https://github.com/openclaw/openclaw/issues/22438)
-- **[P0] "Cannot convert undefined or null to object" in 2026.3.2 with google-vertex/gemini-3.1-pro-preview (15 comments)**: Issue #38327 reports a regression affecting the Google Vertex API, causing the embedded agent to fail with a type error.
-  - [GitHub Issue #38327](https://github.com/openclaw/openclaw/issues/38327)
-
-#### Bugs & Stability
-- **Critical**:
-  - **[P0] "Cannot convert undefined or null to object" in 2026.3.2 with google-vertex/gemini-3.1-pro-preview (3 reactions)**: This regression is a high-priority issue affecting the Google Vertex API.
-    - [GitHub Issue #38327](https://github.com/openclaw/openclaw/issues/38327)
-  - **[P0] Codex OAuth refresh succeeds but cron/heartbeat fail with 10s auth refresh timeout (2 reactions)**: A critical bug where OAuth refreshes succeed, but cron and heartbeat tasks fail due to a timeout.
-    - [GitHub Issue #89278](https://github.com/openclaw/openclaw/issues/89278)
-- **Major**:
-  - **[P1] Steer mode does not inject messages mid-turn for main sessions (4 reactions)**: This bug is affecting the message handling in main sessions.
-    - [GitHub Issue #48003](https://github.com/openclaw/openclaw/issues/48003)
-  - **[P1] AgentSelectionRequiredError floods logs under explicit multi-agent ownership (14 reactions)**: Logs are being flooded due to missing agent ID targets in multi-agent configurations.
-    - [GitHub Issue #126360](https://github.com/openclaw/openclaw/issues/126360)
-
-#### Feature Requests & Roadmap Signals
-- **[P3] Built-in headless browser for reliable web access without external dependencies (12 comments)**: Feature request to bundle a headless Chromium instance for reliable web access.
-  - [GitHub Issue #53763](https://github.com/openclaw/openclaw/issues/53763)
-- **[P2] Feature Request: Configurable streaming watchdog timeout threshold (8 reactions)**: Users are requesting a configurable timeout to prevent the streaming watchdog from triggering too frequently.
-  - [GitHub Issue #68596](https://github.com/openclaw/openclaw/issues/68596)
-- **[P2] Feature Request: Configurable upload size limit for Control UI (7 reactions)**: A feature to allow users to set a maximum file upload size in the Control UI.
-  - [GitHub Issue #71142](https://github.com/openclaw/openclaw/issues/71142)
-
-#### User Feedback Summary
-- **Pain Points**:
-  - **Message injection and session handling**: Users are experiencing issues with message injection and session state, particularly in multi-agent environments and when using specific models like Google Vertex.
-  - **Token usage and context bloat**: There are multiple reports of excessive token usage and context bloat, which can lead to performance degradation and higher costs.
-  - **OAuth and authentication**: Issues with OAuth refresh and authentication timeouts are causing significant disruptions, especially in automated workflows.
-- **Use Cases**:
-  - **Web access and automation**: Users are looking for reliable web access and automation capabilities, with a focus on reducing dependencies on external APIs.
-  - **Context management and efficiency**: There is a strong demand for features that optimize token usage and improve context management to enhance performance and reduce costs.
-
-#### Backlog Watch
-- **Long-Unanswered Important Issues/PRs**:
-  - **[P1] SQLite snapshot restore lacks end-to-end crash and identity guarantees (13 comments)**: A critical issue affecting data integrity during SQLite snapshot restores.
-    - [GitHub Issue #113306](https://github.com/openclaw/openclaw/issues/113306)
-  - **[P1] Per-turn send budget for the message tool (within-turn duplicate-answer storms) (7 comments)**: A feature request to introduce a send budget to prevent duplicate answers within a single turn.
-    - [GitHub Issue #119992](https://github.com/openclaw/openclaw/issues/119992)
-  - **[P1] Reliable tool parameter handling after long conversations (11 comments)**: A critical bug where tool parameters are silently dropped after extended conversations.
-    - [GitHub Issue #53408](https://github.com/openclaw/openclaw/issues/53408)
-
-Maintainers are encouraged to prioritize these issues to ensure the project's continued stability and user satisfaction.
+⚠️ Summary generation failed.
 
 ---
 
@@ -111,49 +49,47 @@ Maintainers are encouraged to prioritize these issues to ensure the project's co
 <details>
 <summary><strong>PicoClaw</strong> — <a href="https://github.com/sipeed/picoclaw">sipeed/picoclaw</a></summary>
 
-# PicoClaw Project Digest
+**PicoClaw Project Digest**
 **Date:** 2026-09-06
-**Repository:** sipeed/picoclaw
+**Repository:** [sipeed/picoclaw](https://github.com/sipeed/picoclaw)
 
 ### 1. Today's Overview
-Activity on the PicoClaw repository has remained moderate with **2 active issues** and **7 pull requests** processed today. The development cycle appears stable, focused on maintaining existing infrastructure through a series of merge PRs and documentation enhancements. The project is currently in a maintenance phase, addressing technical debt and refining the user experience without releasing new major versions.
+Activity on the PicoClaw repository remained stable with a focus on maintenance and documentation rather than new features. The project saw a healthy flow of Pull Requests, with 5 merged and closed items consolidating recent fixes, while 2 open issues were logged. The repository demonstrates steady maintenance, primarily addressing stability, security hardening, and user experience improvements for the Web UI.
 
 ### 2. Releases
-**No new releases** were published in the last 24 hours. The project is operating on version 0.3.1 based on the most recent active bug report.
+**No new releases were published in the last 24 hours.**
 
 ### 3. Project Progress
-*   **Closed PRs (5):** The majority of activity involved merging previous fix PRs. Maintainer `xuwei-xy` merged three large batches of bug fixes (PRs #1559, #1545, #1555) and one specific fix for media handling and DoS hardening (PR #1541).
-*   **Open PRs (2):** Two documentation PRs are currently open. PR #3368 adds a setup example for the Parallel Search MCP, while PR #3367 integrates the Pilot Protocol setup command and clarifies health-check procedures.
+The project made significant progress in consolidating technical debt and improving documentation today:
+*   **Maintenance & Stability:** A series of closed PRs merged bug fixes from previous pull requests (#1559, #1545, #1555, #1541), specifically addressing media temp directory management, channel DoS hardening, and DeepWiki badge updates.
+*   **Documentation:** Two new documentation PRs were opened (#3368, #3367) to guide users on setting up the Parallel Search and Pilot MCP (Model Context Protocol) tools within the native CLI and Web UI.
 
 ### 4. Community Hot Topics
-*   **Long Message Handling in IRC (#3287):** A feature request regarding IRCv3 protocol support for long messages.
-    *   *Analysis:* Users report that PicoClaw fails to interpret messages split by IRC clients (exceeding 512 bytes) as a single cohesive unit, creating a poor user experience in chat contexts.
-*   **Web UI Lag (#3281):** A performance issue affecting the chat interface.
-    *   *Analysis:* Users experience severe input lag as chat history grows, suggesting potential inefficiencies in rendering or state management.
+The community is currently focused on optimizing the Web interface and handling complex communication protocols like IRC.
+
+*   **Web UI Performance (Issue #3281):**
+    *   **Status:** Open
+    *   **Link:** [sipeed/picoclaw Issue #3281](https://github.com/sipeed/picoclaw/issues/3281)
+    *   **Analysis:** With 9 comments and 2 reactions, this is the most discussed topic. Users report severe lag when typing in the chat input box as history grows. This suggests a performance regression or inefficient state management in the frontend rendering logic.
+
+*   **IRC Protocol Support (Issue #3287):**
+    *   **Status:** Open (Marked [stale])
+    *   **Link:** [sipeed/picoclaw Issue #3287](https://github.com/sipeed/picoclaw/issues/3287)
+    *   **Analysis:** This feature request targets IRCv3 message handling. Users need the agent to intelligently reassemble fragmented messages (split beyond 512 bytes) and distinguish between message boundaries and newlines.
 
 ### 5. Bugs & Stability
-*   **Web UI Input Lag (High Severity):** Reported by `xpader`, the input box becomes "very laggy" when chat history is long. This impacts the usability of the web interface significantly.
-    *   *Status:* Open (9 comments, 2 reactions).
-*   **MCP Server Hang (Resolved):** A critical bug causing the agent loop to hang when an MCP server connection fails has been addressed.
-    *   *Status:* Closed via PR #3337.
+*   **Web UI Lag (Issue #3281):** High Severity. The Web UI becomes unresponsive with minimal chat history. This affects the primary user interaction point and significantly degrades the user experience.
+*   **MCP Failure Hang (PR #3337 - Closed):** A critical bug where the agent loop hangs indefinitely if an MCP (Model Context Protocol) server connection fails. While a fix was merged, it is a critical stability fix that prevents the chat interface from becoming unresponsive during network errors.
 
 ### 6. Feature Requests & Roadmap Signals
-*   **IRC Protocol Enhancement:** Users are requesting better handling of IRCv3 long messages. This suggests a need for the agent to be more robust against network fragmentation.
-*   **Documentation Expansion:** The open PRs indicate a push to improve onboarding and configuration guides for external tools (Parallel Search, Pilot Protocol).
+*   **Long Message Support (IRC):** The request for better handling of long messages in IRC indicates a roadmap item for protocol extensibility. This aligns with the "Agent" nature of PicoClaw, requiring it to act as a robust bridge between fragmented network protocols and LLMs.
+*   **MCP Tooling:** The addition of Parallel Search and Pilot Protocol documentation signals a push to expand the ecosystem of available tools and integrations, likely for the next major version update.
 
 ### 7. User Feedback Summary
-*   **Dissatisfaction:** Users are expressing frustration with the responsiveness of the Web UI as sessions accumulate history. The lag is described as "very laggy," preventing smooth interaction.
-*   **Use Cases:** The IRC feature request highlights a desire for PicoClaw to function as a robust bot in IRC environments, specifically handling protocol edge cases.
+Users are expressing frustration regarding the responsiveness of the Web UI. The feedback highlights that as sessions grow, the interface becomes sluggish, making real-time interaction difficult. Conversely, the documentation feedback is constructive, aiming to streamline the setup process for MCP tools without requiring external API keys immediately.
 
 ### 8. Backlog Watch
-*   **Stale Issues:** Several long-standing issues remain open without recent activity, including a general "stale" tag on the IRC feature request and other older bugs.
-
----
-**Links:**
-*   [Issue #3287: Better support long messages in IRC](https://github.com/sipeed/picoclaw/issues/3287)
-*   [Issue #3281: Web UI chat input is very laggy](https://github.com/sipeed/picoclaw/issues/3281)
-*   [PR #3368: docs: add Parallel Search MCP setup example](https://github.com/sipeed/picoclaw/pull/3368)
-*   [PR #3367: docs: add Pilot MCP setup example](https://github.com/sipeed/picoclaw/pull/3367)
+*   **Issue #3287 (IRC Long Messages):** This issue has been marked as "stale" but has seen recent activity. It addresses a complex protocol parsing issue that may require specific maintenance attention to prevent future integration errors.
 
 </details>
 
@@ -164,69 +100,108 @@ Activity on the PicoClaw repository has remained moderate with **2 active issues
 
 # NanoClaw Project Digest — 2026-09-06
 
+---
+
 ## 1. Today's Overview
 
-NanoClaw is experiencing **high contributor activity** with 15 PRs updated in the last 24 hours, signaling strong development momentum. However, the project has **no new releases** and only **1 open issue**, suggesting the bulk of recent work remains in review and has not yet shipped to users. The dominant theme across PRs is a major **provider contract refactoring** led by zvi-fried, alongside hardening of skills installation and agent-to-agent messaging. Community engagement is currently low on issues (0 reactions on the sole tracked issue), but the PR volume indicates an active core team driving architectural improvements.
+NanoClaw shows moderate daily activity with 15 PR updates and 1 issue update in the last 24 hours. No new releases were shipped today. The project is in an active consolidation phase: the core team is heavily focused on unifying provider contracts, hardening the skills installation surface, and stabilizing agent-to-agent (A2A) communication. One critical production bug remains open regarding an unbounded memory leak in the PreCompact hook. Overall project health is solid—development velocity is high, but stability work is catching up to feature velocity.
+
+---
 
 ## 2. Releases
 
-**No new releases** were published in the last 24 hours. The most recent closed PR (#2403) replaced `bump-version` with an explicit Release workflow + concurrency guard, which should improve release reliability going forward, but no version bump has accompanied it yet.
+**No new releases today.** The most recently closed PR (#2403) updated the release workflow itself, replacing `bump-version` with an explicit CI release workflow and concurrency guard, but this did not ship a new version tag.
+
+---
 
 ## 3. Project Progress
 
-**Merged today:**
-- **#2403** — Replaced the `bump-version` CI step with an explicit Release workflow plus concurrency guard, reducing the risk of parallel release runs corrupting version state. [PR #2403](https://github.com/nanocoai/nanoclaw/pull/2403)
+### Merged / Closed Today
 
-**PRs advanced (open, under active review):**
-- **#3584, #3586, #3588, #3591, #3592** — A coordinated refactor series implementing enforced provider contracts (Codex, OpenCode), rendering provider instructions from core-owned canon, and adding a `speed` inference property to agent groups.
-- **#3355, #3356** — New Cursor Agent SDK provider payload and `/add-cursor` install skill.
-- **#3718, #3719** — Agent-to-agent messaging fixes preserving sender identity and surfacing communication failures to originating chats.
-- **#3720, #3721, #3724** — Skills hardening: opt-in source installation with guarded recovery, explicit install requirements respecting operator policy, and a retired Anthropic model ID correction.
-- **#3717** — Prompt injection escape fix for embedded payloads in composed blocks.
+- **#2403** — [ci: replace bump-version with explicit Release workflow + concurrency guard](https://github.com/nanocoai/nanoclaw/issues/2403) (Author: glifocat, Closed 2026-09-05)
+  - Replaced the previous version-bumping mechanism with a dedicated Release workflow that includes a concurrency guard, reducing the risk of duplicate or overlapping release runs.
+
+### Actively Advanced Today (Open PRs)
+
+| PR | Area | Summary |
+|---|---|---|
+| [#3586](https://github.com/nanocoai/nanoclaw/pull/3586) | providers | Refactor: declare the setup provider contract and install verifier |
+| [#3588](https://github.com/nanocoai/nanoclaw/pull/3588) | providers | Refactor: implement the OpenCode provider contract |
+| [#3584](https://github.com/nanocoai/nanoclaw/pull/3584) | providers | Refactor: implement the Codex provider contract |
+| [#3722](https://github.com/nanocoai/nanoclaw/pull/3722) | providers/skills | Refactor: adopt the OpenCode contract in its install skill |
+| [#3592](https://github.com/nanocoai/nanoclaw/pull/3592) | configuration | Feature: add `speed` as a core-owned per-agent-group inference property |
+| [#3591](https://github.com/nanocoai/nanoclaw/pull/3591) | providers/core | Refactor: render provider instructions from core-owned canon |
+| [#3355](https://github.com/nanocoai/nanoclaw/pull/3355) | skills | Feature: add `/add-cursor` provider install skill |
+| [#3721](https://github.com/nanocoai/nanoclaw/pull/3721) | skills/security | Fix: require explicit installation and respect operator policy |
+| [#3720](https://github.com/nanocoai/nanoclaw/pull/3720) | skills/security | Feature: add opt-in source installation with guarded recovery |
+| [#3356](https://github.com/nanocoai/nanoclaw/pull/3356) | providers | Feature: add Cursor Agent SDK payload |
+| [#3718](https://github.com/nanocoai/nanoclaw/pull/3718) | a2a | Fix: preserve verified sender identity and command boundaries |
+| [#3719](https://github.com/nanocoai/nanoclaw/pull/3719) | a2a/security | Fix: report communication failures to the source |
+| [#3717](https://github.com/nanocoai/nanoclaw/pull/3717) | agent-runner | Fix: escape payloads embedded in composed prompt blocks |
+| [#3724](https://github.com/nanocoai/nanoclaw/pull/3724) | skills/providers | Fix: update retired model ID in the add-opencode Anthropic example |
+
+---
 
 ## 4. Community Hot Topics
 
-- **Issue #3716** — *PreCompact conversation-archive OOM crash loop* [Issue #3716](https://github.com/nanocoai/nanoclaw/issues/3716)
-  Every `PreCompact` hook writes an unbounded full-rewrite of the entire conversation history with no rotation or cleanup, causing a production out-of-memory crash loop. This is the **only open issue** and carries significant production impact, yet has zero reactions — likely because affected operators are too busy fighting the crash to engage. The underlying need is **bounded conversation archival** with size caps and rotation, a gap the community is clearly feeling in production deployments.
+### Top Issue
+- **#3716** — [PreCompact conversation-archive writes an unbounded, full-rewrite file per firing — real cause of a production OOM crash loop](https://github.com/nanocoai/nanoclaw/issues/3716) (2 comments, 0 👍, Open since 2026-09-04)
+  - **Why it's hot:** This is a direct production incident report. The `PreCompact` hook writes a complete, unbounded re-serialization of conversation history on every firing, with no rotation or cleanup, causing OOM crash loops in production workloads. Despite 0 reactions, the severity is high and the description is detailed—this is a real user in a live environment.
 
-- **PR #3724** — *Retired Anthropic model ID in add-opencode skill* [PR #3724](https://github.com/nanocoai/nanoclaw/pull/3724)
-  A small but practical fix updating a model ID that Anthropic retired on 2026-06-15. Reflects ongoing maintenance burden from provider API churn.
+### Top PRs (by area activity)
+- **Provider contract refactors** (#3586, #3588, #3584, #3722, #3591) — 5 PRs from `zvi-fried` all landing in the same area, indicating a coordinated sprint to unify provider contracts.
+- **Skills hardening** (#3721, #3720) — 2 PRs tightening installation security and operator policy enforcement.
+- **A2A fixes** (#3718, #3719) — 2 PRs improving agent-to-agent messaging reliability and observability.
 
-- **PR #3718 & #3719** — *A2A messaging identity and failure reporting* [PR #3718](https://github.com/nanocoai/nanoclaw/pull/3718), [PR #3719](https://github.com/nanocoai/nanoclaw/pull/3719)
-  Two companion fixes for agent-to-agent communication. The first stamps verified sender identity; the second surfaces delivery failures back to the originating chat. Together they address a real pain point: agents silently failing to communicate in multi-agent setups.
+**Underlying need:** The community is clearly feeling the pain of fragmented provider implementations and loose skills installation. The project is responding with architectural tightening—core-owned contracts, explicit install gates, and guarded recovery paths.
+
+---
 
 ## 5. Bugs & Stability
 
-| Severity | Item | Description | Fix PR |
-|----------|------|-------------|--------|
-| **Critical** | #3716 | Production OOM crash loop from unbounded conversation archive writes | None yet |
-| **High** | #3717 | Embedded payloads can close their host block and forge prompt structure | [PR #3717](https://github.com/nanocoai/nanoclaw/pull/3717) |
-| **High** | #3718 | A2A messages arrive with unknown sender, causing legitimate requests to be refused | [PR #3718](https://github.com/nanocoai/nanoclaw/pull/3718) |
-| **Medium** | #3719 | Communication failures (blocks, denials, delivery exhaustion) silently dropped | [PR #3719](https://github.com/nanocoai/nanoclaw/pull/3719) |
-| **Low** | #3724 | Retired model ID breaks the add-opencode example | [PR #3724](https://github.com/nanocoai/nanoclaw/pull/3724) |
+| Severity | Item | Link | Fix PR? |
+|---|---|---|---|
+| 🔴 **Critical** | #3716 — PreCompact hook causes production OOM via unbounded conversation archive files | [Issue](https://github.com/nanocoai/nanoclaw/issues/3716) | Not yet |
+| 🟠 **High** | #3717 — Embedded payloads can close and forge composed prompt blocks (structure injection) | [PR](https://github.com/nanocoai/nanoclaw/pull/3717) | Yes (#3717) |
+| 🟠 **High** | #3718 — A2A messages arrive with unknown sender, causing legitimate requests to be refused | [PR](https://github.com/nanocoai/nanoclaw/pull/3718) | Yes (#3718) |
+| 🟡 **Medium** | #3719 — A2A communication failures silently dropped; no feedback to originating agent | [PR](https://github.com/nanocoai/nanoclaw/pull/3719) | Yes (#3719) |
+| 🟡 **Medium** | #3724 — Retired model ID (`claude-sonnet-4-20250514`) in add-opencode example | [PR](https://github.com/nanocoai/nanoclaw/pull/3724) | Yes (#3724) |
 
-The OOM issue (#3716) is the most urgent stability concern — it directly impacts production reliability and has no attached fix yet.
+**Note:** The critical OOM bug (#3716) currently has no associated fix PR, making it the most urgent open stability concern.
+
+---
 
 ## 6. Feature Requests & Roadmap Signals
 
-- **`speed` as a core-owned inference property** ([PR #3592](https://github.com/nanocoai/nanoclaw/pull/3592)) — Adds a per-agent-group `speed` tier alongside `model` and `effort`, with CLI support (`ncl groups config update --speed <tier>`). This signals the roadmap toward **finer-grained cost/performance tuning** for agent groups.
-- **Cursor provider support** ([PR #3355](https://github.com/nanocoai/nanoclaw/pull/3355), [PR #3356](https://github.com/nanocoai/nanoclaw/pull/3356)) — New install skill and SDK payload for Cursor, expanding provider coverage.
-- **Guarded source installation for skills** ([PR #3720](https://github.com/nanocoai/nanoclaw/pull/3720)) — Opt-in `ncl skills list/plan/apply` workflow with recovery, disabled by default and not bypassable by agent approval. Reflects a security-first posture on skill sourcing.
-- **Provider contract enforcement** ([PR #3584](https://github.com/nanocoai/nanoclaw/pull/3584), [PR #3586](https://github.com/nanocoai/nanoclaw/pull/3586), [PR #3588](https://github.com/nanocoai/nanoclaw/pull/3588), [PR #3591](https://github.com/nanocoai/nanoclaw/pull/3591)) — A sweeping refactor making provider instructions core-owned rather than provider-supplied freeform text. Expect this to land as a **breaking change** in the next minor release.
+- **`speed` tier property for agent groups** (#3592) — Adds a core-owned `speed` inference property alongside `model` and `effort`, with CLI support (`ncl groups config update --speed <tier>`) and provider-declared vocabulary. Signals a roadmap toward fine-grained cost/performance tuning.
+- **Cursor Agent SDK provider** (#3356) + `/add-cursor` install skill (#3355) — First-party support for Cursor's agent SDK, indicating expansion beyond Claude Code and OpenAI Codex as first-class providers.
+- **Opt-in source installation with guarded recovery** (#3720) — New `ncl skills list`/`plan`/`apply` CLI surface for structured capability installation. Suggests a future where skills are versioned, auditable, and recoverable.
+- **Core-owned provider instructions** (#3591) — Shifts provider instruction prose from free-form provider text to a core-rendered canon, standardizing how providers declare capabilities.
+
+**Predicted next-version focus:** Provider contract unification (5 PRs in flight), skills install hardening, and A2A reliability improvements are all converging toward what will likely be a stability-and-architecture release rather than a feature-heavy one.
+
+---
 
 ## 7. User Feedback Summary
 
-- **Production OOM from conversation archival** (#3716) is the most vocalized pain point — users are hitting crash loops in real deployments, not edge cases.
-- **Multi-agent communication reliability** (#3718, #3719) reflects growing adoption of agent-to-agent patterns, where silent failures and identity ambiguity are practical blockers.
-- **Provider API churn** (#3724) — Retired model IDs in shipped skills indicate that skill maintainers need better lifecycle management for provider dependencies.
-- **Skill installation trust** (#3720, #3721) — Users and operators want explicit, policy-gated installation rather than agent-auto-installed capabilities, signaling a demand for **operator control** in team/shared deployments.
+- **Production pain is the loudest signal:** Issue #3716 describes a real OOM crash loop in production, indicating that conversation archival under `PreCompact` is not yet safe for sustained use. This is the clearest user dissatisfaction signal.
+- **Model ID rot in examples:** #3724 shows that even documented examples ship with retired model IDs, suggesting the docs/examples surface needs better automated freshness checks.
+- **A2A trust boundaries matter:** #3718 and #3719 reveal that multi-agent deployments are encountering sender-identity and failure-observability gaps—users are building agent networks and hitting real operational issues.
+- **Skills installation anxiety:** The cluster of hardening PRs (#3721, #3720) suggests users (or operators) have experienced unsanctioned or uncontrolled capability installs, prompting a security-first posture.
+
+---
 
 ## 8. Backlog Watch
 
-- **Issue #3716** — The sole open issue and the most severe bug, with no attached fix PR. Requires maintainer attention for a bounded-archive or rotation mechanism.
-- **PR #2403** — Closed but no accompanying release yet; the new Release workflow should be validated with an actual version bump.
-- **Provider contract refactor series (#3584, #3586, #3588, #3591)** — Four interdependent PRs that must land together; any delay in review or merge will block the associated features (#3592, #3355, #3356) that depend on the new contracts.
-- **PR #3721** — Skills hardening PR that depends on the provider contract refactor; if the refactor stalls, this security improvement is also delayed.
+| Item | Age | Risk |
+|---|---|---|
+| [#3716](https://github.com/nanocoai/nanoclaw/issues/3716) — PreCompact OOM crash loop | Open 2 days, 0 comments from maintainers, no fix PR | 🔴 **High** — Production-impacting, unaddressed |
+| [#3586](https://github.com/nanocoai/nanoclaw/pull/3586) — Provider setup contract (created 2026-08-27) | Open 10 days | 🟡 — Part of a coordinated batch; likely merged soon with related PRs |
+| [#3355](https://github.com/nanocoai/nanoclaw/pull/3355) — `/add-cursor` skill (created 2026-08-19) | Open 18 days | 🟡 — Cursor provider is a new surface; needs careful review |
+| [#3356](https://github.com/nanocoai/nanoclaw/pull/3356) — Cursor Agent SDK payload (created 2026-08-19) | Open 18 days | 🟡 — Same as above |
+| [#2403](https://github.com/nanocoai/nanoclaw/pull/2403) — Release workflow (created 2026-05-10) | Closed 2026-09-05, open 118 days | 🟢 — Finally merged after a long cycle |
+
+**Key takeaway:** Issue #3716 is the most important item needing maintainer attention. It's a confirmed production crash with no fix in progress. The 18-day-old Cursor PRs (#3355, #3356) also warrant a review signal given they introduce a new provider surface.
 
 </details>
 
@@ -241,157 +216,157 @@ The OOM issue (#3716) is the most urgent stability concern — it directly impac
 
 ## 1. Today's Overview
 
-NullClaw saw minimal activity over the last 24 hours, with only a single issue updated and no new pull requests or releases. The project remains in a low-velocity phase with one open enhancement request seeking self-hosted Firecrawl configurability. No bugs, regressions, or breaking changes were reported today. Overall, the project appears to be in a maintenance and feature-discussion window rather than an active development sprint.
+NullClaw shows minimal activity over the past 24 hours, with only one open issue updated and no pull requests or releases in the window. The project remains in a steady maintenance state, with the most notable discussion centering on enhancing the built-in Firecrawl search provider to support self-hosted deployments. No critical bugs or regressions were reported today, and the contributor base appears quiet but engaged on specific feature needs.
 
 ---
 
 ## 2. Releases
 
-No new releases were published today. The latest release history is currently empty based on available data.
+No new releases were published today.
 
 ---
 
 ## 3. Project Progress
 
-No pull requests were merged or closed today. There were no open PRs in the last 24 hours, indicating no code contributions are currently in review or under active development.
+No pull requests were merged or closed in the last 24 hours. The project shows no active feature advancement or bug fixes in this reporting window.
 
 ---
 
 ## 4. Community Hot Topics
 
-**[#993 — Make Firecrawl search endpoint configurable for self-hosted instances](https://github.com/nullclaw/nullclaw/issues/993)** (Updated: 2026-09-04 | Comments: 1 | 👍: 0)
+**[Issue #993](https://github.com/nullclaw/nullclaw/issues/993)** — *feat: make Firecrawl search endpoint configurable for self-hosted instances*
+- Author: Crymfox | Created: 2026-08-24 | Updated: 2026-09-04 | 1 comment | 0 reactions
+- The hardcoded API endpoint in `src/tools/web_search_providers/firecrawl.zig` prevents self-hosted Firecrawl users from leveraging the native search provider configuration. This is the only open issue currently active.
 
-This is the only active discussion item. The request highlights that the built-in Firecrawl provider in `src/tools/web_search_providers/firecrawl.zig` has its API endpoint hardcoded to `https://api.firecrawl.dev/v1/search`, preventing self-hosted Firecrawl deployments from functioning with the native `search_provider: "firecrawl"` configuration. The underlying need reflects a growing community expectation that NullClaw support self-hosted infrastructure across its tooling integrations — not just Firecrawl, but likely other providers as well. With zero reactions so far, this may be an early signal that more users will find this limitation.
+**Analysis:** The underlying need reflects a growing demand for privacy-conscious and cost-effective self-hosted alternatives to managed AI services. Users deploying NullClaw in enterprise or home-lab environments increasingly expect first-party integrations to respect self-hosted configurations rather than defaulting to cloud endpoints.
 
 ---
 
 ## 5. Bugs & Stability
 
-No bug reports, crashes, or regressions were filed today. The single open issue (#993) is an enhancement request, not a defect. Project stability appears unaffected by any new issues.
+No bug reports, crashes, or regressions were filed today. Project stability appears unaffected by new issues in this reporting period.
 
 ---
 
 ## 6. Feature Requests & Roadmap Signals
 
-**[#993](https://github.com/nullclaw/nullclaw/issues/993)** — The only active feature request is the configurability of the Firecrawl search endpoint. This signals user demand for:
-- Self-hosted infrastructure compatibility
-- Provider-level flexibility across web search tools
-
-If the next release cycle addresses provider configurability broadly, this feature is a strong candidate for inclusion. Expansion of this request to other search providers (e.g., allowing custom endpoints for any provider) would be a logical roadmap extension.
+**[Issue #993](https://github.com/nullclaw/nullclaw/issues/993)** — *Configurable Firecrawl endpoint*
+- This enhancement directly signals demand for flexible provider configuration. If adopted, the change would likely involve adding a configuration option (e.g., `endpoint` or `base_url`) to the `firecrawl` search provider config block, falling back to the current default for unconfigured instances.
+- **Prediction:** This is a focused, low-risk change that could land in a near-term patch release, as it touches a single module and does not alter existing behavior for users who do not opt in.
 
 ---
 
 ## 7. User Feedback Summary
 
-The primary feedback centering on **#993** reveals a user pain point: the inability to use self-hosted Firecrawl instances despite NullClaw's apparent design for flexibility. The user (Crymfox) identified the specific hardcoded constant and provided a clear reproduction path. No dissatisfaction signals beyond this limitation were observed today. User engagement (comments, reactions) remains low, suggesting the contributor base is still actively identifying integration gaps rather than reporting usage problems.
+The sole active issue highlights a practical pain point: users running self-hosted Firecrawl instances must currently fork or patch NullClaw to use their own endpoint. This suggests a user base that values self-hosting and control over their AI infrastructure. No satisfaction or dissatisfaction signals beyond this feature request were observed today.
 
 ---
 
 ## 8. Backlog Watch
 
-| Issue | Status | Age | Attention Needed |
-|-------|--------|-----|-------------------|
-| [#993](https://github.com/nullclaw/nullclaw/issues/993) — Configurable Firecrawl endpoint | Open | ~13 days | Medium |
-
-Issue #993 has been open since 2026-08-24 with no maintainer response in the past several days. While not critical, this is the sole outstanding request and represents a straightforward configurability fix. Maintainer attention is recommended to either triage the issue with a response or close it with guidance, so the contributor base has clear direction.
+- **[Issue #993](https://github.com/nullclaw/nullclaw/issues/993)** — Open since 2026-08-24 with one comment. While not ancient, this issue has been open for over ten days with no maintainer response or assigned PR. It represents a clear, scoped improvement that would benefit a defined subset of users and warrants triage attention.
 
 ---
 
-**Project Health Assessment:** Low activity, no blockers. The absence of bugs and the single well-scoped enhancement request suggest a stable codebase in a quiet development period. Priority for maintainers: respond to #993 to maintain community engagement.
+*Digest generated from GitHub data for 2026-09-06. Activity level: Low.*
 
 </details>
 
 <details>
 <summary><strong>IronClaw</strong> — <a href="https://github.com/nearai/ironclaw">nearai/ironclaw</a></summary>
 
-**IronClaw Project Digest**
+# IronClaw Project Digest
 **Date:** 2026-09-06
-**Project:** IronClaw (github.com/nearai/ironclaw)
+**Project:** nearai/ironclaw
 
----
+## 1. Today's Overview
+Activity on the IronClaw repository has been moderate, with a total of 9 updates across Issues and Pull Requests in the last 24 hours. While no new releases were deployed, the project saw significant stabilization work, particularly regarding Telegram integration and user onboarding flows. The development team is actively addressing edge cases in the pairing mechanism and sandbox configuration, ensuring a smoother experience for users connecting their personal accounts.
 
-### 1. Today's Overview
-Activity on the IronClaw repository has been moderate, with 3 issues and 6 pull requests updated in the last 24 hours. The project maintains a healthy state with no new releases scheduled for this period. Development focus appears concentrated on stabilizing Telegram integration workflows and refining sandbox configuration defaults, specifically addressing user experience friction points in personal account linking and command admission.
+## 2. Releases
+**No new releases detected.**
 
-### 2. Releases
-**None**
-No new releases were published today.
+## 3. Project Progress
+The project is in a maintenance and stabilization phase, with 3 pull requests closed and merged, and 3 open. Key progress includes:
+*   **Onboarding Workflow:** Merged a fix to ensure unpaired users receive the pairing/connect notice immediately upon starting the bot, rather than the command inventory.
+*   **Configuration Messaging:** Updated error messaging for Telegram personal-account linking to blame the administrator's missing configuration rather than the user's account.
+*   **LLM Caching:** Fixed a bug where conversation cache keys were not being sent on OpenAI request paths, which could impact performance consistency.
+*   **Command Menu:** Enhanced the Telegram UI by registering the Bot API command menu dynamically upon activation.
 
-### 3. Project Progress
-*   **PRs Merged/Closed (3):**
-    *   **#8073:** A documentation and UX fix for the Telegram personal-account linking flow, changing error messaging to remove user-blame when administrator credentials are missing.
-    *   **#8054:** A logic fix ensuring unpaired users receive the correct connect/pairing notice immediately upon starting the bot, rather than seeing a command inventory first.
-    *   **#8062:** A fix to the LLM layer ensuring conversation cache keys are sent on OpenAI request paths to maintain prompt context stability.
-*   **PRs Open (3):**
-    *   **#8075 (XL):** A significant feature addition to make the embedded Pi sandbox loop the default startup profile for benchmarking.
-    *   **#7988 (XS):** A CI/Infrastructure update refreshing the codebase knowledge graph bootstrap snapshot.
-    *   **#8072 (L):** A Telegram feature adding the Bot API command menu (hamburger menu) to list available commands dynamically at activation.
+## 4. Community Hot Topics
+*   **[Issue #8074](https://github.com/nearai/ironclaw/issues/8074)**: **Paired User Connectivity Bug**
+    *   **Status:** Open
+    *   **Analysis:** A critical UX bug where a paired user in a non-connected shared channel receives the wrong error message (the unpaired user manifest) instead of the specific "channel-not-connected" message.
+*   **[PR #8075](https://github.com/nearai/ironclaw/pull/8075)**: **Pi Sandbox Loop Default**
+    *   **Status:** Open (Stacked PR)
+    *   **Analysis:** A feature request to make the embedded Pi sandbox loop the default startup profile for benchmarking, stacking on previous native loop work.
 
-### 4. Community Hot Topics
-*   **Bug: Paired User Notice Copy (#8074 - Open)**
-    *   *Link:* [GitHub Issue #8074](https://github.com/nearai/ironclaw/issues/8074)
-    *   *Analysis:* A discrepancy was found where a **paired** user acting in a shared channel that is not connected receives the "unpaired-actor" copy (account connection notice) instead of the specific "channel-not-connected" notice. This suggests a logic gap in the permission checks between paired status and channel connectivity.
-*   **Feature: Pi Sandbox Default Loop (#8075 - Open)**
-    *   *Link:* [GitHub PR #8075](https://github.com/nearai/ironclaw/pull/8075)
-    *   *Analysis:* A high-priority request to change the default boot profile of the embedded Pi sandbox to a pinned agent-core worker loop. This indicates a shift toward standardized benchmarking environments and likely simplifies deployment for performance testing.
+## 5. Bugs & Stability
+*   **Severity: Medium (Open)** - **Issue #8074**: Incorrect error messaging for paired users in disconnected channels.
+    *   *Note:* This is currently unresolved and awaiting attention.
+*   **Severity: Low (Closed)** - **Issue #7956**: Telegram unpaired `/start` command displayed inventory instead of connect notice.
+    *   *Fix:* Resolved via PR #8054.
+*   **Severity: Low (Closed)** - **Issue #7955**: Generic "Something went wrong" error when admin lacks `api_id`/`api_hash`.
+    *   *Fix:* Resolved via PR #8073, improving transparency.
 
-### 5. Bugs & Stability
-*   **Severity: Medium** - *Issue #7956 (Closed)*: Unpaired Telegram users received a command inventory instead of the pairing notice. **Status:** Fixed via PR #8054.
-*   **Severity: Medium** - *Issue #7955 (Closed)*: Admins without `api_id`/`api_hash` configuration caused generic "Something went wrong" errors for users. **Status:** Fixed via PR #8073 (improved error messaging).
-*   **Severity: Low** - *Issue #8074 (Open)*: Incorrect error messaging copy for paired users in disconnected channels. **Status:** Needs investigation/fix.
+## 6. Feature Requests & Roadmap Signals
+*   **Sandbox Optimization:** The PR #8075 to set the Pi sandbox loop as the default startup profile suggests a roadmap focus on benchmarking and native execution performance.
+*   **Telegram UX:** The work on registering the Bot API command menu (PR #8072) indicates a push for a more polished, command-centric interface for Telegram users.
 
-### 6. Feature Requests & Roadmap Signals
-*   **Standardized Benchmarking:** The open PR #8075 to make the Pi sandbox loop the default startup implies the project is maturing towards specific use cases like performance benchmarking, moving away from generic setups.
-*   **Enhanced UX for Telegram:** The push to register the Bot API command menu (#8072) and fix the pairing flow (#8054) signals a roadmap focus on improving the onboarding experience for new users via Telegram integration.
+## 7. User Feedback Summary
+*   **Onboarding Frustration:** Users have reported confusion when first interacting with the bot (Issue #7956). The feedback highlights a need for immediate clarity—showing the pairing flow immediately upon `/start` is preferred over a list of commands.
+*   **Configuration Visibility:** Users and administrators appreciate clear error messages. The fix in PR #8073 (shifting blame to admin config) is a positive signal regarding user experience and developer tooling.
 
-### 7. User Feedback Summary
-*   **User Frustration:** Users are reporting confusion regarding the initial interaction with the IronClaw Telegram bot (Issue #7956). The disconnect between the expected "connect/pairing" flow and the actual "command inventory" display caused friction.
-*   **Admin Configuration Issues:** Users attempting to set up personal accounts on instances where the administrator has not configured the Telegram API keys are encountering unhelpful generic errors. The feedback indicates a strong need for clearer error states that distinguish between user errors and admin configuration gaps.
-
-### 8. Backlog Watch
-*   **Issue #8074 (Open)** remains the primary item requiring attention. It describes a specific edge case involving paired users and shared channels that was not caught in previous testing. The severity is low (UX copy issue), but it represents a regression in message correctness that should be addressed to ensure users receive the appropriate guidance in mixed-user environments.
+## 8. Backlog Watch
+*   **[PR #8075](https://github.com/nearai/ironclaw/pull/8075)**: This is a "stacked PR" that depends on PR #7908. It is currently open and marked for the `feat/7903-native-loop-sandbox-spike` base. It requires the base PR to be merged first.
 
 </details>
 
 <details>
 <summary><strong>LobsterAI</strong> — <a href="https://github.com/netease-youdao/LobsterAI">netease-youdao/LobsterAI</a></summary>
 
-### **LobsterAI Project Digest**
+# LobsterAI Project Digest
 **Date:** 2026-09-06
-**Repository:** [netease-youdao/LobsterAI](https://github.com/netease-youdao/LobsterAI)
+**Source:** GitHub (netease-youdao/LobsterAI)
 
 ---
 
-#### 1. Today's Overview
-The LobsterAI repository maintained a low activity profile on September 6th, 2026, with no new releases or issues generated in the last 24 hours. The development focus shifted towards backend architectural improvements and maintenance rather than new feature additions. Two pull requests were updated, both addressing code quality and extensibility concerns within the desktop agent framework.
+### 1. Today's Overview
+LobsterAI remains in a maintenance and architectural refinement phase with virtually no active development activity on the day in question. The project recorded zero new issues, zero new releases, and a stagnant issue tracker. However, there is notable maintenance effort focused on code quality and architectural scalability, evidenced by two stale pull requests addressing massive code bloat and modularity.
 
-#### 2. Releases
-**No new releases were detected in the last 24 hours.**
+### 2. Releases
+**None.** No new versions were released in the last 24 hours.
 
-#### 3. Project Progress
-*   **PR #1069 (Refactoring):** Updated to address code maintainability by splitting the large `CoworkSessionDetail.tsx` file (2100+ lines) into separate type definitions and logic files. This aims to improve rendering performance and testability.
-*   **PR #1070 (Feature Enhancement):** Updated to enable per-session MCP (Model Context Protocol) control. The PR introduces UI controls to toggle MCP servers on a per-session basis, moving away from the previous global-only configuration.
+### 3. Project Progress
+*   **PRs Reviewed:** 2 Pull Requests were updated (0 merged, 0 closed).
+*   **Focus:** The primary focus of the updates was **Code Refactoring**. The project is actively working to improve maintainability by breaking down a massive 2100+ line component into modular files and sub-components.
+*   **Feature Planning:** There is preliminary work on a new session-level feature allowing users to control MCP (Model Context Protocol) servers independently per session.
 
-#### 4. Community Hot Topics
-*   **[PR #1069] Refactoring: Splitting CoworkSessionDetail for Maintainability**
-    *   **URL:** [netease-youdao/LobsterAI PR #1069](https://github.com/netease-youdao/LobsterAI/pull/1069)
-    *   **Analysis:** The primary technical concern is code bloat. A single component file exceeding 2100 lines indicates a "God Component" anti-pattern that hinders debugging and future feature development. The proposed refactoring suggests a move towards better modularization.
-*   **[PR #1070] Per-Session MCP Control**
-    *   **URL:** [netease-youdao/LobsterAI PR #1070](https://github.com/netease-youdao/LobsterAI/pull/1070)
-    *   **Analysis:** This addresses a specific usability limitation where MCP servers were globally controlled. The request highlights a need for granular configuration, allowing users to tailor the agent's toolset to specific workflows or sessions.
+### 4. Community Hot Topics
+*   **Refactoring: Splitting CoworkSessionDetail (PR #1069)**
+    *   **Status:** Open (Stale)
+    *   **Summary:** The core conversation page component has grown to over 2100 lines, causing maintainability and rendering performance issues. The PR proposes splitting this monolithic file into separate modules for types, hooks, and sub-components.
+    *   **Needs:** Architectural optimization to reduce unnecessary re-renders and improve code testability.
+    *   **[View PR #1069](https://github.com/netease-youdao/LobsterAI/pull/1069)**
 
-#### 5. Bugs & Stability
-**No specific bugs or stability regressions were reported today.**
+*   **Per-Session MCP Control (PR #1070)**
+    *   **Status:** Open (Stale)
+    *   **Summary:** Users are requesting the ability to toggle MCP servers on a per-session basis rather than using a global setting. This involves UI toolbar changes and backend logic updates in the OpenClaw engine.
+    *   **Needs:** Enhanced user control and state management for MCP integrations.
+    *   **[View PR #1070](https://github.com/netease-youdao/LobsterAI/pull/1070)**
 
-#### 6. Feature Requests & Roadmap Signals
-*   **Granular MCP Management:** The community is pushing for more control over the AI's context providers. Implementing per-session MCP toggles is a strong signal for the "Session Customization" roadmap, suggesting future versions will focus on user-configurable environments rather than one-size-fits-all setups.
+### 5. Bugs & Stability
+**No active bug reports or regressions were recorded today.** The project appears stable with no user-reported crashes or critical stability issues in the last 24 hours.
 
-#### 7. User Feedback Summary
-*   **Performance Optimization:** There is user dissatisfaction with the current rendering performance caused by unnecessary re-renders in the chat session detail view, likely due to tightly coupled state logic.
-*   **Configuration Flexibility:** Users feel restricted by global MCP settings and desire the ability to disable specific tools or servers for specific tasks to prevent interference or resource waste.
+### 6. Feature Requests & Roadmap Signals
+*   **Granular MCP Control:** The stale PR #1070 highlights a demand for more granular configuration. Users want to selectively enable specific tools for specific contexts (sessions). This suggests the roadmap is moving toward a more flexible, multi-tool AI agent workspace rather than a single global configuration.
+*   **Performance Optimization:** The stale PR #1069 indicates a roadmap priority on performance tuning. As the application grows, the team is proactively addressing rendering bottlenecks caused by state management.
 
-#### 8. Backlog Watch
-*   **PR #1069 & #1070 (Stale):** Both PRs are marked as `[stale]` and have been updated but are still open. They require maintainer review and merging to finalize the architectural improvements.
+### 7. User Feedback Summary
+*   **Pain Point:** Code maintainability. Users (via the maintainers tracking technical debt) are concerned that a single file containing 2100+ lines of mixed logic (UI + Hooks + Types) makes debugging and feature expansion difficult.
+*   **Pain Point:** Configuration rigidity. Users currently lack the ability to tailor the AI's environment (MCP servers) to specific tasks, leading to potential clutter or missed opportunities in complex workflows.
+
+### 8. Backlog Watch
+*   **PR #1069 & #1070:** Both PRs were last updated on **2026-09-05** (yesterday). Despite being open, they have received no new comments or reactions in the last 24 hours. These are "stale" PRs that likely require maintainer review or resolution to move forward. The architectural refactoring (#1069) is critical to prevent future technical debt accumulation.
 
 </details>
 
@@ -405,168 +380,78 @@ No activity in the last 24 hours.
 <details>
 <summary><strong>Moltis</strong> — <a href="https://github.com/moltis-org/moltis">moltis-org/moltis</a></summary>
 
-**Moltis Project Digest – 2026‑09‑06**  
-*(Compiled from GitHub activity on github.com/moltis‑org/moltis)*  
+**Moltis Project Digest – 2026‑09‑06**
 
 ---
 
 ### 1. Today’s Overview
-- Activity was very light: **1 issue** was updated (opened) and **no pull requests** or releases were recorded in the last 24 h.  
-- The sole open item is a **feature‑request** to make the default reasoning/thinking level configurable and persisted across sessions.  
-- With no code changes merged today, the codebase remains stable, but the lack of recent contributions suggests a short lull in developer activity.
+- Moltis saw very low activity over the past 24 hours: **1 issue was updated** and **no pull‑requests or releases** were posted.  
+- The single open issue is a *feature request* concerning configurable default reasoning levels, indicating the community is still exploring deeper control of the AI’s “thinking” depth.  
+- With no merged or closed PRs, the codebase remained static today, suggesting a lull in development cadence but also a low‑risk state (no new bugs introduced).
 
 ---
 
 ### 2. Releases
-*No new releases were published in the past 24 h.*
+*No new releases were published in the last 24 hours.*  
+*(The repository currently has no tagged releases, so there are no change logs, breaking‑change notes, or migration guidance to report.)*
 
 ---
 
 ### 3. Project Progress
-- **Merged/Closed PRs:** 0  
-  → No new features or bug fixes were integrated today, so the project’s functional baseline stayed unchanged.
+- **Pull Requests:** 0 opened, merged, or closed today.  
+- Consequently, no new features were integrated, no bug fixes landed, and the overall codebase did not evolve in this reporting window.
 
 ---
 
 ### 4. Community Hot Topics
 | Item | Type | Summary | Comments / 👍 | Link |
 |------|------|---------|---------------|------|
-| **#1259** | Issue – *enhancement* | *“Configurable default reasoning/thinking level (persist across sessions)”* – a request to expose the default AI reasoning depth as a user‑configurable setting that survives restarts. | 0 comments / 0 👍 | <https://github.com/moltis-org/moltis/issues/1259> |
+| **#1259** | Issue – *enhancement* | *Configurable default reasoning/thinking level (persist across sessions)* – a request to let users set a baseline “thinking depth” that survives across sessions. | 0 comments, 0 👍 | <https://github.com/moltis-org/moltis/issues/1259> |
 
-*Analysis*: The request reflects a growing desire among users to fine‑tune Moltis’s cognitive load without editing code. Persisting the setting would improve reproducibility of AI behavior across sessions, a common need for teams that embed Moltis in longer‑running pipelines or repeatable experiments.
+**Analysis:**  
+- This is the only active discussion, and it surfaces a desire for more granular control over the AI’s internal processing budget.  
+- The request hints at use‑cases where developers need predictable latency or resource consumption, especially in constrained environments (e.g., edge devices, real‑time assistants).  
+- No community reaction yet (comments/reactions), so the maintainers may need to solicit feedback or provide a short prototype to gauge interest.
 
 ---
 
 ### 5. Bugs & Stability
-- **No bug reports or crash tickets** were opened or updated today.  
-- Consequently, there are **no fix PRs** in the pipeline for today’s window.
+- **No bugs, crashes, or regressions were reported today.**  
+- Because no new code was merged, there are currently no open defect‑related issues to prioritize.
 
 ---
 
 ### 6. Feature Requests & Roadmap Signals
-- **Feature request #1259** is the only new signal. Its focus on *configurability and persistence* aligns with broader trends in AI‑assistant tooling—users increasingly expect “plug‑and‑play” adjustments rather than source‑code edits.  
-- **Roadmap implication**: If the maintainers prioritize UX polish, this could be slated for the next minor release (e.g., vX.Y+1). Monitoring community voting (reactions, subsequent comments) will help gauge priority.
+| Feature Request | Likelihood for Next Version | Rationale |
+|-----------------|-----------------------------|-----------|
+| Configurable default reasoning level (Issue #1259) | **Medium‑High** | The request aligns with broader trends in AI‑assistant tooling (session persistence, resource budgeting). If the maintainers have an upcoming “configuration” milestone, this could be a quick win. |
+| *(No other new requests reported today)* | – | – |
+
+*Prediction:* If the Moltis maintainers are planning a version that expands the user‑configuration API, the reasoning‑level setting could be bundled into that release. Otherwise, it may remain in the backlog until a dedicated configuration overhaul is scheduled.
 
 ---
 
 ### 7. User Feedback Summary
-- The lone issue indicates **pain around session‑level configuration**: users want a simple mechanism to set a default reasoning depth (e.g., “low/medium/high”) that the assistant remembers between runs.  
-- No additional feedback (praise or criticism) was recorded today, suggesting overall satisfaction with the current feature set, or simply a quiet period of user interaction.
+- The sole feedback signal is the enhancement request above, which reveals a **pain point around predictability**: users want to set a default “thinking level” to avoid manually adjusting the parameter for every session.  
+- No satisfaction or dissatisfaction metrics were captured today; the absence of comments suggests the issue has not yet sparked a broader discussion.
 
 ---
 
 ### 8. Backlog Watch
-- **Open Issues without recent activity** (as of the last 30 days):  
-  - *#1124* – “Docker‑file optimization for faster container startup” (open, last comment 22 days ago).  
-  - *#1198* – “Support for multi‑modal input (image + text)” (open, last comment 18 days ago).  
-
-These items have been awaiting maintainer response for several weeks and may benefit from a triage sprint. Prioritizing them could address performance concerns and broaden Moltis’s modality support, both of which are recurring themes in the project’s roadmap discussions.
+- **Open Issue #1259** – has been open for only one day, but remains unanswered. It should be triaged promptly (labeling, assignment, feasibility assessment) to keep the momentum.  
+- *No other open issues or PRs were listed in the 24‑hour snapshot.* If the repository holds older, unattended items, they are not reflected in the current data set; a periodic audit of the full backlog is recommended to surface any long‑standing tickets that may be at risk of stagnation.
 
 ---
 
-**Bottom Line:** Moltis experienced a quiet day on GitHub, with stability unchanged and a single, well‑scoped feature request emerging. Keeping an eye on the configurability request and clearing the aging backlog will help sustain momentum and signal continued commitment to user‑driven improvements.
+**Overall Health Assessment:**  
+Moltis is in a quiet state today—no releases, no code changes, and only a single, untriaged feature request. The lack of activity does not indicate any immediate risk, but the maintainers should address the open enhancement promptly to demonstrate responsiveness and to prevent the backlog from growing unnoticed. Continued monitoring of issue activity and a proactive triage cadence will help maintain project vitality.
 
 </details>
 
 <details>
 <summary><strong>CoPaw</strong> — <a href="https://github.com/agentscope-ai/CoPaw">agentscope-ai/CoPaw</a></summary>
 
-**CoPaw Project Digest – 2026‑09‑06**  
-*(GitHub : [agentscope‑ai/CoPaw](https://github.com/agentscope-ai/CoPaw))*  
-
----
-
-## 1. Today’s Overview  
-- Activity is moderate: 8 issues were updated (5 still open) and 5 pull‑requests were touched, all of which remain open.  
-- No new releases were cut, and no PRs were merged in the last 24 h, indicating a *maintenance‑focused* period rather than a delivery sprint.  
-- The most visible signals are a handful of regressions (custom provider loading, tool‑call exception handling) and a surge of feature‑oriented discussions around skill versioning, UI edit/rewind controls, and the new “Advisor Mode”.
-
----
-
-## 2. Releases  
-*No new version was published in the last day.*
-
----
-
-## 3. Project Progress (Closed / Merged Today)  
-| Item | Type | Summary |
-|------|------|---------|
-| **#7474** | Issue (closed) | Fixed regression where custom providers could not load after the `ModelInfo.max_tokens → max_output_length` migration (PR #7337). |
-| **#7574** | Issue (closed) | Patched `openai_images.py` to include the required `model` field, preventing HTTP 503 fall‑backs to `dall‑e‑2`. |
-| **#7575** | Issue (closed) | Adjusted `edit()` in the img‑gen skill to omit `response_format` when the endpoint does not support it, eliminating HTTP 400 errors. |
-
-*No PRs were merged today; the three closed bugs were resolved via direct commits or upstream merges that have already landed.*
-
----
-
-## 4. Community Hot Topics  
-
-| Rank | Item | Comments / 👍 | Why it matters |
-|------|------|---------------|----------------|
-| 1 | **#7557 – “Version & dependency metadata for skills (skill_pool)”** (open) | 2 comments, 0 👍 | Skills are the core extensibility point. The lack of versioning creates drift across workspaces, hindering reproducibility and automated updates. |
-| 2 | **#7569 – “Advisor Mode”** (open PR) | No public comments yet, but the PR is already **Ready for Merge**. | Introduces a cost‑effective two‑model collaboration pattern (advisor + worker) that could dramatically improve performance‑vs‑price trade‑offs. |
-| 3 | **#7573 – “Edit last message” & “Rewind” UI buttons** (open) | 1 comment | Directly addresses user friction in the web UI, allowing correction without restarting a session. |
-| 4 | **#7509 – “Update make‑skill to v2”** (open PR, Ready for Merge) | No comments yet | Provides a structured, approval‑driven workflow for skill creation—aligned with the concerns raised in #7557. |
-| 5 | **#7474 – Custom provider load failure** (closed) | 5 comments | Demonstrates the impact of API‑level migrations on downstream configs; the quick turnaround shows good maintainer responsiveness. |
-
-*Underlying need:* A recurring theme is **manageability of extensible components** (skills, providers) – versioning, validation, and UI ergonomics are being demanded by a growing user base.
-
----
-
-## 5. Bugs & Stability  
-
-| Severity | Issue | Summary | Status / Fix |
-|----------|-------|---------|--------------|
-| **Critical** | **#7572 – Exception swallowing in `_drain()`** | The coordinator catches all exceptions, logs only `str(exc)`, and never re‑raises, making debugging impossible. | Still open; no fix PR yet. |
-| **High** | **#7474 – Custom provider loading fails after migration** | `ModelInfo.max_tokens` removed, causing config‑parse errors. | Closed – regression fixed upstream. |
-| **Medium** | **#7574 – Missing `model` field in img‑gen skill** | Causes 503 fallback to a less capable model. | Closed – patch merged. |
-| **Medium** | **#7575 – Unconditional `response_format` in edit()** | Triggers 400 errors on certain endpoints. | Closed – patch merged. |
-| **Low** | **#7571 – “Forgetfulness” / workspace path confusion** | User reports the agent forgetting configuration paths, leading to accidental overwrites. | Open – needs clarification; no code fix yet. |
-
-*Observation:* The most damaging bug (#7572) is still unresolved, which could hide runtime failures in production environments. Prioritising a logging/exception‑rethrow improvement would raise overall reliability.
-
----
-
-## 6. Feature Requests & Roadmap Signals  
-
-| Request | Description | Likelihood for Next Release |
-|---------|-------------|-----------------------------|
-| **#7557 – Skill version & dependency metadata** | Add `skill.yaml` (or similar) to capture version, dependencies, and compatibility. | **High** – aligns with PR #7509 (Make‑Skill v2) and the broader move toward reproducible skill pipelines. |
-| **#7573 – Edit‑last‑message & Rewind UI** | UI controls for correcting or rolling back conversation turns. | **Medium** – UI polish is often scheduled after core stability fixes; may land in a minor UI‑focused release. |
-| **#7569 – Advisor Mode** | Dual‑model collaboration (strong advisor + cheap worker). | **High** – PR already “Ready for Merge”; expect inclusion in the upcoming 2.3.x series. |
-| **#7486 – Creator app‑plugin enhancements** (large PR) | Runtime notification bus, async delegation, media‑prompt scheduling, Windows hardening, Docker support, etc. | **Medium‑Low** – Scope is extensive; likely to be broken into incremental releases. |
-| **#7401 – Windows ACP bootstrap stall fix** | Prevent event‑loop freeze during plugin loading on Windows. | **Medium** – Already under review; may be merged soon and shipped as a stability patch. |
-
----
-
-## 7. User Feedback Summary  
-
-- **Configuration drift & reproducibility** – Users managing multiple workspaces experience “forgetting” of paths and version mismatches (Issue #7571). This drives the demand for skill metadata and deterministic deployment.  
-- **Debugability** – The silent exception handling in `_drain()` (#7572) was highlighted as a major pain point, obstructing troubleshooting.  
-- **UI ergonomics** – The need for in‑session editing and rewinding (#7573) reflects real‑world usage where prompts are often refined iteratively.  
-- **Provider migration pain** – The removal of `ModelInfo.max_tokens` broke custom provider setups (#7474), showing that breaking API changes need clear migration guidance.  
-- **Model‑call reliability** – Missing fields in img‑gen skill requests (#7574, #7575) caused avoidable HTTP errors, indicating that internal SDK validation could be strengthened.
-
-Overall sentiment is **constructive**: users are engaged, surface concrete bugs, and propose tangible improvements rather than merely reporting dissatisfaction.
-
----
-
-## 8. Backlog Watch (Items needing attention)
-
-| Item | Reason it Needs Prioritisation |
-|------|--------------------------------|
-| **#7572 – Tool‑call exception swallowing** | Blocks visibility of runtime failures; no fix in sight. |
-| **#7557 – Skill versioning metadata** | Core to reproducibility; currently open with moderate activity. |
-| **#7573 – UI Edit/Rewind** | Directly improves user workflow; low comment count may hide urgency. |
-| **#7401 – Windows ACP stall** | Affects Windows developers; under review but not merged yet. |
-| **#7486 – Creator app‑plugin overhaul** | Large scope; could delay critical security/hardening updates if not split. |
-| **#7569 – Advisor Mode** | PR ready for merge; merging now would deliver a high‑impact feature. |
-
-*Recommendation*: Assign a maintainer to investigate #7572 immediately, and schedule #7557 for the next minor release (2.3.x). Consider merging #7569 (Advisor Mode) in parallel to showcase a visible new capability.  
-
----  
-
-*Prepared by the AI‑Agent Project Analyst – 2026‑09‑06*
+⚠️ Summary generation failed.
 
 </details>
 
