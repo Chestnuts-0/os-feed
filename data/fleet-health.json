@@ -1,0 +1,354 @@
+[
+  {
+    "job": "digest",
+    "at": "2026-09-05T16:34:25.760Z",
+    "workers": [
+      {
+        "name": "zhipu",
+        "calls": 8,
+        "ok": 1,
+        "err429": 7,
+        "cooldowns": 1,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 该模型当前访问量过大，请您稍后再试"
+      },
+      {
+        "name": "agnes",
+        "calls": 3,
+        "ok": 3,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 0,
+        "cooling": false
+      },
+      {
+        "name": "agnes#2",
+        "calls": 3,
+        "ok": 3,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 0,
+        "cooling": false
+      },
+      {
+        "name": "zhipu#2",
+        "calls": 6,
+        "ok": 3,
+        "err429": 3,
+        "cooldowns": 0,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 该模型当前访问量过大，请您稍后再试"
+      },
+      {
+        "name": "zhipu#3",
+        "calls": 6,
+        "ok": 3,
+        "err429": 3,
+        "cooldowns": 0,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 该模型当前访问量过大，请您稍后再试"
+      },
+      {
+        "name": "groq",
+        "calls": 5,
+        "ok": 1,
+        "err429": 4,
+        "cooldowns": 1,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 195411, Requested 84"
+      },
+      {
+        "name": "groq#2",
+        "calls": 5,
+        "ok": 1,
+        "err429": 4,
+        "cooldowns": 1,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 195411, Requested 73"
+      },
+      {
+        "name": "groq#3",
+        "calls": 8,
+        "ok": 0,
+        "err429": 8,
+        "cooldowns": 2,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 95"
+      },
+      {
+        "name": "groq#4",
+        "calls": 5,
+        "ok": 0,
+        "err429": 4,
+        "cooldowns": 1,
+        "otherErrors": 1,
+        "cooling": false,
+        "lastError": "Error: 400 Please reduce the length of the messages or completion."
+      },
+      {
+        "name": "groq#5",
+        "calls": 8,
+        "ok": 0,
+        "err429": 8,
+        "cooldowns": 2,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 57"
+      },
+      {
+        "name": "groq#6",
+        "calls": 4,
+        "ok": 0,
+        "err429": 4,
+        "cooldowns": 1,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 195412, Requested 58"
+      },
+      {
+        "name": "groq#7",
+        "calls": 5,
+        "ok": 1,
+        "err429": 4,
+        "cooldowns": 1,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198206, Requested 735"
+      },
+      {
+        "name": "groq#8",
+        "calls": 8,
+        "ok": 0,
+        "err429": 8,
+        "cooldowns": 2,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198206, Requested 848"
+      },
+      {
+        "name": "groq#9",
+        "calls": 4,
+        "ok": 2,
+        "err429": 1,
+        "cooldowns": 0,
+        "otherErrors": 1,
+        "cooling": false,
+        "lastError": "Error: 413 Request too large for model `qwen/qwen3.8-27b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 7690, pleas"
+      },
+      {
+        "name": "groq#10",
+        "calls": 4,
+        "ok": 2,
+        "err429": 1,
+        "cooldowns": 0,
+        "otherErrors": 1,
+        "cooling": false,
+        "lastError": "Error: 429 Request too large for model `qwen/qwen3.8-27b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1019. The "
+      },
+      {
+        "name": "gemini",
+        "calls": 8,
+        "ok": 0,
+        "err429": 8,
+        "cooldowns": 2,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 status code (no body)"
+      },
+      {
+        "name": "gemini#2",
+        "calls": 8,
+        "ok": 0,
+        "err429": 8,
+        "cooldowns": 2,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 status code (no body)"
+      },
+      {
+        "name": "gemini#3",
+        "calls": 4,
+        "ok": 0,
+        "err429": 4,
+        "cooldowns": 1,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 status code (no body)"
+      },
+      {
+        "name": "gemini#4",
+        "calls": 3,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 3,
+        "cooling": false,
+        "lastError": "Error: 404 status code (no body)"
+      },
+      {
+        "name": "gemini#5",
+        "calls": 3,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 3,
+        "cooling": false,
+        "lastError": "Error: 404 status code (no body)"
+      },
+      {
+        "name": "siliconflow",
+        "calls": 3,
+        "ok": 2,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 0,
+        "cooling": false
+      },
+      {
+        "name": "siliconflow#2",
+        "calls": 2,
+        "ok": 1,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 1,
+        "cooling": false,
+        "lastError": "Error: 400 status code (no body)"
+      },
+      {
+        "name": "siliconflow#3",
+        "calls": 2,
+        "ok": 2,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 0,
+        "cooling": false
+      },
+      {
+        "name": "siliconflow#4",
+        "calls": 2,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 2,
+        "cooling": false,
+        "lastError": "Error: 403 status code (no body)"
+      },
+      {
+        "name": "siliconflow#5",
+        "calls": 2,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 2,
+        "cooling": false,
+        "lastError": "Error: 403 status code (no body)"
+      },
+      {
+        "name": "siliconflow#6",
+        "calls": 2,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 2,
+        "cooling": false,
+        "lastError": "Error: 403 status code (no body)"
+      },
+      {
+        "name": "mistral",
+        "calls": 2,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 2,
+        "cooling": false,
+        "lastError": "Error: 401 status code (no body)"
+      },
+      {
+        "name": "mistral#2",
+        "calls": 2,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 2,
+        "cooling": false,
+        "lastError": "Error: 401 status code (no body)"
+      },
+      {
+        "name": "mistral#3",
+        "calls": 2,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 2,
+        "cooling": false,
+        "lastError": "Error: 401 status code (no body)"
+      },
+      {
+        "name": "mistral#4",
+        "calls": 2,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 2,
+        "cooling": false,
+        "lastError": "Error: 401 status code (no body)"
+      },
+      {
+        "name": "hf",
+        "calls": 2,
+        "ok": 1,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 1,
+        "cooling": false,
+        "lastError": "Error: 402 \"You have depleted your monthly included credits. Purchase pre-paid credits to continue using Inference Providers. Alternatively, subscribe to PRO to get 20x more included usage.\""
+      },
+      {
+        "name": "hf#2",
+        "calls": 2,
+        "ok": 1,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 1,
+        "cooling": false,
+        "lastError": "Error: 402 \"You have depleted your monthly included credits. Purchase pre-paid credits to continue using Inference Providers. Alternatively, subscribe to PRO to get 20x more included usage.\""
+      },
+      {
+        "name": "openrouter",
+        "calls": 4,
+        "ok": 0,
+        "err429": 4,
+        "cooldowns": 1,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 Provider returned error"
+      },
+      {
+        "name": "custom-modelscope",
+        "calls": 2,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 2,
+        "cooling": false,
+        "lastError": "Error: 401 Authentication failed, please make sure that a valid ModelScope token is supplied."
+      },
+      {
+        "name": "custom-spark",
+        "calls": 2,
+        "ok": 0,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 2,
+        "cooling": false,
+        "lastError": "Error: 401 status code (no body)"
+      }
+    ]
+  }
+]
