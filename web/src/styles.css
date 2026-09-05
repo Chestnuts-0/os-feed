@@ -1988,32 +1988,33 @@ button {
   text-align: center;
 }
 
-/* 关注成功 toast：fixed 顶部悬浮 2.5s 自动消失，不占文档流（修复内容下移闪现） */
+/* 关注成功 toast：fixed 悬浮于 header 下方，2.5s 自动消失，不占文档流（修复内容下移闪现） */
 .creator-follow-toast {
   position: fixed;
-  top: 72px;
+  top: calc(var(--header-h) + 16px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 220;
   padding: 10px 22px;
-  border-radius: 20px;
+  border-radius: 18px;
   background: var(--glass-gradient);
   border: 1px solid var(--card-border-hover);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   color: var(--text);
   font-size: 0.9rem;
-  white-space: nowrap;
-  animation: toast-in 0.25s ease;
+  max-width: min(520px, calc(100vw - 32px));
+  text-align: center;
+  animation: toast-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes toast-in {
   from {
     opacity: 0;
-    transform: translate(-50%, -10px);
+    transform: translate(-50%, -12px) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 0) scale(1);
   }
 }
 .creator-follow-btn.following {
