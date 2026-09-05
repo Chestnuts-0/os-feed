@@ -30,6 +30,15 @@ function prepareFeedPlugin(): Plugin {
       const cards = Array.isArray(parsed) ? parsed : [];
       const { list, details } = splitFeedPayload(cards as Array<{ repo: string; detailCn?: string }>);
 
+      // 加载提速（2026-09-05）：列表剔除前端零消费的死字段。
+      // bigbros=盖章退役遗留（7 出口已清）；aiDim=aiDims[0] 的 deprecated 重复；
+      // score=组装时恒 0（前端排序早已不用它）。仅剔构建产物，data/feed.json 原样保留兼容。
+      for (const card of list as unknown as Record<string, unknown>[]) {
+        delete card["bigbros"];
+        delete card["aiDim"];
+        delete card["score"];
+      }
+
       const listPath = path.join(outDir, "feed.json");
       const detailsPath = path.join(outDir, "feed-details.json");
       fs.writeFileSync(listPath, JSON.stringify(list));

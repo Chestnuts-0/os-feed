@@ -6,6 +6,7 @@ import { CreatorPage } from "./CreatorPage.tsx";
 import { weightedSearch } from "./search.ts";
 import { loadSafe, saveDual, migrateLegacyKeys } from "./storage.ts";
 import { mergeDetail, prefetchFeedDetails, warmFeedDetails, getFeedDetailsIfReady } from "./feed-payload.ts";
+import { loadCachedFeedText, saveCachedFeedText } from "./feed-cache.ts";
 import {
   FEED_MOBILE_MAX_WIDTH,
   feedGridFromMatch,
@@ -479,6 +480,22 @@ function applyJitter(cards: FeedCard[], seed: number, strength = 0.18): FeedCard
     .map((x) => x.c);
 }
 
+/**
+ * TikTok 单调流 v3（2026-09-05 三次拍板：「第三次刷新主页依旧是见过的项目」）。
+ * 洗牌只解决「顺序变」，不解决「翻来覆去那几张」——看过的卡必须沉底：
+ * 7 天内曝光/打开过的卡整体排到流尾（组内保持频道语义序不变），
+ * 每次刷新前段都是没看过的卡；没看过的刷完了尾部旧卡自然回流，流永不空。
+ * seen 的写入点=卡片进入渲染窗口（曝光即看过）+打开详情，跨会话持久化。
+ */
+function sinkSeen(cards: FeedCard[], seen: Record<string, number>, now: number): FeedCard[] {
+  const DAY_MS = 86_400_000;
+  const isStale = (c: FeedCard): number => {
+    const ts = seen[c.repo];
+    return ts && now - ts < 7 * DAY_MS ? 1 : 0;
+  };
+  return [...cards].sort((a, b) => isStale(a) - isStale(b));
+}
+
 function getSectionCards(
   cards: FeedCard[],
   sectionKey: string,
@@ -593,6 +610,8 @@ interface FeedVirtualListProps {
   channel?: string;
   onOpenCreator?: (owner: string) => void;
   entering?: boolean;
+  /** 曝光回调：进入渲染窗口的卡视为「已刷过」（TikTok 单调流沉底依据），由父组件持久化 */
+  onExpose?: (repos: string[]) => void;
 }
 
 function FeedVirtualList({
@@ -604,6 +623,7 @@ function FeedVirtualList({
   channel,
   onOpenCreator,
   entering = false,
+  onExpose,
 }: FeedVirtualListProps) {
   const { cols, rowGap } = useFeedGrid();
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -668,6 +688,16 @@ function FeedVirtualList({
   }, [cards.length, cards[0]?.repo, channel, cols, rowGap]);
 
   const visible = cards.slice(win.startIdx, win.endIdx);
+
+  // 曝光即看过（TikTok 单调流）：渲染窗口内的卡上报父组件记 seen（沉底依据）。
+  // key=窗口位次+频道+首卡：滚动/切频道/数据变化时增量触发，不依赖 onExpose 引用稳定。
+  const exposedKey = `${channel ?? ""}:${cards[0]?.repo ?? ""}:${cards.length}:${win.startIdx}:${win.endIdx}`;
+  const onExposeRef = useRef(onExpose);
+  onExposeRef.current = onExpose;
+  useEffect(() => {
+    if (!onExposeRef.current || win.endIdx <= win.startIdx) return;
+    onExposeRef.current(cards.slice(win.startIdx, win.endIdx).map((c) => c.repo));
+  }, [exposedKey, cards, win.startIdx, win.endIdx]);
 
   return (
     <div ref={wrapRef} className={entering ? "feed-window channel-entering" : "feed-window"}>
@@ -757,29 +787,55 @@ export default function App() {
     setDetailCard(null);
   }, []);
 
-  // 加载 feed.json
+  // 加载 feed.json：同日 IndexedDB 缓存命中 → 缓存文本立即渲染（秒开），后台再拉最新
+  // 版本校验，有变化才热替换（2026-09-05 加载提速：数据每天 digest 一次，日内刷新几乎全命中）
   useEffect(() => {
-    fetch(FEED_URL)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<FeedCard[]>;
-      })
-      .then((data) => {
-        setCards((Array.isArray(data) ? data : []).map(normalizeCard));
-        setLoading(false);
-        warmFeedDetails();
-        // 不要给 idle 加短超时——会在滚动中强行 JSON.parse 整份详情表。
-        const idle = window.requestIdleCallback
-          ? (cb: () => void) => window.requestIdleCallback(cb)
-          : (cb: () => void) => window.setTimeout(cb, 2000);
-        idle(() => {
-          void prefetchFeedDetails();
-        });
-      })
-      .catch((err: unknown) => {
-        setError(err instanceof Error ? err.message : String(err));
-        setLoading(false);
+    let cancelled = false;
+    const idle = window.requestIdleCallback
+      ? (cb: () => void) => window.requestIdleCallback(cb)
+      : (cb: () => void) => window.setTimeout(cb, 2000);
+    const applyData = (data: FeedCard[]) => {
+      setCards((Array.isArray(data) ? data : []).map(normalizeCard));
+      setLoading(false);
+    };
+    const warmDetails = () => {
+      warmFeedDetails();
+      idle(() => {
+        void prefetchFeedDetails();
       });
+    };
+    (async () => {
+      const cachedText = await loadCachedFeedText();
+      if (cancelled) return;
+      if (cachedText) {
+        try {
+          applyData(JSON.parse(cachedText) as FeedCard[]);
+          warmDetails();
+        } catch {
+          /* 缓存损坏 → 落回网络路径 */
+        }
+      }
+      try {
+        const r = await fetch(FEED_URL);
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const text = await r.text();
+        if (cancelled) return;
+        if (text !== cachedText) {
+          void saveCachedFeedText(text);
+          applyData(JSON.parse(text) as FeedCard[]);
+          warmDetails();
+        }
+      } catch (err: unknown) {
+        // 缓存已渲染时后台刷新失败静默（旧数据可刷）；无缓存才报错
+        if (!cachedText) {
+          setError(err instanceof Error ? err.message : String(err));
+          setLoading(false);
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // ESC 立刻关弹窗，不播反向收回
@@ -894,6 +950,25 @@ export default function App() {
     },
     [collections, detailCard, updateTagWeights],
   );
+
+  // 曝光即看过（TikTok 单调流，2026-09-05）：渲染窗口内的卡记 seen 并持久化（idle 节流）。
+  // seen 是不可变 state——本会话流不重排，下次刷新这些卡沉底：「刷过的不回头」。
+  const handleExpose = useCallback((repos: string[]) => {
+    let changed = false;
+    for (const repo of repos) {
+      if (!seenRef.current[repo]) {
+        seenRef.current[repo] = Date.now();
+        changed = true;
+      }
+    }
+    if (!changed) return;
+    const persist = () => saveSeen(seenRef.current);
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(persist, { timeout: 1500 });
+    } else {
+      window.setTimeout(persist, 800);
+    }
+  }, []);
 
   const handleCreateCollection = useCallback(() => {
     const name = prompt("收藏夹名称：");
@@ -1154,14 +1229,16 @@ export default function App() {
     return applyFilter(withContent, seen, interactions, collections);
   }, [cards, tab, seen, interactions, collections]);
 
-  // 分区数据：推荐 = 前端个性化生成；其余频道按各自语义排序后套会话洗牌
-  // （每日=客观热度不抖；关注=动态时间序不抖；推荐 ±10%、热门/分类 ±9% 头部轮换）
+  // 分区数据：推荐 = 前端个性化生成；其余频道按各自语义排序后套会话洗牌，
+  // 全频道出口统一「看过的沉底」（TikTok 单调流：刷过的不回头，前段永远是没看过的卡）
+  // （每日/关注不抖靠沉底换血；推荐 ±10%、热门/分类 ±9% 头部轮换）
   // 关注频道豁免空分区过滤：未关注任何人时侧栏仍保留「关注」项，内容区显示引导
   const sections = useMemo(() => {
     const seed = sessionSeedRef.current;
+    const now = Date.now();
     const all = ALL_SECTIONS.map((s) => ({
       ...s,
-      cards:
+      cards: sinkSeen(
         s.key === "recommended"
           ? applyJitter(
               buildRecommended(visibleCards, preferences.tagWeights, seen, interactions, followingSet),
@@ -1171,6 +1248,9 @@ export default function App() {
           : s.key === "daily" || s.key === "following"
             ? getSectionCards(visibleCards, s.key, followingSet)
             : applyJitter(getSectionCards(visibleCards, s.key, followingSet), seed, 0.18),
+        seen,
+        now,
+      ),
     })).filter((s) => s.key === "following" || s.cards.length > 0);
     return all;
   }, [visibleCards, preferences, seen, interactions, followingSet]);
@@ -1381,6 +1461,7 @@ export default function App() {
                           channel={feedChannel}
                           onOpenCreator={openCreator}
                           entering={channelEnter}
+                          onExpose={handleExpose}
                           onEndHint={`已加载全部 ${activeSection.cards.length} 个项目`}
                         />
                       </>

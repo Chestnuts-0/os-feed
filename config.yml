@@ -105,42 +105,108 @@ openclaw_peers:
 # 加权/TG 通知/评分加权）同步清除，字段仅为历史数据兼容保留。关注频道只认本机关注。
 
 # ── Trending/Search 主题 ───────────────────────────────────────
-# GitHub Search API 查询主题。覆盖 AI/工具/学习/好玩等多个领域。
+# GitHub Search API 查询主题。2026-09-05 十倍扩容：21 主题×50 → ~90 主题×100
+# （候选上限 1450/轮 → 9000/轮），领域从 AI/工程扩展到好玩/生活/学习/硬件/科学全谱系。
+# 每天评分 cap 1000 张滚动消化（评分队列按领域分桶轮询），池子一周内数量级增长。
 # quota = 每主题最多拉取仓库数（Search API 限流 30/min，10 个一批 + 2 秒间隔）
 trending_topics:
   # AI 核心
-  - { q: "topic:llm", label: "llm", quota: 50 }
-  - { q: "topic:ai-agent", label: "ai-agent", quota: 50 }
-  - { q: "topic:rag", label: "rag", quota: 50 }
-  - { q: "topic:vector-database", label: "vector-db", quota: 50 }
-  - { q: "topic:large-language-model", label: "llm-model", quota: 50 }
-  - { q: "topic:machine-learning", label: "ml", quota: 50 }
-  # 非 AI 领域（内容多样性扩容）
-  - { q: "topic:game", label: "game", quota: 50 }
-  - { q: "topic:database", label: "database", quota: 50 }
-  - { q: "topic:security", label: "security", quota: 50 }
-  - { q: "topic:devops", label: "devops", quota: 50 }
-  - { q: "topic:frontend", label: "frontend", quota: 50 }
-  - { q: "topic:backend", label: "backend", quota: 50 }
-  - { q: "topic:self-hosted", label: "self-hosted", quota: 50 }
-  - { q: "topic:developer-tools", label: "developer-tools", quota: 50 }
-  - { q: "topic:command-line", label: "command-line", quota: 50 }
-  - { q: "topic:automation", label: "automation", quota: 50 }
-  - { q: "topic:design", label: "design", quota: 50 }
-  - { q: "topic:mobile", label: "mobile", quota: 50 }
-  - { q: "topic:desktop", label: "desktop", quota: 50 }
-  - { q: "topic:data-visualization", label: "data-visualization", quota: 50 }
-  - { q: "topic:web-framework", label: "web-framework", quota: 50 }
-  # 好玩气质专项（2026-09-05 兴趣分区扩容：trending 被 AI/工程类淹没，「好玩」供给不足，
-  # 用创作/玩耍向主题补源——配合 FUN_VIBE 气质词与 prompt 反例一起把兴趣分区填满真好玩的东西）
-  - { q: "topic:creative-coding", label: "creative-coding", quota: 50 }
-  - { q: "topic:generative-art", label: "generative-art", quota: 50 }
-  - { q: "topic:ascii-art", label: "ascii-art", quota: 50 }
-  - { q: "topic:pixel-art", label: "pixel-art", quota: 50 }
-  - { q: "topic:emulator", label: "emulator", quota: 50 }
-  - { q: "topic:simulation", label: "simulation", quota: 50 }
-  - { q: "topic:physics", label: "physics", quota: 50 }
-  - { q: "topic:arduino", label: "arduino", quota: 50 }
+  - { q: "topic:llm", label: "llm", quota: 100 }
+  - { q: "topic:ai-agent", label: "ai-agent", quota: 100 }
+  - { q: "topic:rag", label: "rag", quota: 100 }
+  - { q: "topic:vector-database", label: "vector-db", quota: 100 }
+  - { q: "topic:large-language-model", label: "llm-model", quota: 100 }
+  - { q: "topic:machine-learning", label: "ml", quota: 100 }
+  - { q: "topic:ai", label: "ai", quota: 100 }
+  - { q: "topic:agents", label: "agents", quota: 100 }
+  - { q: "topic:chatbot", label: "chatbot", quota: 100 }
+  - { q: "topic:transformers", label: "transformers", quota: 100 }
+  - { q: "topic:deep-learning", label: "deep-learning", quota: 100 }
+  # 好玩气质专项（兴趣分区互斥语义：首先得有趣。创作/玩耍/玩具向，配合 FUN_VIBE 气质词）
+  - { q: "topic:game", label: "game", quota: 100 }
+  - { q: "topic:creative-coding", label: "creative-coding", quota: 100 }
+  - { q: "topic:generative-art", label: "generative-art", quota: 100 }
+  - { q: "topic:ascii-art", label: "ascii-art", quota: 100 }
+  - { q: "topic:pixel-art", label: "pixel-art", quota: 100 }
+  - { q: "topic:emulator", label: "emulator", quota: 100 }
+  - { q: "topic:simulation", label: "simulation", quota: 100 }
+  - { q: "topic:physics", label: "physics", quota: 100 }
+  - { q: "topic:arduino", label: "arduino", quota: 100 }
+  - { q: "topic:game-development", label: "game-development", quota: 100 }
+  - { q: "topic:roguelike", label: "roguelike", quota: 100 }
+  - { q: "topic:chess", label: "chess", quota: 100 }
+  - { q: "topic:pygame", label: "pygame", quota: 100 }
+  - { q: "topic:raylib", label: "raylib", quota: 100 }
+  - { q: "topic:godot", label: "godot", quota: 100 }
+  - { q: "topic:retrocomputing", label: "retrocomputing", quota: 100 }
+  - { q: "topic:demoscene", label: "demoscene", quota: 100 }
+  - { q: "topic:music-production", label: "music-production", quota: 100 }
+  - { q: "topic:synthesizer", label: "synthesizer", quota: 100 }
+  - { q: "topic:procedural-generation", label: "procedural-generation", quota: 100 }
+  - { q: "topic:virtual-pet", label: "virtual-pet", quota: 100 }
+  - { q: "topic:raspberry-pi", label: "raspberry-pi", quota: 100 }
+  - { q: "topic:esp32", label: "esp32", quota: 100 }
+  - { q: "topic:3d-printing", label: "3d-printing", quota: 100 }
+  - { q: "topic:robotics", label: "robotics", quota: 100 }
+  # 实用工具（工具分区供给）
+  - { q: "topic:database", label: "database", quota: 100 }
+  - { q: "topic:security", label: "security", quota: 100 }
+  - { q: "topic:devops", label: "devops", quota: 100 }
+  - { q: "topic:frontend", label: "frontend", quota: 100 }
+  - { q: "topic:backend", label: "backend", quota: 100 }
+  - { q: "topic:self-hosted", label: "self-hosted", quota: 100 }
+  - { q: "topic:developer-tools", label: "developer-tools", quota: 100 }
+  - { q: "topic:command-line", label: "command-line", quota: 100 }
+  - { q: "topic:automation", label: "automation", quota: 100 }
+  - { q: "topic:design", label: "design", quota: 100 }
+  - { q: "topic:mobile", label: "mobile", quota: 100 }
+  - { q: "topic:desktop", label: "desktop", quota: 100 }
+  - { q: "topic:data-visualization", label: "data-visualization", quota: 100 }
+  - { q: "topic:web-framework", label: "web-framework", quota: 100 }
+  - { q: "topic:api", label: "api", quota: 100 }
+  - { q: "topic:git", label: "git", quota: 100 }
+  - { q: "topic:docker", label: "docker", quota: 100 }
+  - { q: "topic:kubernetes", label: "kubernetes", quota: 100 }
+  - { q: "topic:testing", label: "testing", quota: 100 }
+  - { q: "topic:monitoring", label: "monitoring", quota: 100 }
+  - { q: "topic:documentation", label: "documentation", quota: 100 }
+  - { q: "topic:productivity", label: "productivity", quota: 100 }
+  - { q: "topic:editor", label: "editor", quota: 100 }
+  - { q: "topic:home-automation", label: "home-automation", quota: 100 }
+  - { q: "topic:iot", label: "iot", quota: 100 }
+  - { q: "topic:cryptography", label: "cryptography", quota: 100 }
+  # 学习资源（学习分区供给）
+  - { q: "topic:awesome", label: "awesome", quota: 100 }
+  - { q: "topic:tutorial", label: "tutorial", quota: 100 }
+  - { q: "topic:algorithms", label: "algorithms", quota: 100 }
+  - { q: "topic:interview", label: "interview", quota: 100 }
+  - { q: "topic:english", label: "english", quota: 100 }
+  - { q: "topic:mathematics", label: "mathematics", quota: 100 }
+  - { q: "topic:learning", label: "learning", quota: 100 }
+  - { q: "topic:cheatsheet", label: "cheatsheet", quota: 100 }
+  - { q: "topic:course", label: "course", quota: 100 }
+  - { q: "topic:textbook", label: "textbook", quota: 100 }
+  # 生活/媒体/科学（各行各业，内容广度）
+  - { q: "topic:finance", label: "finance", quota: 100 }
+  - { q: "topic:trading", label: "trading", quota: 100 }
+  - { q: "topic:travel", label: "travel", quota: 100 }
+  - { q: "topic:fitness", label: "fitness", quota: 100 }
+  - { q: "topic:music", label: "music", quota: 100 }
+  - { q: "topic:video-editor", label: "video-editor", quota: 100 }
+  - { q: "topic:photography", label: "photography", quota: 100 }
+  - { q: "topic:ebook", label: "ebook", quota: 100 }
+  - { q: "topic:podcast", label: "podcast", quota: 100 }
+  - { q: "topic:writing", label: "writing", quota: 100 }
+  - { q: "topic:note-taking", label: "note-taking", quota: 100 }
+  - { q: "topic:knowledge-management", label: "knowledge-management", quota: 100 }
+  - { q: "topic:anime", label: "anime", quota: 100 }
+  - { q: "topic:jellyfin", label: "jellyfin", quota: 100 }
+  - { q: "topic:privacy", label: "privacy", quota: 100 }
+  - { q: "topic:astronomy", label: "astronomy", quota: 100 }
+  - { q: "topic:bioinformatics", label: "bioinformatics", quota: 100 }
+  - { q: "topic:data-science", label: "data-science", quota: 100 }
+  - { q: "topic:maps", label: "maps", quota: 100 }
+  - { q: "topic:weather", label: "weather", quota: 100 }
 
 # ── star 门槛 ──────────────────────────────────────────────────
 # 总 star 数低于此值的项目不进信息流

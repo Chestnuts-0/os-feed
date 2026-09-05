@@ -1,0 +1,67 @@
+/**
+ * feed.json 同日缓存（IndexedDB）——2026-09-05 加载提速。
+ *
+ * 问题：每次刷新全量重拉 2.1MB 列表 + JSON.parse，感知 2-3 秒起。
+ * 方案：拉到一次就把原始文本按日期存进 IndexedDB；同日再刷新直接用缓存渲染
+ * （秒开），后台静默拉最新版本，有变化就更新缓存并热替换数据——
+ * 数据每天 digest 一次，日内刷新几乎总是命中缓存。
+ *
+ * 为什么 IndexedDB 不是 localStorage：2.1MB 文本在 localStorage 的 UTF-16
+ * 计费下 ≈4.2MB，贴着 5MB 配额边，容易 QuotaExceeded；IDB 无此忧。
+ */
+
+const DB_NAME = "gittok-feed-cache";
+const STORE = "feed";
+const KEY = "daily";
+
+function openDb(): Promise<IDBDatabase | null> {
+  return new Promise((resolve) => {
+    if (typeof indexedDB === "undefined") return resolve(null);
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      if (!req.result.objectStoreNames.contains(STORE)) req.result.createObjectStore(STORE);
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => resolve(null);
+  });
+}
+
+function todayStamp(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+/** 当日缓存的原始文本；无缓存/非当日/IDB 不可用 → null（调用方走网络路径）。 */
+export async function loadCachedFeedText(): Promise<string | null> {
+  try {
+    const db = await openDb();
+    if (!db) return null;
+    return await new Promise<string | null>((resolve) => {
+      const tx = db.transaction(STORE, "readonly");
+      const req = tx.objectStore(STORE).get(KEY);
+      req.onsuccess = () => {
+        const row = req.result as { date?: string; text?: string } | undefined;
+        resolve(row && row.date === todayStamp() && typeof row.text === "string" ? row.text : null);
+      };
+      req.onerror = () => resolve(null);
+    });
+  } catch {
+    return null;
+  }
+}
+
+/** 存当日缓存；失败静默（缓存缺失只影响下次刷新速度，不影响功能）。 */
+export async function saveCachedFeedText(text: string): Promise<void> {
+  try {
+    const db = await openDb();
+    if (!db) return;
+    await new Promise<void>((resolve) => {
+      const tx = db.transaction(STORE, "readwrite");
+      tx.objectStore(STORE).put({ date: todayStamp(), text }, KEY);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => resolve();
+      tx.onabort = () => resolve();
+    });
+  } catch {
+    /* 静默 */
+  }
+}

@@ -58,7 +58,7 @@ export function weightedSearch(cards: FeedCard[], query: string): SearchOutcome 
     const desc = card.desc.toLowerCase();
     const summaryCn = card.summaryCn.toLowerCase();
     const reasonCn = card.reasonCn.toLowerCase();
-    const aiDim = card.aiDim.toLowerCase();
+    const aiDim = (card.aiDim ?? card.aiDims?.[0] ?? "").toLowerCase();
     const topicsRelaxed = (card.topics ?? []).map(relaxKey);
 
     let score = 0;
@@ -98,7 +98,12 @@ export function weightedSearch(cards: FeedCard[], query: string): SearchOutcome 
         score += 8;
         hit = true;
       }
-      if (desc.includes(term) || summaryCn.includes(term) || reasonCn.includes(term) || aiDim.includes(term)) {
+      if (
+        desc.includes(term) ||
+        summaryCn.includes(term) ||
+        reasonCn.includes(term) ||
+        aiDim.includes(term)
+      ) {
         score += 2; // 长尾文案层
         hit = true;
       }
