@@ -8,8 +8,9 @@
 
 import type { RepoForScoring, ScoringResult } from "./types.ts";
 
-/** AI 维度分类候选（扩展为约 28 个精细标签，覆盖 AI/工具/学习/好玩） */
-const AI_DIMS = [
+/** AI 维度分类候选（扩展为约 28 个精细标签，覆盖 AI/工具/学习/好玩）。
+ *  导出：质量对照脚本（scripts/llm-quality-test.mts）用同一份清单校验维度合法性。 */
+export const AI_DIMS = [
   // AI 基础设施
   "AI基础设施",
   "推理引擎",

@@ -72,17 +72,32 @@ export function is429(err: unknown): boolean {
 /** 单个 LLM worker：一条串行调用链（免费源各自限流，源内不并发）+ 429 冷却截止时间 */
 interface LlmWorker {
   name: string;
+  /** 健康统计用标签：同名多 worker（groq@模型A、groq@模型B…）按出现序号加 #N 后缀，日志仍用 name */
+  label: string;
   call: (prompt: string, maxTokens: number) => Promise<string>;
   queue: Promise<unknown>;
   cooldownUntil: number;
+  stats: WorkerStats;
+}
+
+/** 单 worker 健康计数（编队健康统计，2026-09-05）：calls=实际发起的调用次数（含重试） */
+interface WorkerStats {
+  calls: number;
+  ok: number;
+  err429: number;
+  cooldowns: number;
+  otherErrors: number;
+  lastError?: string;
 }
 
 function makeWorker(provider: LlmProvider): LlmWorker {
   return {
     name: provider.name,
+    label: provider.name,
     call: (prompt, maxTokens) => provider.call(prompt, maxTokens),
     queue: Promise.resolve(),
     cooldownUntil: 0,
+    stats: { calls: 0, ok: 0, err429: 0, cooldowns: 0, otherErrors: 0 },
   };
 }
 
@@ -99,21 +114,33 @@ export function createLlmCaller(
   primary: LlmProvider,
   fallbackFactories: Array<() => LlmProvider>,
   opts?: { retryBaseMs?: number; maxRetries?: number; cooldownMs?: number },
-): (prompt: string, maxTokens?: number) => Promise<string> {
+): LlmCallerWithHealth {
   const retryBaseMs = opts?.retryBaseMs ?? RETRY_BASE_MS;
   const maxRetries = opts?.maxRetries ?? MAX_RETRIES;
   const cooldownMs = opts?.cooldownMs ?? COOLDOWN_MS;
 
   // 主源立即入池；备源实例化失败（如 key 缺失）跳过该源，不影响其余 worker
   const workers: LlmWorker[] = [];
+  const nameSeq = new Map<string, number>();
+  const pushWorker = (provider: LlmProvider): void => {
+    try {
+      const w = makeWorker(provider);
+      const seq = (nameSeq.get(provider.name) ?? 0) + 1;
+      nameSeq.set(provider.name, seq);
+      w.label = seq === 1 ? provider.name : `${provider.name}#${seq}`;
+      workers.push(w);
+    } catch (err) {
+      console.error(`[llm] worker init failed, skipping: ${err}`);
+    }
+  };
   try {
-    workers.push(makeWorker(primary));
+    pushWorker(primary);
   } catch (err) {
     console.error(`[llm] primary init failed: ${err}`);
   }
   for (const factory of fallbackFactories) {
     try {
-      workers.push(makeWorker(factory()));
+      pushWorker(factory());
     } catch (err) {
       console.error(`[llm] fallback init failed, skipping: ${err}`);
     }
@@ -137,30 +164,40 @@ export function createLlmCaller(
     return best;
   };
 
-  /** 单 worker 内执行一次调用：源内指数退避重试，拉满 429 → 冷却并抛出 */
+  /** 单 worker 内执行一次调用：源内指数退避重试，拉满 429 → 冷却并抛出。
+   *  每次实际发起的调用都计入 stats（含重试），供编队健康统计。 */
   const runOnWorker = async (w: LlmWorker, prompt: string, maxTokens: number): Promise<string> => {
     for (let attempt = 0; ; attempt++) {
+      w.stats.calls++;
       try {
-        return await w.call(prompt, maxTokens);
+        const result = await w.call(prompt, maxTokens);
+        w.stats.ok++;
+        return result;
       } catch (err) {
+        w.stats.lastError = String(err).slice(0, 200);
         if (attempt < maxRetries && is429(err)) {
+          w.stats.err429++;
           const wait = retryBaseMs * 2 ** attempt;
           console.error(`[llm] ${w.name} 429 — retry ${attempt + 1}/${maxRetries} in ${wait / 1000}s...`);
           await sleep(wait);
           continue;
         }
         if (is429(err)) {
+          w.stats.err429++;
+          w.stats.cooldowns++;
           w.cooldownUntil = Date.now() + cooldownMs;
           console.error(
             `[llm] ${w.name} 429 exhausted — cooling down ${cooldownMs / 1000}s, load shifts to other providers`,
           );
+        } else {
+          w.stats.otherErrors++;
         }
         throw err;
       }
     }
   };
 
-  return async function callLlm(prompt: string, maxTokens = LLM_TOKENS_DEFAULT): Promise<string> {
+  const caller = async function callLlm(prompt: string, maxTokens = LLM_TOKENS_DEFAULT): Promise<string> {
     let lastErr: unknown;
     const tried = new Set<LlmWorker>();
     for (;;) {
@@ -181,14 +218,101 @@ export function createLlmCaller(
         // 429：该 worker 已被 runOnWorker 冷却，下一轮换其余 worker
       }
     }
-  };
+  } as LlmCallerWithHealth;
+
+  caller.fleetHealth = (): FleetHealthEntry[] =>
+    workers.map((w) => ({
+      name: w.label,
+      calls: w.stats.calls,
+      ok: w.stats.ok,
+      err429: w.stats.err429,
+      cooldowns: w.stats.cooldowns,
+      otherErrors: w.stats.otherErrors,
+      cooling: w.cooldownUntil > Date.now(),
+      ...(w.stats.lastError ? { lastError: w.stats.lastError } : {}),
+    }));
+  return caller;
 }
 
-const callLlmImpl = createLlmCaller(createProvider(), parseFallbackFactories());
+// ---------------------------------------------------------------------------
+// 编队健康统计（2026-09-05 拆 job 刀配套）：每 worker 成功/429/冷却计数
+// ---------------------------------------------------------------------------
+
+/** 单 worker 健康快照行 */
+export interface FleetHealthEntry {
+  /** worker 标签（同名多 worker 带 #N 序号） */
+  name: string;
+  calls: number;
+  ok: number;
+  err429: number;
+  cooldowns: number;
+  otherErrors: number;
+  /** 统计时刻是否处于 429 冷却中 */
+  cooling: boolean;
+  lastError?: string;
+}
+
+/** fleet-health.json 单 job 条目（digest/feed 两进程先后写同一文件，按 job upsert） */
+export interface FleetHealthFileEntry {
+  job: string;
+  at: string;
+  workers: FleetHealthEntry[];
+}
+
+/** createLlmCaller 返回的调用函数 + 健康快照钩子 */
+type LlmCallerWithHealth = ((prompt: string, maxTokens?: number) => Promise<string>) & {
+  fleetHealth?: () => FleetHealthEntry[];
+};
+
+const callLlmImpl = createLlmCaller(createProvider(), parseFallbackFactories()) as LlmCallerWithHealth;
 
 /** digest 全管道统一 LLM 入口（主源 + LLM_FALLBACKS 并行分摊 + 429 冷却轮转） */
 export async function callLlm(prompt: string, maxTokens = LLM_TOKENS_DEFAULT): Promise<string> {
   return callLlmImpl(prompt, maxTokens);
+}
+
+/** 当前进程 LLM 编队健康快照（未跑过任何调用时返回空数组） */
+export function fleetHealthSummary(): FleetHealthEntry[] {
+  return callLlmImpl.fleetHealth?.() ?? [];
+}
+
+/** 纯函数：按 job 名 upsert 条目（digest 与 feed 两 job 先后写同一文件互不覆盖） */
+export function upsertFleetHealthEntry(
+  list: FleetHealthFileEntry[],
+  entry: FleetHealthFileEntry,
+): FleetHealthFileEntry[] {
+  return [...list.filter((e) => e.job !== entry.job), entry];
+}
+
+/**
+ * 落盘本进程编队健康到 data/fleet-health.json（按 job upsert 合并已有条目），
+ * 并打印终端摘要（Actions log 可读）。文件随 data/ 入仓，git 历史即健康趋势。
+ */
+export function recordFleetHealth(job: string): void {
+  try {
+    const entry: FleetHealthFileEntry = { job, at: new Date().toISOString(), workers: fleetHealthSummary() };
+    const filepath = path.join("data", "fleet-health.json");
+    let list: FleetHealthFileEntry[] = [];
+    if (fs.existsSync(filepath)) {
+      try {
+        list = JSON.parse(fs.readFileSync(filepath, "utf-8")) as FleetHealthFileEntry[];
+      } catch {
+        list = []; // 文件损坏不阻塞主流程，重写
+      }
+    }
+    if (!Array.isArray(list)) list = [];
+    fs.mkdirSync("data", { recursive: true });
+    fs.writeFileSync(filepath, JSON.stringify(upsertFleetHealthEntry(list, entry), null, 2), "utf-8");
+    console.log(`[fleet-health] ${job} 编队健康（已写入 ${filepath}）:`);
+    for (const w of entry.workers) {
+      const okRate = w.calls > 0 ? `${Math.round((w.ok / w.calls) * 100)}%` : "-";
+      console.log(
+        `  ${w.name}: calls=${w.calls} ok=${w.ok}(${okRate}) 429=${w.err429} cooldown=${w.cooldowns} otherErr=${w.otherErrors}${w.cooling ? " [冷却中]" : ""}${w.lastError ? ` last=${w.lastError.slice(0, 80)}` : ""}`,
+      );
+    }
+  } catch (err) {
+    console.error(`[fleet-health] record failed: ${err}`);
+  }
 }
 
 // ---------------------------------------------------------------------------

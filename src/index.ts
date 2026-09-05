@@ -29,7 +29,7 @@ import {
   buildSkillsPrompt,
 } from "./prompts.ts";
 import { buildTrendingPrompt, buildHighlightsPrompt, type ReportHighlights } from "./prompts-data.ts";
-import { callLlm, saveFile, autoGenFooter, LLM_TOKENS_TRENDING } from "./report.ts";
+import { callLlm, saveFile, autoGenFooter, LLM_TOKENS_TRENDING, recordFleetHealth } from "./report.ts";
 import { buildCliReportContent, buildOpenclawReportContent } from "./report-builders.ts";
 import {
   saveWebReport,
@@ -518,14 +518,28 @@ async function main(): Promise<void> {
   // 开源版抖音信息流：生成 feed.json（bigbros 盖章已全面退役不再跑，2026-09-05；
   // 2026-09-01 关注解耦：不再抓大牛/follow 名单 star 灌新卡；
   // 2026-09-05 拍板：外源信号（HN 提及等）不进 feed 算法，hnData 不再传入）
+  // 2026-09-05 拆 job：CI 设 SPLIT_FEED=1 时本进程只做 fetch+digest，trending 数据
+  // 快照落盘经 artifact 传给 feed job（省二次 Search 烧墙）；本地不设该变量=单进程全跑。
   try {
-    console.log("Generating feed...");
-    const { generateFeed } = await import("./feed/index.ts");
-    const feedCards = await generateFeed(CONFIG, trendingData);
-    console.log(`  [feed] generated ${feedCards.length} cards`);
+    if (process.env["SPLIT_FEED"] === "1") {
+      fs.mkdirSync("data", { recursive: true });
+      const snapshotPath = path.join("data", "trending-snapshot.json");
+      fs.writeFileSync(snapshotPath, JSON.stringify(trendingData), "utf-8");
+      console.log(
+        `  [split] SPLIT_FEED=1 → feed 留给 feed job；trending 快照已存 ${snapshotPath}（trending=${trendingData.trendingRepos.length}, search=${trendingData.searchRepos.length}）`,
+      );
+    } else {
+      console.log("Generating feed...");
+      const { generateFeed } = await import("./feed/index.ts");
+      const feedCards = await generateFeed(CONFIG, trendingData);
+      console.log(`  [feed] generated ${feedCards.length} cards`);
+    }
   } catch (err) {
     console.error(`[feed] generation failed: ${err}`);
   }
+
+  // 编队健康落盘（每 worker 成功/429/冷却计数 → data/fleet-health.json，随 data/ 入仓）
+  recordFleetHealth("digest");
 
   console.log("Done!");
 }

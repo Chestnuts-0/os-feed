@@ -140,7 +140,33 @@ function buildTelegramText(cards: FeedCard[], pagesUrl: string): string {
 
   lines.push(`<a href="${pagesUrl}">🌐 去刷更多</a>  ·  刷到好项目，点赞让推荐更准`);
 
+  // 编队健康一行（2026-09-05 拆 job 刀配套）：推送里直接看每源吞吐/429/冷却，掉链子当场可见
+  const healthLine = buildFleetHealthLine();
+  if (healthLine) lines.push(healthLine);
+
   return lines.join("\n");
+}
+
+/** 编队健康一行（读 data/fleet-health.json，优先 feed 条目；缺失/损坏返回空串不阻塞推送） */
+function buildFleetHealthLine(): string {
+  try {
+    if (!fs.existsSync("data/fleet-health.json")) return "";
+    const list = JSON.parse(fs.readFileSync("data/fleet-health.json", "utf-8")) as Array<{
+      job: string;
+      workers: Array<{ name: string; calls: number; ok: number; err429: number; cooldowns: number }>;
+    }>;
+    const entry = list.find((e) => e.job === "feed") ?? list.find((e) => e.job === "digest");
+    if (!entry || entry.workers.length === 0) return "";
+    const totalCalls = entry.workers.reduce((s, w) => s + w.calls, 0);
+    const totalOk = entry.workers.reduce((s, w) => s + w.ok, 0);
+    const top = [...entry.workers].sort((a, b) => b.calls - a.calls).slice(0, 5);
+    const parts = top.map(
+      (w) => `${w.name} ${w.ok}/${w.calls}·429×${w.err429}${w.cooldowns > 0 ? `·冷×${w.cooldowns}` : ""}`,
+    );
+    return `\n🩺 编队健康(${entry.job}): 全队 ${totalOk}/${totalCalls}\n${parts.join("\n")}`;
+  } catch {
+    return "";
+  }
 }
 
 // ---------------------------------------------------------------------------

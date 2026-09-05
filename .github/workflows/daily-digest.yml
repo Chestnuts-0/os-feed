@@ -11,10 +11,16 @@ permissions:
   issues: write
 
 jobs:
+  # ── Job 1: fetch + digest ─────────────────────────────────────────────
+  # 2026-09-05 拆 job：Search 30req/min 墙的抓取 + digest LLM 在本 job；
+  # 万级评分（LLM 墙）拆到 feed job——超时隔离、失败重跑不重烧 Search、
+  # commit 串行化（feed needs digest）后 digest 与 feed 不再抢 push。
+  # SPLIT_FEED=1：index.ts 只落 trending 快照不跑 generateFeed。
   digest:
     runs-on: ubuntu-latest
     # 90→240：LLM 免费源 429 退避 + 备源接管后全程可能超 90min（08-20 停摆主因）
-    timeout-minutes: 360 # 240→360（GH 上限；放量后长尾余量）
+    # 万级评分拆走后 240min 对 fetch+digest 充裕（评分是原长尾大头）
+    timeout-minutes: 240
 
     steps:
       - name: Checkout
@@ -32,8 +38,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run daily digest + feed generation
+      - name: Run daily digest (fetch + digest；feed 由 feed job 接力)
         env:
+          SPLIT_FEED: "1"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LLM_PROVIDER: zhipu
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
@@ -58,16 +65,25 @@ jobs:
           BIGBROS: ${{ secrets.BIGBROS }}
         run: pnpm start
 
-      - name: Commit digest + feed data
+      # trending 快照（fetch 的成果）传给 feed job 复用：feed job 不必重烧 Search 墙
+      - name: Upload trending snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: trending-snapshot
+          path: data/trending-snapshot.json
+          retention-days: 7
+          if-no-files-found: error # feed job 依赖它，缺失就红（宁可响亮失败不静默漏评）
+
+      - name: Commit digest data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add digests/ data/
           if git diff --cached --quiet; then
-            echo "No new digest/feed files to commit"
+            echo "No new digest files to commit"
           else
             DATE=$(date -u +%Y-%m-%d)
-            git commit -m "digest: ${DATE} daily digest + feed update"
+            git commit -m "digest: ${DATE} daily digest update"
             git pull --rebase
             git push
           fi
@@ -97,6 +113,80 @@ jobs:
           PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
         run: pnpm notify:feishu
 
+      - name: Close stale issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DIGEST_REPO: ${{ github.repository }}
+        run: pnpm close-stale
+
+  # ── Job 2: feed 生成 + LLM 万级评分 ───────────────────────────────────
+  # 串行接力（needs: digest）：消化 digest job 的 trending 快照，独享 360min
+  # 跑评分池；commit 在 digest 之后天然无抢push。评分挂了重跑本 job 即可
+  # （Actions「Re-run failed jobs」），不重烧 Search 配额。
+  feed:
+    needs: digest
+    runs-on: ubuntu-latest
+    timeout-minutes: 360 # 评分长尾（免费源 429 退避 + 冷却）的独立超时预算
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # 取分支头而非触发 sha：digest job 刚 push 过 digest/manifest 提交，
+          # feed job 的基线 feed.json/健康文件要基于最新 master
+          ref: ${{ github.ref_name }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download trending snapshot
+        uses: actions/download-artifact@v4
+        with:
+          name: trending-snapshot
+          path: data/
+
+      - name: Run feed generation + LLM scoring
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_PROVIDER: zhipu
+          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
+          # 编队名单与 digest job 同一份（改名记得两边同步）；评分是本 job 的主活
+          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,siliconflow,siliconflow,siliconflow,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,mistral,mistral,mistral,mistral,hf@meta-llama/Llama-3.3-70B-Instruct,hf@Qwen/Qwen2.5-72B-Instruct,openrouter@google/gemma-4-31b-it:free
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          HF_API_KEY: ${{ secrets.HF_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+          AGNES_MODEL: ${{ secrets.AGNES_MODEL || 'agnes-2.0-flash' }}
+          DIGEST_REPO: ${{ github.repository }}
+          BIGBROS: ${{ secrets.BIGBROS }}
+        run: pnpm feed:job
+
+      - name: Commit feed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No new feed files to commit"
+          else
+            DATE=$(date -u +%Y-%m-%d)
+            git commit -m "feed: ${DATE} feed update + fleet health"
+            git pull --rebase
+            git push
+          fi
+
       - name: Send feed top picks (Feishu + Telegram)
         env:
           FEISHU_WEBHOOK_URLS: ${{ secrets.FEISHU_WEBHOOK_URLS }}
@@ -106,9 +196,3 @@ jobs:
           PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           FEED_TOP_N: "10"
         run: pnpm notify:feed
-
-      - name: Close stale issues
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DIGEST_REPO: ${{ github.repository }}
-        run: pnpm close-stale
