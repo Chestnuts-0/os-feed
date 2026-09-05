@@ -42,10 +42,11 @@ const DATA_DIR = "data";
 const FEED_PATH = path.join(DATA_DIR, "feed.json");
 const BATCH_SIZE = 5;
 /** LLM 评分的新仓库上限（已有缓存的仓库不占额度）。
- *  1000→3000→5000（2026-09-05 取材十倍扩容配套）：免费编队多模型 worker 池
- *  （groq×3/gemini×2/siliconflow×2/agnes/zhipu/github-models/mistral ≈12 worker），
- *  5000 张纯调用 ≈ 30 分钟，240min 超时内余量充足；嫌慢继续提额。 */
-const MAX_LLM_SCORE_REPOS = 15000; // 5000→15000（Phase1 放量：36 worker 吞吐下 ≈1h 纯调用）
+ *  **15000→2500 回调（2026-09-05 实测裁定）**：两轮 dispatch 双双撞 360min 墙被杀零产出
+ *  （3000 张 6 源跑了 4h+ 没完）——免费源实际吞吐 ≈12-15 卡/分钟（429 冷却远比理论频繁），
+ *  理论 540 卡/分钟不成立。2500 张 ≈ 3h 内安全完成；**解锁更高 cap 的钥匙=评分增量落盘
+ *  （高优待办）与多账号 key（真乘法），不是调数字。 */
+const MAX_LLM_SCORE_REPOS = 2500;
 /** LLM 并发批次数 */
 const SCORE_CONCURRENCY = 8; // 5→8（2026-09-05 放量：worker 池 36 个，批次并发跟上）
 /** feed.json 最大保留条目数（超出淘汰最老 + 未收藏；前端互动过的靠本地快照兜底） */
