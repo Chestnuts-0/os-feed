@@ -310,8 +310,8 @@ describe("feed pending-retry 队列", () => {
   });
 
   it("队列容量上限：一次性大量失败只保留前 PENDING_MAX 条", async () => {
-    // 350 个新 repo 全失败
-    const many = Array.from({ length: 350 }, (_, i) => `bulk/fail${i}`);
+    // 1100 个新 repo 全失败（PENDING_MAX=1000，2026-09-05 放量 300→1000）
+    const many = Array.from({ length: 1100 }, (_, i) => `bulk/fail${i}`);
     llmMock.impl = () => {
       throw new Error("429 rate limited");
     };
@@ -321,7 +321,7 @@ describe("feed pending-retry 队列", () => {
 
     expect(cards.length).toBe(0);
     const arr = readJson<Record<string, unknown>[]>(pendingPath());
-    expect(arr!.length).toBe(300); // PENDING_MAX=300
+    expect(arr!.length).toBe(1000); // PENDING_MAX=1000
     expect(arr![0]!.retryCount).toBe(1);
   });
 

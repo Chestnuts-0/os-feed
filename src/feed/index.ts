@@ -45,9 +45,9 @@ const BATCH_SIZE = 5;
  *  1000→3000→5000（2026-09-05 取材十倍扩容配套）：免费编队多模型 worker 池
  *  （groq×3/gemini×2/siliconflow×2/agnes/zhipu/github-models/mistral ≈12 worker），
  *  5000 张纯调用 ≈ 30 分钟，240min 超时内余量充足；嫌慢继续提额。 */
-const MAX_LLM_SCORE_REPOS = 5000;
+const MAX_LLM_SCORE_REPOS = 15000; // 5000→15000（Phase1 放量：36 worker 吞吐下 ≈1h 纯调用）
 /** LLM 并发批次数 */
-const SCORE_CONCURRENCY = 5;
+const SCORE_CONCURRENCY = 8; // 5→8（2026-09-05 放量：worker 池 36 个，批次并发跟上）
 /** feed.json 最大保留条目数（超出淘汰最老 + 未收藏；前端互动过的靠本地快照兜底） */
 const MAX_FEED_SIZE = 12000;
 /** 热门标签阈值（最近已知 stars）。
@@ -70,7 +70,7 @@ const REFRESH_CURSOR_PATH = path.join(DATA_DIR, ".refresh_cursor");
 /** 待补评队列文件：LLM 评分失败的 repo 快照在此兜底保留，下轮强制恢复补评（杜绝「失败卡不进 baseline → 永不补评」丢卡） */
 const PENDING_PATH = path.join(DATA_DIR, "pending-retry.json");
 /** 待补评队列容量上限（防失控膨胀挤占新卡评分名额） */
-const PENDING_MAX = 300;
+const PENDING_MAX = 1000; // 300→1000（2026-09-05 放量：候选池万级后失败队列水位同步抬）
 /** 单 repo 最大重试轮数（连败放弃，防僵尸条目长期占位） */
 const PENDING_MAX_RETRIES = 7;
 // 盖章状态文件与 STAMP_* 常量已随「bigbros 全出口退役」（2026-09-05）移除；盖章调用停跑见 generateFeed 2.7 注释。

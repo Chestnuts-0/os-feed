@@ -158,6 +158,7 @@ describe("VALID_PROVIDER_NAMES", () => {
       "siliconflow",
       "github-models",
       "mistral",
+      "hf",
     ]);
   });
 });

@@ -15,7 +15,7 @@ export const LLM_TOKENS_DEFAULT = 4096;
 export const LLM_TOKENS_TRENDING = 6144;
 export const LLM_TOKENS_WEB = 8192;
 export const LLM_TOKENS_ROLLUP = 8192;
-import { type LlmProvider, type ProviderName, createProvider } from "./providers/index.ts";
+import { type LlmProvider, createProvider } from "./providers/index.ts";
 
 // ---------------------------------------------------------------------------
 // LLM worker pool — 多免费源并行分摊（2026-09-04 栗子拍板）
@@ -29,19 +29,39 @@ const COOLDOWN_MS = 5 * 60_000; // 429 重试拉满后该源冷却 5 分钟，�
 const FALLBACK_ENV = "LLM_FALLBACKS";
 
 /** 解析备源名单为工厂数组（实例化在 createLlmCaller 内做，失败自动跳过该源）。
- *  支持 `源@模型` 语法覆盖默认模型：免费层按模型计配额的源（groq/gemini/siliconflow/
- *  openrouter），同 key 写多个 `源@模型` 即多 worker 并行，吞吐 ×N（2026-09-05）。 */
+ *  支持：
+ *  - `源@模型`：覆盖默认模型（同 key 多模型=模型级配额叠加，groq/gemini/siliconflow 等）
+ *  - `custom:名字`：泛化 OpenAI 兼容源（{NAME}_API_KEY/BASE_URL/MODEL + SSRF 校验）
+ *  - 多 key 轮转：{NAME}_API_KEY 逗号分隔多 key，同名条目按出现序号取号
+ *    （Groq/Gemini/HF 多账号=真乘法；OpenRouter 全局池无效）
+ */
 function parseFallbackFactories(): Array<() => LlmProvider> {
+  const sameNameCount = new Map<string, number>();
   return (process.env[FALLBACK_ENV] ?? "")
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean)
     .map((entry) => {
+      // 拆 `源[@模型]`（custom:名字 也可带 @模型）
+      let name = entry;
+      let model: string | undefined;
       const at = entry.indexOf("@");
-      if (at <= 0) return () => createProvider(entry as ProviderName);
-      const name = entry.slice(0, at) as ProviderName;
-      const model = entry.slice(at + 1);
-      return () => createProvider(name, model);
+      if (at > 0) {
+        name = entry.slice(0, at);
+        model = entry.slice(at + 1);
+      }
+      // 多 key 轮转：{NAME}_API_KEY 逗号分隔，同名第 N 次出现取第 N 个 key
+      const envName = (name.startsWith("custom:") ? name.slice(7) : name)
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "_");
+      const keys = (process.env[`${envName}_API_KEY`] ?? "")
+        .split(",")
+        .map((k) => k.trim())
+        .filter(Boolean);
+      const idx = sameNameCount.get(name) ?? 0;
+      sameNameCount.set(name, idx + 1);
+      const apiKey = keys.length > 0 ? keys[idx % keys.length] : undefined;
+      return () => createProvider(name, model, apiKey);
     });
 }
 

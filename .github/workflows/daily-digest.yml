@@ -14,7 +14,7 @@ jobs:
   digest:
     runs-on: ubuntu-latest
     # 90→240：LLM 免费源 429 退避 + 备源接管后全程可能超 90min（08-20 停摆主因）
-    timeout-minutes: 240
+    timeout-minutes: 360 # 240→360（GH 上限；放量后长尾余量）
 
     steps:
       - name: Checkout
@@ -37,18 +37,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LLM_PROVIDER: zhipu
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
-          # 免费编队并行池（2026-09-05 按 RPM 墙开满）：名单里同一项写几遍=该源开几个
-          # 串行 worker，`源@模型` 覆盖模型（按模型计配额的源配额叠加）。worker 数按
-          # 各源免费层 RPM 墙反推（单 worker 串行 ≈3 请求/分钟）：groq 30RPM×6、
-          # gemini 15RPM×4、siliconflow×6、mistral 1RPS×8、github-models 15RPM×3、
-          # agnes/zhipu×2——合计 ≈36 worker ≈108 批/分钟 ≈540 卡/分钟，5000 张
-          # cap ≈10 分钟跑完。过冲不用怕：429 拉满自动冷却 5 分钟，负载自动落到
-          # 其余 worker，到期回归。key 缺失自动跳过；cerebras 402 付费墙暂出池。
-          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,siliconflow,siliconflow,siliconflow,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,github-models,github-models,github-models,mistral,mistral,mistral,mistral,mistral,mistral,mistral,mistral,openrouter@google/gemma-4-31b-it:free
+          # 免费编队并行池（2026-09-05 按 RPM 墙开满 + 舰队扩容排雷）：名单同一项写几遍=
+          # 该源几个串行 worker，`源@模型` 覆盖模型，`custom:名` 走泛化通道（SSRF 校验）。
+          # 2026-09-05 排雷：github-models 官方退役（410 Gone）整源移除；mistral 月额度制
+          # 8→4 保额度细水长流；HF router 免费月度 credits 持续发放（$0.10/月量级小，
+          # 2 worker 小量验证）。多 key 轮转：{NAME}_API_KEY 逗号分隔多 key，同名条目
+          # 按序取号（Groq/Gemini/HF 多账号=真乘法）。≈32 worker。
+          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,siliconflow,siliconflow,siliconflow,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,mistral,mistral,mistral,mistral,hf@meta-llama/Llama-3.3-70B-Instruct,hf@Qwen/Qwen2.5-72B-Instruct,openrouter@google/gemma-4-31b-it:free
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          HF_API_KEY: ${{ secrets.HF_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           # agnès 配置保留（回滚只改 LLM_PROVIDER 一个词）
           AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
           AGNES_MODEL: ${{ secrets.AGNES_MODEL || 'agnes-2.0-flash' }}
