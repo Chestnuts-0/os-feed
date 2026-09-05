@@ -217,7 +217,8 @@ export function heatBoost(card: FeedCard): number {
 
 /**
  * 计算单张卡片推荐分（v2 标签权重版 + 热度加权）。
- * score = aiScore × tagMatchBoost × freshnessFactor × bigbroBoost × heatBoost
+ * score = aiScore × tagMatchBoost × freshnessFactor × heatBoost
+ * （bigbroBoost 大牛背书已随 bigbros 全出口退役移除，2026-09-05）
  */
 export function computeScore(card: FeedCard, profile: UserProfile): number {
   const aiScore = card.aiScore;
@@ -235,10 +236,7 @@ export function computeScore(card: FeedCard, profile: UserProfile): number {
   const daysSince = (Date.now() - new Date(card.ts).getTime()) / (24 * 3600 * 1000);
   const freshnessFactor = 0.4 + 0.6 * Math.exp(-daysSince / 7);
 
-  // 大牛背书
-  const bigbroBoost = 1 + (card.bigbros.length > 0 ? 0.25 : 0);
-
-  return aiScore * tagMatchBoost * freshnessFactor * bigbroBoost * heatBoost(card);
+  return aiScore * tagMatchBoost * freshnessFactor * heatBoost(card);
 }
 
 /** 批量打分并按 score 降序排序 */

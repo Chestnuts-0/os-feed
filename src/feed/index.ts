@@ -1,12 +1,12 @@
 /**
  * 开源版抖音信息流 — 数据管道。
  *
- * 把 trending + search 两路数据合并去重 → 库内 star 盖章（不建卡不跑 LLM）
+ * 把 trending + search 两路数据合并去重 → stars 轮转刷新
  * → LLM 批量评分（中文推荐理由）→ star 门槛过滤 → 个性化排序（反馈 loop）
  * → 输出 data/feed.json 供前端刷。
  *
- * 关注解耦（2026-09-01）：旧「抓大牛 star 灌新卡」已退役，盖章只给库内已有 repo
- * 加 bigbros 背书（状态文件 data/stamped-owners.json 增量续跑）。
+ * bigbros 盖章已全面退役（2026-09-05 拍板：陌生库作者的 star 对访客零价值）：
+ * 管道停跑盖章、评分/推荐/通知/前端展示等一切出口清除；字段仅为历史数据兼容保留。
  *
  * 用法（被 index.ts 主流程调用，或独立运行）：
  *   const cards = await generateFeed(config, trendingData);
@@ -16,7 +16,6 @@ import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
 import type { TrendingData } from "../trending.ts";
-import { stampLibraryStars, type StampUserStatus } from "../bigbro-stars.ts";
 import type { RadarConfig } from "../config.ts";
 import { callLlm } from "../report.ts";
 import { buildFeedScoringPrompt, parseScoringResult } from "./prompts.ts";
@@ -48,8 +47,11 @@ const MAX_LLM_SCORE_REPOS = 1000;
 const SCORE_CONCURRENCY = 5;
 /** feed.json 最大保留条目数（超出淘汰最老 + 未收藏；前端互动过的靠本地快照兜底） */
 const MAX_FEED_SIZE = 12000;
-/** 热门标签阈值（最近已知 stars） */
-const HOT_STAR_THRESHOLD = 2000;
+/** 热门标签阈值（最近已知 stars）。
+ *  2000→30000（2026-09-05 重标定）：取材池整体高星化（search 按 stars 排序拉取），
+ *  库内 star 中位数 1.28 万、p75≈3.1 万，2000 门槛下 86% 的卡都挂「热门」——徽章与热门频道彻底通胀。
+ *  30000≈当前库的 p75，热门回到「头部 1/4 高星库」的本义；取材池继续膨胀时随下次标定上移。 */
+const HOT_STAR_THRESHOLD = 30000;
 /** 每日标签阈值（今日 star 增长） */
 const DAILY_GROWTH_THRESHOLD = 5;
 /** 「刚冒头」库龄上限（天）：创建不足 90 天且增速高的新库 */
@@ -68,14 +70,7 @@ const PENDING_PATH = path.join(DATA_DIR, "pending-retry.json");
 const PENDING_MAX = 300;
 /** 单 repo 最大重试轮数（连败放弃，防僵尸条目长期占位） */
 const PENDING_MAX_RETRIES = 7;
-/** 盖章状态文件：记录已盖章/已跳过的库内 owner（随 digest 入仓，增量续跑防每日重查） */
-const STAMPED_PATH = path.join(DATA_DIR, "stamped-owners.json");
-/** 盖章并发（方案 §9.2：4-8） */
-const STAMP_CONCURRENCY = 6;
-/** 单轮盖章候选上限（防挤占次日搜索配额；状态文件续跑补齐） */
-const STAMP_MAX_USERS = 400;
-/** 盖章配额保留水位（剩余低于此值停盖，留给搜索/轮转刷新） */
-const STAMP_RESERVE_QUOTA = 300;
+// 盖章状态文件与 STAMP_* 常量已随「bigbros 全出口退役」（2026-09-05）移除；盖章调用停跑见 generateFeed 2.7 注释。
 
 // 权威组织/官方仓库 owner 前缀
 const AUTHORITATIVE_ORGS = new Set([
@@ -104,6 +99,12 @@ const AUTHORITATIVE_ORGS = new Set([
 // 学习资源关键词（学英语/学代码等「我自己学习能用」的资源；大模型学习已被 ai 前置判定拿走）
 const LEARNING_KEYWORDS =
   /awesome|tutorial|learn|course|guide|roadmap|面试|interview|study|educat|english|language|leetcode|algorithms|coding|cheatsheet|cheat-sheet|textbook|flashcard|anki|quiz|encyclopedia|math|mathematics|physics|chemistry|biology|编程|英语|学习|教材|数学|物理|化学|生物|百科|速查|题库/i;
+
+// 好玩气质关键词：项目名/描述/topics 里出现「玩」的实锤才算好玩（2026-09-05 兴趣分区收紧）。
+// 背景：LLM 会把正经生产力工具随手打成「创意工具」，实测 300 张 fun 卡混入建站器/图标库/UI 库
+// 数十张——「创意工具」「可视化」标签必须过这层气质词交叉验证才许进兴趣分区。
+const FUN_VIBE =
+  /\bgame\b|\bgames\b|\bgaming\b|arcade|\bpuzzle\b|\bemulator|\bretro\b|\bplayable|gameplay|creative[- ]?coding|generative[- ]?art|\bascii\b|pixel[- ]?art|demoscene|\bshader|chiptune|\bmusic\b|\btoy\b|\btoys\b|\bfun\b|\bart\b|\bartists?\b|游戏|模拟器|玩具|沙盒|好玩|创意编程|生成艺术|音游|像素/i;
 
 /** AI 强特征前缀（命中即归 ai 分区） */
 const AI_PREFIXES = [
@@ -135,8 +136,12 @@ export function classifyCategory(card: Pick<FeedCard, "repo" | "desc" | "topics"
   if (repoLower.includes("skill") || topicsLower.some((t) => t.includes("skill"))) {
     return "tool";
   }
-  // 2. 兴趣：非AI-好玩 / 游戏 / 创意工具
-  if (dims.some((d) => d === "非AI-好玩" || d === "游戏" || d === "创意工具")) {
+  // 2. 兴趣：「非AI-好玩」「游戏」= LLM 气质判定直通；「创意工具」「可视化」须过 FUN_VIBE
+  //    气质词交叉验证（防正经生产力工具被随手打的标签拖进兴趣分区，2026-09-05 收紧）
+  if (dims.some((d) => d === "非AI-好玩" || d === "游戏")) {
+    return "fun";
+  }
+  if (dims.some((d) => d === "创意工具" || d === "可视化") && FUN_VIBE.test(allText)) {
     return "fun";
   }
   // 3. AI：强特征前缀（收窄，避免泛 AI 全进 ai）
@@ -285,49 +290,9 @@ interface MergedRepo {
   pending?: boolean;
 }
 
-// ---------------------------------------------------------------------------
-// 盖章状态文件：data/stamped-owners.json（随 digest 入仓，不给前端当关注名单）
-// ---------------------------------------------------------------------------
-
-interface StampState {
-  updated: string;
-  /** login -> stamped（已盖章）/ org（非 User 跳过）/ not-found（404） */
-  users: Record<string, StampUserStatus>;
-}
-
-/** 加载盖章状态（容错：损坏/缺失一律当空状态，digest 主流程绝不能挂） */
-function loadStampState(): StampState {
-  try {
-    if (!fs.existsSync(STAMPED_PATH)) return { updated: "", users: {} };
-    const raw = JSON.parse(fs.readFileSync(STAMPED_PATH, "utf-8")) as StampState;
-    if (!raw || typeof raw !== "object" || typeof raw.users !== "object" || raw.users === null) {
-      return { updated: "", users: {} };
-    }
-    const users: Record<string, StampUserStatus> = {};
-    for (const [login, status] of Object.entries(raw.users)) {
-      if (status === "stamped" || status === "org" || status === "not-found") {
-        users[login] = status;
-      }
-    }
-    return { updated: typeof raw.updated === "string" ? raw.updated : "", users };
-  } catch (err) {
-    console.error(`  [feed/stamp] state load failed: ${err}, starting with empty state`);
-    return { updated: "", users: {} };
-  }
-}
-
-/** 保存盖章状态（容错：写失败仅日志，不影响主流程；下轮重盖代价只是重查） */
-function saveStampState(state: StampState): void {
-  try {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-    fs.writeFileSync(STAMPED_PATH, JSON.stringify(state, null, 2), "utf-8");
-  } catch (err) {
-    console.error(`  [feed/stamp] state save failed: ${err}`);
-  }
-}
-
 /**
  * stars 轮转刷新：每天对库内 repo 分批查 GitHub API（游标续跑，4-6 天全覆盖）。
+ *
  * starGrowth = 「日均涨星」：(今日 stars − baseline stars) ÷ 距上次真实更新的天数；
  * 间隔 >1 天时摊薄（防停摆 N 天后增量全算到一天头上虚高，2026-09-04）。
  * 返回刷新成功的 repo → 新 stars 映射。
@@ -846,49 +811,9 @@ export async function generateFeed(
   await refreshStarsRoundRobin(repoMap, baselineStars, runIntervalDays);
   console.log(`  [feed] after refresh: ${repoMap.size} unique repos`);
 
-  // 2.7 库内 star 盖章：对库内 User owner 拉最近一页 star，只给库里已有 repo 加 bigbros。
-  //     不新建卡、不跑 LLM；配额不足即停（pendingUsers 下轮续，状态文件增量）。
-  //     盖章失败绝不产生新卡——关注频道的大牛背书全靠这一步（2026-09-01 关注解耦）。
-  const stampState = loadStampState();
-  const repoSet = new Set(repoMap.keys());
-  const ownerSet = new Set<string>();
-  for (const repo of repoSet) {
-    const owner = repo.split("/")[0];
-    if (owner) ownerSet.add(owner);
-  }
-  const stampCandidates = [...ownerSet].filter((o) => !(o in stampState.users));
-  console.log(
-    `  [feed/stamp] candidates ${stampCandidates.length}/${ownerSet.size} owners (state has ${Object.keys(stampState.users).length})`,
-  );
-  if (stampCandidates.length > 0) {
-    const outcome = await stampLibraryStars(stampCandidates, repoSet, {
-      concurrency: STAMP_CONCURRENCY,
-      maxUsers: STAMP_MAX_USERS,
-      reserveQuota: STAMP_RESERVE_QUOTA,
-    });
-    let stampedCards = 0;
-    for (const [repo, bros] of outcome.stamps) {
-      const m = repoMap.get(repo);
-      if (!m) continue; // 理论不可达：stamps 只含 repoSet 成员（防御式跳过）
-      // 与存量 bigbros 取并集：历史卡上旧标签只增不减
-      m.bigbros = [...new Set([...m.bigbros, ...bros])];
-      stampedCards++;
-    }
-    for (const u of outcome.stampedUsers) stampState.users[u] = "stamped";
-    for (const u of outcome.skippedUsers) {
-      if (!stampState.users[u]) stampState.users[u] = "org";
-    }
-    for (const u of outcome.notFoundUsers) {
-      if (!stampState.users[u]) stampState.users[u] = "not-found";
-    }
-    // pendingUsers 不写状态：下轮重查
-    stampState.updated = now;
-    saveStampState(stampState);
-    console.log(
-      `  [feed/stamp] ${stampedCards} cards received stamps (+${outcome.skippedUsers.length} org skipped, ` +
-        `+${outcome.notFoundUsers.length} missing, ${outcome.pendingUsers.length} pending for next round)`,
-    );
-  }
+  // 2.7 库内 star 盖章已停跑（2026-09-05 拍板：陌生库作者的 star 对访客零价值，bigbros 全出口退役）。
+  //     盖章每天烧上千 GitHub API 配额却只产出无人消费的 bigbros 数据；bigbro-stars.ts 与
+  //     loadStampState 系保留（不删文件），如需恢复语义在此处重新接线即可。
 
   // 3. LLM 批量评分（增量模式：跳过已有缓存的仓库，只给新仓库评分）
   const { scores: existingScores, detailMap } = loadExistingScores();

@@ -1,14 +1,15 @@
 /**
- * 库内 star 盖章抓取器（2026-09-01 关注解耦刀重写）。
+ * 库内 star 盖章抓取器（2026-09-01 关注解耦刀重写；2026-09-05 整体停跑）。
  *
- * 旧语义（抓大牛/follow 名单的 star 灌新卡进 feed）已退役。现在只做「库内盖章」：
- * 对库里已有的 GitHub **User** owner，拉 TA 最近一页 star（per_page=100&sort=created），
- * 与库内 repo 集合求交，给已有卡的 bigbros 加背书人。不新建卡、不跑 LLM。
- * 前端关注频道（owner 匹配 ∪ bigbros 匹配）由此获得「TA star 了库内哪个项目」的数据。
+ * 历史沿革：旧语义（抓大牛/follow 名单的 star 灌新卡进 feed）2026-09-01 退役；
+ * 库内盖章语义 2026-09-05 退役——陌生库作者的 star 对访客零价值，每天却烧上千
+ * GitHub API 配额，bigbros 的全部消费出口（详情弹窗/关注频道/推荐加权/TG 通知/
+ * 评分加权）已同步清除。本文件保留不删，generateFeed 已不再调用；如需恢复语义，
+ * 在 generateFeed 2.7 注释处重新接线。
  *
- * 配额：GitHub 认证 5000 req/h。每个 User 候选 2 请求（1 查 type + 1 查 starred）；
- * 开工先查 GET /rate_limit（不消耗配额）算本轮预算，配额不足即停，剩余候选交还下轮——
- * 增量靠状态文件 data/stamped-owners.json（随 digest 入仓，generateFeed 读写）。
+ * 配额（历史设计，留档）：GitHub 认证 5000 req/h，每个 User 候选 2 请求；
+ * 开工先查 GET /rate_limit 算本轮预算，配额不足即停，增量靠状态文件
+ * data/stamped-owners.json。
  */
 
 /** /users/{login} 的 type 里值得盖章的只有真用户 */

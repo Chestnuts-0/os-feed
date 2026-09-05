@@ -2,7 +2,9 @@ import {
   AlertTriangle,
   ArrowLeft,
   BookOpen,
+  Bookmark,
   Bot,
+  Check,
   ChevronRight,
   ExternalLink,
   Flame,
@@ -70,16 +72,18 @@ export const BADGE_LABELS: Record<string, string> = {
   learning: "学习",
 };
 
-/** 数据来源徽章（source → 图标 + 文字） */
+/** 数据来源徽章（source → 图标 + 文字）。
+ *  bigbro=旧「大牛灌卡」时期的历史存量卡（96 张），语义已于 2026-09-05 全面退役，
+ *  仅保留中性展示文案「收录」，不再出现「大牛」字样。 */
 export const SOURCE_ICONS: Record<string, LucideIcon> = {
   trending: Flame,
-  bigbro: Users,
+  bigbro: Bookmark,
   search: Search,
 };
 
 export const SOURCE_LABELS: Record<string, string> = {
   trending: "热门",
-  bigbro: "大牛",
+  bigbro: "收录",
   search: "搜索",
 };
 
@@ -90,6 +94,7 @@ export const SOURCE_LABELS: Record<string, string> = {
 export {
   AlertTriangle,
   ArrowLeft,
+  Check,
   ChevronRight,
   ExternalLink,
   Folder,

@@ -91,10 +91,6 @@ function buildFeishuContent(cards: FeedCard[], pagesUrl: string): string {
     if (c.aiDim) meta.push(c.aiDim);
     lines.push(meta.join(" · "));
 
-    if (c.bigbros.length > 0) {
-      lines.push(`👥 ${c.bigbros.slice(0, 3).join("、")} star 了`);
-    }
-
     lines.push("");
   }
 
@@ -138,10 +134,6 @@ function buildTelegramText(cards: FeedCard[], pagesUrl: string): string {
     if (c.language) meta.push(esc(c.language));
     if (c.aiDim) meta.push(esc(c.aiDim));
     lines.push(`   ${meta.join(" · ")}`);
-
-    if (c.bigbros.length > 0) {
-      lines.push(`   👥 ${esc(c.bigbros.slice(0, 3).join("、"))} star 了`);
-    }
 
     lines.push("");
   }

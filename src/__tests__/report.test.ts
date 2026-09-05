@@ -1,5 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import fs from "node:fs";
+import path from "node:path";
+
+// saveFile 内部用 path.join 拼路径，期望值必须同源构造——写死正斜杠在 Windows 上必挂
+// （反斜杠 vs 正斜杠断言，2026-09-05 根治这组「Windows 旧伤」）
+const expectedDir = path.join("digests", "2026-03-09");
+const expectedPath = path.join(expectedDir, "ai-cli.md");
 
 // ---------------------------------------------------------------------------
 // Mock provider — intercepts createProvider() so the module-level `provider`
@@ -81,17 +87,17 @@ describe("saveFile", () => {
 
   it("returns the expected file path", () => {
     const result = saveFile("content", "2026-03-09", "ai-cli.md");
-    expect(result).toBe("digests/2026-03-09/ai-cli.md");
+    expect(result).toBe(expectedPath);
   });
 
   it("creates parent directories recursively", () => {
     saveFile("content", "2026-03-09", "ai-cli.md");
-    expect(fs.mkdirSync).toHaveBeenCalledWith("digests/2026-03-09", { recursive: true });
+    expect(fs.mkdirSync).toHaveBeenCalledWith(expectedDir, { recursive: true });
   });
 
   it("writes content as utf-8", () => {
     saveFile("hello world", "2026-03-09", "test.md");
-    expect(fs.writeFileSync).toHaveBeenCalledWith("digests/2026-03-09/test.md", "hello world", "utf-8");
+    expect(fs.writeFileSync).toHaveBeenCalledWith(path.join(expectedDir, "test.md"), "hello world", "utf-8");
   });
 });
 

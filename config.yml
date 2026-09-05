@@ -97,12 +97,12 @@ openclaw_peers:
 # 开源版抖音信息流 — 扩展配置
 # ════════════════════════════════════════════════════════════════
 
-# ── 关注语义（2026-09-01 关注解耦刀）──────────────────────────
+# ── 关注语义（2026-09-01 关注解耦 → 2026-09-05 盖章退役）──────
 # 旧「关注大牛抓 star 灌新卡」（bigbros 名单 + following_user 自动同步）已整套退役，
 # bigbros / following_user 配置项随之移除（config.ts 保留空值兜底解析）。
-# 现在「关注频道」的大牛背书 = 库内 star 盖章：管道对库内 GitHub User owner 拉最近
-# 一页 star，与库内 repo 求交后给已有卡加 bigbros（不新建卡、不跑 LLM）。
-# 增量状态文件：data/stamped-owners.json（随 digest 入仓，不给前端当关注名单）。
+# 2026-09-05：库内 star 盖章（stampLibraryStars）也停止运行——陌生库作者的 star 对访客
+# 零价值，每天却烧上千 GitHub API 配额；bigbros 的全部消费出口（详情弹窗/关注频道/推荐
+# 加权/TG 通知/评分加权）同步清除，字段仅为历史数据兼容保留。关注频道只认本机关注。
 
 # ── Trending/Search 主题 ───────────────────────────────────────
 # GitHub Search API 查询主题。覆盖 AI/工具/学习/好玩等多个领域。
@@ -131,6 +131,16 @@ trending_topics:
   - { q: "topic:desktop", label: "desktop", quota: 50 }
   - { q: "topic:data-visualization", label: "data-visualization", quota: 50 }
   - { q: "topic:web-framework", label: "web-framework", quota: 50 }
+  # 好玩气质专项（2026-09-05 兴趣分区扩容：trending 被 AI/工程类淹没，「好玩」供给不足，
+  # 用创作/玩耍向主题补源——配合 FUN_VIBE 气质词与 prompt 反例一起把兴趣分区填满真好玩的东西）
+  - { q: "topic:creative-coding", label: "creative-coding", quota: 50 }
+  - { q: "topic:generative-art", label: "generative-art", quota: 50 }
+  - { q: "topic:ascii-art", label: "ascii-art", quota: 50 }
+  - { q: "topic:pixel-art", label: "pixel-art", quota: 50 }
+  - { q: "topic:emulator", label: "emulator", quota: 50 }
+  - { q: "topic:simulation", label: "simulation", quota: 50 }
+  - { q: "topic:physics", label: "physics", quota: 50 }
+  - { q: "topic:arduino", label: "arduino", quota: 50 }
 
 # ── star 门槛 ──────────────────────────────────────────────────
 # 总 star 数低于此值的项目不进信息流

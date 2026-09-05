@@ -70,8 +70,8 @@ describe("classifyMomentum rising（新星）", () => {
     expect(r.momentum).toContain("daily"); // 高增速同时命中 daily
   });
 
-  it("已到 hot 门槛（总星 >= 2000）→ 不给 rising（已有 hot）", () => {
-    const r = classifyMomentum(mkCard({ stars: 3000, starGrowth: 100, createdAt: daysAgo(30) }));
+  it("已到 hot 门槛（总星 >= 30000，2026-09-05 重标定）→ 不给 rising（已有 hot）", () => {
+    const r = classifyMomentum(mkCard({ stars: 35000, starGrowth: 100, createdAt: daysAgo(30) }));
     expect(r.momentum).toContain("hot");
     expect(r.momentum).not.toContain("rising");
   });

@@ -944,19 +944,6 @@ button {
   padding: 4px 12px;
 }
 
-.detail-bigbro {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background: rgba(139, 92, 246, 0.06);
-  border: 1px solid rgba(139, 92, 246, 0.12);
-  border-radius: var(--radius-sm);
-  margin-bottom: 20px;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
 .detail-actions {
   display: flex;
   gap: 10px;
@@ -1381,49 +1368,7 @@ button {
   opacity: 0.85;
 }
 
-/* --- 大牛页 --- */
-.bigbro-profile {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 24px;
-  background: var(--glass-gradient);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-card);
-  margin-bottom: 24px;
-}
-
-.bigbro-avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 20px;
-  border: 2px solid var(--accent);
-  flex-shrink: 0;
-}
-.bigbro-info h2 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text);
-}
-.bigbro-info p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.bigbro-link {
-  margin-left: auto;
-  padding: 8px 18px;
-  border-radius: 20px;
-  background: var(--accent-gradient);
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: opacity 0.2s;
-}
-.bigbro-link:hover {
-  opacity: 0.85;
-}
+/* 旧「大牛页」样式已随 bigbros 语义退役移除（2026-09-05，无 JSX 引用的死样式） */
 
 /* --- 搜索栏（玻璃化：rgba(28,25,41,0.45) + card-border；聚焦 accent + 克制外发光） --- */
 .search-bar {
@@ -1695,14 +1640,17 @@ button {
   .detail-card {
     padding: 24px 20px;
   }
-  .bigbro-profile {
-    padding: 16px;
-    gap: 12px;
-  }
-  .bigbro-avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
+
+  /* 关注成功气泡：窄屏按钮右侧可能溢出视口，改回按钮下方（净空带足够容纳两行） */
+  .creator-follow-toast {
+    left: 0;
+    top: calc(100% + 8px);
+    transform: none;
+    white-space: normal;
+    font-size: 0.8rem;
+    animation:
+      toast-fade 0.3s ease-out,
+      toast-fade-out 0.25s ease-in 2.25s forwards;
   }
 
   /* --- 移动端适配（底栏 + 频道抽屉，任务书方案 A） --- */
@@ -1920,7 +1868,8 @@ button {
   align-items: center;
   gap: 22px;
   padding: 18px;
-  margin-bottom: 20px;
+  /* 26px：关注成功气泡从按钮下落入这 26px + 18px 内边距的净空带，不压卡片列表 */
+  margin-bottom: 26px;
   border-radius: var(--radius);
   background: var(--card-bg);
   border: 1px solid var(--card-border);
@@ -1988,33 +1937,73 @@ button {
   text-align: center;
 }
 
-/* 关注成功 toast：fixed 悬浮于 header 下方，2.5s 自动消失，不占文档流（修复内容下移闪现） */
+/* 关注成功气泡：锚定在关注按钮右侧（桌面端按钮右侧是 header 大片空白，与卡片列表零接触），
+   不占文档流、不遮任何内容；「N 个项目」计数已上移到按钮上方，落点无遮挡。
+   2.5s 自动退场：入场浮起淡入 + 延迟淡出（2026-09-05 重设计，替代 fixed 全屏居中横幅） */
+.creator-follow-wrap {
+  position: relative;
+  align-self: flex-start;
+}
+
 .creator-follow-toast {
-  position: fixed;
-  top: calc(var(--header-h) + 16px);
-  left: 50%;
-  transform: translateX(-50%);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 220;
-  padding: 10px 22px;
-  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border-radius: 11px;
   background: var(--glass-gradient);
   border: 1px solid var(--card-border-hover);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
   color: var(--text);
-  font-size: 0.9rem;
-  max-width: min(520px, calc(100vw - 32px));
-  text-align: center;
-  animation: toast-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  max-width: calc(100vw - 48px);
+  animation:
+    toast-in 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    toast-out 0.25s ease-in 2.25s forwards;
+}
+
+.creator-follow-toast .toast-check {
+  color: var(--accent);
+  flex-shrink: 0;
 }
 
 @keyframes toast-in {
   from {
     opacity: 0;
-    transform: translate(-50%, -12px) scale(0.96);
+    transform: translate(-6px, -50%) scale(0.97);
   }
   to {
     opacity: 1;
-    transform: translate(-50%, 0) scale(1);
+    transform: translate(0, -50%) scale(1);
+  }
+}
+
+@keyframes toast-out {
+  to {
+    opacity: 0;
+    transform: translate(-4px, -50%);
+  }
+}
+
+@keyframes toast-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes toast-fade-out {
+  to {
+    opacity: 0;
   }
 }
 .creator-follow-btn.following {

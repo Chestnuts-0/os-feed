@@ -58,7 +58,9 @@ export interface FeedCard {
   /** 综合标签（LLM + GitHub topics + language） */
   tags: Tag[];
   aiScore: number;
+  /** 数据来源：bigbro=旧「大牛灌卡」历史存量（语义 2026-09-05 退役，仅中性展示为「收录」） */
   source: "trending" | "bigbro" | "search";
+  /** @deprecated bigbros 盖章已全面退役（2026-09-05）：字段仅为解析历史 feed 数据保留，任何出口不得渲染/加权 */
   bigbros: string[];
   url: string;
   ts: string;

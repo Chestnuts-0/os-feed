@@ -140,12 +140,6 @@ function stampedPath(): string {
   return path.join("data", "stamped-owners.json");
 }
 
-function readJson<T>(p: string): T | null {
-  const raw = memFs.get(p);
-  if (raw === undefined) return null;
-  return JSON.parse(raw) as T;
-}
-
 /** 盖章接口路由：/rate_limit + /users/{login} + /users/{login}/starred；/repos/ 一律 404（轮转刷新跳过） */
 function stampFetch(opts: {
   quotaRemaining?: number;
@@ -191,11 +185,11 @@ beforeEach(() => {
 });
 
 // ---------------------------------------------------------------------------
-// 关注解耦（2026-09-01）：库内 star 盖章语义
+// bigbros 盖章退役（2026-09-05）：管道停跑盖章、不写状态文件；存量 bigbros 数据原样保留
 // ---------------------------------------------------------------------------
 
-describe("库内 star 盖章", () => {
-  it("盖章只改库内已有卡：加 bigbros，不新增卡、不跑 LLM", async () => {
+describe("bigbros 盖章退役", () => {
+  it("盖章停跑：不再打 /rate_limit、/users/、/starred 接口，卡数不变", async () => {
     memFs.set(feedPath(), JSON.stringify([makeOldCard("old/card1")]));
     stampFetch({
       quotaRemaining: 5000,
@@ -205,69 +199,17 @@ describe("库内 star 盖章", () => {
 
     const cards = await generateFeed(cfg, makeTrendingData([]));
 
-    // 卡数不变（库外 star outside/repo 不建卡）
     expect(cards).toHaveLength(1);
-    const card = cards.find((c) => c.repo === "old/card1")!;
-    expect(card).toBeDefined();
-    // 盖章生效：owner star 了库内 repo → bigbros 记上
-    expect(card.bigbros).toEqual(["old"]);
-    // 全管道零 LLM 评分（缓存命中 + 盖章不跑 LLM）
-    expect(llmMock.impl).toBeNull();
-    // 全部卡无 source=bigbro 新卡路径
-    expect(cards.every((c) => c.source !== "bigbro")).toBe(true);
-  });
-
-  it("Organization owner 跳过：不查 star、不盖章、状态记 org", async () => {
-    memFs.set(feedPath(), JSON.stringify([makeOldCard("microsoft/vscode")]));
-    stampFetch({ quotaRemaining: 5000, users: { microsoft: "Organization" } });
-
-    const cards = await generateFeed(cfg, makeTrendingData([]));
-
-    const card = cards.find((c) => c.repo === "microsoft/vscode")!;
-    expect(card.bigbros).toEqual([]);
-    // 只打了 rate_limit + type 两个接口，没打 starred
-    expect(fetchMock.calls.some((u) => u.includes("/starred"))).toBe(false);
-    const state = readJson<{ users: Record<string, string> }>(stampedPath());
-    expect(state?.users["microsoft"]).toBe("org");
-  });
-
-  it("状态文件增量：已盖章 owner 二轮不再查（防每日重复烧配额）", async () => {
-    memFs.set(feedPath(), JSON.stringify([makeOldCard("old/card1")]));
-    stampFetch({
-      quotaRemaining: 5000,
-      users: { old: "User" },
-      starred: { old: ["old/card1"] },
-    });
-
-    await generateFeed(cfg, makeTrendingData([]));
-    const state = readJson<{ users: Record<string, string>; updated: string }>(stampedPath());
-    expect(state?.users["old"]).toBe("stamped");
-    expect(state?.updated.length).toBeGreaterThan(0);
-
-    // 第二轮：状态文件里已有 old → 不再打任何 /users/ 接口
-    fetchMock.calls.length = 0;
-    await generateFeed(cfg, makeTrendingData([]));
+    // 盖章接口一个都不许打（停跑=零配额消耗）
+    expect(fetchMock.calls.some((u) => u.includes("/rate_limit"))).toBe(false);
     expect(fetchMock.calls.some((u) => u.includes("/users/"))).toBe(false);
+    expect(fetchMock.calls.some((u) => u.includes("/starred"))).toBe(false);
+    // 全管道零 LLM 评分（缓存命中）
+    expect(llmMock.impl).toBeNull();
   });
 
-  it("配额不足（低于保留水位）：全部候选留待下轮，不打用户接口", async () => {
-    memFs.set(feedPath(), JSON.stringify([makeOldCard("old/card1")]));
-    stampFetch({ quotaRemaining: 100, users: { old: "User" }, starred: { old: ["old/card1"] } });
-
-    const cards = await generateFeed(cfg, makeTrendingData([]));
-
-    const card = cards.find((c) => c.repo === "old/card1")!;
-    expect(card.bigbros).toEqual([]);
-    // 只打了 rate_limit，没打 type/starred
-    expect(fetchMock.calls.some((u) => /\/users\/[^/]+$/.test(u) || u.includes("/starred"))).toBe(false);
-    // pending 不写状态：下轮重查
-    const state = readJson<{ users: Record<string, string> }>(stampedPath());
-    expect(state?.users["old"]).toBeUndefined();
-  });
-
-  it("盖章与存量 bigbros 取并集，组装时保留截断 10 的既有语义", async () => {
-    const ten = Array.from({ length: 10 }, (_, i) => `user${i + 1}`);
-    memFs.set(feedPath(), JSON.stringify([makeOldCard("old/card1", ten)]));
+  it("存量 bigbros 数据字段原样保留（只增不减的数据面；不再新增盖章）", async () => {
+    memFs.set(feedPath(), JSON.stringify([makeOldCard("old/card1", ["legacy-user"])]));
     stampFetch({
       quotaRemaining: 5000,
       users: { old: "User" },
@@ -277,12 +219,11 @@ describe("库内 star 盖章", () => {
     const cards = await generateFeed(cfg, makeTrendingData([]));
 
     const card = cards.find((c) => c.repo === "old/card1")!;
-    // 并集后截断：原 10 个保留，新盖的 old 排在尾部被截掉（数组体积受控）
-    expect(card.bigbros.length).toBe(10);
-    for (const u of ten) expect(card.bigbros).toContain(u);
+    // 历史 bigbros 保留（字段兼容），但停跑后不再有任何新增
+    expect(card.bigbros).toEqual(["legacy-user"]);
   });
 
-  it("旧 following.json 语义退役：管道不再产出 data/following.json，改写盖章状态", async () => {
+  it("不再写盖章状态文件 data/stamped-owners.json；following.json 语义退役不产出", async () => {
     memFs.set(feedPath(), JSON.stringify([makeOldCard("old/card1")]));
     stampFetch({
       quotaRemaining: 5000,
@@ -292,11 +233,8 @@ describe("库内 star 盖章", () => {
 
     await generateFeed(cfg, makeTrendingData([]));
 
+    expect(memFs.has(stampedPath())).toBe(false);
     expect(memFs.has(followingPath())).toBe(false);
-    // 盖章状态文件落位（随 digest 入仓，不给前端当关注名单）
-    expect(memFs.has(stampedPath())).toBe(true);
-    const state = readJson<{ users: Record<string, string> }>(stampedPath());
-    expect(state?.users["old"]).toBe("stamped");
   });
 
   it("只增不减回归：baseline 100 卡全保留（历史卡缓存命中零重评）", async () => {
@@ -305,7 +243,7 @@ describe("库内 star 盖章", () => {
     llmMock.impl = () => {
       throw new Error("不应调用 LLM（全部缓存命中）");
     };
-    // fetch 全 404：盖章配额查询失败 → 预算 0 全部 pending，主流程不挂
+    // fetch 全 404：stars 轮转刷新跳过，主流程不挂
     fetchMock.impl = async () => ({ ok: false, status: 404 });
 
     const cards = await generateFeed(cfg, makeTrendingData([]));

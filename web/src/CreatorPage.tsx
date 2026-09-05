@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ArrowLeft, ExternalLink } from "./icons.tsx";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, Check, ExternalLink } from "./icons.tsx";
 import { FeedCardMemo, GithubAvatar } from "./FeedCard.tsx";
 import type { FeedCard } from "./types.ts";
 
@@ -34,11 +34,15 @@ export function CreatorPage({
   onOpenCreator,
   onBack,
 }: CreatorPageProps) {
-  // 关注提示：关注成功 → toast 2.5s 自动消失（fixed 悬浮，不推挤页面内容——修复内容下移闪现）
+  // 关注提示：只在「未关注 → 关注」跃迁时弹出（进页面时已是关注态不打扰）。
+  // 气泡锚定在关注按钮正下方（不占文档流、不遮卡片列表），2.5s 自动退场。
   const [followHint, setFollowHint] = useState(false);
+  const prevFollowing = useRef(isFollowing);
   useEffect(() => {
-    if (!isFollowing) {
-      setFollowHint(false);
+    const becameFollowing = isFollowing && !prevFollowing.current;
+    prevFollowing.current = isFollowing;
+    if (!becameFollowing) {
+      if (!isFollowing) setFollowHint(false);
       return;
     }
     setFollowHint(true);
@@ -67,18 +71,23 @@ export function CreatorPage({
               GitHub
             </a>
           </div>
-          <button
-            className={`creator-follow-btn${isFollowing ? " followed" : " following"}`}
-            onClick={() => onToggleFollow(owner)}
-          >
-            {isFollowing ? "已关注" : "+ 关注"}
-          </button>
           <div className="creator-count">{projects.length} 个项目</div>
+          <div className="creator-follow-wrap">
+            <button
+              className={`creator-follow-btn${isFollowing ? " followed" : " following"}`}
+              onClick={() => onToggleFollow(owner)}
+            >
+              {isFollowing ? "已关注" : "+ 关注"}
+            </button>
+            {followHint && (
+              <div className="creator-follow-toast" role="status">
+                <Check size={14} className="toast-check" />
+                已关注 · TA 的新项目会出现在关注频道
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      {followHint && (
-        <div className="creator-follow-toast">已关注，TA 的新项目会出现在关注频道（数据随每日更新）</div>
-      )}
       <div className="creator-projects">
         {projects.length === 0 ? (
           <div className="status">

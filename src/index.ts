@@ -515,7 +515,7 @@ async function main(): Promise<void> {
     }
   }
 
-  // 开源版抖音信息流：生成 feed.json（库内 star 盖章在 generateFeed 内完成；
+  // 开源版抖音信息流：生成 feed.json（bigbros 盖章已全面退役不再跑，2026-09-05；
   // 2026-09-01 关注解耦：不再抓大牛/follow 名单 star 灌新卡；
   // 2026-09-05 拍板：外源信号（HN 提及等）不进 feed 算法，hnData 不再传入）
   try {

@@ -459,14 +459,22 @@ function jitterRank(repo: string, seed: number): number {
 }
 
 /**
- * 会话洗牌（2026-09-05 拍板：刷新不能每次一模一样，TikTok 式新鲜感）：
- * 在相关性骨架（score/heatScore）上按会话种子做 ±strength/2 的乘性抖动——
- * 大秩序不破坏（高分卡大概率还在前面），但相邻次序每次进来都不同。
+ * 会话洗牌 v2（2026-09-05 二次拍板：刷新「还是老看到同样的项目」）。
+ * 旧版乘性抖动拿 c.score 当骨架——存量卡 score=0（feed.json 组装时写死），0×随机=0，
+ * 分类频道抖动完全失效、顺序恒定，这是「刷不出新鲜感」的真根因。
+ * 新版骨架=位次衰减分（第 1 名 2.0 线性降到末尾 1.0，与任何数据字段无关，对全频道恒有效）：
+ * ±strength/2 的乘性抖动让头部成员每次刷新真实轮换（第一屏必出新面孔），
+ * 同时大秩序不破坏（骨架单调，排名越靠前越大概率还在前排）。
  * 每日频道（客观热度）与关注频道（动态时间序）不抖。
  */
-function applyJitter(cards: FeedCard[], seed: number, strength: number): FeedCard[] {
+function applyJitter(cards: FeedCard[], seed: number, strength = 0.18): FeedCard[] {
+  const n = cards.length;
+  if (n <= 1) return cards;
   return cards
-    .map((c) => ({ c, j: (c.score ?? 0) * (1 + strength * (jitterRank(c.repo, seed) - 0.5)) }))
+    .map((c, idx) => ({
+      c,
+      j: (2 - idx / n) * (1 + strength * (jitterRank(c.repo, seed) - 0.5)),
+    }))
     .sort((a, b) => b.j - a.j)
     .map((x) => x.c);
 }
@@ -478,7 +486,11 @@ function getSectionCards(
 ): FeedCard[] {
   switch (sectionKey) {
     case "hot":
-      return cards.filter((c) => c.momentum?.includes("hot"));
+      // 热门频道按增长数降序策展（2026-09-05 二次拍板：每日看增长幅度=相对增速 heatScore，
+      // 热门看增长数本身=绝对增量 starGrowth；同增量比总星，大库优先）
+      return cards
+        .filter((c) => c.momentum?.includes("hot"))
+        .sort((a, b) => (b.starGrowth ?? 0) - (a.starGrowth ?? 0) || b.stars - a.stars);
     case "daily":
       // 每日频道按时效热度分排序：涨得快（相对增速）> 涨得多（2026-09-05 拍板）
       return cards
@@ -490,7 +502,11 @@ function getSectionCards(
         .filter((c) => followingSet.has(c.owner))
         .sort((a, b) => new Date(b.ts).getTime() - new Date(a.ts).getTime());
     default:
-      return cards.filter((c) => c.category === sectionKey);
+      // 固有分类频道（AI/兴趣/工具/学习）按 aiScore 策展排序，同分看涨星势头——
+      // 每个频道打开头部都是评分最高、最有看头的项目，而不是取材流水顺序（2026-09-05）
+      return cards
+        .filter((c) => c.category === sectionKey)
+        .sort((a, b) => (b.aiScore ?? 0.5) - (a.aiScore ?? 0.5) || (b.starGrowth ?? 0) - (a.starGrowth ?? 0));
   }
 }
 
@@ -515,13 +531,12 @@ function buildRecommended(
     return true;
   });
   if (pool.length === 0) return [];
-  // 个性化权重分：标签权重匹配 + aiScore 辅助 + 关注轻微抬推荐（2026-09-01 关注解耦）
+  // 个性化权重分：标签权重匹配 + aiScore 辅助 + 关注轻微抬推荐（2026-09-01 关注解耦；
+  // bigbros 加权出口已随 bigbros 全出口退役移除，2026-09-05）
   // 已读降权（2026-09-05 拍板：适当降权不一刀切）——7 天内看过未互动的 ×0.7，仍可再次出现
   const weightOf = (c: FeedCard): number => {
     const tagScore = (c.tags || []).reduce((s, t) => s + (tagWeights[t.name] ?? 0.15) * (t.weight ?? 0.5), 0);
-    let followBoost = 0;
-    if (followingSet.has(c.owner)) followBoost += 0.3;
-    if ((c.bigbros ?? []).some((b) => followingSet.has(b))) followBoost += 0.2;
+    const followBoost = followingSet.has(c.owner) ? 0.3 : 0;
     const seenTs = seen[c.repo];
     const inter = interactions[c.repo];
     const seenPenalty = seenTs && !inter && now - seenTs < 7 * DAY_MS ? 0.7 : 1;
@@ -557,7 +572,8 @@ function buildRecommended(
 
 function useFeedGrid() {
   const [mobile, setMobile] = useState(
-    () => typeof window !== "undefined" && window.matchMedia(`(max-width: ${FEED_MOBILE_MAX_WIDTH}px)`).matches,
+    () =>
+      typeof window !== "undefined" && window.matchMedia(`(max-width: ${FEED_MOBILE_MAX_WIDTH}px)`).matches,
   );
   useEffect(() => {
     const mq = window.matchMedia(`(max-width: ${FEED_MOBILE_MAX_WIDTH}px)`);
@@ -655,7 +671,9 @@ function FeedVirtualList({
 
   return (
     <div ref={wrapRef} className={entering ? "feed-window channel-entering" : "feed-window"}>
-      {win.topPad > 0 && <div className="feed-window-pad" style={{ height: win.topPad }} aria-hidden="true" />}
+      {win.topPad > 0 && (
+        <div className="feed-window-pad" style={{ height: win.topPad }} aria-hidden="true" />
+      )}
       <div className="feed-list">
         {visible.map((card) => (
           <FeedCardMemo
@@ -669,7 +687,9 @@ function FeedVirtualList({
           />
         ))}
       </div>
-      {win.bottomPad > 0 && <div className="feed-window-pad" style={{ height: win.bottomPad }} aria-hidden="true" />}
+      {win.bottomPad > 0 && (
+        <div className="feed-window-pad" style={{ height: win.bottomPad }} aria-hidden="true" />
+      )}
       {onEndHint && <div className="section-end-hint">{onEndHint}</div>}
     </div>
   );
@@ -703,7 +723,7 @@ export default function App() {
   const [collections, setCollections] = useState<Collection[]>(loadCollections);
   // 关注列表（纯前端，localStorage 持久化；只影响关注频道/我的-关注）
   // 2026-09-01 关注解耦：关注集只认本机 localStorage（不再并入 data/following.json，
-  // 路人打开关注为空）；关注频道匹配用的 bigbros 来自管道库内 star 盖章
+  // 路人打开关注为空）；2026-09-05：关注频道只认 owner 匹配，bigbros 全出口退役
   const [following, setFollowing] = useState<string[]>(loadFollowing);
   const followingSet = useMemo(() => new Set(following), [following]);
   // 创作者页栈（整页替换式子页面：push 进入更深层级，pop 逐级返回；
@@ -946,13 +966,16 @@ export default function App() {
     });
   }, []);
 
-  const openCreator = useCallback((owner: string) => {
-    // 关详情弹窗（overlay 与页面栈独立；从弹窗进入创作者页时先收起弹窗）
-    closeDetail();
-    // push：创作者页内点其他 owner 会叠第二层，返回逐级回退
-    setViewStack((prev) => [...prev, { owner }]);
-    appBodyRef.current?.scrollTo(0, 0);
-  }, [closeDetail]);
+  const openCreator = useCallback(
+    (owner: string) => {
+      // 关详情弹窗（overlay 与页面栈独立；从弹窗进入创作者页时先收起弹窗）
+      closeDetail();
+      // push：创作者页内点其他 owner 会叠第二层，返回逐级回退
+      setViewStack((prev) => [...prev, { owner }]);
+      appBodyRef.current?.scrollTo(0, 0);
+    },
+    [closeDetail],
+  );
 
   const closeCreator = useCallback(() => {
     setViewStack((prev) => prev.slice(0, -1));
@@ -1132,7 +1155,7 @@ export default function App() {
   }, [cards, tab, seen, interactions, collections]);
 
   // 分区数据：推荐 = 前端个性化生成；其余频道按各自语义排序后套会话洗牌
-  // （每日=客观热度不抖；关注=动态时间序不抖；推荐/热门/分类在相关性骨架内 ±15%/±10% 抖动）
+  // （每日=客观热度不抖；关注=动态时间序不抖；推荐 ±10%、热门/分类 ±9% 头部轮换）
   // 关注频道豁免空分区过滤：未关注任何人时侧栏仍保留「关注」项，内容区显示引导
   const sections = useMemo(() => {
     const seed = sessionSeedRef.current;
@@ -1143,11 +1166,11 @@ export default function App() {
           ? applyJitter(
               buildRecommended(visibleCards, preferences.tagWeights, seen, interactions, followingSet),
               seed,
-              0.15,
+              0.2,
             )
           : s.key === "daily" || s.key === "following"
             ? getSectionCards(visibleCards, s.key, followingSet)
-            : applyJitter(getSectionCards(visibleCards, s.key, followingSet), seed, 0.1),
+            : applyJitter(getSectionCards(visibleCards, s.key, followingSet), seed, 0.18),
     })).filter((s) => s.key === "following" || s.cards.length > 0);
     return all;
   }, [visibleCards, preferences, seen, interactions, followingSet]);
@@ -1205,24 +1228,16 @@ export default function App() {
     return cards.filter((c) => c.owner === currentCreator).sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
   }, [cards, currentCreator]);
 
-  // 我的-关注：关注的创作者（只认本机 localStorage）；
-  // count = TA 的项目数；starCount = TA star 的项目数（卡片 bigbros 含 TA 的卡数，盖章数据）
+  // 我的-关注：关注的创作者（只认本机 localStorage）；count = TA 的项目数
+  // （旧 starCount「TA star 过的库内项目」已随 bigbros 全出口退役移除，2026-09-05）
   const followedCreators = useMemo(() => {
     const ownerCount = new Map<string, number>();
-    const starCount = new Map<string, number>();
     for (const c of cards) {
       ownerCount.set(c.owner, (ownerCount.get(c.owner) ?? 0) + 1);
-      for (const b of c.bigbros ?? []) {
-        starCount.set(b, (starCount.get(b) ?? 0) + 1);
-      }
     }
     return following
-      .map((owner) => ({
-        owner,
-        count: ownerCount.get(owner) ?? 0,
-        starCount: starCount.get(owner) ?? 0,
-      }))
-      .sort((a, b) => b.count + b.starCount - (a.count + a.starCount));
+      .map((owner) => ({ owner, count: ownerCount.get(owner) ?? 0 }))
+      .sort((a, b) => b.count - a.count);
   }, [following, cards]);
 
   // 频道切换（侧边栏目的地导航，无取消态）
@@ -1256,37 +1271,37 @@ export default function App() {
   return (
     <div className="app">
       <header className="header">
-          <div className="header-inner">
-            <h1 className="logo">
-              <GitTokLogo />
-            </h1>
-            <nav className="tabs">
-              <button className={`tab${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
-                <Home size={16} />
-                首页
-              </button>
-              <button className={`tab${tab === "search" ? " active" : ""}`} onClick={() => setTab("search")}>
-                <Search size={16} />
-                搜索
-              </button>
-              <button className={`tab${tab === "me" ? " active" : ""}`} onClick={() => setTab("me")}>
-                <User size={16} />
-                我的
-              </button>
-            </nav>
-            {/* 移动端频道抽屉开关（桌面 display:none；桌面 grid 第三列自动落位） */}
-            <button
-              className="drawer-toggle"
-              onClick={() => setDrawerOpen(true)}
-              aria-label="打开频道"
-              title="频道"
-            >
-              <Menu size={20} />
+        <div className="header-inner">
+          <h1 className="logo">
+            <GitTokLogo />
+          </h1>
+          <nav className="tabs">
+            <button className={`tab${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
+              <Home size={16} />
+              首页
             </button>
-          </div>
-        </header>
+            <button className={`tab${tab === "search" ? " active" : ""}`} onClick={() => setTab("search")}>
+              <Search size={16} />
+              搜索
+            </button>
+            <button className={`tab${tab === "me" ? " active" : ""}`} onClick={() => setTab("me")}>
+              <User size={16} />
+              我的
+            </button>
+          </nav>
+          {/* 移动端频道抽屉开关（桌面 display:none；桌面 grid 第三列自动落位） */}
+          <button
+            className="drawer-toggle"
+            onClick={() => setDrawerOpen(true)}
+            aria-label="打开频道"
+            title="频道"
+          >
+            <Menu size={20} />
+          </button>
+        </div>
+      </header>
 
-        <div className="app-body" ref={appBodyRef}>
+      <div className="app-body" ref={appBodyRef}>
         <main className={`main${tab === "feed" || tab === "me" ? " main-feed" : ""}`}>
           {/* === 创作者页栈：整页替换（feed/我的/搜索全部让位）；返回逐级 pop 后恢复原 tab 原频道 === */}
           {viewStack.length > 0 && currentCreator ? (
@@ -1340,8 +1355,8 @@ export default function App() {
                           还没有关注任何人
                         </p>
                         <p className="hint">
-                          去项目卡片上点创作者名即可关注；关注保存在这台浏览器，TA
-                          的项目和 TA star 过的库内项目会出现在关注频道
+                          去项目卡片上点创作者名即可关注；关注保存在这台浏览器，TA 的项目和 TA star
+                          过的库内项目会出现在关注频道
                         </p>
                       </div>
                     )}
@@ -1564,12 +1579,12 @@ export default function App() {
                             <p>还没有关注任何人</p>
                             <p className="hint">
                               去项目卡片上点创作者名即可关注；关注保存在这台浏览器，TA
-                              的项目和 TA star 过的库内项目会出现在关注频道
+                              之后的新项目会出现在关注频道
                             </p>
                           </div>
                         ) : (
                           <div className="creator-list">
-                            {followedCreators.map(({ owner, count, starCount }) => (
+                            {followedCreators.map(({ owner, count }) => (
                               <div
                                 key={owner}
                                 className="creator-item"
@@ -1578,9 +1593,7 @@ export default function App() {
                               >
                                 <GithubAvatar owner={owner} size={56} className="creator-item-avatar" />
                                 <span className="creator-item-name">{owner}</span>
-                                <span className="creator-item-count">
-                                  {count} 个项目{starCount > 0 ? ` · star 了 ${starCount} 个` : ""}
-                                </span>
+                                <span className="creator-item-count">{count} 个项目</span>
                                 <a
                                   className="creator-item-github"
                                   href={`https://github.com/${owner}`}
@@ -1755,13 +1768,8 @@ export default function App() {
                         )}
                       </div>
                       {searchCreators.length > 4 && (
-                        <button
-                          className="creator-toggle"
-                          onClick={() => setShowAllCreators((v) => !v)}
-                        >
-                          {showAllCreators
-                            ? "收起创作者"
-                            : `展开其余 ${searchCreators.length - 4} 位创作者`}
+                        <button className="creator-toggle" onClick={() => setShowAllCreators((v) => !v)}>
+                          {showAllCreators ? "收起创作者" : `展开其余 ${searchCreators.length - 4} 位创作者`}
                         </button>
                       )}
                     </div>
@@ -1804,56 +1812,56 @@ export default function App() {
             <ThumbsDown size={14} className="icon" /> {feedback.dislikes.length}
           </span>
         </footer>
-        </div>
+      </div>
 
-        {/* 移动端频道抽屉（<768px；☰ 打开，选中频道或点遮罩关闭；桌面 display:none） */}
-        {drawerOpen && <div className="drawer-mask" onClick={() => setDrawerOpen(false)} />}
-        <div className={`drawer${drawerOpen ? " open" : ""}`}>
-          <ChannelNav
-            sections={sections}
-            activeKey={feedChannel}
-            onPick={(key) => {
-              switchFeedChannel(key);
-              setDrawerOpen(false);
-            }}
-          />
-        </div>
+      {/* 移动端频道抽屉（<768px；☰ 打开，选中频道或点遮罩关闭；桌面 display:none） */}
+      {drawerOpen && <div className="drawer-mask" onClick={() => setDrawerOpen(false)} />}
+      <div className={`drawer${drawerOpen ? " open" : ""}`}>
+        <ChannelNav
+          sections={sections}
+          activeKey={feedChannel}
+          onPick={(key) => {
+            switchFeedChannel(key);
+            setDrawerOpen(false);
+          }}
+        />
+      </div>
 
-        {/* 移动端底部导航（<768px；首页/搜索/我的，替代顶栏 tabs） */}
-        <nav className="bottom-bar">
-          <button className={`bottom-item${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
-            <Home size={18} />
-            <span>首页</span>
-          </button>
-          <button
-            className={`bottom-item${tab === "search" ? " active" : ""}`}
-            onClick={() => setTab("search")}
-          >
-            <Search size={18} />
-            <span>搜索</span>
-          </button>
-          <button className={`bottom-item${tab === "me" ? " active" : ""}`} onClick={() => setTab("me")}>
-            <User size={18} />
-            <span>我的</span>
-          </button>
-        </nav>
+      {/* 移动端底部导航（<768px；首页/搜索/我的，替代顶栏 tabs） */}
+      <nav className="bottom-bar">
+        <button className={`bottom-item${tab === "feed" ? " active" : ""}`} onClick={() => setTab("feed")}>
+          <Home size={18} />
+          <span>首页</span>
+        </button>
+        <button
+          className={`bottom-item${tab === "search" ? " active" : ""}`}
+          onClick={() => setTab("search")}
+        >
+          <Search size={18} />
+          <span>搜索</span>
+        </button>
+        <button className={`bottom-item${tab === "me" ? " active" : ""}`} onClick={() => setTab("me")}>
+          <User size={18} />
+          <span>我的</span>
+        </button>
+      </nav>
 
-        {/* 详情弹窗 */}
-        {detailCard && (
-          <CardDetail
-            key={detailCard.repo}
-            card={detailCard}
-            liked={feedback.likes.includes(detailCard.repo)}
-            disliked={feedback.dislikes.includes(detailCard.repo)}
-            collections={collections}
-            sourceRect={sourceRectRef.current}
-            onLike={handleLike}
-            onDislike={handleDislike}
-            onUpdateCollections={handleUpdateCollections}
-            onClose={closeDetail}
-            onOpenCreator={openCreator}
-          />
-        )}
+      {/* 详情弹窗 */}
+      {detailCard && (
+        <CardDetail
+          key={detailCard.repo}
+          card={detailCard}
+          liked={feedback.likes.includes(detailCard.repo)}
+          disliked={feedback.dislikes.includes(detailCard.repo)}
+          collections={collections}
+          sourceRect={sourceRectRef.current}
+          onLike={handleLike}
+          onDislike={handleDislike}
+          onUpdateCollections={handleUpdateCollections}
+          onClose={closeDetail}
+          onOpenCreator={openCreator}
+        />
+      )}
     </div>
   );
 }

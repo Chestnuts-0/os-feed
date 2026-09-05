@@ -27,10 +27,32 @@ describe("classifyCategory 固有标签", () => {
     expect(classifyCategory(mkCard({ topics: ["skill"] }))).toBe("tool");
   });
 
-  it("fun：非AI-好玩 / 游戏 / 创意工具", () => {
+  it("fun：非AI-好玩 / 游戏 直通；创意工具/可视化 须过好玩气质词交叉验证", () => {
     expect(classifyCategory(mkCard({ aiDims: ["非AI-好玩"] }))).toBe("fun");
     expect(classifyCategory(mkCard({ aiDims: ["游戏"] }))).toBe("fun");
-    expect(classifyCategory(mkCard({ aiDims: ["创意工具"] }))).toBe("fun");
+    // 「创意工具」+ 描述有玩耍气质（game/music/ascii…）→ fun
+    expect(
+      classifyCategory(mkCard({ aiDims: ["创意工具"], desc: "a tiny browser toy for making music" })),
+    ).toBe("fun");
+    expect(
+      classifyCategory(mkCard({ aiDims: ["可视化"], topics: ["generative-art"], desc: "art from code" })),
+    ).toBe("fun");
+    // p5.js 型创意编程平台（desc 有 artists/learn to code）：气质词命中归 fun，不被 learning 抢走
+    expect(
+      classifyCategory(
+        mkCard({ aiDims: ["创意工具", "可视化"], desc: "platform that empowers artists to learn to code" }),
+      ),
+    ).toBe("fun");
+    // 「创意工具」+ 正经生产力工具描述 → 不过交叉验证，落到后续规则（AI 前缀/learning/tool 兜底）
+    expect(classifyCategory(mkCard({ aiDims: ["创意工具"], desc: "open source website builder" }))).toBe(
+      "tool",
+    );
+    expect(classifyCategory(mkCard({ aiDims: ["创意工具"], desc: "icon library for designers" }))).toBe(
+      "tool",
+    );
+    expect(classifyCategory(mkCard({ aiDims: ["创意工具"], desc: "screenshot recorder for teams" }))).toBe(
+      "tool",
+    );
   });
 
   it("ai：AI 强特征前缀", () => {
@@ -77,10 +99,13 @@ describe("classifyCategory 固有标签", () => {
 // ---------------------------------------------------------------------------
 
 describe("classifyMomentum 动态标签", () => {
-  it("hot：stars >= 2000", () => {
-    const r = classifyMomentum(mkCard({ stars: 3000 }));
+  it("hot：stars >= 30000（2026-09-05 重标定：取材池高星化，86% 通胀的 2000 门槛退役）", () => {
+    const r = classifyMomentum(mkCard({ stars: 35000 }));
     expect(r.momentum).toContain("hot");
     expect(r.momentum).not.toContain("daily");
+    // 门槛之下的高星老库不再挂热门
+    const below = classifyMomentum(mkCard({ stars: 29000 }));
+    expect(below.momentum).not.toContain("hot");
   });
 
   it("daily：starGrowth >= 5", () => {
@@ -90,7 +115,7 @@ describe("classifyMomentum 动态标签", () => {
   });
 
   it("可同时命中 hot + daily（不互斥）", () => {
-    const r = classifyMomentum(mkCard({ stars: 5000, starGrowth: 30 }));
+    const r = classifyMomentum(mkCard({ stars: 50000, starGrowth: 30 }));
     expect(r.momentum).toEqual(expect.arrayContaining(["hot", "daily"]));
   });
 

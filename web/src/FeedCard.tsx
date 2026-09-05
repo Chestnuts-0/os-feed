@@ -8,7 +8,6 @@ import {
   ThumbsUp,
   TrendingUp,
   UserRound,
-  Users,
   X,
   BADGE_ICONS,
   BADGE_LABELS,
@@ -437,16 +436,6 @@ export function CardDetail({
         </div>
       )}
 
-      {card.bigbros.length > 0 && (
-        <div className="detail-bigbro">
-          <Users size={16} />
-          <span>
-            <strong style={{ color: "#c4b5fd" }}>{card.bigbros.slice(0, 3).join("、")}</strong>
-            {card.bigbros.length > 3 && ` 等${card.bigbros.length}位`} 关注的大牛 star 了
-          </span>
-        </div>
-      )}
-
       <div className="detail-actions">
         <button className={`action-btn like-btn${liked ? " active" : ""}`} onClick={() => onLike(card.repo)}>
           <ThumbsUp size={20} />
@@ -527,11 +516,7 @@ export function CardDetail({
   );
 
   return (
-    <div
-      ref={overlayRef}
-      className={`detail-overlay${fromCard ? " is-from-card" : ""}`}
-      onClick={onClose}
-    >
+    <div ref={overlayRef} className={`detail-overlay${fromCard ? " is-from-card" : ""}`} onClick={onClose}>
       <div
         ref={panelRef}
         className={`detail-mover${fromCard ? " is-from-card" : ""}`}

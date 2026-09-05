@@ -105,7 +105,7 @@ export interface FeedCard {
   tags: Tag[];
   aiScore: number;
   source: FeedSource;
-  /** 哪些关注的大牛 star 了（source=bigbro 时有值） */
+  /** @deprecated bigbros 盖章已全面退役（2026-09-05，管道停跑+出口全删）：字段仅为解析历史数据保留 */
   bigbros: string[];
   url: string;
   /** ISO 时间戳 */
