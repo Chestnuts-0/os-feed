@@ -237,7 +237,7 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     expect(callCount.n).toBeGreaterThanOrEqual(2);
   });
 
-  it("达标卡不触发重评（仅 1 次批量调用）", async () => {
+  it("达标卡不触发重评（两段式：海选 1 次 + 精评 1 次，无重试）", async () => {
     llmMock.impl = () => scoreJson("new/ok");
     const trending = makeTrendingData(["new/ok"]);
 
@@ -246,7 +246,8 @@ describe("P0a 长度校验（effLen / 重评 / detail 兜底 / pending）", () =
     const card = cards.find((c) => c.repo === "new/ok");
     expect(card).toBeDefined();
     expect(effLen(card!.reasonCn)).toBeGreaterThanOrEqual(100);
-    expect(callCount.n).toBe(1);
+    // 2026-09-06 两段式：正常路径 = 海选批 1 次 + 精评批 1 次；>2 说明触发了重评
+    expect(callCount.n).toBe(2);
   });
 
   it("summaryFromDetailFirstPara：从第一段截 20-35 字且句号收尾", () => {

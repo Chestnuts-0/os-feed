@@ -258,3 +258,96 @@ function extractPartialResults(jsonStr: string): ScoringResult[] {
   }
   return results;
 }
+
+// ---------------------------------------------------------------------------
+// 两段式评分 · 第一段「海选」（2026-09-06 栗子拍板）：
+// 只打分+贴标签，不生成任何中文文案（输出 ~50 token/20 库，比全文案便宜 ~50 倍），
+// 海选淘汰的库不进 feed（栗子硬约束：出现在 GitTok 的卡必须有全套文案，海选淘汰
+// 的根本不出现，所以无需文案）。只有精评选中的 top-K 才走 buildFeedScoringPrompt 全文案。
+// ---------------------------------------------------------------------------
+
+/** 海选单库结果（无文案，进 two-phase 缓存与 top-K 选择） */
+export interface Phase1Score {
+  repo: string;
+  aiDims: string[];
+  aiScore: number;
+}
+
+/**
+ * 构建海选批 prompt：一批 ~20 库，只要求 ai_dims + ai_score，输出极短。
+ * 评估口径与全文案版一致（同一份 AI_DIMS、同一个 ai_score 语义），保证两段可比。
+ */
+export function buildPhase1ScoringPrompt(repos: RepoForScoring[], aiInterestsText: string): string {
+  const list = repos
+    .map((r, i) => {
+      const topics = r.topics.length ? r.topics.slice(0, 6).join(", ") : "无";
+      const desc = (r.description || "无描述").slice(0, 120);
+      return `${i + 1}. ${r.repo} — ${desc} | ⭐${r.stars} | 语言: ${r.language || "未知"} | topics: ${topics}`;
+    })
+    .join("\n");
+
+  return `你是开源项目策展人，面向中文读者。根据用户兴趣描述，快速评估以下 GitHub 项目与兴趣的相关度。
+
+# 用户兴趣描述
+${aiInterestsText}
+
+# 待评估项目（共 ${repos.length} 个）
+${list}
+
+# 输出要求（只要评分，不要任何文案/解释）
+对每个项目输出一个 JSON 对象，字段只有三个：
+- "repo": "owner/repo"（与输入一致）
+- "ai_dims": 从 [${AI_DIMS.join(", ")}] 中选 1-2 个最贴切的标签
+- "ai_score": 0 到 1 的浮点数相关度（判断依据：AI 相关性、好玩程度、实用能直接用、star 热度）
+
+只返回 JSON 数组，不要 markdown 标记，不要任何其他文字。示例：
+[{"repo":"owner/repo","ai_dims":["AI Agent"],"ai_score":0.85}]`;
+}
+
+/**
+ * 解析海选结果（容错与 parseScoringResult 同款：去代码块标记、修控制字符、逐项提取）。
+ */
+export function parsePhase1ScoringResult(raw: string): Phase1Score[] {
+  let text = raw.trim();
+  text = text
+    .replace(/```(?:json)?\n?/g, "")
+    .replace(/```/g, "")
+    .trim();
+
+  const start = text.indexOf("[");
+  const end = text.lastIndexOf("]");
+  if (start === -1 || end === -1 || end <= start) {
+    console.error("[feed/phase1] No JSON array found in LLM response");
+    return [];
+  }
+  const jsonStr = sanitizeJsonControlChars(text.slice(start, end + 1));
+
+  try {
+    const arr = JSON.parse(jsonStr) as Array<{
+      repo?: string;
+      ai_dims?: string[];
+      ai_dim?: string;
+      ai_score?: number;
+    }>;
+    return arr
+      .filter((x) => x && typeof x.repo === "string")
+      .map((x) => {
+        let dims: string[];
+        if (Array.isArray(x.ai_dims) && x.ai_dims.length > 0) {
+          dims = x.ai_dims.filter((d): d is string => typeof d === "string");
+        } else if (typeof x.ai_dim === "string" && x.ai_dim.trim()) {
+          dims = [x.ai_dim.trim()];
+        } else {
+          dims = [];
+        }
+        return {
+          repo: x.repo as string,
+          aiDims: dims,
+          aiScore: typeof x.ai_score === "number" ? Math.max(0, Math.min(1, x.ai_score)) : 0.5,
+        };
+      });
+  } catch (err) {
+    console.error(`[feed/phase1] JSON parse failed: ${err}`);
+    return [];
+  }
+}

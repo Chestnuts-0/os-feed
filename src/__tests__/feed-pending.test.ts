@@ -213,7 +213,11 @@ describe("feed pending-retry 队列", () => {
       ]),
     );
     // 今天只抓了一张普通新卡；LLM 对所有 repo 成功
+    // 2026-09-06 两段式：先海选批（prompt 无 reason_cn，两 repo 同批）后精评批
     llmMock.impl = (prompt: string) => {
+      if (!prompt.includes("reason_cn")) {
+        return '[{"repo":"ghost/repo","ai_dims":["AI Agent"],"ai_score":0.9},{"repo":"new/ok","ai_dims":["开发者工具"],"ai_score":0.8}]';
+      }
       if (prompt.includes("ghost/repo")) return scoreJson("ghost/repo");
       return scoreJson("new/ok");
     };

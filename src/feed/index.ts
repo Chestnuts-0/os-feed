@@ -18,7 +18,14 @@ import path from "node:path";
 import type { TrendingData } from "../trending.ts";
 import type { RadarConfig } from "../config.ts";
 import { callLlm } from "../report.ts";
-import { buildFeedScoringPrompt, parseScoringResult } from "./prompts.ts";
+import {
+  buildFeedScoringPrompt,
+  parseScoringResult,
+  buildPhase1ScoringPrompt,
+  parsePhase1ScoringResult,
+  type Phase1Score,
+} from "./prompts.ts";
+import { loadPhase1Scores, appendPhase1Scores, selectForProse, type SelectionInput } from "./two-phase.ts";
 import {
   loadProfile,
   saveProfile,
@@ -41,14 +48,22 @@ import type {
 const DATA_DIR = "data";
 const FEED_PATH = path.join(DATA_DIR, "feed.json");
 const BATCH_SIZE = 5;
-/** LLM 评分的新仓库上限（已有缓存的仓库不占额度）。
- *  **15000→2500 回调（2026-09-05 实测裁定）**：两轮 dispatch 双双撞 360min 墙被杀零产出
- *  （3000 张 6 源跑了 4h+ 没完）——免费源实际吞吐 ≈12-15 卡/分钟（429 冷却远比理论频繁），
- *  理论 540 卡/分钟不成立。2500 张 ≈ 3h 内安全完成；**解锁更高 cap 的钥匙=评分增量落盘
- *  （高优待办）与多账号 key（真乘法），不是调数字。 */
-const MAX_LLM_SCORE_REPOS = 2500;
+/** LLM 评分的仓库上限。
+ *  **语义随两段式评分变更（2026-09-06）**：现在 cap 的是「海选」（只打分不写文案，
+ *  20 库/批、输出 ~50 token），9000 ≈ 单轮候选池全量——海选便宜，cap 即形同虚设，
+ *  保留为防失控的保险丝。历史账：原 2500 是全文案吞吐实测裁定（12-15 卡/分钟撞 360min 墙），
+ *  两段式把文案成本砍 ~50 倍后 cap 回到「全覆盖」本义。 */
+const MAX_LLM_SCORE_REPOS = 9000;
+/** 精评（全文案）top-K：每轮只有海选分数最高的 K 张卡才写中文文案。
+ *  800 张 = 160 批 ÷ 32 并发 ≈ 5-10 分钟（栗子硬约束：进 feed 的卡必须全套文案，
+ *  K 就是「每天最多新增多少张完整卡」的产量旋钮）。 */
+const PROSE_TOP_K = 800;
+/** 海选批大小：输出极短（~50 token），20 库/批摊薄 prompt 开销 */
+const PHASE1_BATCH_SIZE = 20;
 /** LLM 并发批次数 */
-const SCORE_CONCURRENCY = 8; // 5→8（2026-09-05 放量：worker 池 36 个，批次并发跟上）
+// 8→32（09-06 根治放量轮撞墙的另一半）：池里 ~32 个 worker 但只有 8 批在飞 = 3/4 编队吃灰。
+// 海选 20 库/批 × 32 并发 ≈ 640 卡/分钟理论值（429 冷却打折后仍数倍于旧 12-15 卡/分钟）。
+const SCORE_CONCURRENCY = 32;
 /** feed.json 最大保留条目数（超出淘汰最老 + 未收藏；前端互动过的靠本地快照兜底） */
 const MAX_FEED_SIZE = 12000;
 /** 热门标签阈值（最近已知 stars）。
@@ -655,6 +670,45 @@ function savePendingRetries(entries: PendingEntry[]): void {
 // LLM 批量评分
 // ---------------------------------------------------------------------------
 
+/** 海选批跑（两段式第一段）：只打分贴标签，输出极短；批大小 PHASE1_BATCH_SIZE。
+ *  缺失不做逐库重试（海选便宜，落下的库下轮经 phase1 缓存补筛），chunk 即落缓存。 */
+async function phase1Batched(repos: RepoForScoring[], aiInterestsText: string): Promise<Phase1Score[]> {
+  const results: Phase1Score[] = [];
+  const batches: RepoForScoring[][] = [];
+  for (let i = 0; i < repos.length; i += PHASE1_BATCH_SIZE) {
+    const batch = repos.slice(i, i + PHASE1_BATCH_SIZE);
+    if (batch.length > 0) batches.push(batch);
+  }
+  console.log(
+    `  [feed/phase1] ${batches.length} batches (${repos.length} repos), concurrency=${SCORE_CONCURRENCY}`,
+  );
+
+  for (let i = 0; i < batches.length; i += SCORE_CONCURRENCY) {
+    const chunk = batches.slice(i, i + SCORE_CONCURRENCY);
+    const chunkResults = await Promise.all(
+      chunk.map(async (batch, idx) => {
+        const batchNum = i + idx + 1;
+        try {
+          const prompt = buildPhase1ScoringPrompt(batch, aiInterestsText);
+          const raw = await callLlm(prompt, 2048);
+          const parsed = parsePhase1ScoringResult(raw);
+          console.log(
+            `  [feed/phase1] batch ${batchNum}/${batches.length}: ${parsed.length}/${batch.length} screened`,
+          );
+          return parsed;
+        } catch (err) {
+          console.error(`  [feed/phase1] batch ${batchNum}/${batches.length} failed: ${err}`);
+          return [];
+        }
+      }),
+    );
+    for (const r of chunkResults) results.push(...r);
+    // 海选结果即筛即落缓存：被杀/重跑不重复烧筛分
+    appendPhase1Scores(chunkResults.flat());
+  }
+  return results;
+}
+
 async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): Promise<ScoringResult[]> {
   const results: ScoringResult[] = [];
   const batches: RepoForScoring[][] = [];
@@ -920,7 +974,11 @@ export async function generateFeed(
     }
     depth++;
   }
-  const reposNeedingScore: RepoForScoring[] = [...pendingFirst, ...nonSearch, ...roundRobin]
+  // 3.1 两段式评分 · 第一段「海选」（2026-09-06）：只打分不写文案，全量筛；
+  //     入库队列次序（pending 优先/trending 优先/search 领域轮询）原样保留，只是消费方
+  //     从「全文案队列」变成「海选队列」——领域多样性在筛分入口保底。
+  const phase1Cache = loadPhase1Scores();
+  const screenQueue: RepoForScoring[] = [...pendingFirst, ...nonSearch, ...roundRobin]
     .slice(0, MAX_LLM_SCORE_REPOS)
     .map((m) => ({
       repo: m.repo,
@@ -929,8 +987,35 @@ export async function generateFeed(
       language: m.language,
       topics: m.topics,
     }));
+  const needScreen = screenQueue.filter((r) => !phase1Cache.has(r.repo));
   console.log(
-    `[feed] ${existingScores.size} cached, scoring ${reposNeedingScore.length}/${repoMap.size} new repos via LLM (cap ${MAX_LLM_SCORE_REPOS})...`,
+    `[feed] ${existingScores.size} prose-cached, ${phase1Cache.size} phase1-cached, screening ${needScreen.length}/${screenQueue.length} repos (cap ${MAX_LLM_SCORE_REPOS})...`,
+  );
+  const freshPhase1 =
+    needScreen.length > 0 ? await phase1Batched(needScreen, config.interests.aiInterestsText) : [];
+  const freshMap = new Map(freshPhase1.map((p) => [p.repo, p] as const));
+
+  // 3.2 第二段「精评」top-K 选择：海选分最高的 K 张卡才写中文文案。
+  //     铁律（栗子 2026-09-06 拍板）：出现在 GitTok 的卡必须有全套文案——
+  //     所以精评在落盘前完成，未入选的卡根本不进 feed（无需文案），不违反铁律。
+  const screened: SelectionInput[] = [];
+  for (const r of screenQueue) {
+    const p1 = phase1Cache.get(r.repo) ?? freshMap.get(r.repo);
+    if (p1) {
+      const m = repoMap.get(r.repo);
+      screened.push({
+        repo: r.repo,
+        aiScore: p1.aiScore,
+        starGrowth: m?.starGrowth ?? 0,
+        stars: m?.stars ?? 0,
+      });
+    }
+  }
+  const screenedSet = new Set(screened.map((s) => s.repo));
+  const proseSelected = selectForProse(screened, PROSE_TOP_K);
+  const reposNeedingScore: RepoForScoring[] = screenQueue.filter((r) => proseSelected.has(r.repo));
+  console.log(
+    `[feed] phase1 screened ${screened.length}, prose top-K ${reposNeedingScore.length} (K=${PROSE_TOP_K})...`,
   );
   const newScoringResults =
     reposNeedingScore.length > 0
@@ -952,6 +1037,11 @@ export async function generateFeed(
     // P0a 长度校验只作用于本轮新评分/恢复补评的卡；存量短卡由任务 2 清 reasonCn 失效后走新评分路径收敛。
     const cachedHit = existingScores.has(m.repo);
     if (!cachedHit) {
+      // 海选已筛但未入选 top-K：主动筛掉，不是评分失败——不进 feed（无文案不出现，栗子铁律）
+      // 也不进待补评（进队列会变僵尸：分数在 phase1 缓存里，永不入选却每轮 +1 重试计数）
+      if (!proseSelected.has(m.repo) && screenedSet.has(m.repo)) {
+        continue;
+      }
       // P0a 长度校验：reasonCn effLen <100（等高卡片第三行空白）或 summaryCn 不在 20-35 字 → 不达标
       if (
         !sc ||
@@ -1069,6 +1159,11 @@ export async function generateFeed(
     // 已通过其他路径持有评分的（缓存命中 = 已解决）→ 出队（防僵尸条目残留）
     for (const repo of [...retryMap.keys()]) {
       if (existingScores.has(repo)) retryMap.delete(repo);
+    }
+    // 海选已筛且未入选的 pending 条目 → 出队：分数已在 phase1 缓存，不是丢失；
+    // 留着会变僵尸（永不入选却永占队列名额）
+    for (const repo of [...retryMap.keys()]) {
+      if (screenedSet.has(repo) && !proseSelected.has(repo)) retryMap.delete(repo);
     }
     for (const m of failedThisRound) {
       const prev = retryMap.get(m.repo);
