@@ -44,7 +44,7 @@ jobs:
           # agnes/zhipu×2——合计 ≈36 worker ≈108 批/分钟 ≈540 卡/分钟，5000 张
           # cap ≈10 分钟跑完。过冲不用怕：429 拉满自动冷却 5 分钟，负载自动落到
           # 其余 worker，到期回归。key 缺失自动跳过；cerebras 402 付费墙暂出池。
-          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,siliconflow,siliconflow,siliconflow,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,github-models,github-models,github-models,mistral,mistral,mistral,mistral,mistral,mistral,mistral,mistral
+          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,siliconflow,siliconflow,siliconflow,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,github-models,github-models,github-models,mistral,mistral,mistral,mistral,mistral,mistral,mistral,mistral,openrouter@google/gemma-4-31b-it:free
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
