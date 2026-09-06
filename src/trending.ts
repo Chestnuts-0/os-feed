@@ -227,10 +227,11 @@ async function searchAiRepos(
       }),
     );
     // Delay between batches to avoid rate limiting.
-    // GitHub Search API 限速 30 请求/分钟：每批 SEARCH_BATCH=10 个并行 → 批间隔必须 ≥20s
-    // （每分钟最多 3 批）。2026-09-05 主题扩到 ~90 个后，旧的 2s 间隔会让后几批整批 403 丢源。
+    // GitHub Search API 限速 30 请求/分钟**按 token 计**：多 PAT 轮转（2026-09-06）下每批
+    // 10 个并行请求摊到 N 个 token，8s 间隔 = 每批 10 请求/8s ≈ 75/min 总量，
+    // 3 token 时单 token ≈25/min 仍在墙内；2026-09-05 的 20s 是单 token 时代的保守值。
     if (i + SEARCH_BATCH < topics.length) {
-      await new Promise((resolve) => setTimeout(resolve, 20_000));
+      await new Promise((resolve) => setTimeout(resolve, 8_000));
     }
   }
 
