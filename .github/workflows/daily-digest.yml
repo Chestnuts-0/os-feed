@@ -54,7 +54,7 @@ jobs:
           # 8→4 保额度细水长流；HF router 免费月度 credits 持续发放（$0.10/月量级小，
           # 2 worker 小量验证）。多 key 轮转：{NAME}_API_KEY 逗号分隔多 key，同名条目
           # 按序取号（Groq/Gemini/HF 多账号=真乘法）。≈32 worker。
-          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,siliconflow,siliconflow,siliconflow,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,mistral,mistral,mistral,mistral,cerebras,cerebras,hf@meta-llama/Llama-3.3-70B-Instruct,hf@Qwen/Qwen2.5-72B-Instruct,openrouter@google/gemma-4-31b-it:free,custom:modelscope,custom:spark
+          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,gemini@gemini-3.5-flash-lite,gemini@gemini-3.5-flash-lite,gemini@gemini-3.1-flash-lite,siliconflow,siliconflow,siliconflow,siliconflow@deepseek-ai/DeepSeek-V3,siliconflow@deepseek-ai/DeepSeek-V3,siliconflow@deepseek-ai/DeepSeek-V3,mistral,mistral,mistral,mistral,cerebras,cerebras,hf@meta-llama/Llama-3.3-70B-Instruct,hf@Qwen/Qwen2.5-72B-Instruct,openrouter@google/gemma-4-31b-it:free,custom:modelscope,custom:spark
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
@@ -174,7 +174,7 @@ jobs:
           LLM_PROVIDER: zhipu
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
           # 编队名单与 digest job 同一份（改名记得两边同步）；评分是本 job 的主活
-          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,siliconflow,siliconflow,siliconflow,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,siliconflow@THUDM/glm-4-9b-chat,mistral,mistral,mistral,mistral,cerebras,cerebras,hf@meta-llama/Llama-3.3-70B-Instruct,hf@Qwen/Qwen2.5-72B-Instruct,openrouter@google/gemma-4-31b-it:free,custom:modelscope,custom:spark
+          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,gemini@gemini-3.5-flash-lite,gemini@gemini-3.5-flash-lite,gemini@gemini-3.1-flash-lite,siliconflow,siliconflow,siliconflow,siliconflow@deepseek-ai/DeepSeek-V3,siliconflow@deepseek-ai/DeepSeek-V3,siliconflow@deepseek-ai/DeepSeek-V3,mistral,mistral,mistral,mistral,cerebras,cerebras,hf@meta-llama/Llama-3.3-70B-Instruct,hf@Qwen/Qwen2.5-72B-Instruct,openrouter@google/gemma-4-31b-it:free,custom:modelscope,custom:spark
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
