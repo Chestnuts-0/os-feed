@@ -55,12 +55,12 @@ const BATCH_SIZE = 5;
  *  「海选便宜」挡不住「批次数×批时延×冷却」的墙。3000=撞墙轮工作量的 ~33%
  *  （队列次序已保证：pending 优先→trending 优先→search 领域轮询按星降序，砍的是长尾），
  *  未入筛的库下轮随重抓自然回来（不入待补评语义不变）。多账号 key 落地后此 cap 回调。 */
-const MAX_LLM_SCORE_REPOS = 3000;
+const MAX_LLM_SCORE_REPOS = Number(process.env["SCREEN_CAP"] ?? 3000);
 /** 精评（全文案）top-K：每轮只有海选分数最高的 K 张卡才写中文文案。
  *  **800→400（2026-09-06 第三刀）**：与海选 cap 同因同调（撞墙轮 K=800 是精评大头的嫌疑最大，
  *  全文案批是慢批）。400 张 = 80 批 ÷ 32 并发；栗子铁律不变：进 feed 的卡必须全套文案。
  *  K 就是「每天新增完整卡」的产量旋钮，编队扩容后先回 800 再往上。 */
-const PROSE_TOP_K = 400;
+const PROSE_TOP_K = Number(process.env["PROSE_TOP_K"] ?? 400);
 /** 海选批大小：输出极短（~50 token），20 库/批摊薄 prompt 开销 */
 const PHASE1_BATCH_SIZE = 20;
 /** LLM 并发批次数 */
