@@ -348,7 +348,7 @@
   },
   {
     "job": "feed",
-    "at": "2026-09-06T15:24:52.319Z",
+    "at": "2026-09-06T15:51:33.023Z",
     "workers": [
       {
         "name": "zhipu",
@@ -363,11 +363,12 @@
       {
         "name": "agnes",
         "calls": 1,
-        "ok": 1,
+        "ok": 0,
         "err429": 0,
         "cooldowns": 0,
-        "otherErrors": 0,
-        "cooling": false
+        "otherErrors": 1,
+        "cooling": false,
+        "lastError": "Error: 503 No available channel for model agnes-2.0-flash under group default (distributor) (request id: 202609061530293247249641vaJzJwZ)"
       },
       {
         "name": "agnes#2",
@@ -377,45 +378,45 @@
         "cooldowns": 0,
         "otherErrors": 1,
         "cooling": false,
-        "lastError": "Error: Unexpected empty response from agnes"
+        "lastError": "Error: 401 无效的令牌，数据库查询出错，请联系管理员 (request id: 20260906153022929279959zP2CkYTK)"
       },
       {
         "name": "zhipu#2",
-        "calls": 4,
-        "ok": 0,
-        "err429": 4,
-        "cooldowns": 1,
+        "calls": 1,
+        "ok": 1,
+        "err429": 0,
+        "cooldowns": 0,
         "otherErrors": 0,
-        "cooling": false,
-        "lastError": "Error: 429 该模型当前访问量过大，请您稍后再试"
+        "cooling": false
       },
       {
         "name": "zhipu#3",
-        "calls": 1,
+        "calls": 4,
         "ok": 1,
-        "err429": 0,
-        "cooldowns": 0,
-        "otherErrors": 0,
-        "cooling": false
-      },
-      {
-        "name": "zhipu#4",
-        "calls": 1,
-        "ok": 1,
-        "err429": 0,
-        "cooldowns": 0,
-        "otherErrors": 0,
-        "cooling": false
-      },
-      {
-        "name": "zhipu#5",
-        "calls": 3,
-        "ok": 1,
-        "err429": 2,
+        "err429": 3,
         "cooldowns": 0,
         "otherErrors": 0,
         "cooling": false,
         "lastError": "Error: 429 该模型当前访问量过大，请您稍后再试"
+      },
+      {
+        "name": "zhipu#4",
+        "calls": 4,
+        "ok": 1,
+        "err429": 3,
+        "cooldowns": 0,
+        "otherErrors": 0,
+        "cooling": false,
+        "lastError": "Error: 429 该模型当前访问量过大，请您稍后再试"
+      },
+      {
+        "name": "zhipu#5",
+        "calls": 1,
+        "ok": 1,
+        "err429": 0,
+        "cooldowns": 0,
+        "otherErrors": 0,
+        "cooling": false
       },
       {
         "name": "groq",
@@ -425,7 +426,7 @@
         "cooldowns": 1,
         "otherErrors": 0,
         "cooling": false,
-        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 17"
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 28"
       },
       {
         "name": "groq#2",
@@ -438,12 +439,13 @@
       },
       {
         "name": "groq#3",
-        "calls": 1,
-        "ok": 1,
-        "err429": 0,
-        "cooldowns": 0,
+        "calls": 4,
+        "ok": 0,
+        "err429": 4,
+        "cooldowns": 1,
         "otherErrors": 0,
-        "cooling": false
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 32"
       },
       {
         "name": "groq#4",
@@ -456,12 +458,13 @@
       },
       {
         "name": "groq#5",
-        "calls": 1,
-        "ok": 1,
-        "err429": 0,
-        "cooldowns": 0,
+        "calls": 4,
+        "ok": 0,
+        "err429": 4,
+        "cooldowns": 1,
         "otherErrors": 0,
-        "cooling": false
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 32"
       },
       {
         "name": "groq#6",
@@ -471,7 +474,7 @@
         "cooldowns": 1,
         "otherErrors": 0,
         "cooling": false,
-        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 31"
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 15"
       },
       {
         "name": "groq#7",
@@ -502,13 +505,12 @@
       },
       {
         "name": "groq#10",
-        "calls": 3,
+        "calls": 1,
         "ok": 1,
-        "err429": 2,
+        "err429": 0,
         "cooldowns": 0,
         "otherErrors": 0,
-        "cooling": false,
-        "lastError": "Error: 429 Request too large for model `qwen/qwen3.8-27b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 2048. The "
+        "cooling": false
       },
       {
         "name": "gemini",
@@ -669,10 +671,10 @@
       },
       {
         "name": "openrouter",
-        "calls": 4,
-        "ok": 0,
-        "err429": 4,
-        "cooldowns": 1,
+        "calls": 2,
+        "ok": 1,
+        "err429": 1,
+        "cooldowns": 0,
         "otherErrors": 0,
         "cooling": false,
         "lastError": "Error: 429 Provider returned error"
@@ -689,17 +691,18 @@
       },
       {
         "name": "custom-modelscope#2",
-        "calls": 0,
+        "calls": 1,
         "ok": 0,
         "err429": 0,
         "cooldowns": 0,
-        "otherErrors": 0,
-        "cooling": false
+        "otherErrors": 1,
+        "cooling": false,
+        "lastError": "SyntaxError: Unexpected token 'o', \"tokens\":983\"... is not valid JSON"
       },
       {
         "name": "custom-spark",
-        "calls": 0,
-        "ok": 0,
+        "calls": 1,
+        "ok": 1,
         "err429": 0,
         "cooldowns": 0,
         "otherErrors": 0,
