@@ -42,6 +42,9 @@ jobs:
       - name: Run daily digest (fetch + digest；feed 由 feed job 接力)
         env:
           SPLIT_FEED: "1"
+          # 事件流观察员（P0，2026-09-06 栗子拍板）：旁路记录星动/新库，纯观察零算法介入
+          EVENTS_OBSERVER: "1"
+          EVENTS_BUDGET_MS: 1200000
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # 多 PAT 轮转（2026-09-06）：Search 30/min 与 core 5000/h 按 token 计，
           # 追加 token（逗号分隔）= N 倍抓取/刷新额度

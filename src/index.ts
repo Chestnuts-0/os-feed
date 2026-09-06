@@ -49,6 +49,7 @@ import { fetchHfData, type HfData } from "./hf.ts";
 import { fetchDevtoData, type DevtoData } from "./devto.ts";
 import { fetchLobstersData, type LobstersData } from "./lobsters.ts";
 import { loadConfig } from "./config.ts";
+import { startEventsObserver } from "./events.ts";
 import { toCstDateStr, toUtcStr } from "./date.ts";
 import { type Lang, MSG, ISSUE_LABELS, CLI_ISSUE_TITLE, OPENCLAW_ISSUE_TITLE } from "./i18n.ts";
 
@@ -315,6 +316,13 @@ async function main(): Promise<void> {
   const providerName = process.env["LLM_PROVIDER"] ?? "anthropic";
   console.log(`[${now.toISOString()}] Starting digest | provider: ${providerName}`);
 
+  // 事件流观察员（P0，2026-09-06 栗子拍板）：与主流程并行的旁路记录，纯观察零算法介入。
+  // 预算默认 20min；主流程结束 stop() → ≤60s 内收尾落盘 data/events-momentum.json。
+  const eventsObserver =
+    process.env["EVENTS_OBSERVER"] === "1"
+      ? startEventsObserver(Number(process.env["EVENTS_BUDGET_MS"] ?? 20 * 60_000))
+      : undefined;
+
   // 1. Fetch all data in parallel
   const webState = loadWebState();
   const {
@@ -540,6 +548,12 @@ async function main(): Promise<void> {
 
   // 编队健康落盘（每 worker 成功/429/冷却计数 → data/fleet-health.json，随 data/ 入仓）
   recordFleetHealth("digest");
+
+  // 事件流观察员收尾（stop → ≤60s 内落盘；等待上限 90s，防个别轮询挂死拖住整体）
+  if (eventsObserver) {
+    eventsObserver.stop();
+    await Promise.race([eventsObserver.done, new Promise((r) => setTimeout(r, 90_000))]);
+  }
 
   console.log("Done!");
 }
