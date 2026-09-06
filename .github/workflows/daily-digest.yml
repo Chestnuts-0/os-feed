@@ -42,6 +42,9 @@ jobs:
         env:
           SPLIT_FEED: "1"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # 多 PAT 轮转（2026-09-06）：Search 30/min 与 core 5000/h 按 token 计，
+          # 追加 token（逗号分隔）= N 倍抓取/刷新额度
+          EXTRA_GITHUB_PATS: ${{ secrets.EXTRA_GITHUB_PATS }}
           LLM_PROVIDER: zhipu
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
           # 免费编队并行池（2026-09-05 按 RPM 墙开满 + 舰队扩容排雷）：名单同一项写几遍=
@@ -165,6 +168,8 @@ jobs:
       - name: Run feed generation + LLM scoring
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # 多 PAT 轮转（星数刷新 core 额度同享，与 digest job 同步维护）
+          EXTRA_GITHUB_PATS: ${{ secrets.EXTRA_GITHUB_PATS }}
           LLM_PROVIDER: zhipu
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
           # 编队名单与 digest job 同一份（改名记得两边同步）；评分是本 job 的主活

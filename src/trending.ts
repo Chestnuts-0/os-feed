@@ -3,6 +3,8 @@
  * Multi-language trending + batched topic search for maximum coverage.
  */
 
+import { nextApiToken } from "./github-tokens.ts";
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -175,13 +177,6 @@ async function searchAiRepos(
   sinceDate: string,
   topics: { q: string; label: string; quota?: number }[] = SEARCH_QUERIES,
 ): Promise<SearchRepo[]> {
-  const token = process.env["GITHUB_TOKEN"] ?? "";
-  const headers: Record<string, string> = {
-    Accept: "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-  };
-  if (token) headers["Authorization"] = `Bearer ${token}`;
-
   const seen = new Set<string>();
   const all: SearchRepo[] = [];
 
@@ -195,6 +190,13 @@ async function searchAiRepos(
           const query = `${q}+pushed:>${sinceDate}&sort=stars&order=desc`;
           const perPage = quota ?? 30;
           const url = `https://api.github.com/search/repositories?q=${query}&per_page=${perPage}`;
+          // 多 PAT 轮转（2026-09-06）：Search 30/min 按 token 计，N 个 token=N 倍额度，按请求取号
+          const token = nextApiToken();
+          const headers: Record<string, string> = {
+            Accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+          };
+          if (token) headers["Authorization"] = `Bearer ${token}`;
           const resp = await fetch(url, { headers });
           if (!resp.ok) {
             console.error(`  [trending/search] "${label}": HTTP ${resp.status}`);
@@ -245,13 +247,6 @@ async function searchAiRepos(
  * 保证 trending 数据源不会因为 HTML 结构变化/反爬而完全为空。
  */
 async function fetchTrendingFallback(): Promise<TrendingRepo[]> {
-  const token = process.env["GITHUB_TOKEN"] ?? "";
-  const headers: Record<string, string> = {
-    Accept: "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-  };
-  if (token) headers["Authorization"] = `Bearer ${token}`;
-
   const queries = [
     { q: "topic:ai pushed:>2026-06-01", sort: "stars" },
     { q: "topic:llm pushed:>2026-06-01", sort: "stars" },
@@ -263,6 +258,13 @@ async function fetchTrendingFallback(): Promise<TrendingRepo[]> {
   for (const { q, sort } of queries) {
     try {
       const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(q)}&sort=${sort}&order=desc&per_page=30`;
+      // 多 PAT 轮转（2026-09-06）：Search 限额按 token 计，按请求取号
+      const token = nextApiToken();
+      const headers: Record<string, string> = {
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
       const resp = await fetch(url, { headers });
       if (!resp.ok) {
         console.error(`  [trending/fallback] HTTP ${resp.status}`);

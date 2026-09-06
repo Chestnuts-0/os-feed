@@ -26,6 +26,7 @@ import {
   type Phase1Score,
 } from "./prompts.ts";
 import { loadPhase1Scores, appendPhase1Scores, selectForProse, type SelectionInput } from "./two-phase.ts";
+import { nextApiToken, getApiTokens } from "../github-tokens.ts";
 import {
   loadProfile,
   saveProfile,
@@ -376,16 +377,11 @@ async function refreshStarsRoundRobin(
   } catch {
     cursor = 0;
   }
-  const token = process.env["GITHUB_TOKEN"] ?? "";
-  const headers: Record<string, string> = {
-    Accept: "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-  };
-  if (token) headers["Authorization"] = `Bearer ${token}`;
-
   const results = new Map<string, number>();
   let refreshed = 0;
   let scanned = 0;
+  /** 连续限流计数：单 token 限流换池内下一个继续；连续打满全池才收工（多 PAT 轮转 2026-09-06） */
+  let limitStreak = 0;
   const total = repos.length;
   const queue: { repo: string; idx: number }[] = [];
 
@@ -411,14 +407,29 @@ async function refreshStarsRoundRobin(
       const item = queue[qi++]!;
       scanned++;
       try {
+        // 多 PAT 轮转（2026-09-06）：core 5000/h 按 token 计，按请求取号
+        const token = nextApiToken();
+        const headers: Record<string, string> = {
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+        };
+        if (token) headers["Authorization"] = `Bearer ${token}`;
         const resp = await fetch(`https://api.github.com/repos/${item.repo}`, { headers });
         if (!resp.ok) {
           if (resp.status === 403 || resp.status === 429) {
-            console.error(`  [feed/refresh] rate limited at ${item.repo}, stop for today`);
-            break;
+            limitStreak++;
+            if (limitStreak >= Math.max(1, getApiTokens().length)) {
+              console.error(
+                `  [feed/refresh] all ${getApiTokens().length} token(s) rate limited at ${item.repo}, stop for today`,
+              );
+              break;
+            }
+            console.error(`  [feed/refresh] token rate limited at ${item.repo}, rotating`);
+            continue;
           }
           continue;
         }
+        limitStreak = 0;
         const d = (await resp.json()) as { stargazers_count?: number; created_at?: string };
         const newStars = d.stargazers_count ?? 0;
         const m = repoMap.get(item.repo);
