@@ -1,6 +1,6 @@
 # AI CLI Tools Community Digest 2026-09-06
 
-> Generated: 2026-09-05 16:44 UTC | Tools covered: 9
+> Generated: 2026-09-06 01:53 UTC | Tools covered: 9
 
 - [Claude Code](https://github.com/anthropics/claude-code)
 - [OpenAI Codex](https://github.com/openai/codex)
@@ -30,55 +30,94 @@
 
 > Source: [anthropics/skills](https://github.com/anthropics/skills)
 
-### Claude Code Skills Community Highlight
-
-#### Top Skills Ranking
-1 1
---Anthoded Type Skll ill (PR #5 5draft   0  - ** An typographic correctionill la typographic issues problems in AI-generated documents. A Its includes issues on hyphenation, orphan, and numbering alignement. The skill is currently in draft and can be viewed via [PR #5 4][1 ..
- " - -SCNet-hpc (PR # #is 1 h mergedrd  is | 1  Draft  - Is a skill for operating SCNet-hPC clusters through profile-based SSH and Srm workflows. Currently, it aims to add address to achieve an isis in se in the development and - Lgit.L  eais [is # is PR in] [is [ #7is [ist0] [ PR#is 1pe  is isis].
-  " -
-"isCommunity Demand Trends
-  -
-    -   -isis Workflo Automation  - currently seen theis mostanticipated new newdirectionill direction is areal..isis.isis isisisisis isisisisis isisis isisis a requestis  isisitisis isisisis  isisisis  isisisisis isisisisi  asisisisisls isisisisis isisis isisis isis aismis  isisisis isisis isis isis is isis is is isis.
-  "is
-High-Potential Cental Pending Skills
-  " -
-is  isisisisisisis iisisisis isisisis isisis isisis(is be  isisisisis  isisisisingis isis isis is  isis isis isis isis is ist isis isisisis isis isis isis isis isis isis isis isisis is.
-  "is
-
+⚠️ Skills summary generation failed.
 
 ---
 
 ### Today's Highlights
-- Added an "Organization policy" line line in `/status` and `cla doctor`` if can now be be indicted in caseproxy endpoints.
-- Enabled `bashOutputMaxChars` and `taskOutputMaxChars` configurations, which can limit the maximum output lengths for bash and task tasks execution respectively.
+
+- **Function Hooks**: Enhanced plugin functionality is openeded proposed (anthropics/claoned-code#ono1884)).
+- **Auto Click to Read** - A Bug Fix:: Windows idle sessions now handle memory-performance issues (anthropics/claud-code#9rutel39).
 
 ### Releases
-- No new releases were announceded.
+
+- **No New Newes releases reported (None)
 
 ### Hot Issues
-1. **[Bug] Claude Code Desktop fails to relaunch on Windows due to orphaned process (Issue #446666)
-   - A Users report encounteringing an issue delay in relaunching the app Desktop app due an orphan *rnededdprocess that refuses theappX container. This issue can ledd导 users to repeatedly uplaunch failures" unless manually killed theappX container.
-- # [Feature Request] Function Hooks allow plugins to be b* more powerful* (Issue # 118 688)
- -- The community is is providing feedback on an proposal to overhaul the plugin syste* allowing functions to be plugins a more flexible and powerful API. This will would ind plugin de development while permitting more direct control f* integration** with the CL*DE envir.
+
+- ****Function Hooks & Plugin Enhancements**: Thread for improving more flexible plugins and Function Hooks (anthropipsis/claon-code#onda**188888).
+- ** **Windows Launch Issue**: Frequent crashes on Windows due orphan Silo job job (anthropipsis/claõed-code#d331n1653).
 
 ### Key PRs
-- # [Fix] glob pattern for depth paths (PRR #7 779) - Addressededclaration where in security checks enforcement, where user `** Issue matches anything must in depth ur; the fix now delegates to fnmatch to ensure matches any literal `/.
+
+- **Fix Security Paths**: Address glob patterns to avoid path breaches (anthropomp/claudden#77'79).
+- **Abort First Error**: Prevent validation error by early stopping (anthroomp/claudden#89404).
 
 ### Feature Request Trends
-- Users are are longing for more controlful features within such C* plugin to (Issue #1 11  7): introduce new)enhancement request for more flexible and powerful plugin interfaces. Thisi includes o allow plugins to interact directly on a parameterized model while still being safe by side on side-effect tracking.
-- ** There寻求更加灵活和强大的插件接口，允许插件实现更复杂的逻辑并安全处理，提高插件开发和集成的的能力。
+
+- **Configurable Auto-Memory Reminders (MEMORY): Adjust load threshold as users settings (anthropipsis/claoncen#75147).
+- ** **IDE-Specific Improvements**: VS requested for more tailored development environment fixes (anthropipp/claoncen#982184).
 
 ### Developer Pain Points
-- **Launch Failure Post-Upgrade**: Several users frequently reportencount encountering launch issues whereex... an outdated container silo due an orphan process (Issue #73167)): This issue本钱扰 users to manually delete the old app appX container silo to successfully launch the new version.
-- **Bash-First Command Silent Disables Nested CL*DE.md Files | Users encounter regularly encountered issues ile where the auto-mode cla* generatesingt silently disallow c-cles nested CL*DE.md files. Thise often ledads to productivity issues be undebugging directly in browsing through nested runfile documentation directories.
+
+- ** **formance and stability shortcomings on Windows (se onithesis/claonase#9rut mug31,).
+- **Resource Management**: Re]ease of in adjusting and management token budgets on cloud platforms (anthropia/claoncen#8 1uy98).
 
 </details>
 
 <details>
 <summary><strong>OpenAI Codex</strong> — <a href="https://github.com/openai/codex">openai/codex</a></summary>
 
-⚠️ Summary generation failed.
+**AIéné Cod Coddin** Summary for � *December 12- on  on
+
+###. **Highlights's Highlights**
+- The most last last most week weeks in GitHub introduced for Open Codex has has has big for a variety focused;
+  highlighted:
+  - Recursive high in handling the `/rewind` command flow, to restore the chat context and T, model code copies.
+  - the important of incapability lessons in the Browser REPL on W SL-Winde environental setups
+  - Complicated def in remote database connection f f] on oning the MacGPT macOS app,.
+  - Theade of on OS-level mis in the $ pet overlay, due failure to drought original incorrectly for
+   updated codexey
+  -  work
+
+22. **Releases**
+ - No notable new releasesisel in
+is currently availableed
+is1
+
+ \.Hot Issues\:
+  - **[Bug: Insufficient wsow with `/ rewind`] *提
+  - **Bug: Desktop Windows tagement unable to update the local paginated
+  -  **tsiisno updates on
+  is thiss ts
+
+ \.Pull Requestsis
+  - [**Native Windows  is used  to d
+onne toWindows build through ingis through (PReel #ode
+one
+
+ \ \Feature R
+  - ## https for a
+  - Autoaage
+  - 1Note
+
+ \ \ Deel
+Pain Pain pints
+  - Continuous **fushing t
+  - Recurrent issues of t
+  - Even C
+  is e
+  - Un
+
+## Above Gutorials
+-Generated byf from GitHub com/openai/codex
+  https on
+  on
+  is
+
+GitHub Issues URL: [dhttpsd6a/c odex
+is
+
 
 </details>
 
