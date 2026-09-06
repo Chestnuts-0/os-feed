@@ -2,8 +2,9 @@ name: Daily Agents Radar
 
 on:
   schedule:
-    # 00:00 UTC = 08:00 CST (UTC+8)
-    - cron: "0 0 * * *"
+    # 20:00 UTC = 04:00 CST（栗子 2026-09-06 拍板：挪到国内深夜，智谱/硅基最空，
+    # 免费源有效健康率最高；原 00:00 UTC=08:00 CST 撞智谱工作日早高峰，实测 87% 429）
+    - cron: "0 20 * * *"
   workflow_dispatch:
 
 permissions:
