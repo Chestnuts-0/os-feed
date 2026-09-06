@@ -1,242 +1,255 @@
 {
-  "windowStart": "2026-09-06T08:17:08.961Z",
-  "windowEnd": "2026-09-06T08:32:28.629Z",
-  "polls": 30,
-  "eventsSeen": 2966,
-  "watchEvents": 118,
-  "createEvents": 31,
+  "windowStart": "2026-09-06T21:50:37.562Z",
+  "windowEnd": "2026-09-06T22:03:08.210Z",
+  "polls": 26,
+  "eventsSeen": 2582,
+  "watchEvents": 66,
+  "createEvents": 43,
   "topWatched": [
     {
-      "repo": "Nicholas2519/python-cloudflare-turnstile",
-      "stars": 3
-    },
-    {
-      "repo": "WorldFlowAI/everything-claude-code",
-      "stars": 2
-    },
-    {
-      "repo": "ashemag/human-atlas",
-      "stars": 2
-    },
-    {
-      "repo": "blader/humanizer",
-      "stars": 2
-    },
-    {
-      "repo": "debpalash/VoiceStudio",
-      "stars": 2
-    },
-    {
-      "repo": "avansaber/avansaber-php-reddit-api",
-      "stars": 2
-    },
-    {
-      "repo": "Thurnreiter/Cache",
+      "repo": "Danilaa1/cuelume",
       "stars": 1
     },
     {
-      "repo": "Ekuesky/Monitoring-QG",
+      "repo": "KevinLiss/ApeAdmin",
       "stars": 1
     },
     {
-      "repo": "zsyggg/paper-craft-skills",
+      "repo": "openai/skills",
       "stars": 1
     },
     {
-      "repo": "AlexsJones/llmfit",
+      "repo": "BohemiaInteractive/CWR",
       "stars": 1
     },
     {
-      "repo": "LauraRozier/TBU-Named-Pipe",
+      "repo": "NVIDIA/SkillSpector",
       "stars": 1
     },
     {
-      "repo": "y1005540-svg/zesto.vendor-penal-",
+      "repo": "ImL1s/telltale",
       "stars": 1
     },
     {
-      "repo": "gavischneider/awesome-llm-wiki",
+      "repo": "mohamed-sayed-elmahdy/Frontend-Forge-Platform",
       "stars": 1
     },
     {
-      "repo": "ElPatoDelCuak/CustomLab_API",
+      "repo": "trekhleb/javascript-algorithms",
       "stars": 1
     },
     {
-      "repo": "FreeXR/eureka_panther-adreno-gpu-exploit-1",
+      "repo": "JetBrains/go-modern-guidelines",
       "stars": 1
     },
     {
-      "repo": "msitarzewski/agency-agents",
+      "repo": "elliothux/open-compute",
       "stars": 1
     },
     {
-      "repo": "TencentCloud/TencentDB-Agent-Memory",
+      "repo": "cloud-in-a-bottle/cloud-in-a-bottle",
       "stars": 1
     },
     {
-      "repo": "sandiiarov/skill-creator",
+      "repo": "zoncabe/engine64",
       "stars": 1
     },
     {
-      "repo": "wzshiming/anyproxy",
+      "repo": "luli395/android_everything",
       "stars": 1
     },
     {
-      "repo": "nixfred/infomarchy",
+      "repo": "lignertys/reddit-research-skills",
       "stars": 1
     },
     {
-      "repo": "Ebullioscopic/Atoll",
+      "repo": "touchlab/Kermit",
       "stars": 1
     },
     {
-      "repo": "drewmt/lineweb-social",
+      "repo": "naravid19/MHDDoS-GUI",
       "stars": 1
     },
     {
-      "repo": "NousResearch/hermes-agent",
+      "repo": "bugsNburgers/GitVital",
       "stars": 1
     },
     {
-      "repo": "SAWARATSUKI/KawaiiLogos",
+      "repo": "expo/expo",
       "stars": 1
     },
     {
-      "repo": "vllm-project/vllm",
+      "repo": "dstotijn/hetty",
       "stars": 1
     },
     {
-      "repo": "mirage-project/mirage",
+      "repo": "MangoLim3/FinancialAdvisor",
       "stars": 1
     },
     {
-      "repo": "headroomlabs-ai/headroom",
+      "repo": "KINDdom-m3TA/open-science-tmw",
       "stars": 1
     },
     {
-      "repo": "saurabh-saini/OmniStream",
+      "repo": "Nabu-md/Typescript-Nabu",
       "stars": 1
     },
     {
-      "repo": "saurabh-saini/portfolio",
+      "repo": "element-hq/ess-helm",
       "stars": 1
     },
     {
-      "repo": "PBH-BTN/PeerBanHelper",
+      "repo": "phemiz/azeez-project",
       "stars": 1
     },
     {
-      "repo": "southleft/figma-console-mcp",
+      "repo": "b13/ai-label",
       "stars": 1
     },
     {
-      "repo": "petarzarkov/dunx",
+      "repo": "element-hq/element-meta",
       "stars": 1
     },
     {
-      "repo": "humanlayer/skills",
+      "repo": "MadsLorentzen/ai-job-search",
       "stars": 1
     },
     {
-      "repo": "mgallese3-crypto/kitsune",
+      "repo": "satyamisme/OpenMenu",
       "stars": 1
     },
     {
-      "repo": "BraveOPotato/FckSignups",
+      "repo": "erayack/avery",
       "stars": 1
     },
     {
-      "repo": "onlook-dev/onlook",
+      "repo": "OpenIPC/firmware",
       "stars": 1
     },
     {
-      "repo": "ShadowArcanist/netviz",
+      "repo": "passbolt/passbolt_api",
       "stars": 1
     },
     {
-      "repo": "rasbt/LLMs-from-scratch",
+      "repo": "cataclysmbn/Cataclysm-BN",
       "stars": 1
     },
     {
-      "repo": "go-task/task",
+      "repo": "ruvnet/ruflo",
       "stars": 1
     },
     {
-      "repo": "rfjakob/earlyoom",
+      "repo": "JimmXinu/FanFicFare",
       "stars": 1
     },
     {
-      "repo": "stdlib-js/stdlib",
+      "repo": "sliverbackz/Ez-RASP",
       "stars": 1
     },
     {
-      "repo": "Leonard8818/-Delta-Force-Graphics-Optimizer",
+      "repo": "codecrafters-io/build-your-own-x",
       "stars": 1
     },
     {
-      "repo": "evangelosvlachos96-dotcom/vendor-integration-platform",
+      "repo": "Cleanuparr/Cleanuparr",
       "stars": 1
     },
     {
-      "repo": "The-AI-Republic/pi-dash",
+      "repo": "garrytan/gstack",
       "stars": 1
     },
     {
-      "repo": "MisterBooo/llm-interview-questions",
+      "repo": "google-research/timesfm",
       "stars": 1
     },
     {
-      "repo": "Sanjiv215/VIGILO-Python-Package",
+      "repo": "servo/servo",
       "stars": 1
     },
     {
-      "repo": "ganeshmshetty/openclip",
+      "repo": "monochrome-music/monochrome",
       "stars": 1
     },
     {
-      "repo": "521xueweihan/HelloGitHub",
+      "repo": "unplugin/unplugin-icons",
       "stars": 1
     },
     {
-      "repo": "waydroid/waydroid",
+      "repo": "darkzOGx/youtube-automation-agent",
       "stars": 1
     },
     {
-      "repo": "public-apis/public-apis",
+      "repo": "mvanhorn/last30days-skill",
+      "stars": 1
+    },
+    {
+      "repo": "EarthboundPromoter/Sleeptalker",
+      "stars": 1
+    },
+    {
+      "repo": "awesome-selfhosted/awesome-selfhosted",
+      "stars": 1
+    },
+    {
+      "repo": "hasscc/tianqi",
+      "stars": 1
+    },
+    {
+      "repo": "iOfficeAI/OfficeCLI",
+      "stars": 1
+    },
+    {
+      "repo": "fzakaria/trynix",
+      "stars": 1
+    },
+    {
+      "repo": "yewstack/yew",
       "stars": 1
     }
   ],
   "newRepos": [
-    "jiying2007/audio-pipeline",
-    "abc885277-dotcom/CONTENT-CREATER",
-    "nathapp-io/nax-ai",
-    "SrDicov/z-repo",
-    "songkaili24/loganalyzer",
-    "DataDog/sdlc-gitops-sample-stack",
-    "lubindanilo/investment-website",
-    "Olbrasoft/sdilejcz",
-    "niko86/laterite",
-    "EliasHir/Movie-app-SC",
-    "Viola-orientalis/book-eating-lion-final",
-    "nextatlas20/My-Homepage",
-    "jsoyer/HivePilot",
-    "antst/dashi",
-    "Netcracker/pgskipper-operator",
-    "xb18/rtk",
-    "benderricardo4674/aczmlf",
-    "anshache/mibqxz",
-    "1nwo/gzzdvm",
-    "dolphindevelopments/orca-run-api",
-    "vikasprogrammer/threejs-procedural-dungeon",
-    "leptris/yeptris-ruby",
-    "exoplatform/ecms",
-    "lisa-method/physics-attractor-dynamics",
-    "xb18/swagger-ui",
-    "LasceUCR/lasce",
-    "ch2ziem/kkhzfb",
-    "srijanmondal382-a11y/ParoShield",
-    "Jassi220205/Out_Box",
-    "zprintprohk-rgb/zprintpro"
+    "GeekSquad323/Payment-Confirmed-9mx2kmov",
+    "rcpch/digital-growth-charts-react-component-library",
+    "poindexter12/baude",
+    "dboles99/amplified-futures-vcv",
+    "merge-demo/mergequeue-bazel",
+    "celbrilum/chrono-tera-693",
+    "shun8686/sglang",
+    "alexandre-a-marinho/app_carteira",
+    "MidHun0720/STEP-SEM3-Week2-Practice",
+    "shipmate-oss/mckbrfofpm",
+    "CadburyAtoms/Skilltrees",
+    "fardavide/Aura",
+    "routhjim/llama.cpp-lab",
+    "rkstu/compliance-fabrication-cot",
+    "pradeep-verma-dev/skill-outcome-front",
+    "rindiqella-code/Assist0239-tnqt1m4b",
+    "woahwhattheheck/mova-store",
+    "soenneker/soenneker.blazor.tomselect",
+    "creamnight0/streamvault",
+    "andre1ws/db-cvetok-garna",
+    "ceph/ceph-cm-ansible",
+    "QuantStrategyLab/QuantPlatformKit",
+    "s243a/UnifyWeaver",
+    "dgem/ipace-owners",
+    "refaqt/qolab",
+    "CodeBambi/Conditioning-Control-Panel---CSharp-WPF",
+    "objectstack-ai/objectstack",
+    "tnakamura/TailwindUSS",
+    "igas39booer/vhruyp",
+    "cyberdudebivash-pvt-ltd/cyberdudebivash-blog",
+    "cafepromenade/UniGetUI",
+    "Eviive/nas-argocd-infrastructure",
+    "openagentemail/openagentemail",
+    "rityoldie005/xxhfqp",
+    "mac20777/nlpm",
+    "mstan/recomp-ui",
+    "contashepo-create/logistics-web",
+    "r-ryantm/nixpkgs",
+    "Danpazexe/pull-shark",
+    "programadorisgod/pm2-view",
+    "Shadyelsawy536/cafe-website",
+    "MartinZ2024/Aprendizaje_automatico",
+    "DanielLavrushin/DLSS5-Swapper"
   ]
 }

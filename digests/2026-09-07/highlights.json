@@ -1,0 +1,74 @@
+{
+  "zh": {
+    "ai-cli": [
+      "Windows 桌面端宠物点击穿透问题频发",
+      "背景轮询 Token 浪费引发 39 条关注",
+      "Worktree 管理和语音播放基础设施快速迭代",
+      "多起 Windows 浮动宠物 UI Bug 报告",
+      "Token 轮询导致长时间后台任务消耗配额",
+      "Claude Code Skills 摘要生成失败"
+    ],
+    "ai-agents": [
+      "OpenClaw 生态活跃度报告生成失败",
+      "OpenClaw 项目深度报告生成失败",
+      "NanoBot 摘要生成失败",
+      "Hermes Agent 摘要生成失败",
+      "PicoClaw 多模态 QQ 附件解析支持",
+      "PicoClaw 本地附件上传功能已合并"
+    ],
+    "ai-trending": [
+      "AI 开源趋势报告生成失败",
+      "GitHub Trending 数据源访问失败"
+    ],
+    "ai-community": [
+      "团队删掉向量数据库改用 Postgres",
+      "Token 预算框架解决 Agent 成本失控",
+      "Agent 需要评估循环而非更好提示词",
+      "Agent 生产化需应用用户 RBAC 权限",
+      "n8n 自动生成工作流引发安全风险",
+      "ARC-AGI 基准测试花费 67 美分得分 44%"
+    ]
+  },
+  "en": {
+    "ai-cli": [
+      "Claude Code v2.1.263 released with stability fixes",
+      "Community fixing Windows path normalization issues",
+      "Subagent token consumption blowups reported",
+      "Context auto-compaction causing performance thrashing",
+      "Hot Issue: Instantly hitting Max subscription limits",
+      "Claude Code Skills summary generation failed"
+    ],
+    "ai-agents": [
+      "OpenClaw ecosystem sees 500 Issues & 500 PRs updated",
+      "Top issues focus on update regressions and startup failures",
+      "Windows gateway start failures and macOS launchd loops reported",
+      "High stability risk due to volume of P0/P1 critical bugs",
+      "213 PRs merged in last 24 hours",
+      "Strong development velocity despite elevated stability concerns"
+    ],
+    "ai-hn": [
+      "An alien mind is about to arrive at Earth",
+      "GPT-6 Astra demonstrated on robot arms",
+      "View inside OpenAI Research Acceleration",
+      "You're paying for Claude's thinking but not getting it",
+      "The leaked audit exposes OpenAI's real financial crisis",
+      "Meet Claude: ABC's new regional cadet journalist"
+    ],
+    "ai-hf": [
+      "Qwen3.8-27B dominates downloads with 6.1M+",
+      "DeepSeek-V4 Flash-Vision Exp leads weekly likes",
+      "Google timesfm 3.0 leads non-language models",
+      "MiniMax-H3 and LTX-2.5 drive video generation",
+      "GLM-5.3 Flash brings fast multimodal inference",
+      "Uncensored Qwen variants gain community traction"
+    ],
+    "ai-community": [
+      "We deleted our vector database for Postgres",
+      "Postgres proved faster than specialized vector DBs",
+      "Rebuilt RAG pipeline without LangChain",
+      "Agents need evaluation loops, not better prompts",
+      "Postgres handles RAG needs better than vector DBs",
+      "Manual overhead introduced after dropping frameworks"
+    ]
+  }
+}
