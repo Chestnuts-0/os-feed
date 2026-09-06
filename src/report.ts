@@ -24,6 +24,10 @@ import { type LlmProvider, createProvider } from "./providers/index.ts";
 const MAX_RETRIES = 3;
 const RETRY_BASE_MS = 30_000; // 30 s, 60 s, 120 s — 免费模型限流为分钟级窗口（智谱 1305 实测），15s 级退避盖不住
 const COOLDOWN_MS = 5 * 60_000; // 429 重试拉满后该源冷却 5 分钟，期间请求分摊给其余源，到期自动回归轮转
+/** 单次调用跨 worker 轮转的总时限：全队饱和时逐 worker 退避（30+60+120s+冷却 ≈ 3.5min/worker），
+ *  36 worker 轮完要 ~2h，远超 90min 作业窗——round1 groq 429 风暴空转 83min 被杀零落盘之鉴（GT-0906-01）。
+ *  到点抛普通错误交上层 per-batch/per-repo 兜底（进 pending-retry 下轮自动补评），轮时长上界锁回 ≤20 分钟。 */
+const CALL_DEADLINE_MS = Number(process.env["LLM_CALL_DEADLINE_MS"] ?? 360_000); // 默认 6 min
 
 /** 备源环境变量名：逗号分隔 provider 名单，与主源一起并行分摊负载（CI 配 LLM_FALLBACKS=agnes） */
 const FALLBACK_ENV = "LLM_FALLBACKS";
@@ -113,11 +117,12 @@ function makeWorker(provider: LlmProvider): LlmWorker {
 export function createLlmCaller(
   primary: LlmProvider,
   fallbackFactories: Array<() => LlmProvider>,
-  opts?: { retryBaseMs?: number; maxRetries?: number; cooldownMs?: number },
+  opts?: { retryBaseMs?: number; maxRetries?: number; cooldownMs?: number; callDeadlineMs?: number },
 ): LlmCallerWithHealth {
   const retryBaseMs = opts?.retryBaseMs ?? RETRY_BASE_MS;
   const maxRetries = opts?.maxRetries ?? MAX_RETRIES;
   const cooldownMs = opts?.cooldownMs ?? COOLDOWN_MS;
+  const callDeadlineMs = opts?.callDeadlineMs ?? CALL_DEADLINE_MS;
 
   // 主源立即入池；备源实例化失败（如 key 缺失）跳过该源，不影响其余 worker
   const workers: LlmWorker[] = [];
@@ -200,7 +205,15 @@ export function createLlmCaller(
   const caller = async function callLlm(prompt: string, maxTokens = LLM_TOKENS_DEFAULT): Promise<string> {
     let lastErr: unknown;
     const tried = new Set<LlmWorker>();
+    const start = Date.now();
     for (;;) {
+      if (Date.now() - start > callDeadlineMs) {
+        // 总时限到：不再乐观重试（全队饱和时换 worker 也只会继续 429）。
+        // 抛普通错误（非 429）→ 直接上抛，交上层 per-batch/per-repo 兜底
+        throw new Error(
+          `llm call deadline exceeded after ${callDeadlineMs}ms across ${tried.size} worker(s)`,
+        );
+      }
       const w = pickWorker();
       if (tried.has(w)) throw lastErr; // 所有 worker 都试过仍 429 → 抛给上层（safeLlm/scoreBatched 兜底）
       tried.add(w);

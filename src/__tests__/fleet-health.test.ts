@@ -100,6 +100,27 @@ describe("createLlmCaller fleetHealth 编队健康统计", () => {
     expect(rows.find((r) => r.name === "bad")?.lastError).toContain("boom");
   });
 
+  it("跨 worker 轮转总时限：全队持续 429 时到点抛 deadline 错误，不再乐观重试", async () => {
+    // GT-0906-01 连环刀：round1 groq 429 风暴中逐 worker 退避轮转 83min 未终态、被作业窗杀死。
+    // 时限语义：callLlm 从首次尝试起计时，超 callDeadlineMs 抛普通错误（非 429），交上层兜底。
+    const a = fakeProvider("a", async () => {
+      throw err429();
+    });
+    const b = fakeProvider("b", async () => {
+      throw err429();
+    });
+    const caller = createLlmCaller(a, [() => b], {
+      retryBaseMs: 30, // 单 worker 尝试 ≈ 30ms，两个 worker 轮完 ≈ 60ms > 时限 → 时限先触发
+      maxRetries: 1,
+      cooldownMs: 1,
+      callDeadlineMs: 50,
+    });
+    await expect(caller("p", 10)).rejects.toThrow(/deadline exceeded/);
+    // 到点即停：两个 worker 都被试过但不会无限轮转（调用数有界）
+    const rows = caller.fleetHealth!();
+    expect(rows.find((r) => r.name === "a")!.err429).toBeGreaterThan(0);
+  });
+
   it("同名多 worker 标签加 #N 序号（编队 groq@模型A / groq@模型B 区分统计）", () => {
     const g1 = fakeProvider("groq");
     const g2 = fakeProvider("groq");

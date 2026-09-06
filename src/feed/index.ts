@@ -61,6 +61,10 @@ const MAX_LLM_SCORE_REPOS = Number(process.env["SCREEN_CAP"] ?? 3000);
  *  全文案批是慢批）。400 张 = 80 批 ÷ 32 并发；栗子铁律不变：进 feed 的卡必须全套文案。
  *  K 就是「每天新增完整卡」的产量旋钮，编队扩容后先回 800 再往上。 */
 const PROSE_TOP_K = Number(process.env["PROSE_TOP_K"] ?? 400);
+/** 评分段总预算（GT-0906-01 连环刀）：海选+精评+逐仓重评共用一条墙钟红线，从海选批跑开始计时。
+ *  到线后 retryScoring 直接放弃剩余仓库 → failedThisRound → pending-retry 下轮自动补评。
+ *  与 callLlm 的单调用时限（LLM_CALL_DEADLINE_MS）配合，把滴灌小轮时长上界锁回 ≤20 分钟。 */
+const SCORING_BUDGET_MS = Number(process.env["SCORING_BUDGET_MS"] ?? 900_000); // 默认 15 min
 /** 海选批大小：输出极短（~50 token），20 库/批摊薄 prompt 开销 */
 const PHASE1_BATCH_SIZE = 20;
 /** LLM 并发批次数 */
@@ -722,7 +726,11 @@ async function phase1Batched(repos: RepoForScoring[], aiInterestsText: string): 
   return results;
 }
 
-async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): Promise<ScoringResult[]> {
+async function scoreBatched(
+  repos: RepoForScoring[],
+  aiInterestsText: string,
+  scoringDeadline = Number.POSITIVE_INFINITY,
+): Promise<ScoringResult[]> {
   const results: ScoringResult[] = [];
   const batches: RepoForScoring[][] = [];
   for (let i = 0; i < repos.length; i += BATCH_SIZE) {
@@ -749,7 +757,7 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
             console.log(
               `  [feed/scoring] batch ${batchNum}/${batches.length}: ${parsed.length}/${batch.length} scored, retrying ${missing.length} missing...`,
             );
-            const retried = await retryScoring(missing, aiInterestsText, 1, false);
+            const retried = await retryScoring(missing, aiInterestsText, 1, false, scoringDeadline);
             return [...parsed, ...retried];
           }
           console.log(
@@ -772,16 +780,27 @@ async function scoreBatched(repos: RepoForScoring[], aiInterestsText: string): P
 
 /** 对缺失/不达标的 repo 逐个重试 LLM 评分（单 repo prompt，输出短，成功率更高）。
  *  checkLength=true 时每个 repo 最多重试 maxAttempts 次，每次校验长度（reasonCn effLen≥100 且 summaryCn 20-35 字），达标即用；
- *  checkLength=false 用于批量解析缺失补评（长度校验统一在组装循环做）。 */
+ *  checkLength=false 用于批量解析缺失补评（长度校验统一在组装循环做）。
+ *  deadline（GT-0906-01 连环刀）：评分段墙钟红线，到线即停——剩余仓库由调用方记入
+ *  failedThisRound → pending-retry 下轮自动补评，绝不阻塞轮次（组装循环逐仓调用是串行的，
+ *  不设红线的话饱和时段 60 仓 × 3 次重评能把轮次拖过作业窗）。 */
 async function retryScoring(
   repos: RepoForScoring[],
   aiInterestsText: string,
   maxAttempts = 3,
   checkLength = true,
+  deadline = Number.POSITIVE_INFINITY,
 ): Promise<ScoringResult[]> {
   const results: ScoringResult[] = [];
   for (const repo of repos) {
+    if (Date.now() > deadline) {
+      console.warn(
+        `  [feed/scoring] scoring budget exhausted at ${repo.repo} — ${repos.length - results.length} repo(s) deferred to pending-retry`,
+      );
+      break;
+    }
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      if (Date.now() > deadline) break;
       try {
         const prompt = buildFeedScoringPrompt([repo], aiInterestsText);
         const raw = await callLlm(prompt, 4096);
@@ -991,7 +1010,15 @@ export async function generateFeed(
   //     入库队列次序（pending 优先/trending 优先/search 领域轮询）原样保留，只是消费方
   //     从「全文案队列」变成「海选队列」——领域多样性在筛分入口保底。
   const phase1Cache = loadPhase1Scores();
-  const screenQueue: RepoForScoring[] = [...pendingFirst, ...nonSearch, ...roundRobin]
+  // 海选窗口 fresh-filter（GT-0906-01 连环刀）：pending 补评永远在队首，其余只取「尚未海选」的仓库。
+  // 已海选未精评的仓库本轮已消费过 prose 机会，不再占窗——否则窗口每轮只推进 prose 数（~60）而非
+  // cap 数（400），万级池要 100+ 轮才筛得完；fresh 过滤后窗口每轮推进 cap 数，~20 轮筛完全池。
+  // cap ≥ 全池（完整轮）时 fresh 过滤即空操作，语义与旧管道一致。
+  const screenQueue: RepoForScoring[] = [
+    ...pendingFirst,
+    ...nonSearch.filter((m) => !phase1Cache.has(m.repo)),
+    ...roundRobin.filter((m) => !phase1Cache.has(m.repo)),
+  ]
     .slice(0, MAX_LLM_SCORE_REPOS)
     .map((m) => ({
       repo: m.repo,
@@ -1004,6 +1031,9 @@ export async function generateFeed(
   console.log(
     `[feed] ${existingScores.size} prose-cached, ${phase1Cache.size} phase1-cached, screening ${needScreen.length}/${screenQueue.length} repos (cap ${MAX_LLM_SCORE_REPOS})...`,
   );
+  // 评分段总预算（GT-0906-01 连环刀）：从海选批跑到逐仓重评共用一条墙钟红线，
+  // 到线后重评放弃 → failedThisRound → pending-retry，轮时长上界锁回 ≤20 分钟
+  const scoringDeadline = Date.now() + SCORING_BUDGET_MS;
   const freshPhase1 =
     needScreen.length > 0 ? await phase1Batched(needScreen, config.interests.aiInterestsText) : [];
   const freshMap = new Map(freshPhase1.map((p) => [p.repo, p] as const));
@@ -1025,6 +1055,7 @@ export async function generateFeed(
     }
   }
   const screenedSet = new Set(screened.map((s) => s.repo));
+  const screenQueueSet = new Set(screenQueue.map((s) => s.repo));
   const proseSelected = selectForProse(screened, PROSE_TOP_K);
   const reposNeedingScore: RepoForScoring[] = screenQueue.filter((r) => proseSelected.has(r.repo));
   console.log(
@@ -1032,7 +1063,7 @@ export async function generateFeed(
   );
   const newScoringResults =
     reposNeedingScore.length > 0
-      ? await scoreBatched(reposNeedingScore, config.interests.aiInterestsText)
+      ? await scoreBatched(reposNeedingScore, config.interests.aiInterestsText, scoringDeadline)
       : [];
   const scoringMap = new Map<string, ScoringResult>([
     ...existingScores,
@@ -1050,10 +1081,28 @@ export async function generateFeed(
     // P0a 长度校验只作用于本轮新评分/恢复补评的卡；存量短卡由任务 2 清 reasonCn 失效后走新评分路径收敛。
     const cachedHit = existingScores.has(m.repo);
     if (!cachedHit) {
-      // 海选已筛但未入选 top-K：主动筛掉，不是评分失败——不进 feed（无文案不出现，栗子铁律）
-      // 也不进待补评（进队列会变僵尸：分数在 phase1 缓存里，永不入选却每轮 +1 重试计数）
-      if (!proseSelected.has(m.repo) && screenedSet.has(m.repo)) {
-        continue;
+      // 只有精评入选者走下方评分/兜底路径，其余仓库分类处置（GT-0906-01 连环刀）：
+      // ① 在本轮海选窗内但海选失败（无 phase1 分，LLM 全灭/单批失败）→ 记入待补评
+      //    （retryCount+1，下轮 pendingFirst 优先恢复重筛），不烧逐仓重评——
+      //    旧代码对这类仓库逐仓 retryScoring×3，饱和时段足以拖爆作业窗；
+      // ② 海选已筛未入选 top-K：主动筛掉，不是评分失败——不进 feed（无文案不出现，栗子铁律），
+      //    也不进待补评（进队列会变僵尸：分数在 phase1 缓存里，永不入选却每轮 +1 重试计数）；
+      // ③ 未进本轮海选窗（滴灌 cap 截断的仓库）：不是失败，只是排队未轮到——旧代码会落到
+      //    逐仓 retryScoring×3（6000+ 仓库 × 3 次 LLM 调用 = 小轮爆窗的另一真根源），现在
+      //    直接跳过，下轮海选窗口自然推进到它们。完整轮 cap ≥ 全池时③类为空，语义不变。
+      if (!proseSelected.has(m.repo)) {
+        // 持有历史 detail 的仓库例外：detail 兜底是零 LLM 成本防丢卡路径（既有测试锁定），
+        // 不在此跳过，落到下方质量分支走「重评失败 → detail 兜底」
+        if (!detailMap.has(m.repo)) {
+          // ① 在本轮海选窗内但海选失败（无 phase1 分，LLM 全灭/单批失败）→ 入待补评
+          //    （retryCount+1，下轮 pendingFirst 优先恢复重筛），不烧逐仓重评；
+          // ②③ 已筛未入选（主动淘汰）/ 未进本轮窗（滴灌排队未轮到）→ 直接跳过，
+          //    下轮海选窗口自然推进。完整轮 cap ≥ 全池时③类为空，语义不变。
+          if (!screenedSet.has(m.repo) && screenQueueSet.has(m.repo)) {
+            failedThisRound.push(m);
+          }
+          continue;
+        }
       }
       // P0a 长度校验：reasonCn effLen <100（等高卡片第三行空白）或 summaryCn 不在 20-35 字 → 不达标
       if (
@@ -1069,6 +1118,8 @@ export async function generateFeed(
           [{ repo: m.repo, description: m.desc, stars: m.stars, language: m.language, topics: m.topics }],
           config.interests.aiInterestsText,
           3,
+          true,
+          scoringDeadline,
         );
         if (retried.length > 0) {
           sc = retried[0]!;
