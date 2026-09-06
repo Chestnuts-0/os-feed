@@ -11,6 +11,19 @@ on:
     # 03:00 班收尾后 04:00 完整轮接班；白天配额留给完整轮与人工验证
     - cron: "0 14,16,18,19 * * *"
   workflow_dispatch:
+    # 连环看护器（GT-0906-01）手动切片入口：默认 400/60 ≈ 15 分钟/轮，
+    # 快了加切片慢了减，第一轮跑完校准
+    inputs:
+      screen_cap:
+        description: "海选上限（本轮最多海选的候选数）"
+        required: false
+        default: "400"
+        type: string
+      prose_top_k:
+        description: "精评 top-K（本轮最多产出全套文案的卡数）"
+        required: false
+        default: "60"
+        type: string
 
 permissions:
   contents: write
@@ -45,6 +58,8 @@ jobs:
       - name: Run feed drip（自主轻抓取+增量评分）
         env:
           FEED_FETCH: "1"
+          SCREEN_CAP: ${{ github.event.inputs.screen_cap || '400' }}
+          PROSE_TOP_K: ${{ github.event.inputs.prose_top_k || '60' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EXTRA_GITHUB_PATS: ${{ secrets.EXTRA_GITHUB_PATS }}
           LLM_PROVIDER: zhipu
