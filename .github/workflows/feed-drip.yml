@@ -1,0 +1,81 @@
+name: Feed Drip（少量多次滴灌）
+
+# 滴灌日更（2026-09-06 栗子拍板「少量多次」）：每 3 小时一次轻量 feed 更新，
+# 每轮只处理「自上轮以来的新增候选」（海选/文案缓存天然去重），单轮预期 10-25 分钟、
+# 每轮都有新卡落地；失败损失=该轮新增（下轮 pending 补评自动追）。与 04:00 CST 的
+# 完整日更（digest+大评分）互补：完整轮出日报+大盘刷新，滴灌轮保当天持续新鲜。
+
+on:
+  schedule:
+    - cron: "0 1,4,7,10,13,16 * * *" # UTC，≈ CST 09/12/15/18/21/24 点，避开 04:00 完整轮
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: feed-drip
+  cancel-in-progress: true # 卡住的滴灌轮被下一轮替代（缓存保证进度不丢）
+
+jobs:
+  drip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90 # 单轮轻量：抓取 2-3min + 海选/精评增量，90min 富余
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run feed drip（自主轻抓取+增量评分）
+        env:
+          FEED_FETCH: "1"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXTRA_GITHUB_PATS: ${{ secrets.EXTRA_GITHUB_PATS }}
+          LLM_PROVIDER: zhipu
+          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
+          LLM_FALLBACKS: agnes,agnes,zhipu,zhipu,zhipu,zhipu,groq,groq,groq,groq,groq,groq,groq@openai/gpt-oss-20b,groq@openai/gpt-oss-20b,groq@qwen/qwen3.8-27b,groq@qwen/qwen3.8-27b,gemini,gemini,gemini,gemini@gemini-2.5-flash-lite,gemini@gemini-2.5-flash-lite,gemini@gemini-3.5-flash-lite,gemini@gemini-3.5-flash-lite,gemini@gemini-3.1-flash-lite,mistral,mistral,mistral,mistral,cerebras,cerebras,hf@meta-llama/Llama-3.3-70B-Instruct,hf@Qwen/Qwen2.5-72B-Instruct,openrouter@google/gemma-4-31b-it:free,custom:modelscope,custom:modelscope@stepfun-ai/Step-3.7-Flash,custom:spark
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          HF_API_KEY: ${{ secrets.HF_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+          AGNES_MODEL: ${{ secrets.AGNES_MODEL || 'agnes-2.0-flash' }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          MODELSCOPE_API_KEY: ${{ secrets.MODELSCOPE_API_KEY }}
+          MODELSCOPE_BASE_URL: https://api-inference.modelscope.cn/v1
+          MODELSCOPE_MODEL: Qwen/Qwen3.8-27B
+          SPARK_API_KEY: ${{ secrets.SPARK_API_KEY }}
+          SPARK_BASE_URL: https://spark-api-open.xf-yun.com/v1
+          SPARK_MODEL: lite
+          DIGEST_REPO: ${{ github.repository }}
+        run: pnpm feed:job
+
+      - name: Commit feed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No new feed files to commit"
+          else
+            DATE=$(date -u +%Y-%m-%d)
+            git commit -m "feed: ${DATE} drip update"
+            git pull --rebase
+            git push
+          fi

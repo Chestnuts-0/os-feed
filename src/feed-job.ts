@@ -36,6 +36,17 @@ async function main(): Promise<void> {
     } catch (err) {
       console.error(`[feed-job] 快照解析失败，按空 trending 继续（${err}）`);
     }
+  } else if (process.env["FEED_FETCH"] === "1") {
+    // 滴灌模式（2026-09-06 少量多次）：无 digest job 的快照时自力更生轻抓一次
+    // （搜索 89 主题+trending 页 ≈2-3 分钟），让 feed job 脱离 digest job 独立跑批
+    console.log("[feed-job] FEED_FETCH=1 且无快照 → 自主轻抓取");
+    const { fetchTrendingData } = await import("./trending.ts");
+    trendingData = await fetchTrendingData(config.trendingTopics).catch(
+      (): TrendingData => ({ trendingRepos: [], searchRepos: [], trendingFetchSuccess: false }),
+    );
+    console.log(
+      `[feed-job] 自主抓取完成：trending=${trendingData.trendingRepos.length}, search=${trendingData.searchRepos.length}`,
+    );
   } else {
     console.log(`[feed-job] ${SNAPSHOT_PATH} 不存在 → 空 trending（零成本重算分类/动量 + pending 补评模式）`);
   }
