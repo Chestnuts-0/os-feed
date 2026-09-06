@@ -348,22 +348,22 @@
   },
   {
     "job": "feed",
-    "at": "2026-09-06T19:05:36.932Z",
+    "at": "2026-09-06T19:35:00.665Z",
     "workers": [
       {
         "name": "zhipu",
-        "calls": 1,
+        "calls": 2,
         "ok": 0,
         "err429": 0,
         "cooldowns": 0,
-        "otherErrors": 1,
+        "otherErrors": 2,
         "cooling": false,
         "lastError": "Error: 401 令牌已过期或验证不正确"
       },
       {
         "name": "agnes",
-        "calls": 1,
-        "ok": 1,
+        "calls": 2,
+        "ok": 2,
         "err429": 0,
         "cooldowns": 0,
         "otherErrors": 0,
@@ -371,8 +371,8 @@
       },
       {
         "name": "agnes#2",
-        "calls": 1,
-        "ok": 1,
+        "calls": 2,
+        "ok": 2,
         "err429": 0,
         "cooldowns": 0,
         "otherErrors": 0,
@@ -380,8 +380,8 @@
       },
       {
         "name": "zhipu#2",
-        "calls": 1,
-        "ok": 1,
+        "calls": 2,
+        "ok": 2,
         "err429": 0,
         "cooldowns": 0,
         "otherErrors": 0,
@@ -389,10 +389,10 @@
       },
       {
         "name": "zhipu#3",
-        "calls": 3,
+        "calls": 5,
         "ok": 1,
-        "err429": 2,
-        "cooldowns": 0,
+        "err429": 4,
+        "cooldowns": 1,
         "otherErrors": 0,
         "cooling": false,
         "lastError": "Error: 429 您的账户已达到速率限制，请您控制请求频率"
@@ -424,16 +424,17 @@
         "cooldowns": 1,
         "otherErrors": 0,
         "cooling": false,
-        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199523, Requested 30"
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 16"
       },
       {
         "name": "groq#2",
-        "calls": 1,
-        "ok": 1,
-        "err429": 0,
-        "cooldowns": 0,
+        "calls": 4,
+        "ok": 0,
+        "err429": 4,
+        "cooldowns": 1,
         "otherErrors": 0,
-        "cooling": false
+        "cooling": false,
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 17"
       },
       {
         "name": "groq#3",
@@ -443,7 +444,7 @@
         "cooldowns": 1,
         "otherErrors": 0,
         "cooling": false,
-        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199523, Requested 15"
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 32"
       },
       {
         "name": "groq#4",
@@ -453,7 +454,7 @@
         "cooldowns": 1,
         "otherErrors": 0,
         "cooling": false,
-        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199523, Requested 15"
+        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199524, Requested 16"
       },
       {
         "name": "groq#5",
@@ -466,13 +467,12 @@
       },
       {
         "name": "groq#6",
-        "calls": 4,
-        "ok": 0,
-        "err429": 4,
-        "cooldowns": 1,
+        "calls": 1,
+        "ok": 1,
+        "err429": 0,
+        "cooldowns": 0,
         "otherErrors": 0,
-        "cooling": false,
-        "lastError": "Error: 429 Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199523, Requested 15"
+        "cooling": false
       },
       {
         "name": "groq#7",
@@ -486,11 +486,12 @@
       {
         "name": "groq#8",
         "calls": 1,
-        "ok": 1,
+        "ok": 0,
         "err429": 0,
         "cooldowns": 0,
-        "otherErrors": 0,
-        "cooling": false
+        "otherErrors": 1,
+        "cooling": false,
+        "lastError": "Error: Unexpected empty response from groq"
       },
       {
         "name": "groq#9",
@@ -503,13 +504,12 @@
       },
       {
         "name": "groq#10",
-        "calls": 2,
+        "calls": 1,
         "ok": 1,
-        "err429": 1,
+        "err429": 0,
         "cooldowns": 0,
         "otherErrors": 0,
-        "cooling": false,
-        "lastError": "Error: 429 Request too large for model `qwen/qwen3.8-27b` in organization `org_01m1pdm1bne5ssp5tzddge7ka3` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 2048. The "
+        "cooling": false
       },
       {
         "name": "gemini",
@@ -696,7 +696,7 @@
         "cooldowns": 0,
         "otherErrors": 1,
         "cooling": false,
-        "lastError": "SyntaxError: Unexpected token '够', \"够。\\n等下还要注意\"... is not valid JSON"
+        "lastError": "SyntaxError: Unexpected token '�', \"��\"},\"fini\"... is not valid JSON"
       },
       {
         "name": "custom-spark",
