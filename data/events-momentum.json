@@ -1,0 +1,242 @@
+{
+  "windowStart": "2026-09-06T08:17:08.961Z",
+  "windowEnd": "2026-09-06T08:32:28.629Z",
+  "polls": 30,
+  "eventsSeen": 2966,
+  "watchEvents": 118,
+  "createEvents": 31,
+  "topWatched": [
+    {
+      "repo": "Nicholas2519/python-cloudflare-turnstile",
+      "stars": 3
+    },
+    {
+      "repo": "WorldFlowAI/everything-claude-code",
+      "stars": 2
+    },
+    {
+      "repo": "ashemag/human-atlas",
+      "stars": 2
+    },
+    {
+      "repo": "blader/humanizer",
+      "stars": 2
+    },
+    {
+      "repo": "debpalash/VoiceStudio",
+      "stars": 2
+    },
+    {
+      "repo": "avansaber/avansaber-php-reddit-api",
+      "stars": 2
+    },
+    {
+      "repo": "Thurnreiter/Cache",
+      "stars": 1
+    },
+    {
+      "repo": "Ekuesky/Monitoring-QG",
+      "stars": 1
+    },
+    {
+      "repo": "zsyggg/paper-craft-skills",
+      "stars": 1
+    },
+    {
+      "repo": "AlexsJones/llmfit",
+      "stars": 1
+    },
+    {
+      "repo": "LauraRozier/TBU-Named-Pipe",
+      "stars": 1
+    },
+    {
+      "repo": "y1005540-svg/zesto.vendor-penal-",
+      "stars": 1
+    },
+    {
+      "repo": "gavischneider/awesome-llm-wiki",
+      "stars": 1
+    },
+    {
+      "repo": "ElPatoDelCuak/CustomLab_API",
+      "stars": 1
+    },
+    {
+      "repo": "FreeXR/eureka_panther-adreno-gpu-exploit-1",
+      "stars": 1
+    },
+    {
+      "repo": "msitarzewski/agency-agents",
+      "stars": 1
+    },
+    {
+      "repo": "TencentCloud/TencentDB-Agent-Memory",
+      "stars": 1
+    },
+    {
+      "repo": "sandiiarov/skill-creator",
+      "stars": 1
+    },
+    {
+      "repo": "wzshiming/anyproxy",
+      "stars": 1
+    },
+    {
+      "repo": "nixfred/infomarchy",
+      "stars": 1
+    },
+    {
+      "repo": "Ebullioscopic/Atoll",
+      "stars": 1
+    },
+    {
+      "repo": "drewmt/lineweb-social",
+      "stars": 1
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "stars": 1
+    },
+    {
+      "repo": "SAWARATSUKI/KawaiiLogos",
+      "stars": 1
+    },
+    {
+      "repo": "vllm-project/vllm",
+      "stars": 1
+    },
+    {
+      "repo": "mirage-project/mirage",
+      "stars": 1
+    },
+    {
+      "repo": "headroomlabs-ai/headroom",
+      "stars": 1
+    },
+    {
+      "repo": "saurabh-saini/OmniStream",
+      "stars": 1
+    },
+    {
+      "repo": "saurabh-saini/portfolio",
+      "stars": 1
+    },
+    {
+      "repo": "PBH-BTN/PeerBanHelper",
+      "stars": 1
+    },
+    {
+      "repo": "southleft/figma-console-mcp",
+      "stars": 1
+    },
+    {
+      "repo": "petarzarkov/dunx",
+      "stars": 1
+    },
+    {
+      "repo": "humanlayer/skills",
+      "stars": 1
+    },
+    {
+      "repo": "mgallese3-crypto/kitsune",
+      "stars": 1
+    },
+    {
+      "repo": "BraveOPotato/FckSignups",
+      "stars": 1
+    },
+    {
+      "repo": "onlook-dev/onlook",
+      "stars": 1
+    },
+    {
+      "repo": "ShadowArcanist/netviz",
+      "stars": 1
+    },
+    {
+      "repo": "rasbt/LLMs-from-scratch",
+      "stars": 1
+    },
+    {
+      "repo": "go-task/task",
+      "stars": 1
+    },
+    {
+      "repo": "rfjakob/earlyoom",
+      "stars": 1
+    },
+    {
+      "repo": "stdlib-js/stdlib",
+      "stars": 1
+    },
+    {
+      "repo": "Leonard8818/-Delta-Force-Graphics-Optimizer",
+      "stars": 1
+    },
+    {
+      "repo": "evangelosvlachos96-dotcom/vendor-integration-platform",
+      "stars": 1
+    },
+    {
+      "repo": "The-AI-Republic/pi-dash",
+      "stars": 1
+    },
+    {
+      "repo": "MisterBooo/llm-interview-questions",
+      "stars": 1
+    },
+    {
+      "repo": "Sanjiv215/VIGILO-Python-Package",
+      "stars": 1
+    },
+    {
+      "repo": "ganeshmshetty/openclip",
+      "stars": 1
+    },
+    {
+      "repo": "521xueweihan/HelloGitHub",
+      "stars": 1
+    },
+    {
+      "repo": "waydroid/waydroid",
+      "stars": 1
+    },
+    {
+      "repo": "public-apis/public-apis",
+      "stars": 1
+    }
+  ],
+  "newRepos": [
+    "jiying2007/audio-pipeline",
+    "abc885277-dotcom/CONTENT-CREATER",
+    "nathapp-io/nax-ai",
+    "SrDicov/z-repo",
+    "songkaili24/loganalyzer",
+    "DataDog/sdlc-gitops-sample-stack",
+    "lubindanilo/investment-website",
+    "Olbrasoft/sdilejcz",
+    "niko86/laterite",
+    "EliasHir/Movie-app-SC",
+    "Viola-orientalis/book-eating-lion-final",
+    "nextatlas20/My-Homepage",
+    "jsoyer/HivePilot",
+    "antst/dashi",
+    "Netcracker/pgskipper-operator",
+    "xb18/rtk",
+    "benderricardo4674/aczmlf",
+    "anshache/mibqxz",
+    "1nwo/gzzdvm",
+    "dolphindevelopments/orca-run-api",
+    "vikasprogrammer/threejs-procedural-dungeon",
+    "leptris/yeptris-ruby",
+    "exoplatform/ecms",
+    "lisa-method/physics-attractor-dynamics",
+    "xb18/swagger-ui",
+    "LasceUCR/lasce",
+    "ch2ziem/kkhzfb",
+    "srijanmondal382-a11y/ParoShield",
+    "Jassi220205/Out_Box",
+    "zprintprohk-rgb/zprintpro"
+  ]
+}
